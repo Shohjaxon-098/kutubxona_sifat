@@ -1,6 +1,7 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
 
 class TextfieldWidget extends StatelessWidget {
   const TextfieldWidget({super.key, required this.phoneController});
@@ -22,9 +23,9 @@ class TextfieldWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.lerp(
                   Border(
-                    bottom: BorderSide(color: Color(0xffEDEDED)),
-                    top: BorderSide(color: Color(0xffEDEDED)),
-                    left: BorderSide(color: Color(0xffEDEDED)),
+                    bottom: BorderSide(color: AppColors().border),
+                    top: BorderSide(color: AppColors().border),
+                    left: BorderSide(color: AppColors().border),
                   ),
                   Border(),
                   0,
@@ -38,9 +39,9 @@ class TextfieldWidget extends StatelessWidget {
                 child: Text(
                   '+998',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors().black,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -53,46 +54,46 @@ class TextfieldWidget extends StatelessWidget {
                   cursorHeight: 18,
                   keyboardType: TextInputType.phone,
 
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                   inputFormatters: [LengthLimitingTextInputFormatter(9)],
                   decoration: InputDecoration(
                     isDense: true,
                     hintStyle: TextStyle(
-                      color: Color(0xffD0D5DD),
+                      color: AppColors().hintColor,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
                     hintText: '_ _  _ _ _  _ _  _ _',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEDEDED)),
+                      borderSide: BorderSide(color: AppColors().border),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         bottomRight: Radius.circular(16),
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEDEDED)),
+                      borderSide: BorderSide(color: AppColors().border),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         bottomRight: Radius.circular(16),
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEDEDED)),
+                      borderSide: BorderSide(color: AppColors().border),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         bottomRight: Radius.circular(16),
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEDEDED)),
+                      borderSide: BorderSide(color: AppColors().border),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         bottomRight: Radius.circular(16),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEDEDED)),
+                      borderSide: BorderSide(color: AppColors().border),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         bottomRight: Radius.circular(16),

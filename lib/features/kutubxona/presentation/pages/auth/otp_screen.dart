@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_state.dart';
@@ -39,157 +41,160 @@ class _OtpScreenState extends State<OtpScreen> {
       otpController5,
       otpController6,
     ];
-    return BlocProvider(
-      create: (context) => TimerBloc(),
-      child: Scaffold(
-        body: BlocBuilder<TimerBloc, TimerState>(
-          builder: (context, state) {
-            String count = '';
-            String displayMessage = '';
-            bool isButtonEnabled = false;
-            if (state is TimerInitial || state is TimerRunning) {
-              final timeLeft =
-                  (state is TimerInitial)
-                      ? state.timeLeft
-                      : (state as TimerRunning).timeLeft;
-              if (timeLeft > 0) {
-                count = '$timeLeft:00';
-                displayMessage = count;
-                isButtonEnabled = false;
-              } else {
-                displayMessage = "asdds";
-                isButtonEnabled = true;
-              }
-            } else if (state is TimerCompleted) {
-              displayMessage = "dassdae2wq";
+    return Scaffold(
+      body: BlocBuilder<TimerBloc, TimerState>(
+        builder: (context, state) {
+          String count = '';
+          String displayMessage = '';
+          bool isButtonEnabled = false;
+          if (state is TimerInitial || state is TimerRunning) {
+            final timeLeft =
+                (state is TimerInitial)
+                    ? state.timeLeft
+                    : (state as TimerRunning).timeLeft;
+            if (timeLeft > 0) {
+              count = '$timeLeft:00';
+              displayMessage = count;
+              isButtonEnabled = false;
+            } else {
+              displayMessage = "Қайта юбориш";
               isButtonEnabled = true;
             }
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 291,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              spreadRadius: 2,
-                              blurRadius: 60,
-                              offset: Offset(5, 12),
-                            ),
-                          ],
-                          color: Color.fromARGB(255, 42, 54, 121),
-                          borderRadius: BorderRadius.circular(24),
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/mask.png'),
-                            fit: BoxFit.cover,
-                          ),
+          } else if (state is TimerCompleted) {
+            displayMessage = "true";
+            isButtonEnabled = true;
+          }
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 290,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors().grey,
+                          spreadRadius: 2,
+                          blurRadius: 60,
+                          offset: Offset(5, 12),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 84,
-                                height: 84,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(28),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 0,
-                                      spreadRadius: 5,
-                                      color: Color.fromARGB(38, 255, 255, 255),
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      "assets/icons/privacy.png",
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 33),
-                              Text(
-                                'Телефонингизга юборилган кодни киритинг',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
+                      ],
+                      color: AppColors().cardColor,
+                      borderRadius: BorderRadius.circular(24),
+                      image: DecorationImage(
+                        image: AssetImage(AppImages().mask),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(height: 100),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(4, (index) {
-                        return OtpWidget(
-                          color: Colors.black,
-                          otpController: otpController[index],
-                          onChanged: (value) {
-                            if (value.length == 1) {
-                              FocusScope.of(context).nextFocus();
-                            }
-                            if (value.isEmpty) {
-                              FocusScope.of(context).previousFocus();
-                            }
-                          },
-                        );
-                      }),
-                    ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      displayMessage,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 84,
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors().white,
+                              borderRadius: BorderRadius.circular(28),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 0,
+                                  spreadRadius: 5,
+                                  color: AppColors().cardShadow,
+                                ),
+                              ],
+                              image: DecorationImage(
+                                image: AssetImage(AppImages().privacy),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 33),
+                          Text(
+                            'Телефонингизга юборилган кодни киритинг',
+                            style: TextStyle(
+                              color: AppColors().white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 12),
-
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 8,
-                          backgroundColor: Colors.indigo,
-                          minimumSize: Size(double.infinity, 60),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ),
-                          );
+                  ),
+                  SizedBox(height: 100),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(4, (index) {
+                      return OtpWidget(
+                        color: AppColors().black,
+                        otpController: otpController[index],
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                          if (value.isEmpty) {
+                            FocusScope.of(context).previousFocus();
+                          }
                         },
-                        child: Text(
-                          "Кириш",
-                          style: TextStyle(color: Colors.white),
-                        ),
+                      );
+                    }),
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    displayMessage,
+                    style: TextStyle(
+                      color: AppColors().blue,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+
+                  Spacer(),
+                  TextButton(
+                    child: Text(
+                      'Телефон рақамни ўзгартириш',
+                      style: TextStyle(
+                        color: AppColors().blue,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ],
-                ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(height: 31),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 8,
+                        backgroundColor: AppColors().onBoardbuttonColor,
+                        minimumSize: Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      },
+                      child: Text(
+                        "Кириш",
+                        style: TextStyle(color: AppColors().white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

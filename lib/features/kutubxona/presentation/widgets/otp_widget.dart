@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
 
 class OtpWidget extends StatelessWidget {
   const OtpWidget({
@@ -19,14 +20,14 @@ class OtpWidget extends StatelessWidget {
       height: 40,
       child: Center(
         child: TextFormField(
-          cursorColor: Colors.black,
+          cursorColor: AppColors().black,
           cursorHeight: 20,
           controller: otpController,
           keyboardType: TextInputType.number,
           style: TextStyle(
             color: color,
-            fontSize: 30,
-            fontWeight: FontWeight.w600,
+            fontSize: 26,
+            fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
           inputFormatters: [

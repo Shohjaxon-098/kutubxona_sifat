@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/onboard/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -41,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/icons/logo.png', width: 140, height: 140),
+            Image.asset(AppImages().splashLogo, width: 140, height: 140),
             SizedBox(height: 8),
             Text(
               "Liber",
@@ -56,9 +58,9 @@ class _SplashScreenState extends State<SplashScreen>
                   return LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(5),
                     value: _controller.value, // Animatsiyalashgan qiymat
-                    backgroundColor: Colors.grey,
+                    backgroundColor: AppColors().linerBackgroundColor,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Color.fromARGB(255, 43, 58, 129),
+                      AppColors().linerValueColor,
                     ),
                   );
                 },

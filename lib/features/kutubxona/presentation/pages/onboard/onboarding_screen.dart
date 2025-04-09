@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/auth/auth_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -10,17 +12,17 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int currentIndex = 0;
 
   List<Map<String, String>> pages = [
     {
-      "image": "assets/images/onBoard1.svg",
+      "image": AppImages().onBoard1,
       "text": "Китобларни уйингизга буюртма қилинг",
     },
-    {"image": "assets/images/onBoard2.svg", "text": "Китобларни онлайн ўқинг"},
+    {"image": AppImages().onBoard2, "text": "Китобларни онлайн ўқинг"},
     {
-      "image": "assets/images/onBoard3.svg",
+      "image": AppImages().onBoard3,
       "text": "Китобларни аудио шаклини тингланг",
     },
   ];
@@ -48,13 +50,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(pages[index]["image"]!, height: 200),
-                        SizedBox(height: 20),
+                        SizedBox(height: 40),
                         Text(
                           pages[index]["text"]!,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -68,12 +70,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(pages.length, (index) => buildDot(index)),
           ),
-
+          SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 64),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.indigo,
+                backgroundColor: AppColors().onBoardbuttonColor,
                 minimumSize: Size(double.infinity, 60),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -87,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               child: Text(
                 "Утказиб юбориш",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors().white),
               ),
             ),
           ),
@@ -102,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 7,
       width: 7,
       decoration: BoxDecoration(
-        color: currentIndex == index ? Color(0xff3F51B5) : Color(0xffF5F5F5),
+        color: currentIndex == index ? AppColors().enableDot : AppColors().disableDot,
         borderRadius: BorderRadius.circular(4),
       ),
     );
