@@ -16,4 +16,5 @@ class AppColors {
   Color cardShadow = Color.fromARGB(38, 255, 255, 255);
   Color searchBack = Color(0xffF5F5F5);
   Color searchIcon = Color(0xff9A9A9A);
+  Color rateCount = Color(0xffFF7F4D);
 }

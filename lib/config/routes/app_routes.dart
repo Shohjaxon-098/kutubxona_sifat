@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/auth/auth_screen.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/auth/otp_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/home/home_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/pages/home/screens/home_screen.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/onboard/onboarding_screen.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/splash/splash_screen.dart';
 import 'package:page_transition/page_transition.dart';

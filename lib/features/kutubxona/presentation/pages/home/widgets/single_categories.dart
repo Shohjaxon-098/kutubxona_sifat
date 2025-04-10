@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/app_images.dart';
 
 class SingleCategories extends StatelessWidget {
   const SingleCategories({super.key});
@@ -19,35 +21,61 @@ class SingleCategories extends StatelessWidget {
     ];
     return SizedBox(
       width: double.infinity,
-      height: 158,
+      height: 250,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
         itemCount: 4,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 1.3,
+          childAspectRatio: 1.8,
           crossAxisCount: 1,
-          mainAxisSpacing: 15,
-          crossAxisSpacing: 15,
+          mainAxisSpacing: 10,
         ),
         itemBuilder:
-            (context, index) => ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(color: AppColors().black),
-                child: Center(
-                  child: Text(
-                    ruknlar[index],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors().white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
+            (context, index) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: SizedBox(
+                    height: 160,
+
+                    child: Card(child: Center(child: Icon(Icons.book))),
                   ),
                 ),
-              ),
+                SizedBox(height: 10),
+                Text(
+                  '1984',
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    color: AppColors().black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  'SIYOSAT, FANTASTIKA',
+                  style: TextStyle(
+                    color: AppColors().cardColor,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Row(
+                  children: [
+                    SvgPicture.asset(AppImages().rate, width: 15),
+                    SizedBox(width: 8),
+                    Text(
+                      '4.7',
+                      style: TextStyle(
+                        color: AppColors().rateCount,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
       ),
     );
