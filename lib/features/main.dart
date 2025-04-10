@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocProvider;
+import 'package:kutubxona/config/routes/app_routes.dart';
 import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/pages/splash/splash_screen.dart';
 
@@ -18,6 +19,8 @@ class KutubxonaApp extends StatelessWidget {
         title: 'Flutter Demo',
         home: SplashScreen(),
         debugShowCheckedModeBanner: false,
+        onGenerateRoute: AppRoutes.generateRoute, // Link routes
+        initialRoute: AppRoutes.splash, // Set the initial route
       ),
     );
   }

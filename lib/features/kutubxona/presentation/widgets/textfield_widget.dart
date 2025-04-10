@@ -51,7 +51,7 @@ class TextfieldWidget extends StatelessWidget {
                 height: 50,
                 child: TextFormField(
                   controller: phoneController,
-                  cursorHeight: 18,
+            
                   keyboardType: TextInputType.phone,
 
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),

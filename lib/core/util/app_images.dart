@@ -9,4 +9,5 @@ class AppImages {
   String onBoard3 = '$assets$images/onBoard3.svg';
   String privacy = '$assets$icons/privacy.png';
   String mask = '$assets$images/mask.png';
+    String person = '$assets$icons/person.svg';
 }

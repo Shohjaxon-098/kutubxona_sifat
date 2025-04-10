@@ -12,18 +12,25 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<TimerStopped>(_onTimerStopped);
   }
 
-  void _onTimerStarted(TimerStarted event, Emitter<TimerState> emit) {
-    _timer?.cancel(); // Eski taymerni to'xtatish
-    emit(TimerRunning(10)); // Taymerni boshlash
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  void _onTimerStarted(TimerStarted event, Emitter<TimerState> emit) async {
+    _timer?.cancel(); // Cancel any existing timer
+
+    // Emit initial state before starting the timer
+    emit(TimerRunning(10));
+
+    // Use await to ensure that the event handler doesn't complete prematurely
+    await Future.delayed(
+      Duration(seconds: 1),
+    ); // Delay before starting the timer
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       final timeLeft =
           (state is TimerRunning) ? (state as TimerRunning).timeLeft - 1 : 0;
 
       if (timeLeft >= 0) {
-        add(TimerTicked(timeLeft));
+        add(TimerTicked(timeLeft)); // Dispatch the TimerTicked event
       } else {
         timer.cancel();
-        emit(TimerCompleted());
       }
     });
   }

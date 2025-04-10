@@ -6,13 +6,18 @@ class OtpWidget extends StatelessWidget {
   const OtpWidget({
     super.key,
     required this.otpController,
-    required this.onChanged,
+
     required this.color,
+    required this.focusNode,
+    this.nextNode,
+    this.previousNode,
   });
   final TextEditingController otpController;
 
-  final void Function(String)? onChanged;
   final Color? color;
+  final FocusNode focusNode;
+  final FocusNode? nextNode;
+  final FocusNode? previousNode;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -20,21 +25,26 @@ class OtpWidget extends StatelessWidget {
       height: 40,
       child: Center(
         child: TextFormField(
+          focusNode: focusNode,
           cursorColor: AppColors().black,
           cursorHeight: 20,
           controller: otpController,
-          keyboardType: TextInputType.number,
+
           style: TextStyle(
             color: color,
             fontSize: 26,
             fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(1),
-            FilteringTextInputFormatter.digitsOnly,
-          ],
-          onChanged: onChanged,
+          inputFormatters: [LengthLimitingTextInputFormatter(1)],
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            if (value.isNotEmpty && nextNode != null) {
+              FocusScope.of(context).requestFocus(nextNode);
+            } else if (value.isEmpty && previousNode != null) {
+              FocusScope.of(context).requestFocus(previousNode);
+            }
+          },
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
             border: InputBorder.none,

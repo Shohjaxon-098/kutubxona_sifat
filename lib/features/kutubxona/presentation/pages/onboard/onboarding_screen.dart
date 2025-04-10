@@ -27,6 +27,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -43,16 +49,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               itemCount: pages.length,
               itemBuilder: (context, index) {
+                String image = pages[index]["image"]!;
+                String text = pages[index]["text"]!;
                 return Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 85),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(pages[index]["image"]!, height: 200),
+                        SvgPicture.asset(image, height: 200),
                         SizedBox(height: 40),
                         Text(
-                          pages[index]["text"]!,
+                          text,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -104,7 +112,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 7,
       width: 7,
       decoration: BoxDecoration(
-        color: currentIndex == index ? AppColors().enableDot : AppColors().disableDot,
+        color:
+            currentIndex == index
+                ? AppColors().enableDot
+                : AppColors().disableDot,
         borderRadius: BorderRadius.circular(4),
       ),
     );
