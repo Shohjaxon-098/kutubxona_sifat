@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 
-class TextfieldWidget extends StatelessWidget {
-  const TextfieldWidget({super.key, required this.phoneController});
+class PhoneTextfieldWidget extends StatelessWidget {
+  const PhoneTextfieldWidget({super.key, required this.phoneController});
   final TextEditingController phoneController;
 
   @override
@@ -51,9 +51,10 @@ class TextfieldWidget extends StatelessWidget {
                 height: 50,
                 child: TextFormField(
                   controller: phoneController,
-            
+                  cursorColor: AppColors().black,
+                  cursorWidth: 1,
                   keyboardType: TextInputType.phone,
-
+                  cursorHeight: 22,
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                   inputFormatters: [LengthLimitingTextInputFormatter(9)],
                   decoration: InputDecoration(

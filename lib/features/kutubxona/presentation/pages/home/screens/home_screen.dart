@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/home/widgets/all_categories.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/home/widgets/single_categories.dart';
+import '../../../../../../core/util/important.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,7 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   CircleAvatar(
                     backgroundColor: AppColors().white,
                     radius: 28,
-                    child: SvgPicture.asset(AppImages().person, width: 40),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: SvgPicture.asset(AppImages().person, width: 40),
+                    ),
                   ),
                 ],
               ),
@@ -106,12 +104,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Text(
-                                'Барчаси',
-                                style: TextStyle(
-                                  color: AppColors().blue,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                              GestureDetector(
+                                onTap: () {},
+                                child: Text(
+                                  'Барчаси',
+                                  style: TextStyle(
+                                    color: AppColors().blue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],

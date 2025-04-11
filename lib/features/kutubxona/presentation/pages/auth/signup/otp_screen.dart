@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kutubxona/common/navigator/app_navigator.dart';
-import 'package:kutubxona/config/routes/app_routes.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_state.dart';
-import 'package:kutubxona/features/kutubxona/presentation/widgets/otp_widget.dart';
+import 'package:kutubxona/core/util/important.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -76,6 +67,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                      width: double.infinity,
                       height: 260,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -93,41 +85,39 @@ class _OtpScreenState extends State<OtpScreen> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 30, right: 30),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 84,
-                              height: 84,
-                              decoration: BoxDecoration(
-                                color: AppColors().white,
-                                borderRadius: BorderRadius.circular(28),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 0,
-                                    spreadRadius: 5,
-                                    color: AppColors().cardShadow,
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                  image: AssetImage(AppImages().privacy),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 84,
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors().white,
+                              borderRadius: BorderRadius.circular(28),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 0,
+                                  spreadRadius: 5,
+                                  color: AppColors().cardShadow,
                                 ),
-                              ),
+                              ],
                             ),
-                            SizedBox(height: 33),
-                            Text(
-                              'Телефонингизга юборилган кодни киритинг',
-                              style: TextStyle(
-                                color: AppColors().white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: SvgPicture.asset(AppImages().secure),
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 33),
+                          Text(
+                            'Телефонингизга юборилган\nкодни киритинг',
+                            style: TextStyle(
+                              color: AppColors().white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 100),
@@ -153,12 +143,17 @@ class _OtpScreenState extends State<OtpScreen> {
                           displayMessage,
                           style: TextStyle(
                             color: AppColors().black,
-                            fontSize: 14,
+                            fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         isButtonEnabled
                             ? TextButton(
+                              style: ButtonStyle(
+                                overlayColor: WidgetStateProperty.all(
+                                  Colors.transparent,
+                                ), // Splash yo‘q
+                              ),
                               onPressed: () {
                                 context.read<TimerBloc>().add(TimerStarted());
                               },
@@ -166,6 +161,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 "Қайта юбориш",
                                 style: TextStyle(
                                   color: AppColors().blue,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -173,12 +169,18 @@ class _OtpScreenState extends State<OtpScreen> {
                             : SizedBox(height: 48),
                       ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.18),
                     TextButton(
+                      style: ButtonStyle(
+                        overlayColor: WidgetStateProperty.all(
+                          Colors.transparent,
+                        ), // Splash yo‘q
+                      ),
                       child: Text(
                         'Телефон рақамни ўзгартириш',
                         style: TextStyle(
                           color: AppColors().blue,
+                          fontSize: 15,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -191,8 +193,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        elevation: 8,
-                        backgroundColor: AppColors().onBoardbuttonColor,
+                        backgroundColor: AppColors().primaryColor,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -201,12 +202,15 @@ class _OtpScreenState extends State<OtpScreen> {
                       onPressed: () {
                         AppNavigator.pushNamedAndRemoveUntil(
                           context,
-                          AppRoutes.home,
+                          AppRoutes.register,
                         );
                       },
                       child: Text(
                         "Кириш",
-                        style: TextStyle(color: AppColors().white),
+                        style: TextStyle(
+                          color: AppColors().white,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ],
