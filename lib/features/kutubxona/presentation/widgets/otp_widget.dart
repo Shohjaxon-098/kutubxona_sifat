@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/important.dart';
 
 class OtpWidget extends StatelessWidget {
   const OtpWidget({
     super.key,
     required this.otpController,
-
     required this.color,
     required this.focusNode,
     this.nextNode,
