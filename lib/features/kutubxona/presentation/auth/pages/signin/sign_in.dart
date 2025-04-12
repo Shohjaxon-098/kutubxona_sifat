@@ -14,6 +14,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 SizedBox(height: 50),
-                PhoneTextfieldWidget(phoneController: passwordController),
+                PhoneTextfieldWidget(phoneController: phoneController),
                 SizedBox(height: 24),
                 SizedBox(height: 6),
                 textFieldW(

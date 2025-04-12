@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/bloc/bloc_timer/timer_count_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/auth/logic/bloc_timer/timer_count_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/auth/logic/bloc_timer/timer_count_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Timer? _timer;

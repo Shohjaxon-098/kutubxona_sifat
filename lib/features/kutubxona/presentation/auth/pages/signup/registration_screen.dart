@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:kutubxona/core/util/important.dart';
 
-
 class AuthRegisterScreen extends StatefulWidget {
   const AuthRegisterScreen({super.key});
 
@@ -12,30 +11,34 @@ class AuthRegisterScreen extends StatefulWidget {
 class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
   String? selectedGender;
   String? documentType = 'passport';
-  File? passportImage;
+  File? frontImage;
+  File? backImage;
 
-  Future<void> pickPassportImage() async {
-    final pickedImage = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
-
-    if (pickedImage != null) {
-      setState(() {
-        passportImage = File(pickedImage.path);
-      });
-    }
-  }
-
-  Future<void> takePassportImage() async {
-    final pickedImage = await ImagePicker().pickImage(
+  Future<void> pickImage(bool isFront) async {
+    final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
     );
-    if (pickedImage != null) {
+    if (pickedFile != null) {
       setState(() {
-        passportImage = File(pickedImage.path);
+        if (isFront) {
+          frontImage = File(pickedFile.path);
+        } else {
+          backImage = File(pickedFile.path);
+        }
       });
     }
   }
+  //  Future<void> pickPassportImage() async {
+  //     final pickedImage = await ImagePicker().pickImage(
+  //       source: ImageSource.gallery,
+  //     );
+
+  //     if (pickedImage != null) {
+  //       setState(() {
+  //         passportImage = File(pickedImage.path);
+  //       });
+  //     }
+  //   }
 
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
@@ -45,7 +48,7 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
   final passportInfoController = TextEditingController();
 
   final genders = ['Эркак', 'Аёл'];
-
+  bool obsure = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +74,7 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                 label: "Исмингиз",
                 controller: nameController,
                 hint: 'Исмингиз',
+                keyboardType: TextInputType.name,
               ),
               const SizedBox(height: 20),
               const Text("Жинс"),
@@ -120,14 +124,25 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
               textFieldW(
                 label: "Парол",
                 controller: passwordController,
-                obscure: true,
+                obscure: obsure,
                 hint: "***********",
+                suffixIcon:
+                    obsure == true
+                        ? SvgPicture.asset(
+                          AppImages().eyeShow,
+                          fit: BoxFit.scaleDown,
+                        )
+                        : SvgPicture.asset(
+                          AppImages().eyeHide,
+                          fit: BoxFit.scaleDown,
+                        ),
               ),
               const SizedBox(height: 20),
               textFieldW(
                 label: "Фамилиянгиз",
                 controller: surnameController,
                 hint: 'Фамилиянгиз',
+                keyboardType: TextInputType.name,
               ),
               const SizedBox(height: 20),
               textFieldW(
@@ -141,7 +156,7 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                 label: "Туғилган санаси",
                 controller: birthDateController,
                 hint: "кк.оо.йййй",
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.datetime,
               ),
               const SizedBox(height: 20),
               const Text(
@@ -157,7 +172,11 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                   value: 'passport',
                   groupValue: documentType,
                   onChanged: (value) {
-                    setState(() => documentType = value);
+                    setState(() {
+                      documentType = value!;
+                      frontImage = null;
+                      backImage = null;
+                    });
                   },
                 ),
               ),
@@ -170,43 +189,65 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                   value: 'birth_certificate',
                   groupValue: documentType,
                   onChanged: (value) {
-                    setState(() => documentType = value);
+                    setState(() {
+                      documentType = value!;
+                      frontImage = null;
+                      backImage = null;
+                    });
                   },
                 ),
               ),
               const SizedBox(height: 20),
               textFieldW(
-                label: "Паспорт маълумотлари",
+                label:
+                    documentType == 'passport'
+                        ? "Паспорт маълумотлари *"
+                        : "Гувоҳнома ID рақами *",
                 controller: passportInfoController,
-                hint: "Паспорт серия рақами | ЖШИР",
+                hint:
+                    documentType == 'passport'
+                        ? "Паспорт серия рақами | ЖШИР"
+                        : "ID рақами",
                 keyboardType: TextInputType.number,
                 lengthInput: 14,
               ),
               const SizedBox(height: 20),
-              const Text(
-                "Ҳужжат расмини юкланг",
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  _buildImageUploadPlaceholder(),
-                  const SizedBox(width: 12),
-                  _buildImageUploadPlaceholder(),
-                ],
-              ),
+
+              documentType == 'passport'
+                  ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Ҳужжат расмини юкланг",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          imageBox(file: frontImage, isFront: true),
+                          const SizedBox(width: 12),
+                          imageBox(file: backImage, isFront: false),
+                        ],
+                      ),
+                    ],
+                  )
+                  : SizedBox(),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // submit logika shu yerga yoziladi
+                    AppNavigator.pushNamedAndRemoveUntil(
+                      context,
+                      AppRoutes.home,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors().primaryColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+
+                    minimumSize: Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: const Text(
@@ -222,26 +263,28 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
     );
   }
 
-  Widget _buildImageUploadPlaceholder() {
+  Widget imageBox({required File? file, required bool isFront}) {
     return GestureDetector(
-      onTap: takePassportImage,
+      onTap: () => pickImage(isFront),
       child: Container(
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
+        margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: AppColors().border,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(12),
         ),
         child:
-            passportImage != null
+            file != null
                 ? ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.file(passportImage!, fit: BoxFit.cover),
+                  child: Image.file(file, fit: BoxFit.cover),
                 )
                 : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.image, size: 30, color: AppColors().grey),
+                  children: const [
+                    Icon(Icons.image, size: 28, color: Colors.grey),
+                    Icon(Icons.add, size: 18, color: Colors.grey),
                   ],
                 ),
       ),

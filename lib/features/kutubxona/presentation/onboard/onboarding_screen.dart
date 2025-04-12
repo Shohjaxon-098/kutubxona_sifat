@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/auth/signin/sign_in.dart';
+import 'package:kutubxona/features/kutubxona/presentation/auth/pages/signin/sign_in.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

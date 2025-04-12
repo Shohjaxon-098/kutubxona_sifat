@@ -9,6 +9,8 @@ Widget textFieldW({
   String? hint,
   int? lengthInput,
   TextInputType? keyboardType,
+  void Function(String)? onChanged,
+  Widget? suffixIcon,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,6 +20,7 @@ Widget textFieldW({
       SizedBox(
         height: 50,
         child: TextFormField(
+          onChanged:onChanged ,
           controller: controller,
           keyboardType: keyboardType,
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
@@ -27,7 +30,8 @@ Widget textFieldW({
           cursorHeight: 22,
           obscureText: obscure,
           obscuringCharacter: '*',
-          decoration: InputDecoration(
+          
+          decoration: InputDecoration(suffixIcon: suffixIcon,
             isDense: true,
             hintStyle: TextStyle(
               color: AppColors().hintColor,

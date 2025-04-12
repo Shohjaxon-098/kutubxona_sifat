@@ -11,5 +11,7 @@ class AppImages {
   String mask = '$assets$images/mask.png';
   String person = '$assets$icons/person.svg';
   String rate = '$assets$icons/rate.svg';
-   String secure = '$assets$icons/secure.svg';
+  String secure = '$assets$icons/secure.svg';
+  String eyeHide = '$assets$icons/eye-hide.svg';
+  String eyeShow = '$assets$icons/eye-show.svg';
 }

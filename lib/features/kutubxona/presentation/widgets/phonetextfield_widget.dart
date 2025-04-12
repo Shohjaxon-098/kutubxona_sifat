@@ -55,7 +55,7 @@ class PhoneTextfieldWidget extends StatelessWidget {
                   cursorWidth: 1,
                   keyboardType: TextInputType.phone,
                   cursorHeight: 22,
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                   inputFormatters: [LengthLimitingTextInputFormatter(9)],
                   decoration: InputDecoration(
                     isDense: true,

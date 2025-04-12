@@ -1,12 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/auth/signin/sign_in.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/auth/signup/otp_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/auth/signup/registration_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/auth/signup/sign_up.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/home/screens/home_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/onboard/onboarding_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/pages/splash/splash_screen.dart';
-import 'package:page_transition/page_transition.dart';
+
+
+import 'package:kutubxona/core/util/important.dart';
 
 class AppRoutes {
   // Define route names
