@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 
-ThemeData theme() {
+ThemeData darkTheme() {
   return ThemeData(
-    scaffoldBackgroundColor: AppColors().white,
     fontFamily: 'Cairo',
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.dark(surface: AppColors().darkBack),
   );
 }

@@ -21,7 +21,7 @@ Widget textFieldW({
       SizedBox(
         height: 50,
         child: TextFormField(
-          onChanged:onChanged ,
+          onChanged: onChanged,
           controller: controller,
           keyboardType: keyboardType,
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
@@ -31,8 +31,9 @@ Widget textFieldW({
           cursorHeight: 22,
           obscureText: obscure,
           obscuringCharacter: '*',
-          
-          decoration: InputDecoration(suffixIcon: suffixIcon,
+
+          decoration: InputDecoration(
+            suffixIcon: suffixIcon,
             isDense: true,
             hintStyle: TextStyle(
               color: AppColors().hintColor,

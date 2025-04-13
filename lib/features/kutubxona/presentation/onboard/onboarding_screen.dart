@@ -107,8 +107,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget buildDot(int index) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.5),
-      height: 7,
-      width: 7,
+      height: 8,
+      width: 8,
       decoration: BoxDecoration(
         color:
             currentIndex == index
