@@ -43,7 +43,7 @@ class OtpWidget extends StatelessWidget {
               FocusScope.of(context).requestFocus(previousNode);
             }
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
             border: InputBorder.none,
             hintText: ('_'),

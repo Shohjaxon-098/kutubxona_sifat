@@ -19,12 +19,12 @@ class AllCategories extends StatelessWidget {
     ];
     return SizedBox(
       width: double.infinity,
-      height: 260,
+      height: 270,
       child: GridView.builder(
         reverse: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 6,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
           crossAxisCount: 3,
@@ -33,7 +33,7 @@ class AllCategories extends StatelessWidget {
             (context, index) => ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Container(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(color: AppColors().black),
                 child: Center(
                   child: Text(

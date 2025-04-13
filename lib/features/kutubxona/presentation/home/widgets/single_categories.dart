@@ -8,25 +8,14 @@ class SingleCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List ruknlar = [
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-      "Жахон адабиёти",
-    ];
     return SizedBox(
       width: double.infinity,
       height: 250,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: 4,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: 1.8,
           crossAxisCount: 1,
           mainAxisSpacing: 10,
@@ -40,10 +29,15 @@ class SingleCategories extends StatelessWidget {
                   child: SizedBox(
                     height: 160,
 
-                    child: Card(child: Center(child: Icon(Icons.book))),
+                    child: Card(
+                      color: AppColors().cardColor,
+                      child: const Center(
+                        child: Icon(Icons.book, color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   '1984',
                   style: TextStyle(
@@ -64,7 +58,7 @@ class SingleCategories extends StatelessWidget {
                 Row(
                   children: [
                     SvgPicture.asset(AppImages().rate, width: 15),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       '4.7',
                       style: TextStyle(

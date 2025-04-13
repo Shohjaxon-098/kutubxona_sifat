@@ -22,10 +22,11 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
     )..forward();
 
-    Future.delayed(Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 4), () async{
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
       );
     });
   }
@@ -44,12 +45,12 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(AppImages().splashLogo, width: 140, height: 140),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               "Liber",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            SizedBox(height: 170),
+            const SizedBox(height: 170),
             SizedBox(
               width: 240,
               child: AnimatedBuilder(

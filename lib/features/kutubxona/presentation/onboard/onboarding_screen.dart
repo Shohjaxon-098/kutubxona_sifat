@@ -51,24 +51,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               itemBuilder: (context, index) {
                 String image = pages[index]["image"]!;
                 String text = pages[index]["text"]!;
-                return Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 85),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(image, height: 200),
-                        SizedBox(height: 40),
-                        Text(
-                          text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 85),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(image, height: 200),
+                      const SizedBox(height: 40),
+                      Text(
+                        text,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },
@@ -78,13 +76,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(pages.length, (index) => buildDot(index)),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors().primaryColor,
-                minimumSize: Size(double.infinity, 60),
+                minimumSize: const Size(double.infinity, 60),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
@@ -92,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => SignIn()),
+                  MaterialPageRoute(builder: (context) => const SignIn()),
                 );
               },
               child: Text(
@@ -108,7 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget buildDot(int index) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 2.5),
+      margin: const EdgeInsets.symmetric(horizontal: 2.5),
       height: 7,
       width: 7,
       decoration: BoxDecoration(

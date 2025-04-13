@@ -60,7 +60,7 @@ class _OtpScreenState extends State<OtpScreen> {
           }
           return SafeArea(
             child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -75,7 +75,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             color: AppColors().grey,
                             spreadRadius: 2,
                             blurRadius: 60,
-                            offset: Offset(5, 12),
+                            offset: const Offset(5, 12),
                           ),
                         ],
                         color: AppColors().cardColor,
@@ -107,7 +107,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               child: SvgPicture.asset(AppImages().secure),
                             ),
                           ),
-                          SizedBox(height: 33),
+                          const SizedBox(height: 33),
                           Text(
                             'Телефонингизга юборилган\nкодни киритинг',
                             style: TextStyle(
@@ -120,7 +120,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 100),
+                    const SizedBox(height: 100),
                     Column(
                       children: [
                         Row(
@@ -137,7 +137,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             );
                           }),
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Text(
                           textAlign: TextAlign.center,
                           displayMessage,
@@ -166,7 +166,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 ),
                               ),
                             )
-                            : SizedBox(height: 48),
+                            : const SizedBox(height: 48),
                       ],
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.18),
@@ -189,12 +189,12 @@ class _OtpScreenState extends State<OtpScreen> {
                       },
                     ),
 
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors().primaryColor,
-                        minimumSize: Size(double.infinity, 60),
+                        minimumSize: const Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),

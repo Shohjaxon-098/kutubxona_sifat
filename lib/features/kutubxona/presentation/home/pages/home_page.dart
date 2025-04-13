@@ -1,13 +1,8 @@
-import '../../../../../core/util/important.dart';
+import 'package:kutubxona/core/util/important.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors().cardColor,
@@ -54,43 +49,31 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             flex: 3,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(33),
                 topRight: Radius.circular(33),
               ),
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
                 decoration: BoxDecoration(color: AppColors().white),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 50,
-                        child: TextField(
-                          style: TextStyle(color: AppColors().black),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: AppColors().searchBack,
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                            ),
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: AppColors().searchIcon,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                            hintStyle: TextStyle(
-                              fontSize: 14,
-                              color: AppColors().searchIcon,
-                            ),
-                            hintText: "Қидириш",
-                          ),
+                      GestureDetector(
+                        onTap: () {
+                          AppNavigator.pushNamed(context, AppRoutes.bookSearch);
+                        },
+                        child: search(
+                          enabled: false,
+                          onChanged: (query) {
+                            context.read<BookSearchBloc>().add(
+                              SearchBooks(query),
+                            );
+                          },
                         ),
                       ),
-                      SizedBox(height: 35),
+
+                      const SizedBox(height: 35),
                       Column(
                         children: [
                           Row(
@@ -117,10 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          AllCategories(),
+
+                          const AllCategories(),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Column(
                         children: [
                           Row(
@@ -136,8 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 12),
-                          SingleCategories(),
+                          const SizedBox(height: 12),
+                          const SingleCategories(),
                         ],
                       ),
                     ],

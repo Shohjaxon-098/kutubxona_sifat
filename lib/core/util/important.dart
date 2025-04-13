@@ -17,7 +17,13 @@ export 'package:kutubxona/features/kutubxona/presentation/auth/pages/signin/sign
 export 'package:kutubxona/features/kutubxona/presentation/auth/pages/signup/otp_screen.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/pages/signup/registration_screen.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/pages/signup/sign_up.dart';
-export 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
+export 'package:kutubxona/features/kutubxona/presentation/home/pages/home_page.dart';
 export 'package:kutubxona/features/kutubxona/presentation/onboard/onboarding_screen.dart';
 export 'package:kutubxona/features/kutubxona/presentation/splash/splash_screen.dart';
 export 'package:page_transition/page_transition.dart';
+export 'package:kutubxona/features/kutubxona/data/models/book.dart';
+export 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/home/widgets/search_widget.dart';
+export 'package:flutter/services.dart';

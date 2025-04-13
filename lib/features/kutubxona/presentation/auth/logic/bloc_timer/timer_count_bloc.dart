@@ -20,10 +20,10 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
     // Use await to ensure that the event handler doesn't complete prematurely
     await Future.delayed(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
     ); // Delay before starting the timer
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       final timeLeft =
           (state is TimerRunning) ? (state as TimerRunning).timeLeft - 1 : 0;
 

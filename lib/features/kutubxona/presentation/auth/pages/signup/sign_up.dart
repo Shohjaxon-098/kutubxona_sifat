@@ -20,7 +20,7 @@ class _SignUpState extends State<SignUp> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -35,7 +35,7 @@ class _SignUpState extends State<SignUp> {
                         color: AppColors().grey,
                         spreadRadius: 2,
                         blurRadius: 60,
-                        offset: Offset(5, 12),
+                        offset: const Offset(5, 12),
                       ),
                     ],
                     color: AppColors().cardColor,
@@ -68,7 +68,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Text(
                         'Ассалому алайкум\nХуш келибсиз!',
                         style: TextStyle(
@@ -81,14 +81,14 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 PhoneTextfieldWidget(phoneController: passwordController),
 
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors().primaryColor,
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -105,7 +105,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
 
                 TextButton(
                   style: ButtonStyle(

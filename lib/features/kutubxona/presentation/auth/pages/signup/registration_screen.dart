@@ -69,7 +69,7 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               textFieldW(
                 label: "Исмингиз",
                 controller: nameController,
@@ -231,7 +231,7 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                       ),
                     ],
                   )
-                  : SizedBox(),
+                  : const SizedBox(),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
@@ -245,7 +245,7 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors().primaryColor,
 
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -280,9 +280,9 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                   borderRadius: BorderRadius.circular(12),
                   child: Image.file(file, fit: BoxFit.cover),
                 )
-                : Column(
+                : const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.image, size: 28, color: Colors.grey),
                     Icon(Icons.add, size: 18, color: Colors.grey),
                   ],

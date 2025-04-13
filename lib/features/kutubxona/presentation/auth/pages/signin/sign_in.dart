@@ -22,7 +22,7 @@ class _SignInState extends State<SignIn> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
                         color: AppColors().grey,
                         spreadRadius: 2,
                         blurRadius: 60,
-                        offset: Offset(5, 12),
+                        offset: const Offset(5, 12),
                       ),
                     ],
                     color: AppColors().cardColor,
@@ -70,7 +70,7 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 33),
+                      const SizedBox(height: 33),
                       Text(
                         'Ассалому алайкум\nХуш келибсиз!',
                         style: TextStyle(
@@ -83,10 +83,10 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 PhoneTextfieldWidget(phoneController: phoneController),
-                SizedBox(height: 24),
-                SizedBox(height: 6),
+                const SizedBox(height: 24),
+                const SizedBox(height: 6),
                 textFieldW(
                   label: 'Парол',
                   controller: passwordController,
@@ -96,7 +96,7 @@ class _SignInState extends State<SignIn> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors().primaryColor,
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -109,12 +109,12 @@ class _SignInState extends State<SignIn> {
                     style: TextStyle(color: AppColors().white),
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     side: BorderSide(color: AppColors().primaryColor),
                     backgroundColor: AppColors().white,
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -129,7 +129,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 TextButton(
                   style: ButtonStyle(
                     overlayColor: WidgetStateProperty.all(

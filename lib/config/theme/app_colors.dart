@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  Color linerValueColor = Color.fromARGB(255, 43, 58, 129);
-  Color linerBackgroundColor = Colors.grey;
-  Color primaryColor = Color(0xff3F51B5);
-  Color white = Colors.white;
-  Color enableDot = Color(0xff3F51B5);
-  Color disableDot = Colors.grey.shade200;
-  Color black = Colors.black;
-  Color border = Color(0xffEDEDED);
-  Color hintColor = Color(0xffD0D5DD);
-  Color blue = Colors.blue;
-  Color cardColor = Color(0xff28397C);
-  Color grey = Colors.grey;
-  Color cardShadow = Color.fromARGB(38, 255, 255, 255);
-  Color searchBack = Color(0xffF5F5F5);
-  Color searchIcon = Color(0xff9A9A9A);
-  Color rateCount = Color(0xffFF7F4D);
+  final Color linerValueColor = const Color.fromARGB(255, 43, 58, 129);
+  final Color linerBackgroundColor = Colors.grey;
+  final Color primaryColor = const Color(0xff3F51B5);
+  final Color white = Colors.white;
+  final Color enableDot = const Color(0xff3F51B5);
+  final Color disableDot = Colors.grey.shade200;
+  final Color black = Colors.black;
+  final Color border = const Color(0xffEDEDED);
+  final Color hintColor = const Color(0xffD0D5DD);
+  final Color blue = Colors.blue;
+  final Color cardColor = const Color(0xff28397C);
+  final Color grey = Colors.grey;
+  final Color cardShadow = const Color.fromARGB(38, 255, 255, 255);
+  final Color searchBack = const Color(0xffF5F5F5);
+  final Color searchIcon = const Color(0xff9A9A9A);
+  final Color rateCount = const Color(0xffFF7F4D);
+  final Color textColor = const Color(0xff131045);
 }
