@@ -5,6 +5,7 @@ Widget search({
   TextEditingController? controller,
   FocusNode? focusNode,
   bool? enabled,
+  BuildContext? context,
 }) {
   return SizedBox(
     height: 50,
@@ -12,17 +13,23 @@ Widget search({
       controller: controller,
       focusNode: focusNode,
       enabled: enabled,
-      style: TextStyle(color: AppColors().black),
+
       decoration: InputDecoration(
         filled: true,
-        fillColor: AppColors().searchBack,
+        fillColor: Theme.of(context!).colorScheme.secondary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-        suffixIcon: Icon(Icons.search, color: AppColors().searchIcon),
+        suffixIcon: Icon(
+          Icons.search,
+          color: Theme.of(context).colorScheme.primary,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
         ),
-        hintStyle: TextStyle(fontSize: 14, color: AppColors().searchIcon),
+        hintStyle: TextStyle(
+          fontSize: 14,
+          color: Theme.of(context).colorScheme.primary,
+        ),
         hintText: "Қидириш",
       ),
       onChanged: onChanged,

@@ -42,7 +42,6 @@ class SingleCategories extends StatelessWidget {
                   '1984',
                   style: TextStyle(
                     fontFamily: 'Cairo',
-                    color: AppColors().black,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),
@@ -50,7 +49,7 @@ class SingleCategories extends StatelessWidget {
                 Text(
                   'SIYOSAT, FANTASTIKA',
                   style: TextStyle(
-                    color: AppColors().cardColor,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
                   ),

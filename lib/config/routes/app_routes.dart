@@ -1,5 +1,5 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/pages/booksearch_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
 
 class AppRoutes {
   // Define route names
@@ -28,7 +28,7 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case signIn:
-        return MaterialPageRoute(builder: (context) => const SignIn());
+        return MaterialPageRoute(builder: (context) => const Login());
       case signUp:
         return PageTransition(
           isIos: true,

@@ -3,7 +3,11 @@ import 'package:kutubxona/common/navigator/app_navigator.dart';
 import 'package:kutubxona/config/routes/app_routes.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
+import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
+import 'package:kutubxona/service/apis/api_service.dart';
+import 'package:kutubxona/service/hive_service.dart';
+import 'package:kutubxona/service/library_id.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -13,7 +17,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +34,6 @@ class _SignUpState extends State<SignUp> {
                   width: double.infinity,
                   height: 260,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors().grey,
-                        spreadRadius: 2,
-                        blurRadius: 60,
-                        offset: const Offset(5, 12),
-                      ),
-                    ],
                     color: AppColors().cardColor,
                     borderRadius: BorderRadius.circular(24),
                     image: DecorationImage(
@@ -82,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                PhoneTextfieldWidget(phoneController: passwordController),
+                PhoneTextfieldWidget(phoneController: phoneController),
 
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
                 ElevatedButton(
@@ -93,8 +89,35 @@ class _SignUpState extends State<SignUp> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {
-                    AppNavigator.pushNamed(context, AppRoutes.otpScreen);
+                  onPressed: () async {
+                    RegisterStep1 registerStep1 = RegisterStep1(
+                      phone: phoneController.text,
+                      libraryId: libraryId,
+                    );
+                    try {
+                      ApiService apiService = ApiService();
+                      var response = await apiService.registerStep1(
+                        registerStep1,
+                      ); // <- faqat model yuboriladi
+                      if (response.statusCode == 201) {
+                        // Save user data to local storage (Hive)
+                        await LocalStorage.saveUserData(registerStep1.toJson());
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('User Registered Successfully'),
+                          ),
+                        );
+                        AppNavigator.pushNamed(context, AppRoutes.otpScreen);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Registration Failed')),
+                        );
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                    }
                   },
                   child: Text(
                     "Давом этиш",

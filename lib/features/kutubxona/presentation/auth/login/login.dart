@@ -6,14 +6,14 @@ import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/textfieldW.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignInState extends State<SignIn> {
+class _LoginState extends State<Login> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -32,14 +32,6 @@ class _SignInState extends State<SignIn> {
                   width: double.infinity,
                   height: 260,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors().grey,
-                        spreadRadius: 2,
-                        blurRadius: 60,
-                        offset: const Offset(5, 12),
-                      ),
-                    ],
                     color: AppColors().cardColor,
                     borderRadius: BorderRadius.circular(24),
                     image: DecorationImage(
@@ -86,7 +78,7 @@ class _SignInState extends State<SignIn> {
                 const SizedBox(height: 50),
                 PhoneTextfieldWidget(phoneController: phoneController),
                 const SizedBox(height: 24),
-                const SizedBox(height: 6),
+
                 textFieldW(
                   label: 'Парол',
                   controller: passwordController,
@@ -113,7 +105,7 @@ class _SignInState extends State<SignIn> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     side: BorderSide(color: AppColors().primaryColor),
-                    backgroundColor: AppColors().white,
+                    backgroundColor: Colors.transparent,
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),

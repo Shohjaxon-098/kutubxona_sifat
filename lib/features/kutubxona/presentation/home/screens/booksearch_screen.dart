@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/data/models/book.dart';
 import 'package:kutubxona/features/kutubxona/enums/filter_type.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_state.dart';
+import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_bloc.dart';
+import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_event.dart';
+import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/widgets/fileter_panel.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/widgets/search_widget.dart';
 
@@ -80,11 +82,15 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
-        backgroundColor: AppColors().white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
           "Китоблар",
-          style: TextStyle(color: AppColors().textColor, fontSize: 20),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.tertiary,
+            fontSize: 20,
+          ),
         ),
       ),
       body: Padding(
@@ -93,6 +99,7 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
           child: Column(
             children: [
               search(
+                context: context,
                 enabled: true,
                 focusNode: _focusNode,
                 controller: _controller,
@@ -101,19 +108,29 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                   context.read<BookSearchBloc>().add(SearchBooks(query));
                 },
               ),
-              const FilterPanel(),
+              SizedBox(height: 25),
               BlocBuilder<BookSearchBloc, BookSearchState>(
                 builder: (context, state) {
                   if (state is BookSearchLoading) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8),
-                      child: CircularProgressIndicator(),
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     );
                   } else if (state is BookSearchLoaded) {
                     if (state.results.isEmpty) {
-                      return const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Text("Натижа топилмади"),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 100),
+                          SvgPicture.asset(AppImages().noResult),
+                          SizedBox(height: 30),
+                          Text(
+                            textAlign: TextAlign.center,
+                            "Сизнинг сўровингиз бўйича\nхеч нарса топилмади!",
+                          ),
+                        ],
                       );
                     }
                     return ListView.builder(

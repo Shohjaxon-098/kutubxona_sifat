@@ -4,14 +4,13 @@ class OtpWidget extends StatelessWidget {
   const OtpWidget({
     super.key,
     required this.otpController,
-    required this.color,
+
     required this.focusNode,
     this.nextNode,
     this.previousNode,
   });
   final TextEditingController otpController;
 
-  final Color? color;
   final FocusNode focusNode;
   final FocusNode? nextNode;
   final FocusNode? previousNode;
@@ -23,15 +22,11 @@ class OtpWidget extends StatelessWidget {
       child: Center(
         child: TextFormField(
           focusNode: focusNode,
-          cursorColor: AppColors().black,
+
           cursorHeight: 20,
           controller: otpController,
 
-          style: TextStyle(
-            color: color,
-            fontSize: 26,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           keyboardType: TextInputType.number,
@@ -46,7 +41,7 @@ class OtpWidget extends StatelessWidget {
             contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
             border: InputBorder.none,
             hintText: ('_'),
-            hintStyle: TextStyle(fontSize: 24, color: Colors.black),
+            hintStyle: TextStyle(fontSize: 24),
           ),
         ),
       ),

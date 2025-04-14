@@ -14,4 +14,5 @@ class AppImages {
   String secure = '$assets$icons/secure.svg';
   String eyeHide = '$assets$icons/eye-hide.svg';
   String eyeShow = '$assets$icons/eye-show.svg';
+  String noResult = '$assets$images/no-result.svg';
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kutubxona/config/routes/app_routes.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/features/kutubxona/presentation/onboard/onboarding_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/onboard/screens/onboarding_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
+import 'package:kutubxona/service/hive_service.dart'; // HomeScreen import qilish
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -22,14 +26,22 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
     )..forward();
 
-    Future.delayed(const Duration(seconds: 4), () async{
+
+  Future.delayed(const Duration(seconds: 4), () async {
+    final userData = await LocalStorage.getUserData();
+
+    if (userData != null) {
+      // oldin ro'yxatdan o'tgan foydalanuvchi
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
+    } else {
       Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const OnboardingScreen()),
       );
-    });
-  }
+    }
+  });
+}
+
 
   @override
   void dispose() {

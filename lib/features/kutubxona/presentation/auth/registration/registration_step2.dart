@@ -1,5 +1,9 @@
 import 'dart:io';
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
+import 'package:kutubxona/features/kutubxona/presentation/auth/widgets/image.dart';
+import 'package:kutubxona/service/apis/api_service.dart';
+import 'package:kutubxona/service/hive_service.dart';
 
 class AuthRegisterScreen extends StatefulWidget {
   const AuthRegisterScreen({super.key});
@@ -28,17 +32,6 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
       });
     }
   }
-  //  Future<void> pickPassportImage() async {
-  //     final pickedImage = await ImagePicker().pickImage(
-  //       source: ImageSource.gallery,
-  //     );
-
-  //     if (pickedImage != null) {
-  //       setState(() {
-  //         passportImage = File(pickedImage.path);
-  //       });
-  //     }
-  //   }
 
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
@@ -46,7 +39,10 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
   final telegramController = TextEditingController();
   final birthDateController = TextEditingController();
   final passportInfoController = TextEditingController();
+  final documentNumber = TextEditingController();
 
+  File? document_file1;
+  File? document_file2;
   final genders = ['Эркак', 'Аёл'];
   bool obsure = true;
   @override
@@ -224,9 +220,17 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          imageBox(file: frontImage, isFront: true),
+                          imageBox(
+                            file: frontImage,
+                            isFront: true,
+                            onTap: () {},
+                          ),
                           const SizedBox(width: 12),
-                          imageBox(file: backImage, isFront: false),
+                          imageBox(
+                            file: backImage,
+                            isFront: false,
+                            onTap: () {},
+                          ),
                         ],
                       ),
                     ],
@@ -236,7 +240,43 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    RegisterStep2 user = RegisterStep2(
+                      firstName: nameController.text,
+                      lastName: surnameController.text,
+                      password: passwordController.text,
+                      telegramId: telegramController.text,
+                      birthDate: birthDateController.text,
+                      documentType: 'Passport', // or selected document type
+                      documentNumber: documentNumber.text,
+                      document_file1: document_file1!,
+                      document_file2: document_file2!,
+                    );
+
+                    // Register the user
+                    try {
+                      ApiService apiService = ApiService();
+                      var response = await apiService.registerStep2(
+                        user.toJson(),
+                      );
+                      if (response.statusCode == 200) {
+                        // Save user data to local storage (Hive)
+                        await LocalStorage.saveUserData(user.toJson());
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('User Registered Successfully'),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Registration Failed')),
+                        );
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                    }
                     AppNavigator.pushNamedAndRemoveUntil(
                       context,
                       AppRoutes.home,
@@ -263,31 +303,31 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
     );
   }
 
-  Widget imageBox({required File? file, required bool isFront}) {
-    return GestureDetector(
-      onTap: () => pickImage(isFront),
-      child: Container(
-        width: 80,
-        height: 80,
-        margin: const EdgeInsets.only(right: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child:
-            file != null
-                ? ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.file(file, fit: BoxFit.cover),
-                )
-                : const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.image, size: 28, color: Colors.grey),
-                    Icon(Icons.add, size: 18, color: Colors.grey),
-                  ],
-                ),
-      ),
-    );
-  }
+  // Widget imageBox({required File? file, required bool isFront}) {
+  //   return GestureDetector(
+  //     onTap: () => pickImage(isFront),
+  //     child: Container(
+  //       width: 80,
+  //       height: 80,
+  //       margin: const EdgeInsets.only(right: 10),
+  //       decoration: BoxDecoration(
+  //         border: Border.all(color: Colors.grey),
+  //         borderRadius: BorderRadius.circular(12),
+  //       ),
+  //       child:
+  //           file != null
+  //               ? ClipRRect(
+  //                 borderRadius: BorderRadius.circular(12),
+  //                 child: Image.file(file, fit: BoxFit.cover),
+  //               )
+  //               : const Column(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 children: [
+  //                   Icon(Icons.image, size: 28, color: Colors.grey),
+  //                   Icon(Icons.add, size: 18, color: Colors.grey),
+  //                 ],
+  //               ),
+  //     ),
+  //   );
+  // }
 }

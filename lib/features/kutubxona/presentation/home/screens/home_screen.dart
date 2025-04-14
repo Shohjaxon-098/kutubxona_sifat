@@ -55,7 +55,9 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Container(
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-                decoration: BoxDecoration(color: AppColors().white),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -64,6 +66,7 @@ class HomeScreen extends StatelessWidget {
                           AppNavigator.pushNamed(context, AppRoutes.bookSearch);
                         },
                         child: search(
+                          context: context,
                           enabled: false,
                           onChanged: (query) {
                             context.read<BookSearchBloc>().add(
@@ -82,7 +85,6 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                 'Рукнлар',
                                 style: TextStyle(
-                                  color: AppColors().black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -105,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Column(
+                      const Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,15 +115,14 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                 'Куннинг енг яхшилари',
                                 style: TextStyle(
-                                  color: AppColors().black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
-                          const SingleCategories(),
+                          SizedBox(height: 12),
+                          SingleCategories(),
                         ],
                       ),
                     ],

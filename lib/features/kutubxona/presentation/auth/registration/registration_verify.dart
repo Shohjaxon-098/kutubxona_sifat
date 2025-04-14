@@ -1,4 +1,9 @@
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
+import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
+import 'package:kutubxona/service/apis/api_service.dart';
+import 'package:kutubxona/service/hive_service.dart';
+import 'package:kutubxona/service/library_id.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -9,10 +14,10 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   final List<TextEditingController> controllers = List.generate(
-    4,
+    6,
     (_) => TextEditingController(),
   );
-  final List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
+  final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
   @override
   void initState() {
     super.initState();
@@ -70,14 +75,6 @@ class _OtpScreenState extends State<OtpScreen> {
                       width: double.infinity,
                       height: 260,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors().grey,
-                            spreadRadius: 2,
-                            blurRadius: 60,
-                            offset: const Offset(5, 12),
-                          ),
-                        ],
                         color: AppColors().cardColor,
                         borderRadius: BorderRadius.circular(24),
                         image: DecorationImage(
@@ -125,13 +122,12 @@ class _OtpScreenState extends State<OtpScreen> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(4, (index) {
+                          children: List.generate(6, (index) {
                             return OtpWidget(
-                              color: AppColors().black,
                               otpController: controllers[index],
                               focusNode: focusNodes[index],
                               nextNode:
-                                  index < 3 ? focusNodes[index + 1] : null,
+                                  index < 5 ? focusNodes[index + 1] : null,
                               previousNode:
                                   index > 0 ? focusNodes[index - 1] : null,
                             );
@@ -142,7 +138,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           textAlign: TextAlign.center,
                           displayMessage,
                           style: TextStyle(
-                            color: AppColors().black,
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
@@ -199,11 +194,43 @@ class _OtpScreenState extends State<OtpScreen> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      onPressed: () {
-                        AppNavigator.pushNamedAndRemoveUntil(
-                          context,
-                          AppRoutes.register,
+                      onPressed: () async {
+                        String? libPhone = await LocalStorage.getPhone();
+                        RegisterVerify registerVerify = RegisterVerify(
+                          otpCode: controllers.toString(),
+                          phone: libPhone!,
+                          libraryId: libraryId,
                         );
+                        print(libPhone);
+                        try {
+                          ApiService apiService = ApiService();
+                          var response = await apiService.registerVerify(
+                            registerVerify,
+                          ); // <- faqat model yuboriladi
+                          if (response.statusCode == 201) {
+                            // Save user data to local storage (Hive)
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('User Registered Successfully'),
+                              ),
+                            );
+                            AppNavigator.pushNamed(
+                              context,
+                              AppRoutes.otpScreen,
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Registration Failed'),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                        }
                       },
                       child: Text(
                         "Кириш",

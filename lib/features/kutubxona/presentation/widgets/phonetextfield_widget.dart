@@ -12,7 +12,10 @@ class PhoneTextfieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Мобил рақам', style: TextStyle(fontWeight: FontWeight.w500)),
+        const Text(
+          'Мобил рақам',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
         const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,11 +41,7 @@ class PhoneTextfieldWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   '+998',
-                  style: TextStyle(
-                    color: AppColors().black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
             ),

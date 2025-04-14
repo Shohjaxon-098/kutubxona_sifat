@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/kutubxona/data/models/book.dart';
 import 'package:kutubxona/features/kutubxona/enums/filter_type.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/logic/bloc/book_search_state.dart';
+import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_event.dart';
+import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_state.dart';
 
 class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
   final List<Book> books; // offline data

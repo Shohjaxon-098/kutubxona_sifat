@@ -33,8 +33,8 @@ class AllCategories extends StatelessWidget {
             (context, index) => ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(color: AppColors().black),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(color: AppColors().cardColor),
                 child: Center(
                   child: Text(
                     ruknlar[index],

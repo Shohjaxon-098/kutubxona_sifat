@@ -5,6 +5,12 @@ ThemeData darkTheme() {
   return ThemeData(
     fontFamily: 'Cairo',
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.dark(surface: AppColors().darkBack),
+    colorScheme: ColorScheme.dark(
+      surface: AppColors().darkBack,
+      primaryContainer: AppColors().darkBack,
+      secondary: AppColors().searchBackDark,
+      primary: AppColors().searchInDark,
+      tertiary: AppColors().white,
+    ),
   );
 }
