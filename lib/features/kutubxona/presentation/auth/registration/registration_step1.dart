@@ -93,7 +93,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     ),
                     const SizedBox(height: 50),
                     PhoneTextfieldWidget(phoneController: phoneController),
-                    if (errorMessage != null) // xatolik bo‘lsa chiqaramiz
+                    if (errorMessage != null)
                       Text(
                         errorMessage,
                         style: const TextStyle(color: Colors.red),
@@ -109,7 +109,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                       ),
                       onPressed: () {
                         RegisterStep1 registerStep1 = RegisterStep1(
-                          phone: phoneController.text.trim(),
+                          phone: phoneController.text,
                           libraryId: libraryId,
                         );
                         context.read<RegisterStep1Bloc>().add(

@@ -1,9 +1,8 @@
-// register_step1_bloc.dart
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:kutubxona/core/error/exeptions.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_repository.dart';
 import 'package:kutubxona/service/api_service.dart';
+
 import 'register_step1_event.dart';
 import 'register_step1_state.dart';
 
@@ -19,25 +18,10 @@ class RegisterStep1Bloc extends Bloc<RegisterStep1Event, RegisterStep1State> {
     emit(RegisterStep1Loading());
 
     try {
-      final result = await ApiService().registerStep1(event.userData);
-
-      if (result.success) {
-        emit(RegisterStep1Success());
-      } else {
-        emit(RegisterStep1Error("Telefon raqam noto‘g‘ri"));
-      }
-    } on DioException catch (e) {
-      String errorMessage = "Xatolik yuz berdi";
-
-      if (e.response?.statusCode == 400) {
-        errorMessage = "Telefon raqam noto‘g‘ri";
-      } else if (e.type == DioExceptionType.connectionTimeout) {
-        errorMessage = "Internetga ulanib bo‘lmadi";
-      } else {
-        errorMessage = e.response?.data ?? "Noma'lum xatolik";
-      }
-
-      emit(RegisterStep1Error(errorMessage));
+      await ApiService().registerStep1(event.userData);
+      emit(RegisterStep1Success());
+    } on ServerException catch (e) {
+      emit(RegisterStep1Error(e.message));
     } catch (e) {
       emit(RegisterStep1Error("Noma'lum xatolik: $e"));
     }

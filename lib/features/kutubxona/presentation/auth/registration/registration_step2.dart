@@ -5,7 +5,7 @@ import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/r
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_state.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
-import 'package:kutubxona/features/kutubxona/presentation/auth/widgets/image.dart';
+import 'package:kutubxona/features/kutubxona/presentation/auth/registration/widgets/image.dart';
 import 'package:kutubxona/service/base_url.dart';
 
 class RegisterStep2Screen extends StatefulWidget {

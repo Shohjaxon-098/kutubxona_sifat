@@ -1,5 +1,3 @@
-// register_step1_state.dart
-
 import 'package:equatable/equatable.dart';
 
 abstract class RegisterStep1State extends Equatable {

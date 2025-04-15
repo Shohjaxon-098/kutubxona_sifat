@@ -7,21 +7,12 @@ import 'package:kutubxona/service/base_url.dart';
 import 'package:kutubxona/service/open_dio_client.dart';
 
 class ApiService extends ApiClient {
-  Future<ApiResult> registerStep1(RegisterStep1 userData) async {
-    final response = await dio.post(
-      '$baseUrl/account/register/step1/',
-      data: userData.toJson(),
-    );
+  Future<Response> registerStep1(RegisterStep1 userData) async {
     try {
-      // agar status code 200 bo'lsa, muvaffaqiyat
-      if (response.statusCode == 200) {
-        return ApiResult(success: true, data: response.data);
-      } else {
-        return ApiResult(success: false, message: "Noto‘g‘ri javob keldi");
-      }
-    } on DioException catch (e) {
-      // Bloc'da ushlaymiz
-      throw e;
+      return await dio.post(
+        '$baseUrl/account/register/step1/',
+        data: userData.toJson(),
+      );
     } catch (e) {
       rethrow;
     }

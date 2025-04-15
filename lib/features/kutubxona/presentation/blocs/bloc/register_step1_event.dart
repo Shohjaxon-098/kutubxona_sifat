@@ -1,5 +1,3 @@
-// register_step1_event.dart
-
 import 'package:equatable/equatable.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 

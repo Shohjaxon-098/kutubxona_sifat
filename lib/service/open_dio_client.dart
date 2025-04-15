@@ -51,7 +51,7 @@ class ApiClient {
 
               return handler.next(error);
           }
-          debugPrint('Error Status Code: ${error.response?.data}');
+          debugPrint('Error: ${error.response?.data}');
           errorData = error.response?.data;
           return handler.next(error);
         },

@@ -1,6 +1,7 @@
-import 'package:kutubxona/core/api_result.dart';
+
+import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 
 
 abstract class AuthRepository {
-  Future<ApiResult> sendPhoneNumber(String phoneNumber);
+  Future<void> registerStep1(RegisterStep1 userData);
 }
