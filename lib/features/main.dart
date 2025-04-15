@@ -1,12 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart' show BlocProvider;
+import 'package:flutter_bloc/flutter_bloc.dart'
+    show BlocProvider, MultiBlocProvider;
 import 'package:hive_flutter/adapters.dart';
 import 'package:kutubxona/config/routes/app_routes.dart';
 import 'package:kutubxona/config/theme/light_theme.dart';
 import 'package:kutubxona/config/theme/dark_theme.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/splash/screens/splash_screen.dart';
 import 'package:kutubxona/service/api_service.dart';
+import 'package:kutubxona/service/base_url.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +24,11 @@ class KutubxonaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegisterStep2Bloc(ApiService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => RegisterStep2Bloc(ApiService())),
+        BlocProvider(create: (context) => RegisterStep1Bloc()),
+      ],
       child: MaterialApp(
         title: 'Kutubxona',
         theme: theme(),
