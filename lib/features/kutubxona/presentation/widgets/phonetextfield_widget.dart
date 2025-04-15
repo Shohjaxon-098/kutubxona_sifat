@@ -38,7 +38,7 @@ class PhoneTextfieldWidget extends StatelessWidget {
                   bottomLeft: Radius.circular(16),
                 ),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                   '+998',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),

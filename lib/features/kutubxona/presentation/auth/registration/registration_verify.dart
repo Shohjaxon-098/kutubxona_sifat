@@ -1,18 +1,17 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
 import 'package:kutubxona/service/apis/api_service.dart';
 import 'package:kutubxona/service/hive_service.dart';
 import 'package:kutubxona/service/library_id.dart';
 
-class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+class RegisterVerify extends StatefulWidget {
+  const RegisterVerify({super.key});
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  State<RegisterVerify> createState() => _RegisterVerifyState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _RegisterVerifyState extends State<RegisterVerify> {
   final List<TextEditingController> controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -137,7 +136,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         Text(
                           textAlign: TextAlign.center,
                           displayMessage,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
@@ -195,41 +194,50 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                       ),
                       onPressed: () async {
+                        String code = controllers.map((c) => c.text).join();
                         String? libPhone = await LocalStorage.getPhone();
-                        RegisterVerify registerVerify = RegisterVerify(
-                          otpCode: controllers.toString(),
-                          phone: libPhone!,
-                          libraryId: libraryId,
-                        );
-                        print(libPhone);
-                        try {
-                          ApiService apiService = ApiService();
-                          var response = await apiService.registerVerify(
-                            registerVerify,
-                          ); // <- faqat model yuboriladi
-                          if (response.statusCode == 201) {
-                            // Save user data to local storage (Hive)
 
+                        if (libPhone == null || code.length != 6) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Ma'lumotlar to'liq emas"),
+                            ),
+                          );
+                          return;
+                        }
+
+                        RegisterVerifyModel registerVerify =
+                            RegisterVerifyModel(
+                              otpCode: code,
+                              phone: libPhone,
+                              libraryId: libraryId,
+                            );
+
+                        try {
+                          var response = await ApiService().registerVerify(
+                            registerVerify,
+                          );
+                          if (response.statusCode == 200) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('User Registered Successfully'),
+                                content: Text("Tasdiq muvaffaqiyatli"),
                               ),
                             );
                             AppNavigator.pushNamed(
                               context,
-                              AppRoutes.otpScreen,
+                              AppRoutes.registerStep2Screen,
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Registration Failed'),
+                                content: Text("Tasdiqlashda xatolik"),
                               ),
                             );
                           }
                         } catch (e) {
-                          ScaffoldMessenger.of(
-                            context,
-                          ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Xatolik: $e")),
+                          );
                         }
                       },
                       child: Text(

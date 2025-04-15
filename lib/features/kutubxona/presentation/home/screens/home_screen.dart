@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Рукнлар',
                                 style: TextStyle(
                                   fontSize: 18,

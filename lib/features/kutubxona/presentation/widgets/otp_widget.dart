@@ -26,7 +26,7 @@ class OtpWidget extends StatelessWidget {
           cursorHeight: 20,
           controller: otpController,
 
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           keyboardType: TextInputType.number,

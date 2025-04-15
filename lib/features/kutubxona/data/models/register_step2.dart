@@ -1,6 +1,6 @@
 import 'dart:io';
 
-class RegisterStep2 {
+class RegisterStep2Model {
   final String firstName;
   final String lastName;
   final String password;
@@ -10,7 +10,7 @@ class RegisterStep2 {
   final String documentNumber;
   final File document_file1;
   final File document_file2;
-  RegisterStep2({
+  RegisterStep2Model({
     required this.firstName,
     required this.lastName,
     required this.password,

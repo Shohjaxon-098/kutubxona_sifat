@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocProvider;
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:kutubxona/config/routes/app_routes.dart';
 import 'package:kutubxona/config/theme/light_theme.dart';
 import 'package:kutubxona/config/theme/dark_theme.dart';
+import 'package:kutubxona/features/kutubxona/blocs/register_step2/register_step2_bloc.dart';
 import 'package:kutubxona/features/kutubxona/data/models/book.dart';
 import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/splash/screens/splash_screen.dart';
+import 'package:kutubxona/service/apis/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-   await Hive.openBox('userBox');
+  await Hive.openBox('userBox');
   runApp(const KutubxonaApp());
 }
 
@@ -66,7 +67,7 @@ class KutubxonaApp extends StatelessWidget {
       ),
     ];
     return BlocProvider(
-      create: (context) => BookSearchBloc(offlineBooks),
+      create: (context) => RegisterStep2Bloc(ApiService()),
       child: MaterialApp(
         title: 'Kutubxona',
         theme: theme(),

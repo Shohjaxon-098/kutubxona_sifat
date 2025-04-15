@@ -9,14 +9,14 @@ import 'package:kutubxona/service/apis/api_service.dart';
 import 'package:kutubxona/service/hive_service.dart';
 import 'package:kutubxona/service/library_id.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class RegisterStep1Screen extends StatefulWidget {
+  const RegisterStep1Screen({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<RegisterStep1Screen> createState() => _RegisterStep1ScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -101,13 +101,16 @@ class _SignUpState extends State<SignUp> {
                       ); // <- faqat model yuboriladi
                       if (response.statusCode == 201) {
                         // Save user data to local storage (Hive)
-                        await LocalStorage.saveUserData(registerStep1.toJson());
+                        await LocalStorage.savePhone(phoneController.text);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('User Registered Successfully'),
                           ),
                         );
-                        AppNavigator.pushNamed(context, AppRoutes.otpScreen);
+                        AppNavigator.pushNamed(
+                          context,
+                          AppRoutes.registerVerify,
+                        );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Registration Failed')),

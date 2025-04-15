@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/service/apis/api_service.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
+import 'package:kutubxona/features/kutubxona/blocs/auth/auth_event.dart';
+import 'package:kutubxona/features/kutubxona/blocs/auth/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial());

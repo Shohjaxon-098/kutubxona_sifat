@@ -28,23 +28,16 @@ class SingleCategories extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   child: SizedBox(
                     height: 160,
-
                     child: Card(
                       color: AppColors().cardColor,
-                      child: const Center(
-                        child: Icon(Icons.book, color: Colors.white),
-                      ),
+                      child: const Center(child: Icon(Icons.book)),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
+                const Text(
                   '1984',
-                  style: TextStyle(
-                    fontFamily: 'Cairo',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                 ),
                 Text(
                   'SIYOSAT, FANTASTIKA',

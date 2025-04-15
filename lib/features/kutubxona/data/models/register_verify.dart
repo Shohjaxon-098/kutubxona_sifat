@@ -1,11 +1,10 @@
-class RegisterVerify {
+class RegisterVerifyModel {
   final String phone;
   final String libraryId;
   final String otpCode;
-  RegisterVerify({
+  RegisterVerifyModel({
     required this.phone,
     required this.libraryId,
-
     required this.otpCode,
   });
 

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/data/models/book.dart';
 import 'package:kutubxona/features/kutubxona/enums/filter_type.dart';
 import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_bloc.dart';
 import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_event.dart';
 import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_state.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/widgets/fileter_panel.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/widgets/search_widget.dart';
 
 class BookSearchScreen extends StatefulWidget {
@@ -108,12 +106,12 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                   context.read<BookSearchBloc>().add(SearchBooks(query));
                 },
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               BlocBuilder<BookSearchBloc, BookSearchState>(
                 builder: (context, state) {
                   if (state is BookSearchLoading) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 100),
+                      padding: const EdgeInsets.symmetric(vertical: 100),
                       child: CircularProgressIndicator(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -123,10 +121,10 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 100),
+                          const SizedBox(height: 100),
                           SvgPicture.asset(AppImages().noResult),
-                          SizedBox(height: 30),
-                          Text(
+                          const SizedBox(height: 30),
+                          const Text(
                             textAlign: TextAlign.center,
                             "Сизнинг сўровингиз бўйича\nхеч нарса топилмади!",
                           ),

@@ -6,10 +6,10 @@ class AppRoutes {
   static const String splash = '/';
   static const String home = '/home';
   static const String signIn = '/signIn';
-  static const String signUp = '/signUp';
-  static const String otpScreen = '/otpScreen';
+  static const String registerStep1Screen = '/registerStep1';
+  static const String registerVerify = '/registerVerify';
   static const String onBoardScreen = '/onBoardScreen';
-  static const String register = '/register';
+  static const String registerStep2Screen = '/registerStep2';
   static const bookSearch = '/bookSearch';
   // Method to handle routing
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,10 +29,10 @@ class AppRoutes {
         );
       case signIn:
         return MaterialPageRoute(builder: (context) => const Login());
-      case signUp:
+      case registerStep1Screen:
         return PageTransition(
           isIos: true,
-          child: const SignUp(),
+          child: const RegisterStep1Screen(),
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
@@ -43,19 +43,19 @@ class AppRoutes {
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 300),
         );
-      case register:
+      case registerStep2Screen:
         return PageTransition(
           isIos: true,
-          child: const AuthRegisterScreen(),
+          child: const RegisterStep2Screen(),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 300),
         );
-      case otpScreen:
+      case registerVerify:
         return MaterialPageRoute(
           builder:
               (context) => BlocProvider(
                 create: (context) => TimerBloc(),
-                child: const OtpScreen(),
+                child: const RegisterVerify(),
               ),
         );
       case bookSearch:

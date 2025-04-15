@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
+import 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
 import 'package:kutubxona/service/base_url.dart';
 
@@ -62,13 +63,18 @@ class ApiService {
     }
   }
 
-  Future<Response> registerVerify(RegisterVerify registerVerify) async {
+  Future<Response> registerVerify(RegisterVerifyModel userData) async {
     try {
-      return await _dio.post(
+      final data = userData.toJson();
+      print("Sending OTP verify data: $data");
+      final response = await _dio.post(
         '$baseUrl/account/register/verify/',
-        data: registerVerify,
+        data: data,
       );
+      print("✅ Verified OTP: ${response.data}");
+      return response;
     } catch (e) {
+      print("❌ OTP verify error: $e");
       rethrow;
     }
   }

@@ -12,6 +12,7 @@ Widget textFieldW({
   TextInputType? keyboardType,
   void Function(String)? onChanged,
   Widget? suffixIcon,
+  BuildContext? context,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +27,7 @@ Widget textFieldW({
           keyboardType: keyboardType,
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
           inputFormatters: [LengthLimitingTextInputFormatter(lengthInput)],
-          cursorColor: AppColors().black,
+          cursorColor: Theme.of(context!).colorScheme.tertiary,
           cursorWidth: 1,
           cursorHeight: 22,
           obscureText: obscure,

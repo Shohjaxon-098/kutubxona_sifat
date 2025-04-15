@@ -15,7 +15,7 @@ class AppColors {
   final Color grey = Colors.grey;
   final Color cardShadow = const Color.fromARGB(38, 255, 255, 255);
   final Color searchBackLight = const Color(0xffF5F5F5);
-  final Color searchBackDark = Color(0xff10182C);
+  final Color searchBackDark = const Color(0xff10182C);
   final Color searchInLight = const Color(0xff9A9A9A);
     final Color searchInDark = const Color(0xff8E9BDF);
 

@@ -80,6 +80,7 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 24),
 
                 textFieldW(
+                  context: context,
                   label: 'Парол',
                   controller: passwordController,
                   hint: '********',
@@ -105,7 +106,7 @@ class _LoginState extends State<Login> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     side: BorderSide(color: AppColors().primaryColor),
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -129,7 +130,10 @@ class _LoginState extends State<Login> {
                     ), // Splash yo‘q
                   ),
                   onPressed: () {
-                    AppNavigator.pushNamed(context, AppRoutes.signUp);
+                    AppNavigator.pushNamed(
+                      context,
+                      AppRoutes.registerStep1Screen,
+                    );
                   },
                   child: Text(
                     "Рўйхатдан ўтиш",
