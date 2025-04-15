@@ -5,9 +5,9 @@ export 'package:kutubxona/common/navigator/app_navigator.dart';
 export 'package:kutubxona/config/routes/app_routes.dart';
 export 'package:kutubxona/config/theme/app_colors.dart';
 export 'package:kutubxona/core/util/app_images.dart';
-export 'package:kutubxona/features/kutubxona/blocs/timer/timer_count_bloc.dart';
-export 'package:kutubxona/features/kutubxona/blocs/timer/timer_count_event.dart';
-export 'package:kutubxona/features/kutubxona/blocs/timer/timer_count_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/timer/timer_count_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/timer/timer_count_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/timer/timer_count_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/otp_widget.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/textfieldW.dart';
@@ -22,8 +22,8 @@ export 'package:kutubxona/features/kutubxona/presentation/onboard/screens/onboar
 export 'package:kutubxona/features/kutubxona/presentation/splash/screens/splash_screen.dart';
 export 'package:page_transition/page_transition.dart';
 export 'package:kutubxona/features/kutubxona/data/models/book.dart';
-export 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_bloc.dart';
-export 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_event.dart';
-export 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/widgets/search_widget.dart';
 

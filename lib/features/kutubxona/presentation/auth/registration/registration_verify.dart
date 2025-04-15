@@ -1,6 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
-import 'package:kutubxona/service/apis/api_service.dart';
+import 'package:kutubxona/service/api_service.dart';
 import 'package:kutubxona/service/hive_service.dart';
 import 'package:kutubxona/service/library_id.dart';
 

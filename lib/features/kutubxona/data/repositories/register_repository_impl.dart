@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_repository.dart';
-import 'package:kutubxona/service/apis/api_service.dart';
+import 'package:kutubxona/service/api_service.dart';
 
 class RegisterRepositoryImpl implements RegisterRepository {
   final ApiService apiService;

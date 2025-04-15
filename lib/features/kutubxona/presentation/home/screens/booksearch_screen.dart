@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/data/models/book.dart';
 import 'package:kutubxona/features/kutubxona/enums/filter_type.dart';
-import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_event.dart';
-import 'package:kutubxona/features/kutubxona/blocs/book_search/book_search_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/widgets/search_widget.dart';
 
 class BookSearchScreen extends StatefulWidget {

@@ -5,9 +5,11 @@ import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
-import 'package:kutubxona/service/apis/api_service.dart';
+import 'package:kutubxona/service/api_service.dart';
+
 import 'package:kutubxona/service/hive_service.dart';
 import 'package:kutubxona/service/library_id.dart';
+import 'package:kutubxona/service/open_dio_client.dart';
 
 class RegisterStep1Screen extends StatefulWidget {
   const RegisterStep1Screen({super.key});
@@ -18,13 +20,14 @@ class RegisterStep1Screen extends StatefulWidget {
 
 class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   TextEditingController phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -79,7 +82,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 ),
                 const SizedBox(height: 50),
                 PhoneTextfieldWidget(phoneController: phoneController),
-
+                Text(ApiClient().errorData),
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
