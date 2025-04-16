@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:kutubxona/common/navigator/app_navigator.dart';
-
-import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
-
 import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_state.dart';

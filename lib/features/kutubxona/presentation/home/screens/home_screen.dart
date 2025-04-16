@@ -90,7 +90,12 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  AppNavigator.pushNamed(
+                                    context,
+                                    AppRoutes.categoryScreen,
+                                  );
+                                },
                                 child: Text(
                                   'Барчаси',
                                   style: TextStyle(

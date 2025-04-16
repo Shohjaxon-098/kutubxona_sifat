@@ -10,7 +10,8 @@ class AppRoutes {
   static const String registerVerify = '/registerVerify';
   static const String onBoardScreen = '/onBoardScreen';
   static const String registerStep2Screen = '/registerStep2';
-  static const bookSearch = '/bookSearch';
+  static const String bookSearch = '/bookSearch';
+  static const String categoryScreen = '/categoryScreen';
   // Method to handle routing
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -63,6 +64,13 @@ class AppRoutes {
           isIos: true,
           child: const BookSearchScreen(),
           type: PageTransitionType.fade,
+          duration: const Duration(milliseconds: 400),
+        );
+      case categoryScreen:
+        return PageTransition(
+          isIos: true,
+          child: const BookSearchScreen(),
+          type: PageTransitionType.leftToRight,
           duration: const Duration(milliseconds: 400),
         );
 
