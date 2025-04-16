@@ -1,15 +1,21 @@
-import 'package:dio/dio.dart';
+import 'package:kutubxona/features/kutubxona/data/datasources/register_remote_datasource.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_repository.dart';
-import 'package:kutubxona/service/api_service.dart';
-import 'package:kutubxona/service/base_url.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
-  final ApiService apiService;
+import '../../domain/entities/register_step1_entity.dart';
 
-  AuthRepositoryImpl({required this.apiService});
+
+class RegisterStep1RepositoryImpl implements RegisterStep1Repository {
+  final RegisterRemoteDataSource remoteDataSource;
+
+  RegisterStep1RepositoryImpl({required this.remoteDataSource});
+
   @override
-  Future<Response> registerStep1(RegisterStep1 userData) async {
-    return apiService.registerStep1(userData);
+  Future<void> registerPhone(RegisterStep1Entity entity) {
+    final model = RegisterStep1Model(
+      phoneNumber: entity.phoneNumber,
+      libraryId: entity.libraryId,
+    );
+    return remoteDataSource.registerPhone(model);
   }
 }

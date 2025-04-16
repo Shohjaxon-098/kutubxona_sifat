@@ -1,17 +1,17 @@
-class RegisterVerifyModel {
-  final String phone;
-  final String libraryId;
-  final String otpCode;
-  RegisterVerifyModel({
-    required this.phone,
-    required this.libraryId,
-    required this.otpCode,
-  });
+import 'package:kutubxona/features/kutubxona/domain/entities/otp_entity.dart';
 
-  Map<String, dynamic> toJson() => {
-    'phone_number': phone,
-    'library_id': libraryId,
+class OtpVerifyModel extends OtpEntity {
+  OtpVerifyModel({
+    required String phoneNumber,
+    required String libraryId,
+    required String otp,
+  }) : super(phoneNumber: phoneNumber, libraryId: libraryId, otp: otp);
 
-    'otp_code': otpCode,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      "phone_number": phoneNumber,
+      "library_id": libraryId,
+      "otp": otp,
+    };
+  }
 }

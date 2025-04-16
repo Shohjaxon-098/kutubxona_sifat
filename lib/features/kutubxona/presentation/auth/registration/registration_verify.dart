@@ -1,7 +1,7 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
-import 'package:kutubxona/service/api_service.dart';
-import 'package:kutubxona/service/hive_service.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_state.dart';
 import 'package:kutubxona/service/library_id.dart';
 
 class RegisterVerify extends StatefulWidget {
@@ -65,190 +65,175 @@ class _RegisterVerifyState extends State<RegisterVerify> {
           return SafeArea(
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 260,
-                      decoration: BoxDecoration(
-                        color: AppColors().cardColor,
-                        borderRadius: BorderRadius.circular(24),
-                        image: DecorationImage(
-                          image: AssetImage(AppImages().mask),
-                          fit: BoxFit.cover,
+              child: BlocListener<OtpBloc, OtpState>(
+                listener: (context, state) {
+                  if (state is OtpSuccess) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppRoutes.registerStep2Screen,
+                    );
+                  } else if (state is OtpFailure) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.message)));
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 260,
+                        decoration: BoxDecoration(
+                          color: AppColors().cardColor,
+                          borderRadius: BorderRadius.circular(24),
+                          image: DecorationImage(
+                            image: AssetImage(AppImages().mask),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 84,
+                              height: 84,
+                              decoration: BoxDecoration(
+                                color: AppColors().white,
+                                borderRadius: BorderRadius.circular(28),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 0,
+                                    spreadRadius: 5,
+                                    color: AppColors().cardShadow,
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SvgPicture.asset(AppImages().secure),
+                              ),
+                            ),
+                            const SizedBox(height: 33),
+                            Text(
+                              'Телефонингизга юборилган\nкодни киритинг',
+                              style: TextStyle(
+                                color: AppColors().white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      const SizedBox(height: 100),
+                      Column(
                         children: [
-                          Container(
-                            width: 84,
-                            height: 84,
-                            decoration: BoxDecoration(
-                              color: AppColors().white,
-                              borderRadius: BorderRadius.circular(28),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 0,
-                                  spreadRadius: 5,
-                                  color: AppColors().cardShadow,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: SvgPicture.asset(AppImages().secure),
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(6, (index) {
+                              return OtpWidget(
+                                otpController: controllers[index],
+                                focusNode: focusNodes[index],
+                                nextNode:
+                                    index < 5 ? focusNodes[index + 1] : null,
+                                previousNode:
+                                    index > 0 ? focusNodes[index - 1] : null,
+                              );
+                            }),
                           ),
-                          const SizedBox(height: 33),
+                          const SizedBox(height: 12),
                           Text(
-                            'Телефонингизга юборилган\nкодни киритинг',
-                            style: TextStyle(
-                              color: AppColors().white,
-                              fontSize: 20,
+                            textAlign: TextAlign.center,
+                            displayMessage,
+                            style: const TextStyle(
+                              fontSize: 15,
                               fontWeight: FontWeight.w500,
                             ),
-                            textAlign: TextAlign.center,
                           ),
+                          isButtonEnabled
+                              ? TextButton(
+                                style: ButtonStyle(
+                                  overlayColor: WidgetStateProperty.all(
+                                    Colors.transparent,
+                                  ), // Splash yo‘q
+                                ),
+                                onPressed: () {
+                                  context.read<TimerBloc>().add(TimerStarted());
+                                },
+                                child: Text(
+                                  "Қайта юбориш",
+                                  style: TextStyle(
+                                    color: AppColors().blue,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              )
+                              : const SizedBox(height: 48),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 100),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(6, (index) {
-                            return OtpWidget(
-                              otpController: controllers[index],
-                              focusNode: focusNodes[index],
-                              nextNode:
-                                  index < 5 ? focusNodes[index + 1] : null,
-                              previousNode:
-                                  index > 0 ? focusNodes[index - 1] : null,
-                            );
-                          }),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.18,
+                      ),
+                      TextButton(
+                        style: ButtonStyle(
+                          overlayColor: WidgetStateProperty.all(
+                            Colors.transparent,
+                          ), // Splash yo‘q
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          textAlign: TextAlign.center,
-                          displayMessage,
-                          style: const TextStyle(
+                        child: Text(
+                          'Телефон рақамни ўзгартириш',
+                          style: TextStyle(
+                            color: AppColors().blue,
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        isButtonEnabled
-                            ? TextButton(
-                              style: ButtonStyle(
-                                overlayColor: WidgetStateProperty.all(
-                                  Colors.transparent,
-                                ), // Splash yo‘q
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      BlocBuilder<OtpBloc, OtpState>(
+                        builder: (context, state) {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors().primaryColor,
+                              minimumSize: const Size(double.infinity, 60),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
                               ),
-                              onPressed: () {
-                                context.read<TimerBloc>().add(TimerStarted());
-                              },
-                              child: Text(
-                                "Қайта юбориш",
-                                style: TextStyle(
-                                  color: AppColors().blue,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            )
-                            : const SizedBox(height: 48),
-                      ],
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.18),
-                    TextButton(
-                      style: ButtonStyle(
-                        overlayColor: WidgetStateProperty.all(
-                          Colors.transparent,
-                        ), // Splash yo‘q
-                      ),
-                      child: Text(
-                        'Телефон рақамни ўзгартириш',
-                        style: TextStyle(
-                          color: AppColors().blue,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors().primaryColor,
-                        minimumSize: const Size(double.infinity, 60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-                      onPressed: () async {
-                        String code = controllers.map((c) => c.text).join();
-                        String? libPhone = await LocalStorage.getPhone();
-
-                        if (libPhone == null || code.length != 6) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Ma'lumotlar to'liq emas"),
                             ),
+                            onPressed: () async {
+                              context.read<OtpBloc>().add(
+                                SubmitOtp(
+                                  phoneNumber: '',
+                                  libraryId: libraryId,
+                                  otp: controllers.asMap().toString(),
+                                ),
+                              );
+                            },
+                            child:
+                                state is OtpLoading
+                                    ? const CircularProgressIndicator()
+                                    : Text(
+                                      "Кириш",
+                                      style: TextStyle(
+                                        color: AppColors().white,
+                                        fontSize: 15,
+                                      ),
+                                    ),
                           );
-                          return;
-                        }
-
-                        RegisterVerifyModel registerVerify =
-                            RegisterVerifyModel(
-                              otpCode: code,
-                              phone: libPhone,
-                              libraryId: libraryId,
-                            );
-
-                        try {
-                          var response = await ApiService().registerVerify(
-                            registerVerify,
-                          );
-                          if (response.statusCode == 200) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Tasdiq muvaffaqiyatli"),
-                              ),
-                            );
-                            AppNavigator.pushNamed(
-                              context,
-                              AppRoutes.registerStep2Screen,
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Tasdiqlashda xatolik"),
-                              ),
-                            );
-                          }
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Xatolik: $e")),
-                          );
-                        }
-                      },
-                      child: Text(
-                        "Кириш",
-                        style: TextStyle(
-                          color: AppColors().white,
-                          fontSize: 15,
-                        ),
+                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

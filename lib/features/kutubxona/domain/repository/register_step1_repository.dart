@@ -1,7 +1,5 @@
+import '../entities/register_step1_entity.dart';
 
-import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
-
-
-abstract class AuthRepository {
-  Future<void> registerStep1(RegisterStep1 userData);
+abstract class RegisterStep1Repository {
+  Future<void> registerPhone(RegisterStep1Entity entity);
 }

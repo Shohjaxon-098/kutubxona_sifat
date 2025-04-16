@@ -52,12 +52,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case registerVerify:
-        return MaterialPageRoute(
-          builder:
-              (context) => BlocProvider(
-                create: (context) => TimerBloc(),
-                child: const RegisterVerify(),
-              ),
+        return PageTransition(
+          isIos: true,
+          child: const RegisterVerify(),
+          type: PageTransitionType.rightToLeft,
+          duration: const Duration(milliseconds: 400),
         );
       case bookSearch:
         return PageTransition(
@@ -70,7 +69,7 @@ class AppRoutes {
         return PageTransition(
           isIos: true,
           child: const BookSearchScreen(),
-          type: PageTransitionType.leftToRight,
+          type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
 

@@ -1,11 +1,15 @@
-class RegisterStep1 {
-  final String phone;
-  final String libraryId;
+import '../../domain/entities/register_step1_entity.dart';
 
-  RegisterStep1({required this.phone,required this.libraryId});
+class RegisterStep1Model extends RegisterStep1Entity {
+  RegisterStep1Model({
+    required String phoneNumber,
+    required String libraryId,
+  }) : super(phoneNumber: phoneNumber, libraryId: libraryId);
 
-  Map<String, dynamic> toJson() => {
-    'phone_number': phone,
-    'library_id': libraryId,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      "phone_number": phoneNumber,
+      "library_id": libraryId,
+    };
+  }
 }

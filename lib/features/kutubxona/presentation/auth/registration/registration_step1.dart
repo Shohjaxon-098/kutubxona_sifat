@@ -1,9 +1,10 @@
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/register_step1_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
+import 'package:kutubxona/service/hive_service.dart';
 import 'package:kutubxona/service/library_id.dart';
 
 class RegisterStep1Screen extends StatefulWidget {
@@ -22,17 +23,20 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocBuilder<RegisterStep1Bloc, RegisterStep1State>(
-            builder: (context, state) {
-              String? errorMessage;
-              bool isLoading = false;
-
-              if (state is RegisterStep1Error) {
-                errorMessage = state.message;
-              } else if (state is RegisterStep1Loading) {
-                isLoading = true;
+          child: BlocConsumer<RegisterStep1Bloc, RegisterStep1State>(
+            listener: (context, state) {
+              if (state is RegisterSuccess) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text("Kod yuborildi")));
+                AppNavigator.pushNamed(context, AppRoutes.registerVerify);
+              } else if (state is RegisterFailure) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
               }
-
+            },
+            builder: (context, state) {
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -87,11 +91,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     ),
                     const SizedBox(height: 50),
                     PhoneTextfieldWidget(phoneController: phoneController),
-                    if (errorMessage != null)
-                      Text(
-                        errorMessage,
-                        style: const TextStyle(color: Colors.red),
-                      ),
+
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -102,12 +102,13 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                         ),
                       ),
                       onPressed: () {
-                        RegisterStep1 registerStep1 = RegisterStep1(
-                          phone: phoneController.text,
-                          libraryId: libraryId,
-                        );
+                        final phone = phoneController.text.trim();
+
                         context.read<RegisterStep1Bloc>().add(
-                          RegisterStep1Submitted(registerStep1),
+                          SubmitPhoneNumber(
+                            phoneNumber: phone,
+                            libraryId: libraryId,
+                          ),
                         );
                       },
                       child: Text(
