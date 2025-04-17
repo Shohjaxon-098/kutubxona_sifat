@@ -1,4 +1,4 @@
-import 'package:kutubxona/features/kutubxona/data/datasources/register_remote_datasource.dart';
+import 'package:kutubxona/features/kutubxona/data/datasources/register_step1_remote_datasource.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_repository.dart';
 

@@ -1,3 +1,4 @@
+// lib/features/register_step2/domain/entities/register_step2_entity.dart
 
 import 'dart:io';
 
@@ -9,8 +10,8 @@ class RegisterStep2Entity {
   final String birthDate;
   final String documentType;
   final String documentNumber;
-  final File documentFile1;
-  final File documentFile2;
+  final File documentFile1Path;
+  final File documentFile2Path;
 
   RegisterStep2Entity({
     required this.firstName,
@@ -20,7 +21,7 @@ class RegisterStep2Entity {
     required this.birthDate,
     required this.documentType,
     required this.documentNumber,
-    required this.documentFile1,
-    required this.documentFile2,
+    required this.documentFile1Path,
+    required this.documentFile2Path,
   });
 }

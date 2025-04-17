@@ -1,17 +1,5 @@
-import 'package:dio/dio.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:kutubxona/config/theme/light_theme.dart';
-import 'package:kutubxona/config/theme/dark_theme.dart';
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/data/datasources/register_remote_datasource.dart';
-import 'package:kutubxona/features/kutubxona/data/repositories/register_step1_repository_impl.dart';
-import 'package:kutubxona/features/kutubxona/domain/usecases/register_phone_usecase.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_bloc.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;
-import 'package:kutubxona/injection/service_locator.dart';
-import 'package:kutubxona/service/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +16,18 @@ class KutubxonaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => RegisterStep2Bloc(context.read())),
+        BlocProvider(
+          create:
+              (context) => RegisterStep2Bloc(
+                submitUseCase: RegisterStep2Usecases(
+                  repository: RegisterStep2RepositoryImpl(
+                    remoteDataSource: RegisterStep2RemoteDataSourceImpl(
+                      dio: Dio(),
+                    ),
+                  ),
+                ),
+              ),
+        ),
         BlocProvider(
           create:
               (context) => RegisterStep1Bloc(

@@ -56,11 +56,13 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         birthDate: birthDateController.text,
         documentType: documentType!,
         documentNumber: passportInfoController.text,
-        documentFile1: docFront!,
-        documentFile2: docBack!,
+        documentFile1Path: docFront!,
+        documentFile2Path: docBack!,
       );
-
-      context.read<RegisterStep2Bloc>().add(RegisterStep2Submitted(entity));
+      print(entity.documentFile1Path);
+      context.read<RegisterStep2Bloc>().add(
+        SubmitRegisterStep2Event(entity: entity),
+      );
     }
   }
 
