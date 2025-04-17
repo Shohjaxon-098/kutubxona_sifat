@@ -1,7 +1,7 @@
 class OtpEntity {
   final String phoneNumber;
   final String libraryId;
-  final String otp;
+  final int otp;
 
   OtpEntity({
     required this.phoneNumber,

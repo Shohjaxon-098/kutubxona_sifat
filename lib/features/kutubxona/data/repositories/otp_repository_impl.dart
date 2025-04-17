@@ -13,8 +13,8 @@ class OtpRepositoryImpl implements OtpRepository {
   @override
   Future<void> verifyOtp(OtpEntity otpEntity) {
     final model = OtpVerifyModel(
-      libraryId: otpEntity.libraryId,
       phoneNumber: otpEntity.phoneNumber,
+      libraryId: otpEntity.libraryId,
       otp: otpEntity.otp,
     );
     return remoteDataSource.verifyOtp(model);

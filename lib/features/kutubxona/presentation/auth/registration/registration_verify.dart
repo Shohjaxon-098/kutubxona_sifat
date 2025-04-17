@@ -223,14 +223,17 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                         ),
                         onPressed: () async {
                           final otpCode = controllers.map((c) => c.text).join();
-                          final phoneNumber = LocalStorage.getPhone();
+                          final phoneNumber = await LocalStorage.getPhone();
                           context.read<OtpBloc>().add(
                             SubmitOtp(
                               phoneNumber: phoneNumber.toString(),
                               libraryId: libraryId,
-                              otp: otpCode,
+                              otp: int.parse(otpCode),
                             ),
                           );
+                          print("otp: ${int.parse(otpCode).runtimeType}");
+                          print("phone: $phoneNumber");
+                          print("libraryId: $libraryId");
                         },
                         child:
                             state is OtpLoading

@@ -3,7 +3,7 @@ abstract class OtpEvent {}
 class SubmitOtp extends OtpEvent {
   final String phoneNumber;
   final String libraryId;
-  final String otp;
+  final int otp;
 
   SubmitOtp({
     required this.phoneNumber,

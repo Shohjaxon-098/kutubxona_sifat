@@ -17,8 +17,8 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<OtpRepository>(
-    () => OtpRepositoryImpl(OtpRemoteDataSourceImpl(Dio())),
+    () => OtpRepositoryImpl(OtpRemoteDataSourceImpl(dio: Dio())),
   );
 
- 
+  // Boshqa dependencylar bo‘lsa, shu yerga qo‘shing
 }

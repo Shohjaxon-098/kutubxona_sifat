@@ -11,7 +11,7 @@ class OtpVerifyModel extends OtpEntity {
     return {
       "phone_number": phoneNumber,
       "library_id": libraryId,
-      "otp": otp,
+      "otp_code": otp,
     };
   }
 }
