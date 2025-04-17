@@ -28,7 +28,7 @@ class KutubxonaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => RegisterStep2Bloc(ApiService())),
+        BlocProvider(create: (context) => RegisterStep2Bloc(context.read())),
         BlocProvider(
           create:
               (context) => RegisterStep1Bloc(

@@ -41,3 +41,4 @@ export 'package:kutubxona/service/library_id.dart';
 export 'package:dio/dio.dart';
 export 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
 export 'package:kutubxona/service/base_url.dart';
+export 'dart:io';

@@ -1,4 +1,4 @@
-import 'package:kutubxona/features/kutubxona/domain/repository/register_repository.dart';
+import 'package:kutubxona/features/kutubxona/domain/repository/register_step2_repository.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_repository.dart';
 
 import 'package:kutubxona/features/kutubxona/domain/entities/register_step1_entity.dart';
