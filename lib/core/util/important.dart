@@ -10,7 +10,7 @@ export 'package:kutubxona/features/kutubxona/presentation/blocs/timer/timer_coun
 export 'package:kutubxona/features/kutubxona/presentation/blocs/timer/timer_count_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/otp_widget.dart';
 export 'package:image_picker/image_picker.dart';
-export 'package:kutubxona/features/kutubxona/presentation/widgets/textfieldW.dart';
+export 'package:kutubxona/features/kutubxona/presentation/widgets/textfield_input.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/widgets/all_categories.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/widgets/single_categories.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/login/login.dart';
@@ -26,4 +26,18 @@ export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book
 export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_event.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/widgets/search_widget.dart';
-
+export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_state.dart';
+export 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
+export 'package:kutubxona/features/kutubxona/presentation/auth/registration/widgets/image.dart';
+export 'package:kutubxona/features/kutubxona/presentation/widgets/gender_selector.dart';
+export 'package:kutubxona/features/kutubxona/presentation/widgets/primary_button.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_state.dart';
+export 'package:kutubxona/service/hive_service.dart';
+export 'package:kutubxona/service/library_id.dart';
+export 'package:dio/dio.dart';
+export 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
+export 'package:kutubxona/service/base_url.dart';

@@ -34,7 +34,9 @@ class KutubxonaApp extends StatelessWidget {
               (context) => RegisterStep1Bloc(
                 RegisterPhoneUseCase(
                   RegisterStep1RepositoryImpl(
-                    remoteDataSource: RegisterRemoteDataSourceImpl(dio: Dio()),
+                    remoteDataSource: RegisterStep1RemoteDataSourceImpl(
+                      dio: Dio(),
+                    ),
                   ),
                 ),
               ),

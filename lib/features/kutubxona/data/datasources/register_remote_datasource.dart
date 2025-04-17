@@ -2,14 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/service/base_url.dart';
 
-abstract class RegisterRemoteDataSource {
+abstract class RegisterStep1RemoteDataSource {
   Future<void> registerPhone(RegisterStep1Model model);
 }
 
-class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
+class RegisterStep1RemoteDataSourceImpl
+    implements RegisterStep1RemoteDataSource {
   final Dio dio;
 
-  RegisterRemoteDataSourceImpl({required this.dio});
+  RegisterStep1RemoteDataSourceImpl({required this.dio});
 
   @override
   Future<void> registerPhone(RegisterStep1Model model) async {

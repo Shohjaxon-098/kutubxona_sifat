@@ -4,9 +4,8 @@ import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_re
 
 import 'package:kutubxona/features/kutubxona/domain/entities/register_step1_entity.dart';
 
-
 class RegisterStep1RepositoryImpl implements RegisterStep1Repository {
-  final RegisterRemoteDataSource remoteDataSource;
+  final RegisterStep1RemoteDataSource remoteDataSource;
 
   RegisterStep1RepositoryImpl({required this.remoteDataSource});
 

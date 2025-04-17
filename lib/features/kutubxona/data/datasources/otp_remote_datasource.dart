@@ -1,7 +1,6 @@
 // data/datasources/otp_remote_datasource.dart
-import 'package:dio/dio.dart';
-import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
-import 'package:kutubxona/service/base_url.dart';
+
+import 'package:kutubxona/core/util/important.dart';
 
 abstract class OtpRemoteDataSource  {
   Future<void> verifyOtp(OtpVerifyModel model);
