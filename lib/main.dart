@@ -5,16 +5,18 @@ import 'package:kutubxona/config/theme/dark_theme.dart';
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/data/datasources/register_remote_datasource.dart';
 import 'package:kutubxona/features/kutubxona/data/repositories/register_step1_repository_impl.dart';
-import 'package:kutubxona/features/kutubxona/domain/repository/otp_repository.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/register_phone_usecase.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_bloc.dart';
+import 'package:kutubxona/injection/service_locator.dart' as di;
+import 'package:kutubxona/injection/service_locator.dart';
 import 'package:kutubxona/service/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await di.init();
   await Hive.openBox('userBox');
   runApp(const KutubxonaApp());
 }
@@ -36,7 +38,8 @@ class KutubxonaApp extends StatelessWidget {
                   ),
                 ),
               ),
-        ), 
+        ),
+        BlocProvider<OtpBloc>(create: (_) => sl<OtpBloc>()),
         BlocProvider(create: (context) => TimerBloc()),
       ],
       child: MaterialApp(
