@@ -2,7 +2,7 @@ import 'package:kutubxona/features/kutubxona/data/datasources/register_remote_da
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_repository.dart';
 
-import '../../domain/entities/register_step1_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/register_step1_entity.dart';
 
 
 class RegisterStep1RepositoryImpl implements RegisterStep1Repository {

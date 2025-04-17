@@ -1,7 +1,7 @@
 // domain/usecases/verify_otp_usecase.dart
 import 'package:kutubxona/features/kutubxona/domain/repository/otp_repository.dart';
 
-import '../entities/otp_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/otp_entity.dart';
 
 class VerifyOtpUseCase {
   final OtpRepository repository;

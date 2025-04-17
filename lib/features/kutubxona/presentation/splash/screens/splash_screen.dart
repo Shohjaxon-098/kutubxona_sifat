@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kutubxona/config/routes/app_routes.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/features/kutubxona/presentation/onboard/screens/onboarding_screen.dart';
-import 'package:kutubxona/service/hive_service.dart'; // HomeScreen import qilish
+// HomeScreen import qilish
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

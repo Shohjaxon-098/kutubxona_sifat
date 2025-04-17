@@ -1,10 +1,8 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
-import 'package:kutubxona/service/hive_service.dart';
 import 'package:kutubxona/service/library_id.dart';
 
 class RegisterStep1Screen extends StatefulWidget {

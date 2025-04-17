@@ -3,7 +3,7 @@ import 'package:kutubxona/features/kutubxona/data/datasources/otp_remote_datasou
 import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/otp_repository.dart';
 
-import '../../domain/entities/otp_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/otp_entity.dart';
 
 class OtpRepositoryImpl implements OtpRepository {
   final OtpRemoteDataSource remoteDataSource;

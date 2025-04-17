@@ -20,7 +20,6 @@ class _RegisterVerifyState extends State<RegisterVerify> {
   @override
   void initState() {
     super.initState();
-
     context.read<TimerBloc>().add(TimerStarted());
   }
 
@@ -211,9 +210,11 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                               ),
                             ),
                             onPressed: () async {
+                              final otpCode =
+                                  controllers.map((c) => c.text).join();
                               context.read<OtpBloc>().add(
                                 SubmitOtp(
-                                  phoneNumber: '',
+                                  phoneNumber: otpCode,
                                   libraryId: libraryId,
                                   otp: controllers.asMap().toString(),
                                 ),

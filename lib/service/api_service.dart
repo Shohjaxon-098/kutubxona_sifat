@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:kutubxona/features/kutubxona/data/models/register_verify.dart';
 import 'package:kutubxona/service/base_url.dart';
 import 'package:kutubxona/service/open_dio_client.dart';
 

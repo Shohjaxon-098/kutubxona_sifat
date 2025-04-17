@@ -1,7 +1,7 @@
 import 'package:kutubxona/features/kutubxona/domain/repository/register_repository.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step1_repository.dart';
 
-import '../entities/register_step1_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/register_step1_entity.dart';
 
 class RegisterPhoneUseCase {
   final RegisterStep1Repository repository;

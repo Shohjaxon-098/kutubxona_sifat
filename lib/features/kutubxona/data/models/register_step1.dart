@@ -1,10 +1,10 @@
-import '../../domain/entities/register_step1_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/register_step1_entity.dart';
 
 class RegisterStep1Model extends RegisterStep1Entity {
   RegisterStep1Model({
-    required String phoneNumber,
-    required String libraryId,
-  }) : super(phoneNumber: phoneNumber, libraryId: libraryId);
+    required super.phoneNumber,
+    required super.libraryId,
+  });
 
   Map<String, dynamic> toJson() {
     return {

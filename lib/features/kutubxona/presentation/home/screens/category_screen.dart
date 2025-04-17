@@ -11,7 +11,7 @@ class CategoryScreen extends StatelessWidget {
 
 buildAppbar(BuildContext context) {
   return AppBar(
-    title: Text('Рукнлар'),
+    title: const Text('Рукнлар'),
     centerTitle: true,
     iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
 

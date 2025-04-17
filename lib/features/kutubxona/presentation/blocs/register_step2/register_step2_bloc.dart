@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'register_step2_event.dart';
-import 'register_step2_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_state.dart';
 import 'package:kutubxona/service/api_service.dart';
 
 class RegisterStep2Bloc extends Bloc<RegisterStep2Event, RegisterStep2State> {

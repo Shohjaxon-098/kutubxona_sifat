@@ -2,10 +2,10 @@ import 'package:kutubxona/features/kutubxona/domain/entities/otp_entity.dart';
 
 class OtpVerifyModel extends OtpEntity {
   OtpVerifyModel({
-    required String phoneNumber,
-    required String libraryId,
-    required String otp,
-  }) : super(phoneNumber: phoneNumber, libraryId: libraryId, otp: otp);
+    required super.phoneNumber,
+    required super.libraryId,
+    required super.otp,
+  });
 
   Map<String, dynamic> toJson() {
     return {
