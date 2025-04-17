@@ -37,7 +37,6 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   final passportInfoController = TextEditingController();
   final documentNumber = TextEditingController();
 
- 
   void _submitForm(BuildContext context) {
     if (docFront == null || docBack == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,17 +58,17 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
     context.read<RegisterStep2Bloc>().add(RegisterStep2Submitted(data: user));
   }
-final _formKey = GlobalKey<FormState>();
+
+  final _formKey = GlobalKey<FormState>();
   bool obsure = true;
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterStep2Bloc, RegisterStep2State>(
-      listener: (context, state) {
-        
-      },
-      child: Scaffold(
-        body: Form(key: _formKey,
-          child: SafeArea(
+      listener: (context, state) {},
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -88,7 +87,6 @@ final _formKey = GlobalKey<FormState>();
                   ),
                   const SizedBox(height: 24),
                   TextFieldInput(
-                  
                     label: "Исмингиз",
                     controller: nameController,
                     hint: 'Исмингиз',
@@ -105,7 +103,6 @@ final _formKey = GlobalKey<FormState>();
                   ),
                   const SizedBox(height: 20),
                   TextFieldInput(
-                 
                     label: "Парол",
                     controller: passwordController,
                     obscure: obsure,
@@ -123,7 +120,6 @@ final _formKey = GlobalKey<FormState>();
                   ),
                   const SizedBox(height: 20),
                   TextFieldInput(
-                    
                     label: "Фамилиянгиз",
                     controller: surnameController,
                     hint: 'Фамилиянгиз',
@@ -131,7 +127,6 @@ final _formKey = GlobalKey<FormState>();
                   ),
                   const SizedBox(height: 20),
                   TextFieldInput(
-            
                     label: "Телеграм username",
                     controller: telegramController,
                     hint: 'Телеграм ID',
@@ -139,7 +134,6 @@ final _formKey = GlobalKey<FormState>();
                   ),
                   const SizedBox(height: 20),
                   TextFieldInput(
-                
                     label: "Туғилган санаси",
                     controller: birthDateController,
                     hint: "кк.оо.йййй",
@@ -153,7 +147,10 @@ final _formKey = GlobalKey<FormState>();
                   ListTile(
                     title: const Text(
                       "Паспорт",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
                     ),
                     leading: Radio<String>(
                       value: 'passport',
@@ -170,7 +167,10 @@ final _formKey = GlobalKey<FormState>();
                   ListTile(
                     title: const Text(
                       "Туғилганлик ҳақида гувоҳнома",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
                     ),
                     leading: Radio<String>(
                       value: 'birth_certificate',
@@ -186,7 +186,6 @@ final _formKey = GlobalKey<FormState>();
                   ),
                   const SizedBox(height: 20),
                   TextFieldInput(
-                   
                     label:
                         documentType == 'passport'
                             ? "Паспорт маълумотлари *"
@@ -200,7 +199,7 @@ final _formKey = GlobalKey<FormState>();
                     lengthInput: 14,
                   ),
                   const SizedBox(height: 20),
-          
+
                   documentType == 'passport'
                       ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,13 +213,13 @@ final _formKey = GlobalKey<FormState>();
                             children: [
                               imageBox(
                                 file: docFront,
-          
+
                                 onTap: () => pickImage(true),
                               ),
                               const SizedBox(width: 12),
                               imageBox(
                                 file: docBack,
-          
+
                                 onTap: () => pickImage(false),
                               ),
                             ],
