@@ -11,6 +11,14 @@ class LocalStorage {
     return _box.get("phone");
   }
 
+  static Future<void> saveUserId(int userId) async {
+    await _box.put("user_id", userId);
+  }
+
+  static Future<int?> getUserId() async {
+    return _box.get("user_id");
+  }
+
   static Future<void> saveLibraryId(String id) async {
     await _box.put("library_id", id);
   }

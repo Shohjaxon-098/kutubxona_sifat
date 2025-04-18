@@ -47,7 +47,7 @@ class KutubxonaApp extends StatelessWidget {
         title: 'Kutubxona',
         theme: theme(),
         darkTheme: darkTheme(),
-        home: const SplashScreen(),
+        home: const HomeScreen(),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute, // Link routes
         initialRoute: AppRoutes.splash, // Set the initial route

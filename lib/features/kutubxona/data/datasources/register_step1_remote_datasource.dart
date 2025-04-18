@@ -14,9 +14,12 @@ class RegisterStep1RemoteDataSourceImpl
 
   @override
   Future<void> registerPhone(RegisterStep1Model model) async {
-    await dio.post(
+    final response = await dio.post(
       "$baseUrl/account/register/step1/", // 🔁 Bu yerga API endpoint URL qo‘ying
       data: model.toJson(),
     );
+    if (response.statusCode != 201) {
+      throw Exception(response.data['message'] ?? 'Registration failed');
+    }
   }
 }

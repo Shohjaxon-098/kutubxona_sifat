@@ -39,7 +39,17 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
     }
   }
 
-  void _submitForm() {
+  void _submitForm() async {
+    final userId = await LocalStorage.getUserId();
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User ID topilmadi. Илтимос, қайта рўйхатдан ўтинг."),
+        ),
+      );
+      return;
+    }
+
     if (_formKey.currentState!.validate()) {
       if (docFront == null || docBack == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -60,6 +70,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         documentFile1Path: docFront!,
         documentFile2Path: docBack!,
         libraryId: libraryId,
+        userId: userId,
       );
       print(entity.documentFile1Path);
       context.read<RegisterStep2Bloc>().add(

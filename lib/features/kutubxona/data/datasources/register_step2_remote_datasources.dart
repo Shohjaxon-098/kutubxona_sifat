@@ -20,7 +20,7 @@ class RegisterStep2RemoteDataSourceImpl
       data: formData,
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 201) {
       throw Exception('Server error: ${response.data}');
     }
   }

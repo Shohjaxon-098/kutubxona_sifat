@@ -59,21 +59,17 @@ class HomeScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primaryContainer,
                 ),
                 child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          AppNavigator.pushNamed(context, AppRoutes.bookSearch);
+                      search(
+                        context: context,
+                        enabled: true,
+                        onChanged: (query) {
+                          context.read<BookSearchBloc>().add(
+                            SearchBooks(query),
+                          );
                         },
-                        child: search(
-                          context: context,
-                          enabled: false,
-                          onChanged: (query) {
-                            context.read<BookSearchBloc>().add(
-                              SearchBooks(query),
-                            );
-                          },
-                        ),
                       ),
 
                       const SizedBox(height: 20),

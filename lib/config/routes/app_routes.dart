@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/screens/category_screen.dart';
 
 class AppRoutes {
   // Define route names
@@ -68,7 +69,7 @@ class AppRoutes {
       case categoryScreen:
         return PageTransition(
           isIos: true,
-          child: const BookSearchScreen(),
+          child: const CategoryScreen(),
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );

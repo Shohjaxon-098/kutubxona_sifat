@@ -33,9 +33,9 @@ export 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/registration/widgets/image.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/gender_selector.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/primary_button.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_bloc.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_event.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_state.dart';
 export 'package:kutubxona/service/hive_service.dart';
 export 'package:kutubxona/service/library_id.dart';
 export 'package:dio/dio.dart';
@@ -53,4 +53,7 @@ export 'package:kutubxona/features/kutubxona/domain/usecases/register_phone_usec
 export 'package:kutubxona/features/kutubxona/domain/usecases/register_step2_usecases.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_bloc.dart';
 export 'package:kutubxona/injection/service_locator.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
 

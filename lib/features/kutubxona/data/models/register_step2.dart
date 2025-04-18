@@ -17,14 +17,15 @@ class RegisterStep2Model extends RegisterStep2Entity {
     required super.documentNumber,
     required super.documentFile1Path,
     required super.documentFile2Path,
-    required super.libraryId
+    required super.libraryId,
+    required super.userId,
   });
 
   FormData toFormData() {
     return FormData.fromMap({
       'first_name': firstName,
       'last_name': lastName,
-      'gender':selectGender,
+      'gender': selectGender,
       'password': password,
       'telegram_id': telegramId,
       'birth_date': birthDate,
@@ -32,7 +33,8 @@ class RegisterStep2Model extends RegisterStep2Entity {
       'document_number': documentNumber,
       'document_file1': documentFile1Path,
       'document_file2': documentFile2Path,
-      'library_id':libraryId
+      'library_id': libraryId,
+      'user_id': userId,
     });
   }
 }

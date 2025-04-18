@@ -14,6 +14,7 @@ class RegisterStep2Entity {
   final File documentFile1Path;
   final File documentFile2Path;
   final String libraryId;
+  final int userId;
 
   RegisterStep2Entity({
     required this.firstName,
@@ -26,6 +27,7 @@ class RegisterStep2Entity {
     required this.documentNumber,
     required this.documentFile1Path,
     required this.documentFile2Path,
-    required this.libraryId
+    required this.libraryId,
+    required this.userId
   });
 }

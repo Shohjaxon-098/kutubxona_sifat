@@ -24,7 +24,8 @@ class RegisterStep2RepositoryImpl implements RegisterStep2Repository {
       documentNumber: entity.documentNumber,
       documentFile1Path: entity.documentFile1Path,
       documentFile2Path: entity.documentFile2Path,
-      libraryId: entity.libraryId
+      libraryId: entity.libraryId,
+      userId: entity.userId,
     );
 
     await remoteDataSource.submitRegisterStep2(model);

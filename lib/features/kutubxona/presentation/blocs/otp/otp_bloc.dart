@@ -1,8 +1,8 @@
 // presentation/bloc/otp/otp_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/verify_otp_usecase.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/otp_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_state.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/otp_entity.dart';
 
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
