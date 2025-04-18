@@ -1,4 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/widgets/fileter_panel.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,86 +50,98 @@ class HomeScreen extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(33),
-                topRight: Radius.circular(33),
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
+            child: Container(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(33),
+                  topRight: Radius.circular(33),
                 ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      search(
-                        context: context,
-                        enabled: true,
-                        onChanged: (query) {
-                          context.read<BookSearchBloc>().add(
-                            SearchBooks(query),
-                          );
-                        },
-                      ),
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        search(
+                          context: context,
+                          enabled: true,
+                          onChanged: (query) {
+                            context.read<BookSearchBloc>().add(
+                              SearchBooks(query),
+                            );
+                          },
+                        ),
+                        SizedBox(width: 16),
+                        GestureDetector(
+                          onTap: () {
+                            const BookSearchScreen();
+                          },
+                          child: Icon(
+                            Icons.dashboard,
+                            color: Theme.of(context).colorScheme.scrim,
+                          ),
+                        ),
+                      ],
+                    ),
 
-                      const SizedBox(height: 20),
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Рукнлар',
+                    const SizedBox(height: 20),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Рукнлар',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                AppNavigator.pushNamed(
+                                  context,
+                                  AppRoutes.categoryScreen,
+                                );
+                              },
+                              child: Text(
+                                'Барчаси',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  color: AppColors().blue,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  AppNavigator.pushNamed(
-                                    context,
-                                    AppRoutes.categoryScreen,
-                                  );
-                                },
-                                child: Text(
-                                  'Барчаси',
-                                  style: TextStyle(
-                                    color: AppColors().blue,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
 
-                          const AllCategories(),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      const Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Куннинг енг яхшилари',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                        const AllCategories(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Куннинг енг яхшилари',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 12),
-                          SingleCategories(),
-                        ],
-                      ),
-                    ],
-                  ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12),
+                        SingleCategories(),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

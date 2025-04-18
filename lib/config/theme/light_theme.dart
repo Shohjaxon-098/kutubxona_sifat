@@ -10,6 +10,7 @@ ThemeData theme() {
       secondary: AppColors().searchBackLight,
       primary: AppColors().searchInLight,
       tertiary: AppColors().textColor,
+      scrim: AppColors().cardColor,
     ),
   );
 }

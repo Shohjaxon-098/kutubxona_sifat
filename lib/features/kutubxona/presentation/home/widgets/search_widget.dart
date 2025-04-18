@@ -7,13 +7,11 @@ Widget search({
   bool? enabled,
   BuildContext? context,
 }) {
-  return SizedBox(
-    height: 50,
+  return Expanded(
     child: TextField(
       controller: controller,
       focusNode: focusNode,
       enabled: enabled,
-
       decoration: InputDecoration(
         filled: true,
         fillColor: Theme.of(context!).colorScheme.secondary,
@@ -24,7 +22,19 @@ Widget search({
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: AppColors().border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors().border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors().border),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors().border),
         ),
         hintStyle: TextStyle(
           fontSize: 14,
