@@ -14,7 +14,6 @@ buildAppbar(BuildContext context) {
     title: const Text('Рукнлар'),
     centerTitle: true,
     iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
-
     backgroundColor: Theme.of(context).colorScheme.surface,
   );
   
