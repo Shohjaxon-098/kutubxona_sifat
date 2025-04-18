@@ -10,14 +10,14 @@ class PrimaryButton extends StatelessWidget {
   final TextStyle? textStyle;
 
   const PrimaryButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.text,
     this.height = 50,
     this.borderRadius = 16,
     this.color,
     this.textStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

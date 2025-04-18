@@ -51,6 +51,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       final entity = RegisterStep2Entity(
         firstName: nameController.text,
         lastName: surnameController.text,
+        selectGender: selectedGender!,
         password: passwordController.text,
         telegramId: telegramController.text,
         birthDate: birthDateController.text,
@@ -58,6 +59,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         documentNumber: passportInfoController.text,
         documentFile1Path: docFront!,
         documentFile2Path: docBack!,
+        libraryId: libraryId,
       );
       print(entity.documentFile1Path);
       context.read<RegisterStep2Bloc>().add(

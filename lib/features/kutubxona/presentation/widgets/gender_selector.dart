@@ -8,12 +8,12 @@ class GenderSelector extends StatelessWidget {
   final String? hintText;
 
   const GenderSelector({
-    Key? key,
+    super.key,
     required this.genders,
     required this.selectedGender,
     required this.onChanged,
     this.hintText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +29,10 @@ class GenderSelector extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
       ),
-      items: genders.map((gender) {
-        return DropdownMenuItem(
-          value: gender,
-          child: Text(gender),
-        );
-      }).toList(),
+      items:
+          genders.map((gender) {
+            return DropdownMenuItem(value: gender, child: Text(gender));
+          }).toList(),
       onChanged: onChanged,
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(

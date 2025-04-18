@@ -5,6 +5,7 @@ import 'dart:io';
 class RegisterStep2Entity {
   final String firstName;
   final String lastName;
+  final String selectGender;
   final String password;
   final String telegramId;
   final String birthDate;
@@ -12,10 +13,12 @@ class RegisterStep2Entity {
   final String documentNumber;
   final File documentFile1Path;
   final File documentFile2Path;
+  final String libraryId;
 
   RegisterStep2Entity({
     required this.firstName,
     required this.lastName,
+    required this.selectGender,
     required this.password,
     required this.telegramId,
     required this.birthDate,
@@ -23,5 +26,6 @@ class RegisterStep2Entity {
     required this.documentNumber,
     required this.documentFile1Path,
     required this.documentFile2Path,
+    required this.libraryId
   });
 }

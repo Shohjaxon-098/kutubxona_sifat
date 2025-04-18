@@ -1,8 +1,8 @@
 // lib/features/register_step2/presentation/bloc/register_step2_bloc.dart
 import 'package:bloc/bloc.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/register_step2_usecases.dart';
-import 'register_step2_event.dart';
-import 'register_step2_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_state.dart';
 
 class RegisterStep2Bloc extends Bloc<RegisterStep2Event, RegisterStep2State> {
   final RegisterStep2Usecases submitUseCase;

@@ -13,7 +13,7 @@ class TextFieldInput extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const TextFieldInput({
-    Key? key,
+    super.key,
     required this.label,
     required this.controller,
     this.obscure = false,
@@ -23,7 +23,7 @@ class TextFieldInput extends StatelessWidget {
     this.suffixIcon,
     this.onChanged,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +55,11 @@ class TextFieldInput extends StatelessWidget {
           cursorWidth: 1,
           cursorHeight: 22,
           decoration: InputDecoration(
-            constraints: BoxConstraints(minHeight: 50),
+            constraints: const BoxConstraints(minHeight: 50),
             suffixIcon: suffixIcon,
             isDense: true,
             hintText: hint,
-            errorStyle: TextStyle(fontSize: 12),
+            errorStyle: const TextStyle(fontSize: 12),
             hintStyle: TextStyle(
               color: AppColors().hintColor,
               fontSize: 14,

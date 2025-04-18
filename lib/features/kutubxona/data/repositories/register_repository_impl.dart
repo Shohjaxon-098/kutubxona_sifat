@@ -4,8 +4,7 @@ import 'package:kutubxona/features/kutubxona/data/datasources/register_step2_rem
 import 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/register_step2_repository.dart';
 
-import '../../domain/entities/register_step2_entity.dart';
-
+import 'package:kutubxona/features/kutubxona/domain/entities/register_step2_entity.dart';
 
 class RegisterStep2RepositoryImpl implements RegisterStep2Repository {
   final RegisterStep2RemoteDataSource remoteDataSource;
@@ -17,6 +16,7 @@ class RegisterStep2RepositoryImpl implements RegisterStep2Repository {
     final model = RegisterStep2Model(
       firstName: entity.firstName,
       lastName: entity.lastName,
+      selectGender: entity.selectGender,
       password: entity.password,
       telegramId: entity.telegramId,
       birthDate: entity.birthDate,
@@ -24,6 +24,7 @@ class RegisterStep2RepositoryImpl implements RegisterStep2Repository {
       documentNumber: entity.documentNumber,
       documentFile1Path: entity.documentFile1Path,
       documentFile2Path: entity.documentFile2Path,
+      libraryId: entity.libraryId
     );
 
     await remoteDataSource.submitRegisterStep2(model);
