@@ -59,13 +59,13 @@ class AppRoutes {
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
-      case bookSearch:
-        return PageTransition(
-          isIos: true,
-          child: const BookSearchScreen(),
-          type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 400),
-        );
+      // case bookSearch:
+      //   return PageTransition(
+      //     isIos: true,
+      //     child: const BookSearchScreen(),
+      //     type: PageTransitionType.fade,
+      //     duration: const Duration(milliseconds: 400),
+      //   );
       case categoryScreen:
         return PageTransition(
           isIos: true,

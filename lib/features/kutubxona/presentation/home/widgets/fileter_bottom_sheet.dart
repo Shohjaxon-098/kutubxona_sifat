@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/filter_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/filter_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/filter_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_state.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({super.key});
@@ -150,7 +150,9 @@ class FilterBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 35),
                 child: PrimaryButton(
                   onPressed:
-                      () => context.read<FilterBloc>().add(ClearFiltersEvent()),
+                      () => context.read<FilterBloc>().add(
+                        ClearFiltersEvent(),
+                      ),
                   text: 'Тозалаш',
                 ),
               ),

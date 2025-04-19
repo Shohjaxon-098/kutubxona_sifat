@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/filter_entity.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/clear_filters_usecases.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/filter_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/filter_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_state.dart';
 
 
 class FilterBloc extends Bloc<FilterEvent, FilterState> {
