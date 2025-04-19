@@ -17,7 +17,6 @@ export 'package:kutubxona/features/kutubxona/presentation/auth/login/login.dart'
 export 'package:kutubxona/features/kutubxona/presentation/auth/registration/registration_verify.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/registration/registration_step2.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/registration/registration_step1.dart';
-export 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
 export 'package:kutubxona/features/kutubxona/presentation/onboard/screens/onboarding_screen.dart';
 export 'package:kutubxona/features/kutubxona/presentation/splash/screens/splash_screen.dart';
 export 'package:page_transition/page_transition.dart';
@@ -57,4 +56,3 @@ export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/r
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
-
