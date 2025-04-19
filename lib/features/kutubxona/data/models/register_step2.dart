@@ -1,6 +1,5 @@
 // lib/features/register_step2/data/models/register_step2_model.dart
 
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/register_step2_entity.dart';

@@ -1,6 +1,5 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/widgets/fileter_panel.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -74,11 +73,9 @@ class HomeScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         GestureDetector(
-                          onTap: () {
-                            const BookSearchScreen();
-                          },
+                          onTap:()=> showFilterModal(context),
                           child: Icon(
                             Icons.dashboard,
                             color: Theme.of(context).colorScheme.scrim,

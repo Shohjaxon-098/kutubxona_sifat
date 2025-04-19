@@ -5,9 +5,9 @@ class RegisterStep1Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: true,
-      body: const RegisterStep1Form(),
+      body: RegisterStep1Form(),
     );
   }
 }

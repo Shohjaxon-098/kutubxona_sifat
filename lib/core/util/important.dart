@@ -56,4 +56,5 @@ export 'package:kutubxona/injection/service_locator.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_event.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/register_step1_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
+export 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
 

@@ -14,7 +14,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
     (_) => TextEditingController(),
   );
   final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
-  late String _phoneNumber;
+  late String phoneNumber;
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
     final phone = await LocalStorage.getPhone();
     if (phone != null) {
       setState(() {
-        _phoneNumber = phone;
+        phoneNumber = phone;
       });
     }
   }
@@ -55,7 +55,6 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                 AppRoutes.registerStep2Screen,
               );
             } else if (state is OtpFailure) {
-              print(state.message);
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.message)));
