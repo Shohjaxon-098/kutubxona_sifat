@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_event.dart';
@@ -18,16 +17,16 @@ class FilterBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Wrap(
             children: [
-              Center(
+              const Center(
                 child: Text(
                   "Китоблар",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               // Year
               ExpansionTile(
-                tilePadding: EdgeInsets.symmetric(horizontal: 24),
+                tilePadding: const EdgeInsets.symmetric(horizontal: 24),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                   side: BorderSide(color: AppColors().border),
@@ -71,7 +70,7 @@ class FilterBottomSheet extends StatelessWidget {
                           borderSide: BorderSide(color: AppColors().border),
                         ),
                       ),
-                      hint: Text(
+                      hint: const Text(
                         "1900",
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
@@ -110,7 +109,7 @@ class FilterBottomSheet extends StatelessWidget {
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 10),
+                  childrenPadding: const EdgeInsets.symmetric(horizontal: 10),
                   children: List.generate(5, (index) {
                     final rating = 5 - index;
                     final selected = filter.selectedRatings.contains(rating);
@@ -130,7 +129,7 @@ class FilterBottomSheet extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Icon(
-                                Icons.star_rate_rounded,
+                                i < rating? Icons. star_rate_rounded:Icons.star_rate_outlined,
                                 size: 35,
                                 color:
                                     i < rating

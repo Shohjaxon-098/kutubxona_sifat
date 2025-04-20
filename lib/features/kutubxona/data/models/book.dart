@@ -1,29 +1,18 @@
-import '../../domain/entities/book_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
 
 class BookModel extends BookEntity {
   BookModel({
-    required int id,
-    required String slug,
-    required String name,
-    required String category,
-    required String image,
-    double? rating,
-    required String author,
-    required String publication,
-    String? publishedDate,
-    int? reviewsCount,
-  }) : super(
-          id: id,
-          slug: slug,
-          name: name,
-          category: category,
-          image: image,
-          rating: rating,
-          author: author,
-          publication: publication,
-          publishedDate: publishedDate,
-          reviewsCount: reviewsCount,
-        );
+    required super.id,
+    required super.slug,
+    required super.name,
+    required super.category,
+    required super.image,
+    super.rating,
+    required super.author,
+    required super.publication,
+    super.publishedDate,
+    super.reviewsCount,
+  });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     return BookModel(

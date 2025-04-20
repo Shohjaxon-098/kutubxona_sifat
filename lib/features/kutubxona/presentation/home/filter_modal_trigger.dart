@@ -9,7 +9,7 @@ void showFilterModal(BuildContext context) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     builder: (_) {
       return BlocProvider(
         create: (_) => FilterBloc(ClearFiltersUseCase()),

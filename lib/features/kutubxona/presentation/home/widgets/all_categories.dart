@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 
 class AllCategories extends StatelessWidget {
-  const AllCategories({super.key});
-
+  const AllCategories({super.key, required this.itemCount});
+  final int itemCount;
   @override
   Widget build(BuildContext context) {
     List ruknlar = [
@@ -17,13 +17,10 @@ class AllCategories extends StatelessWidget {
       "Жахон адабиёти",
       "Жахон адабиёти",
     ];
-    return SizedBox(
-      width: double.infinity,
-      height: 270,
+    return Expanded(
       child: GridView.builder(
-        reverse: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 6,
+        itemCount: itemCount,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,

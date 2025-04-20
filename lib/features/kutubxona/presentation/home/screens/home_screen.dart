@@ -111,8 +111,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-
-                        const AllCategories(),
+                        // const AllCategories(itemCount: 6),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -143,4 +142,8 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+buildBottomNavigationBar() {
+  return BottomNavigationBar(items: []);
 }

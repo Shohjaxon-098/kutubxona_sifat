@@ -1,7 +1,6 @@
 // lib/features/kutubxona/data/datasources/category_remote_data_source.dart
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/category.dart';
-import 'package:dio/dio.dart';
 
 class CategoryRemoteDataSource {
   final Dio dio;

@@ -16,7 +16,7 @@ class SingleCategories extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: 4,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 1.8,
+          childAspectRatio: 1.9,
           crossAxisCount: 1,
           mainAxisSpacing: 10,
         ),
@@ -42,7 +42,7 @@ class SingleCategories extends StatelessWidget {
                 Text(
                   'SIYOSAT, FANTASTIKA',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: AppColors().searchInDark,
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
                   ),

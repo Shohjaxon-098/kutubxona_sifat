@@ -9,7 +9,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   final ClearFiltersUseCase clearFiltersUseCase;
 
   FilterBloc(this.clearFiltersUseCase)
-      : super(FilterState(filters: const FilterEntity())) {
+      : super(const FilterState(filters: FilterEntity())) {
     on<SelectYearEvent>((event, emit) {
       emit(state.copyWith(
         filters: state.filters.copyWith(selectedYear: event.year),
