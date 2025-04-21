@@ -17,7 +17,9 @@ class AllCategories extends StatelessWidget {
       "Жахон адабиёти",
       "Жахон адабиёти",
     ];
-    return Expanded(
+    double height = ((itemCount / 2).ceil()) * 95;
+    return SizedBox(
+      height: height,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: itemCount,
@@ -30,7 +32,7 @@ class AllCategories extends StatelessWidget {
             (context, index) => ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(color: AppColors().cardColor),
                 child: Center(
                   child: Text(

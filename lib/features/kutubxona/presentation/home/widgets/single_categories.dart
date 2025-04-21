@@ -13,6 +13,7 @@ class SingleCategories extends StatelessWidget {
       height: 250,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(left: 16),
         physics: const BouncingScrollPhysics(),
         itemCount: 4,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

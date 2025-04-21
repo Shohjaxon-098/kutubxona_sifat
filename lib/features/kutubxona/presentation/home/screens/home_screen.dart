@@ -50,7 +50,6 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Container(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(33),
@@ -62,72 +61,85 @@ class HomeScreen extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        search(
-                          context: context,
-                          enabled: true,
-                          onChanged: (query) {},
-                        ),
-                        const SizedBox(width: 16),
-                        GestureDetector(
-                          onTap: () => showFilterModal(context),
-                          child: Icon(
-                            Icons.dashboard,
-                            color: Theme.of(context).colorScheme.scrim,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 16,
+                      ),
+                      child: Row(
+                        children: [
+                          search(
+                            context: context,
+                            enabled: true,
+                            onChanged: (query) {},
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 16),
+                          GestureDetector(
+                            onTap: () => showFilterModal(context),
+                            child: Icon(
+                              Icons.dashboard,
+                              color: Theme.of(context).colorScheme.scrim,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
 
                     const SizedBox(height: 20),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Рукнлар',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                AppNavigator.pushNamed(
-                                  context,
-                                  AppRoutes.categoryScreen,
-                                );
-                              },
-                              child: Text(
-                                'Барчаси',
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Рукнлар',
                                 style: TextStyle(
-                                  color: AppColors().blue,
-                                  fontSize: 14,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        // const AllCategories(itemCount: 6),
-                      ],
+                              GestureDetector(
+                                onTap: () {
+                                  AppNavigator.pushNamed(
+                                    context,
+                                    AppRoutes.categoryScreen,
+                                  );
+                                },
+                                child: Text(
+                                  'Барчаси',
+                                  style: TextStyle(
+                                    color: AppColors().blue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const AllCategories(itemCount: 6),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
                     const Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Куннинг енг яхшилари',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Куннинг енг яхшилари',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(height: 12),
                         SingleCategories(),
