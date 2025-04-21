@@ -1,4 +1,3 @@
-
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/filter/filter_event.dart';
@@ -129,7 +128,9 @@ class FilterBottomSheet extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Icon(
-                                i < rating? Icons. star_rate_rounded:Icons.star_rate_outlined,
+                                i < rating
+                                    ? Icons.star_rate_sharp
+                                    : Icons.star_rate_outlined,
                                 size: 35,
                                 color:
                                     i < rating
@@ -149,9 +150,7 @@ class FilterBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 35),
                 child: PrimaryButton(
                   onPressed:
-                      () => context.read<FilterBloc>().add(
-                        ClearFiltersEvent(),
-                      ),
+                      () => context.read<FilterBloc>().add(ClearFiltersEvent()),
                   text: 'Тозалаш',
                 ),
               ),
