@@ -4,7 +4,7 @@ class BookEntity {
   final String name;
   final String category;
   final String image;
-  final double? rating;
+  final String? rating;
   final String author;
   final String publication;
   final String? publishedDate;
@@ -16,9 +16,9 @@ class BookEntity {
     required this.name,
     required this.category,
     required this.image,
+    this.rating,
     required this.author,
     required this.publication,
-    this.rating,
     this.publishedDate,
     this.reviewsCount,
   });

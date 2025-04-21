@@ -1,6 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_categories.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/category_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/category/category_state.dart';
 
 class CategoryBloc extends Cubit<CategoryState> {
   final GetCategories getCategories;

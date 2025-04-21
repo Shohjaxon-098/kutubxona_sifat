@@ -1,4 +1,4 @@
-import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
+import '../../domain/entities/book_entity.dart';
 
 class BookModel extends BookEntity {
   BookModel({
@@ -21,7 +21,7 @@ class BookModel extends BookEntity {
       name: json['name'],
       category: json['category'],
       image: json['image'],
-      rating: (json['rating'] is int) ? (json['rating'] as int).toDouble() : json['rating'],
+      rating: json['rating'],
       author: json['author'],
       publication: json['publication'],
       publishedDate: json['published_date'],
@@ -29,16 +29,18 @@ class BookModel extends BookEntity {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'slug': slug,
-        'name': name,
-        'category': category,
-        'image': image,
-        'rating': rating,
-        'author': author,
-        'publication': publication,
-        'published_date': publishedDate,
-        'reviews_count': reviewsCount,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'slug': slug,
+      'name': name,
+      'category': category,
+      'image': image,
+      'rating': rating,
+      'author': author,
+      'publication': publication,
+      'published_date': publishedDate,
+      'reviews_count': reviewsCount,
+    };
+  }
 }

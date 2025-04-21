@@ -1,21 +1,22 @@
-import 'package:dartz/dartz.dart';
-import 'package:kutubxona/core/error/failure.dart';
-import 'package:kutubxona/features/kutubxona/data/datasources/book_remote_data_source.dart';
+import 'package:dio/dio.dart';
+import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/book_repository.dart';
-import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
+import '../../domain/entities/book_entity.dart';
+
+import '../models/book_model.dart';
 
 class BookRepositoryImpl implements BookRepository {
-  final BookRemoteDataSource remoteDataSource;
+  final Dio dio;
 
-  BookRepositoryImpl(this.remoteDataSource);
+  BookRepositoryImpl(this.dio);
 
   @override
-  Future<Either<Failure, List<BookEntity>>> getBooks() async {
-    try {
-      final books = await remoteDataSource.getBooks();
-      return Right(books);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+  Future<List<BookEntity>> searchBooks(String query) async {
+    final response = await dio.get(
+      '$baseUrl/books/$libraryId/',
+      queryParameters: {'query': query},
+    );
+
+    return (response.data as List).map((e) => BookModel.fromJson(e)).toList();
   }
 }

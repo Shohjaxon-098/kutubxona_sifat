@@ -20,7 +20,7 @@ export 'package:kutubxona/features/kutubxona/presentation/auth/registration/regi
 export 'package:kutubxona/features/kutubxona/presentation/onboard/screens/onboarding_screen.dart';
 export 'package:kutubxona/features/kutubxona/presentation/splash/screens/splash_screen.dart';
 export 'package:page_transition/page_transition.dart';
-export 'package:kutubxona/features/kutubxona/data/models/book.dart';
+export 'package:kutubxona/features/kutubxona/data/models/book_model.dart';
 // export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_bloc.dart';
 // export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_event.dart';
 // export 'package:kutubxona/features/kutubxona/presentation/blocs/book_search/book_search_state.dart';

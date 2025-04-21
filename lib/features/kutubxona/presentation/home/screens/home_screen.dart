@@ -1,8 +1,30 @@
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+  bool showDropdown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        setState(() => showDropdown = false);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +92,15 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           search(
+                            focusNode: focusNode,
+                            controller: controller,
                             context: context,
                             enabled: true,
-                            onChanged: (query) {},
+                            onChanged: (query) {
+                              context.read<SearchBloc>().add(
+                                SearchQueryChanged(query),
+                              );
+                            },
                           ),
                           const SizedBox(width: 16),
                           GestureDetector(
@@ -85,7 +113,46 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-
+                    if (showDropdown)
+                      BlocBuilder<SearchBloc, SearchState>(
+                        builder: (context, state) {
+                          if (state is SearchLoading) {
+                            return const LinearProgressIndicator();
+                          } else if (state is SearchLoaded) {
+                            final books = state.books;
+                            if (books.isEmpty) {
+                              return const Text("Hech qanday kitob topilmadi.");
+                            }
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.grey.shade300),
+                              ),
+                              constraints: const BoxConstraints(maxHeight: 200),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: books.length,
+                                itemBuilder: (context, index) {
+                                  final book = books[index];
+                                  return ListTile(
+                                    title: Text(book.name),
+                                    subtitle: Text(book.author),
+                                    onTap: () {
+                                      controller.text = book.name;
+                                      focusNode.unfocus();
+                                      setState(() => showDropdown = false);
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                          } else if (state is SearchError) {
+                            return Text("Xatolik: ${state.message}");
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -131,7 +198,7 @@ class HomeScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              Text( 
                                 'Куннинг енг яхшилари',
                                 style: TextStyle(
                                   fontSize: 18,
