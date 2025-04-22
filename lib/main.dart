@@ -1,6 +1,7 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;
 
 void main() async {
@@ -45,12 +46,15 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider<OtpBloc>(create: (_) => sl<OtpBloc>()),
         BlocProvider(create: (context) => TimerBloc()),
         BlocProvider(create: (context) => sl<SearchBloc>()),
+        BlocProvider(
+          create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
+        ),
       ],
       child: MaterialApp(
         title: 'Kutubxona',
         theme: theme(),
         darkTheme: darkTheme(),
-        home: const HomeScreen(),
+        home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute, // Link routes
         initialRoute: AppRoutes.splash, // Set the initial route

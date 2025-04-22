@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/features/kutubxona/presentation/auth/login/login.dart';
+import 'package:kutubxona/features/kutubxona/presentation/region/screens/select_region.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -90,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const Login()),
+                  MaterialPageRoute(builder: (context) => const SelectRegion()),
                 );
               },
               child: Text(

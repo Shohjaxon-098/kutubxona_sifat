@@ -19,8 +19,8 @@ buildAppbar(BuildContext context) {
   );
 }
 
-buildBody(BuildContext context) {
-  return Padding(
+Widget buildBody(BuildContext context) {
+  return SingleChildScrollView(
     padding: const EdgeInsets.only(left: 16, right: 16, top: 11),
     child: Column(
       children: [
@@ -32,7 +32,7 @@ buildBody(BuildContext context) {
   );
 }
 
-buildSearch(BuildContext context) {
+Widget buildSearch(BuildContext context) {
   return Row(
     children: [
       search(context: context, enabled: true, onChanged: (query) {}),

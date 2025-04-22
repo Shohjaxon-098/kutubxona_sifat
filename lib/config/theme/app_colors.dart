@@ -9,7 +9,7 @@ class AppColors {
   final Color disableDot = Colors.grey.shade200;
   final Color black = Colors.black;
   final Color border = const Color(0xffEDEDED);
-  final Color hintColor = const Color(0xffD0D5DD);
+  final Color hintColor = const Color(0xff9A9A9A);
   final Color blue = Colors.blue;
   final Color cardColor = const Color(0xff28397C);
   final Color grey = Colors.grey;

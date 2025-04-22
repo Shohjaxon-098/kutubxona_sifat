@@ -1,7 +1,7 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
 
 class HomeScreen extends StatefulWidget {

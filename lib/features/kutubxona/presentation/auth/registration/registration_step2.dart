@@ -124,10 +124,11 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                                 : null,
                   ),
                   const SizedBox(height: 16),
-                  const Text("Жинс"),
-                  GenderSelector(
-                    genders: ['Эркак', 'Аёл'],
-                    selectedGender: selectedGender,
+
+                  CustomDropdown(
+                    label: 'Жинс',
+                    items: ['Эркак', 'Аёл'],
+                    selectedItem: selectedGender,
                     onChanged:
                         (value) => setState(() => selectedGender = value),
                   ),

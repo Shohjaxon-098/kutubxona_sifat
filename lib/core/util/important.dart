@@ -30,7 +30,7 @@ export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/r
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_state.dart';
 export 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
 export 'package:kutubxona/features/kutubxona/presentation/auth/registration/widgets/image.dart';
-export 'package:kutubxona/features/kutubxona/presentation/widgets/gender_selector.dart';
+export 'package:kutubxona/features/kutubxona/presentation/widgets/custom_selecter.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/primary_button.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_bloc.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_event.dart';
