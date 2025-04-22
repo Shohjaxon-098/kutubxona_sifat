@@ -7,7 +7,7 @@ class LocalStorage {
     await _box.put("phone", phone);
   }
 
-  static Future<String?> getPhone() async {
+  static String? get getPhone {
     return _box.get("phone");
   }
 

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:kutubxona/core/util/important.dart';
 
 // Bloc
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_bloc.dart';
 

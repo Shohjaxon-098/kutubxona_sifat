@@ -26,7 +26,6 @@ export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/r
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_event.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step2/register_step2_state.dart';
 export 'package:kutubxona/features/kutubxona/data/models/register_step2.dart';
-export 'package:kutubxona/features/kutubxona/presentation/auth/registration/widgets/image.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/custom_selecter.dart';
 export 'package:kutubxona/features/kutubxona/presentation/widgets/primary_button.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_bloc.dart';
@@ -53,6 +52,11 @@ export 'package:kutubxona/features/kutubxona/presentation/blocs/register_step1/r
 export 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/screens/booksearch_screen.dart';
 export 'package:kutubxona/features/kutubxona/domain/entities/library_entity.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_bloc.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_event.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_state.dart';
+export 'package:flutter_svg/flutter_svg.dart';
+export 'package:kutubxona/features/kutubxona/presentation/region/screens/select_region.dart';
+export 'package:kutubxona/features/kutubxona/domain/entities/register_step2_entity.dart';
+export 'package:kutubxona/features/kutubxona/presentation/widgets/image_picker_helper.dart';
+export 'package:kutubxona/core/util/validators.dart';

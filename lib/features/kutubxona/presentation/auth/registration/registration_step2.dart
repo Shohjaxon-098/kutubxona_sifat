@@ -1,5 +1,4 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/domain/entities/register_step2_entity.dart';
 
 class RegisterStep2Screen extends StatefulWidget {
   const RegisterStep2Screen({super.key});
@@ -25,15 +24,13 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   String? apiErrorMessage;
 
   Future<void> pickImage(bool isFront) async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-    );
+    final pickedFile = await pickImageFromCamera();
     if (pickedFile != null) {
       setState(() {
         if (isFront) {
-          docFront = File(pickedFile.path);
+          docFront = pickedFile;
         } else {
-          docBack = File(pickedFile.path);
+          docBack = pickedFile;
         }
       });
     }
@@ -69,10 +66,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         documentNumber: passportInfoController.text,
         documentFile1Path: docFront!,
         documentFile2Path: docBack!,
-        libraryId:AppConfig. libraryId.toString(),
+        libraryId: AppConfig.libraryId.toString(),
         userId: userId,
       );
-      print(entity.documentFile1Path);
       context.read<RegisterStep2Bloc>().add(
         SubmitRegisterStep2Event(entity: entity),
       );
@@ -112,19 +108,13 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  TextFieldInput(
-                    label: "Исмингиз",
-                    controller: nameController,
-                    hint: 'Исмингиз',
-                    keyboardType: TextInputType.name,
-                    validator:
-                        (val) =>
-                            val == null || val.isEmpty
-                                ? "Илтимос, исмни киритинг"
-                                : null,
+                  buildTextField(
+                    "Исмингиз",
+                    nameController,
+                    TextInputType.name,
+                    validateRequired,
                   ),
                   const SizedBox(height: 16),
-
                   CustomDropdown(
                     label: 'Жинс',
                     items: ['Эркак', 'Аёл'],
@@ -133,58 +123,33 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         (value) => setState(() => selectedGender = value),
                   ),
                   const SizedBox(height: 16),
-                  TextFieldInput(
-                    label: "Парол",
-                    controller: passwordController,
-                    obscure: obsure,
-                    hint: "***********",
-                    validator:
-                        (val) =>
-                            val == null || val.length < 6
-                                ? "Камида 6 та белгидан иборат парол киритинг"
-                                : null,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        obsure ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () => setState(() => obsure = !obsure),
-                    ),
+                  buildTextField(
+                    "Парол",
+                    passwordController,
+                    TextInputType.text,
+                    validatePassword,
+                    obscure: true,
                   ),
                   const SizedBox(height: 16),
-                  TextFieldInput(
-                    label: "Фамилиянгиз",
-                    controller: surnameController,
-                    hint: 'Фамилиянгиз',
-                    keyboardType: TextInputType.name,
-                    validator:
-                        (val) =>
-                            val == null || val.isEmpty
-                                ? "Илтимос, фамилияни киритинг"
-                                : null,
+                  buildTextField(
+                    "Фамилиянгиз",
+                    surnameController,
+                    TextInputType.name,
+                    validateRequired,
                   ),
                   const SizedBox(height: 16),
-                  TextFieldInput(
-                    label: "Телеграм username",
-                    controller: telegramController,
-                    hint: 'Телеграм ID',
-                    keyboardType: TextInputType.text,
-                    validator:
-                        (val) =>
-                            val == null || val.isEmpty
-                                ? "Илтимос, Telegram ID киритинг"
-                                : null,
+                  buildTextField(
+                    "Телеграм username",
+                    telegramController,
+                    TextInputType.text,
+                    validateRequired,
                   ),
                   const SizedBox(height: 16),
-                  TextFieldInput(
-                    label: "Туғилган санаси",
-                    controller: birthDateController,
-                    hint: "кк.оо.йййй",
-                    keyboardType: TextInputType.datetime,
-                    validator:
-                        (val) =>
-                            val == null || val.isEmpty
-                                ? "Илтимос, туғилган санани киритинг"
-                                : null,
+                  buildTextField(
+                    "Туғилган санаси",
+                    birthDateController,
+                    TextInputType.datetime,
+                    validateRequired,
                   ),
                   const SizedBox(height: 16),
                   const Text(
@@ -214,22 +179,13 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     title: const Text("Туғилганлик ҳақида гувоҳнома"),
                   ),
                   const SizedBox(height: 16),
-                  TextFieldInput(
-                    label:
-                        documentType == 'passport'
-                            ? "Паспорт маълумотлари *"
-                            : "Гувоҳнома ID рақами *",
-                    controller: passportInfoController,
-                    hint:
-                        documentType == 'passport'
-                            ? "Паспорт серия рақами | ЖШИР"
-                            : "ID рақами",
-                    keyboardType: TextInputType.text,
-                    validator:
-                        (val) =>
-                            val == null || val.isEmpty
-                                ? "Илтимос, хужжат маълумотини киритинг"
-                                : null,
+                  buildTextField(
+                    documentType == 'passport'
+                        ? "Паспорт маълумотлари *"
+                        : "Гувоҳнома ID рақами *",
+                    passportInfoController,
+                    TextInputType.text,
+                    validateRequired,
                   ),
                   if (documentType == 'passport') ...[
                     const SizedBox(height: 16),
@@ -259,6 +215,41 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildTextField(
+    String label,
+    TextEditingController controller,
+    TextInputType keyboardType,
+    String? Function(String?) validator, {
+    bool obscure = false,
+  }) {
+    return TextFieldInput(
+      label: label,
+      controller: controller,
+      hint: label,
+      keyboardType: keyboardType,
+      validator: validator,
+      obscure: obscure,
+    );
+  }
+
+  Widget imageBox({File? file, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child:
+            file == null
+                ? const Icon(Icons.camera_alt, size: 50)
+                : Image.file(file, fit: BoxFit.cover),
       ),
     );
   }

@@ -5,16 +5,19 @@ class OtpWidget extends StatelessWidget {
   const OtpWidget({
     super.key,
     required this.otpController,
-
     required this.focusNode,
     this.nextNode,
     this.previousNode,
+    this.isFirst,
+    this.isLast,
   });
   final TextEditingController otpController;
 
   final FocusNode focusNode;
   final FocusNode? nextNode;
   final FocusNode? previousNode;
+  final bool? isFirst;
+  final bool? isLast;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -23,19 +26,21 @@ class OtpWidget extends StatelessWidget {
       child: Center(
         child: TextFormField(
           focusNode: focusNode,
-
           cursorHeight: 20,
           controller: otpController,
-
           style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           keyboardType: TextInputType.number,
           onChanged: (value) {
-            if (value.isNotEmpty && nextNode != null) {
-              FocusScope.of(context).requestFocus(nextNode);
-            } else if (value.isEmpty && previousNode != null) {
-              FocusScope.of(context).requestFocus(previousNode);
+            if (value.length == 1) {
+              if (nextNode != null) {
+                FocusScope.of(context).requestFocus(nextNode);
+              }
+            } else if (value.isEmpty) {
+              if (previousNode != null) {
+                FocusScope.of(context).requestFocus(previousNode);
+              }
             }
           },
           decoration: const InputDecoration(

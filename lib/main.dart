@@ -1,6 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/region/screens/select_region.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;

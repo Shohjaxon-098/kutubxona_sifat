@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/features/kutubxona/presentation/onboard/screens/onboarding_screen.dart';
-// HomeScreen import qilish
+import 'package:kutubxona/core/util/important.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,28 +11,33 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
+  static const splashDuration = Duration(seconds: 3);
+  static const delayDuration = Duration(seconds: 4);
+
   @override
   void initState() {
     super.initState();
+    _initAnimation();
+    _navigateToNextScreen();
+  }
 
-    _controller = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    )..forward();
+  void _initAnimation() {
+    _controller = AnimationController(duration: splashDuration, vsync: this)
+      ..forward();
+  }
 
-    Future.delayed(const Duration(seconds: 4), () async {
-      // // final userData = await LocalStorage.getUserData();
+  void _navigateToNextScreen() {
+    Future.delayed(delayDuration, () async {
+      // Simulate user authentication check or initialization here
+      // final userData = await LocalStorage.getUserData();
 
       // if (userData != null) {
-      //   // oldin ro'yxatdan o'tgan foydalanuvchi
       //   Navigator.pushReplacementNamed(context, AppRoutes.home);
       // } else {
-
+      //   Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
       // }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-      );
+
+      AppNavigator.pushReplacementNamed(context, AppRoutes.onBoardScreen);
     });
   }
 
@@ -53,31 +54,43 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(AppImages().splashLogo, width: 140, height: 140),
+            _buildSplashLogo(),
             const SizedBox(height: 8),
-            const Text(
-              "Liber",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
+            _buildSplashText(),
             const SizedBox(height: 170),
-            SizedBox(
-              width: 240,
-              child: AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return LinearProgressIndicator(
-                    borderRadius: BorderRadius.circular(5),
-                    value: _controller.value, // Animatsiyalashgan qiymat
-                    backgroundColor: AppColors().linerBackgroundColor,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors().linerValueColor,
-                    ),
-                  );
-                },
-              ),
-            ),
+            _buildProgressBar(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSplashLogo() {
+    return Image.asset(AppImages().splashLogo, width: 140, height: 140);
+  }
+
+  Widget _buildSplashText() {
+    return const Text(
+      "Liber",
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+    );
+  }
+
+  Widget _buildProgressBar() {
+    return SizedBox(
+      width: 240,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return LinearProgressIndicator(
+            borderRadius: BorderRadius.circular(5),
+            value: _controller.value,
+            backgroundColor: AppColors().linerBackgroundColor,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              AppColors().linerValueColor,
+            ),
+          );
+        },
       ),
     );
   }
