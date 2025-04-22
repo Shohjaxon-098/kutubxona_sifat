@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/data/datasources/otp_remote_datasource.dart';
@@ -9,7 +8,6 @@ import 'package:kutubxona/features/kutubxona/domain/repository/otp_repository.da
 import 'package:kutubxona/features/kutubxona/domain/usecases/searchs_book_usecases.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/verify_otp_usecase.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/otp/otp_bloc.dart';
 
 final sl = GetIt.instance;
 

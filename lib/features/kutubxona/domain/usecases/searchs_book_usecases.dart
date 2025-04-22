@@ -1,6 +1,6 @@
 import 'package:kutubxona/features/kutubxona/domain/repository/book_repository.dart';
 
-import '../entities/book_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
 
 class SearchBooks {
   final BookRepository repository;

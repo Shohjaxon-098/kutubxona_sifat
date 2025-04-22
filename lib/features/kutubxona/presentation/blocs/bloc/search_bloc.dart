@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/searchs_book_usecases.dart';
-import 'search_event.dart';
-import 'search_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchBooks searchBooks;

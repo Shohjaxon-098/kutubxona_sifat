@@ -1,4 +1,4 @@
-import '../../domain/entities/book_entity.dart';
+import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
 
 class BookModel extends BookEntity {
   BookModel({
