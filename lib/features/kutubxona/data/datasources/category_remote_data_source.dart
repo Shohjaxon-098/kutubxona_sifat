@@ -7,8 +7,8 @@ class CategoryRemoteDataSource {
 
   CategoryRemoteDataSource({required this.dio});
 
-  Future<List<Category>> getCategories() async {
-    final response = await dio.get('$baseUrl/$libraryId/categories/');
+  Future<List<Category>> getCategories() async {final id = await AppConfig.libraryId.toString();
+    final response = await dio.get('${AppConfig.baseUrl}/$id/categories/');
     List<Category> categories = (response.data as List)
         .map((categoryJson) => Category.fromJson(categoryJson))
         .toList();

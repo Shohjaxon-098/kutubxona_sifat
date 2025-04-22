@@ -1,6 +1,5 @@
 import 'package:kutubxona/core/util/important.dart';
 
-
 class RegisterVerify extends StatefulWidget {
   const RegisterVerify({super.key});
 
@@ -221,6 +220,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                             ),
                           ),
                           onPressed: () async {
+                            final id = await AppConfig.libraryId.toString();
                             final otpCode =
                                 controllers.map((c) => c.text).join();
                             final phoneNumber = await LocalStorage.getPhone();
@@ -228,7 +228,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                             context.read<OtpBloc>().add(
                               SubmitOtp(
                                 phoneNumber: phoneNumber.toString(),
-                                libraryId: libraryId,
+                                libraryId: id,
                                 otp: int.parse(otpCode),
                               ),
                             );

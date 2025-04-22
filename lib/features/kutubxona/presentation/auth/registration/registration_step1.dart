@@ -106,11 +106,11 @@ class _RegisterStep1FormState extends State<RegisterStep1Form> {
                     onPressed: () async {
                       final phone = phoneController.text.trim();
                       await LocalStorage.savePhone(phone);
+                      final id = await AppConfig.libraryId.toString();
+
+                      // ignore: use_build_context_synchronously
                       context.read<RegisterStep1Bloc>().add(
-                        SubmitPhoneNumber(
-                          phoneNumber: phone,
-                          libraryId: libraryId,
-                        ),
+                        SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
                       );
                     },
                     child: Text(

@@ -1,1 +1,0 @@
-final String baseUrl='https://library.sifatdev.uz/api/v1';

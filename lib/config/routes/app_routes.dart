@@ -6,7 +6,7 @@ class AppRoutes {
   // Define route names
   static const String splash = '/';
   static const String home = '/home';
-  static const String signIn = '/signIn';
+  static const String login = '/login';
   static const String registerStep1Screen = '/registerStep1';
   static const String registerVerify = '/registerVerify';
   static const String onBoardScreen = '/onBoardScreen';
@@ -29,7 +29,7 @@ class AppRoutes {
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 300),
         );
-      case signIn:
+      case login:
         return MaterialPageRoute(builder: (context) => const Login());
       case registerStep1Screen:
         return PageTransition(

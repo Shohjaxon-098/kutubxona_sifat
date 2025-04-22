@@ -69,7 +69,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         documentNumber: passportInfoController.text,
         documentFile1Path: docFront!,
         documentFile2Path: docBack!,
-        libraryId: libraryId,
+        libraryId:AppConfig. libraryId.toString(),
         userId: userId,
       );
       print(entity.documentFile1Path);

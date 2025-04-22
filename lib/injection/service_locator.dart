@@ -29,7 +29,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // External
-  sl.registerLazySingleton(() => Dio(BaseOptions(baseUrl: baseUrl)));
+  sl.registerLazySingleton(() => Dio(BaseOptions(baseUrl: AppConfig.baseUrl)));
 
   // === OTP ===
   sl.registerFactory(() => OtpBloc(sl()));
@@ -46,6 +46,10 @@ Future<void> init() async {
   // === Library ===
   sl.registerFactory(() => LibraryBloc(sl()));
   sl.registerLazySingleton(() => GetLibrariesUseCase(sl()));
-  sl.registerLazySingleton<LibraryRepository>(() => LibraryRepositoryImpl(remoteDataSource: sl()));
-  sl.registerLazySingleton<LibraryRemoteDataSource>(() => LibraryRemoteDataSourceImpl(dio: sl()));
+  sl.registerLazySingleton<LibraryRepository>(
+    () => LibraryRepositoryImpl(remoteDataSource: sl()),
+  );
+  sl.registerLazySingleton<LibraryRemoteDataSource>(
+    () => LibraryRemoteDataSourceImpl(dio: sl()),
+  );
 }

@@ -14,7 +14,7 @@ class OtpRemoteDataSourceImpl implements OtpRemoteDataSource {
   @override
   Future<void> verifyOtp(OtpVerifyModel model) async {
     final response = await dio.post(
-      '$baseUrl/account/register/verify/',
+      '${AppConfig.baseUrl}/account/register/verify/',
       data: model.toJson(),
       options: Options(headers: {'Content-Type': 'application/json'}),
     );

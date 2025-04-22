@@ -11,9 +11,9 @@ class BookRepositoryImpl implements BookRepository {
   BookRepositoryImpl(this.dio);
 
   @override
-  Future<List<BookEntity>> searchBooks(String query) async {
+  Future<List<BookEntity>> searchBooks(String query) async {final id = await AppConfig.libraryId.toString();
     final response = await dio.get(
-      '$baseUrl/books/$libraryId/',
+      '${AppConfig.baseUrl}/books/$id/',
       queryParameters: {'query': query},
     );
 

@@ -1,7 +1,4 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/library_state.dart';
 
 class SelectRegion extends StatefulWidget {
   const SelectRegion({super.key});
@@ -12,11 +9,150 @@ class SelectRegion extends StatefulWidget {
 
 class _SelectRegionState extends State<SelectRegion> {
   String? selectedRegion;
+  String? selectedDistrict;
+  String? selectedLibrary;
+
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
-    context.read<LibraryBloc>().add(FetchLibrariesEvent());
     super.initState();
+    context.read<LibraryBloc>().add(FetchLibrariesEvent());
+  }
+
+  List<String> getRegions(List<LibraryEntity> data) =>
+      data.map((e) => e.region).toSet().toList();
+
+  List<String> getDistricts(List<LibraryEntity> data, String region) =>
+      data
+          .where((e) => e.region == region)
+          .map((e) => e.district)
+          .toSet()
+          .toList();
+
+  List<String> getLibraries(
+    List<LibraryEntity> data,
+    String region,
+    String district,
+  ) =>
+      data
+          .where((e) => e.region == region && e.district == district)
+          .map((e) => e.name)
+          .toList();
+
+  Widget _buildHeaderCard() {
+    return Container(
+      width: double.infinity,
+      height: 260,
+      decoration: BoxDecoration(
+        color: AppColors().cardColor,
+        borderRadius: BorderRadius.circular(24),
+        image: DecorationImage(
+          image: AssetImage(AppImages().mask),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 84,
+              height: 84,
+              decoration: BoxDecoration(
+                color: AppColors().white,
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 0,
+                    spreadRadius: 5,
+                    color: AppColors().cardShadow,
+                  ),
+                ],
+                image: DecorationImage(
+                  image: AssetImage(AppImages().splashLogo),
+                  scale: 11,
+                ),
+              ),
+            ),
+            const SizedBox(height: 33),
+            Text(
+              'Қайси худуддаги кутубхоналардан фойдаланмоқчисиз?',
+              style: TextStyle(
+                color: AppColors().white,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDropdowns(List<LibraryEntity> libraries) {
+    return Column(
+      children: [
+        CustomDropdown(
+          items: getRegions(libraries),
+          onChanged: (value) {
+            setState(() {
+              selectedRegion = value;
+              selectedDistrict = null;
+              selectedLibrary = null;
+            });
+          },
+          selectedItem: selectedRegion,
+          label: 'Вилоят',
+          hintText: 'Вилоят',
+        ),
+        const SizedBox(height: 24),
+        CustomDropdown(
+          items:
+              selectedRegion != null
+                  ? getDistricts(libraries, selectedRegion!)
+                  : [],
+          onChanged: (value) {
+            setState(() {
+              selectedDistrict = value;
+              selectedLibrary = null;
+            });
+          },
+          selectedItem: selectedDistrict,
+          label: 'Туман',
+          hintText: 'Туман',
+        ),
+        const SizedBox(height: 24),
+        CustomDropdown(
+          items:
+              (selectedRegion != null && selectedDistrict != null)
+                  ? getLibraries(libraries, selectedRegion!, selectedDistrict!)
+                  : [],
+          onChanged: (value) {
+            setState(() {
+              selectedLibrary = value;
+            });
+          },
+          selectedItem: selectedLibrary,
+          label: 'Кутубхона',
+          hintText: 'Кутубхона',
+        ),
+      ],
+    );
+  }
+
+  void _handleContinue(List<LibraryEntity> libraries) async {
+    await libraries.firstWhere(
+      (e) =>
+          e.region == selectedRegion &&
+          e.district == selectedDistrict &&
+          e.name == selectedLibrary,
+      orElse: () => throw Exception("Tanlangan kutubxona topilmadi"),
+    );
+
+    AppNavigator.pushNamed(context, AppRoutes.login);
   }
 
   @override
@@ -26,117 +162,50 @@ class _SelectRegionState extends State<SelectRegion> {
       body: Form(
         key: _formKey,
         child: SafeArea(
-          child: BlocBuilder<LibraryBloc, LibraryState>(
-            builder: (context, state) {
-              if (state is LibraryLoading) {
-                return const CircularProgressIndicator();
-              } else if (state is LibraryLoaded) {
-                return SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 260,
-                          decoration: BoxDecoration(
-                            color: AppColors().cardColor,
-                            borderRadius: BorderRadius.circular(24),
-                            image: DecorationImage(
-                              image: AssetImage(AppImages().mask),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 84,
-                                height: 84,
-                                decoration: BoxDecoration(
-                                  color: AppColors().white,
-                                  borderRadius: BorderRadius.circular(28),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 0,
-                                      spreadRadius: 5,
-                                      color: AppColors().cardShadow,
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                    image: AssetImage(AppImages().splashLogo),
-                                    scale: 11,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 33),
-                              Text(
-                                'Қайси худуддаги кутубхоналардан фойдаланмоқчиси?',
-                                style: TextStyle(
-                                  color: AppColors().white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        CustomDropdown(
-                          items: [],
-                          onChanged: (value) {},
-                          selectedItem: selectedRegion,
-                          label: 'Вилоят',
-                          hintText: 'Вилоят',
-                        ),
-                        const SizedBox(height: 24),
-                        CustomDropdown(
-                          items: [],
-                          onChanged: (value) {},
-                          selectedItem: selectedRegion,
-                          label: 'Туман',
-                          hintText: 'Туман',
-                        ),
-
-                        const SizedBox(height: 24),
-                        CustomDropdown(
-                          items: [],
-                          onChanged: (value) {},
-                          selectedItem: selectedRegion,
-                          label: 'Кутубхона',
-                          hintText: 'Кутубхона',
-                        ),
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.1,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors().primaryColor,
-                            minimumSize: const Size(double.infinity, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          onPressed: () {
-                            AppNavigator.pushNamed(context, AppRoutes.home);
-                          },
-                          child: Text(
-                            "Давом этиш",
-                            style: TextStyle(color: AppColors().white),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-                    ),
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildHeaderCard(),
+                  const SizedBox(height: 30),
+                  BlocBuilder<LibraryBloc, LibraryState>(
+                    builder: (context, state) {
+                      if (state is LibraryLoaded) {
+                        return _buildDropdowns(state.libraries);
+                      }
+                      return const SizedBox();
+                    },
                   ),
-                );
-              }
-              return const SizedBox();
-            },
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
+                  BlocBuilder<LibraryBloc, LibraryState>(
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors().primaryColor,
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (state is LibraryLoaded) {
+                            _handleContinue(state.libraries);
+                          }
+                        },
+                        child: Text(
+                          "Давом этиш",
+                          style: TextStyle(color: AppColors().white),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                ],
+              ),
+            ),
           ),
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:kutubxona/core/util/important.dart';
 
-
 abstract class BookRemoteDataSource {
   Future<List<BookModel>> getBooks();
 }
@@ -12,7 +11,10 @@ class BookRemoteDataSourceImpl implements BookRemoteDataSource {
 
   @override
   Future<List<BookModel>> getBooks() async {
-    final response = await dio.get('$baseUrl/books/$libraryId');
+    final id = await AppConfig.libraryId.toString();
+    final response = await dio.get(
+      '${AppConfig.baseUrl}/books/$id',
+    );
 
     if (response.statusCode == 200) {
       final List data = response.data;

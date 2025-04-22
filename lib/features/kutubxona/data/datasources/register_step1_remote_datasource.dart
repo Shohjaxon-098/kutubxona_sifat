@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kutubxona/features/kutubxona/data/models/register_step1.dart';
-import 'package:kutubxona/service/base_url.dart';
+import 'package:kutubxona/core/constants/app_config.dart';
 
 abstract class RegisterStep1RemoteDataSource {
   Future<void> registerPhone(RegisterStep1Model model);
@@ -15,7 +15,7 @@ class RegisterStep1RemoteDataSourceImpl
   @override
   Future<void> registerPhone(RegisterStep1Model model) async {
     final response = await dio.post(
-      "$baseUrl/account/register/step1/", // 🔁 Bu yerga API endpoint URL qo‘ying
+      "${AppConfig.baseUrl}/account/register/step1/", // 🔁 Bu yerga API endpoint URL qo‘ying
       data: model.toJson(),
     );
     if (response.statusCode != 201) {

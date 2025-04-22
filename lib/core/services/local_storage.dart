@@ -20,10 +20,10 @@ class LocalStorage {
   }
 
   static Future<void> saveLibraryId(String id) async {
-    await _box.put("library_id", id);
+    await _box.put("id", id);
   }
 
-  static Future<String?> getLibraryId() async {
-    return _box.get("library_id");
-  }
+ static String? get libraryId {
+  return _box.get("id");
+}
 }

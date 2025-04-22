@@ -16,7 +16,7 @@ class RegisterStep2RemoteDataSourceImpl
   Future<void> submitRegisterStep2(RegisterStep2Model model) async {
     final formData = model.toFormData();
     final response = await dio.post(
-      '$baseUrl/account/register/step2/',
+      '${AppConfig.baseUrl}/account/register/step2/',
       data: formData,
     );
 
