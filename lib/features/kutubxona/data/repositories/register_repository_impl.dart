@@ -22,8 +22,6 @@ class RegisterStep2RepositoryImpl implements RegisterStep2Repository {
       birthDate: entity.birthDate,
       documentType: entity.documentType,
       documentNumber: entity.documentNumber,
-      documentFile1Path: entity.documentFile1Path,
-      documentFile2Path: entity.documentFile2Path,
       libraryId: entity.libraryId,
       userId: entity.userId,
     );

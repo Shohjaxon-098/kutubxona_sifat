@@ -14,8 +14,6 @@ class RegisterStep2Model extends RegisterStep2Entity {
     required super.birthDate,
     required super.documentType,
     required super.documentNumber,
-    required super.documentFile1Path,
-    required super.documentFile2Path,
     required super.libraryId,
     required super.userId,
   });
@@ -30,8 +28,6 @@ class RegisterStep2Model extends RegisterStep2Entity {
       'birth_date': birthDate,
       'document_type': documentType,
       'document_number': documentNumber,
-      'document_file1': documentFile1Path,
-      'document_file2': documentFile2Path,
       'library_id': libraryId,
       'user_id': userId,
     });

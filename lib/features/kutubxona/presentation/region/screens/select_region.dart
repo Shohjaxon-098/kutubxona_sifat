@@ -13,11 +13,12 @@ class _SelectRegionState extends State<SelectRegion> {
   String? selectedLibrary;
 
   final _formKey = GlobalKey<FormState>();
-
+  late List<LibraryEntity> libraries;
   @override
   void initState() {
     super.initState();
     context.read<LibraryBloc>().add(FetchLibrariesEvent());
+    libraries = [];
   }
 
   List<String> getRegions(List<LibraryEntity> data) =>
@@ -174,31 +175,21 @@ class _SelectRegionState extends State<SelectRegion> {
                   BlocBuilder<LibraryBloc, LibraryState>(
                     builder: (context, state) {
                       if (state is LibraryLoaded) {
-                        return _buildDropdowns(state.libraries);
+                        libraries = state.libraries;
                       }
-                      return const SizedBox();
+                      return _buildDropdowns(libraries);
                     },
                   ),
                   SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
                   BlocBuilder<LibraryBloc, LibraryState>(
                     builder: (context, state) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors().primaryColor,
-                          minimumSize: const Size(double.infinity, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
+                      return PrimaryButton(
                         onPressed: () {
                           if (state is LibraryLoaded) {
                             _handleContinue(state.libraries);
                           }
                         },
-                        child: Text(
-                          "Давом этиш",
-                          style: TextStyle(color: AppColors().white),
-                        ),
+                        text: "Давом этиш",
                       );
                     },
                   ),

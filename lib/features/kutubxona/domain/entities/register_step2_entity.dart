@@ -1,6 +1,4 @@
-// lib/features/register_step2/domain/entities/register_step2_entity.dart
-
-import 'dart:io';
+import 'package:kutubxona/core/util/important.dart';
 
 class RegisterStep2Entity {
   final String firstName;
@@ -11,10 +9,10 @@ class RegisterStep2Entity {
   final String birthDate;
   final String documentType;
   final String documentNumber;
-  final File documentFile1Path;
-  final File documentFile2Path;
   final String libraryId;
   final int userId;
+  final File? documentFront;
+  final File? documentBack;
 
   RegisterStep2Entity({
     required this.firstName,
@@ -25,9 +23,29 @@ class RegisterStep2Entity {
     required this.birthDate,
     required this.documentType,
     required this.documentNumber,
-    required this.documentFile1Path,
-    required this.documentFile2Path,
     required this.libraryId,
-    required this.userId
+    required this.userId,
+    this.documentFront,
+    this.documentBack,
   });
+
+  RegisterStep2Entity copyWith({
+    File? documentFront,
+    File? documentBack,
+  }) {
+    return RegisterStep2Entity(
+      firstName: firstName,
+      lastName: lastName,
+      selectGender: selectGender,
+      password: password,
+      telegramId: telegramId,
+      birthDate: birthDate,
+      documentType: documentType,
+      documentNumber: documentNumber,
+      libraryId: libraryId,
+      userId: userId,
+      documentFront: documentFront ?? this.documentFront,
+      documentBack: documentBack ?? this.documentBack,
+    );
+  }
 }

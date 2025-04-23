@@ -64,9 +64,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         birthDate: birthDateController.text,
         documentType: documentType!,
         documentNumber: passportInfoController.text,
-        documentFile1Path: docFront!,
-        documentFile2Path: docBack!,
         libraryId: AppConfig.libraryId.toString(),
+        documentFront: docFront!,
+        documentBack: docBack!,
         userId: userId,
       );
       context.read<RegisterStep2Bloc>().add(
@@ -157,6 +157,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   RadioListTile<String>(
+                    activeColor: AppColors().searchInDark,
                     value: 'passport',
                     groupValue: documentType,
                     onChanged:
@@ -168,6 +169,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     title: const Text("Паспорт"),
                   ),
                   RadioListTile<String>(
+                    activeColor: AppColors().searchInDark,
                     value: 'birth_certificate',
                     groupValue: documentType,
                     onChanged:

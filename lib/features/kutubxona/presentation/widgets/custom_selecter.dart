@@ -21,8 +21,9 @@ class CustomDropdown extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: TextStyle(fontWeight: FontWeight.w600)),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         DropdownButtonFormField<String>(
+          isDense: true,
           borderRadius: BorderRadius.circular(16),
           dropdownColor: Theme.of(context).colorScheme.surface,
           value: selectedItem,
@@ -39,6 +40,7 @@ class CustomDropdown extends StatelessWidget {
                 return DropdownMenuItem(value: item, child: Text(item));
               }).toList(),
           onChanged: onChanged,
+    
           icon: Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors().hintColor,
