@@ -1,10 +1,17 @@
-import 'dart:io';
+part of 'upload_image_bloc.dart';
 
-abstract class UploadMediaEvent {}
+abstract class UploadImageEvent extends Equatable {
+  const UploadImageEvent();
 
-class UploadMediaStarted extends UploadMediaEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class StartUploadImage extends UploadImageEvent {
   final File file;
-  final String type;
 
-  UploadMediaStarted({required this.file, required this.type});
+  const StartUploadImage(this.file);
+
+  @override
+  List<Object?> get props => [file];
 }

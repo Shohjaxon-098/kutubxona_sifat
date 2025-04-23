@@ -1,4 +1,8 @@
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/kutubxona/data/datasources/common_remote_data_source.dart';
+import 'package:kutubxona/features/kutubxona/data/repositories/common_repository_impl.dart';
+import 'package:kutubxona/features/kutubxona/domain/usecases/upload_image_usecase.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/upload_image_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
@@ -49,6 +53,14 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SearchBloc>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
+        ),
+        BlocProvider(
+          create:
+              (context) => UploadImageBloc(
+                uploadImageUseCase: UploadImageUseCase(
+                  CommonRepositoryImpl(CommonRemoteDataSourceImpl(Dio())),
+                ),
+              ),
         ),
       ],
       child: MaterialApp(

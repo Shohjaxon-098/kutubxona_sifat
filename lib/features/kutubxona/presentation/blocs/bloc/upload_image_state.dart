@@ -1,19 +1,31 @@
-import 'package:kutubxona/features/kutubxona/domain/entities/upload_image_entity.dart';
+part of 'upload_image_bloc.dart';
 
-abstract class UploadMediaState {}
+abstract class UploadImageState extends Equatable {
+  const UploadImageState();
 
-class UploadMediaInitial extends UploadMediaState {}
-
-class UploadMediaLoading extends UploadMediaState {}
-
-class UploadMediaSuccess extends UploadMediaState {
-  final MediaUpload media;
-
-  UploadMediaSuccess(this.media);
+  @override
+  List<Object?> get props => [];
 }
 
-class UploadMediaFailure extends UploadMediaState {
+class UploadImageInitial extends UploadImageState {}
+
+class UploadImageLoading extends UploadImageState {}
+
+class UploadImageSuccess extends UploadImageState {
+  final String id;
+  final File file;
+
+  const UploadImageSuccess(this.id, this.file);
+
+  @override
+  List<Object?> get props => [id, file];
+}
+
+class UploadImageFailure extends UploadImageState {
   final String message;
 
-  UploadMediaFailure(this.message);
+  const UploadImageFailure(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

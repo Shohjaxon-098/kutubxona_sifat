@@ -1,4 +1,5 @@
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/upload_image_bloc.dart';
 
 class RegisterStep2Screen extends StatefulWidget {
   const RegisterStep2Screen({super.key});
@@ -25,7 +26,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
   Future<void> pickImage(bool isFront) async {
     final pickedFile = await pickImageFromCamera();
+
     if (pickedFile != null) {
+      final file = File(pickedFile.path);
       setState(() {
         if (isFront) {
           docFront = pickedFile;
@@ -33,7 +36,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
           docBack = pickedFile;
         }
       });
+      context.read<UploadImageBloc>().add(StartUploadImage(file));
     }
+    if (pickedFile != null) {}
   }
 
   void _submitForm() async {
