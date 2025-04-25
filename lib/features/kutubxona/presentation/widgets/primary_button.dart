@@ -3,20 +3,21 @@ import 'package:kutubxona/config/theme/app_colors.dart';
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
+  final String? text;
   final double height;
   final double borderRadius;
   final Color? color;
   final TextStyle? textStyle;
-
+  final Widget? ttext;
   const PrimaryButton({
     super.key,
     required this.onPressed,
-    required this.text,
+     this.text,
     this.height = 50,
     this.borderRadius = 16,
     this.color,
     this.textStyle,
+    this.ttext
   });
 
   @override
@@ -30,8 +31,8 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
       ),
-      child: Text(
-        text,
+      child:ttext?? Text(
+        text!,
         style:
             textStyle ??
             TextStyle(

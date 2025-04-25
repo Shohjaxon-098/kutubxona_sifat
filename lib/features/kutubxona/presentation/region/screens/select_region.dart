@@ -174,7 +174,11 @@ class _SelectRegionState extends State<SelectRegion> {
                   const SizedBox(height: 30),
                   BlocBuilder<LibraryBloc, LibraryState>(
                     builder: (context, state) {
-                      if (state is LibraryLoaded) {
+                      if (state is LibraryError) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text(state.message)));
+                      } else if (state is LibraryLoaded) {
                         libraries = state.libraries;
                       }
                       return _buildDropdowns(libraries);
@@ -189,7 +193,17 @@ class _SelectRegionState extends State<SelectRegion> {
                             _handleContinue(state.libraries);
                           }
                         },
-                        text: "Давом этиш",
+                        ttext:
+                            state is LibraryLoading
+                                ? CircularProgressIndicator()
+                                : Text(
+                                  "Давом этиш",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors().white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                       );
                     },
                   ),

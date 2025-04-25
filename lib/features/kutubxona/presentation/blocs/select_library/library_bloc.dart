@@ -13,6 +13,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       } catch (e) {
         emit(LibraryError(e.toString()));
       }
-    });
+    }); 
   }
 }
