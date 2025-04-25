@@ -74,6 +74,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         documentBack: docBack!,
         userId: userId,
       );
+      print(docFront);
       context.read<RegisterStep2Bloc>().add(
         SubmitRegisterStep2Event(entity: entity),
       );
@@ -122,6 +123,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   const SizedBox(height: 16),
                   CustomDropdown(
                     label: 'Жинс',
+                    hintText: 'Жинс',
                     items: ['Эркак', 'Аёл'],
                     selectedItem: selectedGender,
                     onChanged:

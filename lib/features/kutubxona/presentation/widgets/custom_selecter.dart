@@ -40,7 +40,7 @@ class CustomDropdown extends StatelessWidget {
                 return DropdownMenuItem(value: item, child: Text(item));
               }).toList(),
           onChanged: onChanged,
-    
+
           icon: Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors().hintColor,

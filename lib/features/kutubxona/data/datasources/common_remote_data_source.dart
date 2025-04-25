@@ -20,6 +20,7 @@ class CommonRemoteDataSourceImpl implements CommonRemoteDataSource {
       '${AppConfig.baseUrl}/common/media/upload/',
       data: formData,
     );
+    
     return UploadImageResponseModel.fromJson(response.data);
   }
 }
