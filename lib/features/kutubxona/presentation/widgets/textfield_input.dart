@@ -9,9 +9,10 @@ class TextFieldInput extends StatelessWidget {
   final int? lengthInput;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
-  final Function(String)? onChanged;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
-
+  final bool? readOnly;
+ final  void Function()? onTap;
   const TextFieldInput({
     super.key,
     required this.label,
@@ -23,6 +24,8 @@ class TextFieldInput extends StatelessWidget {
     this.suffixIcon,
     this.onChanged,
     this.validator,
+    this.readOnly,
+    this.onTap
   });
 
   @override
@@ -33,11 +36,13 @@ class TextFieldInput extends StatelessWidget {
         Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
         const SizedBox(height: 6),
         TextFormField(
+          readOnly: readOnly ?? false,
           controller: controller,
           obscureText: obscure,
           obscuringCharacter: '*',
           keyboardType: keyboardType,
           onChanged: onChanged,
+          onTap: onTap,
           validator:
               validator ??
               (value) {

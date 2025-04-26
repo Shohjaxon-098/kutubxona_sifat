@@ -12,12 +12,12 @@ class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
     required this.onPressed,
-     this.text,
+    this.text,
     this.height = 50,
     this.borderRadius = 16,
     this.color,
     this.textStyle,
-    this.ttext
+    this.ttext,
   });
 
   @override
@@ -31,16 +31,18 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
       ),
-      child:ttext?? Text(
-        text!,
-        style:
-            textStyle ??
-            TextStyle(
-              fontSize: 15,
-              color: AppColors().white,
-              fontWeight: FontWeight.w500,
-            ),
-      ),
+      child:
+          ttext ??
+          Text(
+            text!,
+            style:
+                textStyle ??
+                TextStyle(
+                  fontSize: 15,
+                  color: AppColors().white,
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
     );
   }
 }

@@ -19,9 +19,5 @@ class RegisterStep2RemoteDataSourceImpl
       '${AppConfig.baseUrl}/account/register/step2/',
       data: formData,
     );
-
-    if (response.statusCode != 201) {
-      throw Exception('Server error: ${response.data}');
-    }
   }
 }

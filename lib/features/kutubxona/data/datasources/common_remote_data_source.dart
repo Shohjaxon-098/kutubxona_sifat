@@ -11,16 +11,26 @@ class CommonRemoteDataSourceImpl implements CommonRemoteDataSource {
 
   @override
   Future<UploadImageResponseModel> uploadImage(File file) async {
-    final formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(file.path),
-      'type': 'image', // doim image
-    });
+    try {
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(file.path),
+        'type': 'image', // doim image
+      });
 
-    final response = await dio.post(
-      '${AppConfig.baseUrl}/common/media/upload/',
-      data: formData,
-    );
-    
-    return UploadImageResponseModel.fromJson(response.data);
+      final response = await dio.post(
+        '${AppConfig.baseUrl}/common/media/upload/',
+        data: formData,
+      );
+
+      if (response.statusCode == 201) {
+        return UploadImageResponseModel.fromJson(
+          response.data,
+        ); // API qaytargan ID
+      } else {
+        throw Exception('Rasmni yuklashda xatolik');
+      }
+    } catch (e) {
+      throw Exception('Rasmni yuklashda xatolik: $e');
+    }
   }
 }

@@ -13,7 +13,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   String? documentType = 'passport';
   File? docFront;
   File? docBack;
-
+  int? docFrontId;
+  int? docBackId;
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
@@ -64,36 +65,86 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         firstName: nameController.text,
         lastName: surnameController.text,
         selectGender: selectedGender!,
+        telegramUsername: telegramController.text,
         password: passwordController.text,
-        telegramId: telegramController.text,
         birthDate: birthDateController.text,
         documentType: documentType!,
         documentNumber: passportInfoController.text,
-        libraryId: AppConfig.libraryId.toString(),
-        documentFront: docFront!,
-        documentBack: docBack!,
+        documentFront: docFrontId,
+        documentBack: docBackId,
         userId: userId,
+        libraryId: AppConfig.libraryId.toString(),
       );
-      print(docFront);
+      print(nameController.text);
+      print(surnameController.text);
+      print(selectedGender);
+      print(passwordController.text);
+      print(telegramController.text);
+      print(birthDateController.text);
+      print(documentType);
+      print(passportInfoController.text);
+      print(AppConfig.libraryId.toString());
+      print(docFrontId);
+      print(docBackId);
+      print(userId);
+
       context.read<RegisterStep2Bloc>().add(
         SubmitRegisterStep2Event(entity: entity),
       );
     }
   }
 
+  Future<void> pickBirthDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (picked != null) {
+      final formatted =
+          "${picked.year.toString().padLeft(4, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      setState(() {
+        birthDateController.text = formatted;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterStep2Bloc, RegisterStep2State>(
-      listener: (ctx, state) {
-        if (state is RegisterStep2Failure) {
-          ScaffoldMessenger.of(
-            ctx,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
-        }
-        if (state is RegisterStep2Success) {
-          Navigator.pushNamed(ctx, AppRoutes.home);
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<RegisterStep2Bloc, RegisterStep2State>(
+          listener: (ctx, state) {
+            if (state is RegisterStep2Failure) {
+              ScaffoldMessenger.of(
+                ctx,
+              ).showSnackBar(SnackBar(content: Text(state.message)));
+            }
+            if (state is RegisterStep2Success) {
+              Navigator.pushNamed(ctx, AppRoutes.home);
+            }
+          },
+        ),
+        BlocListener<UploadImageBloc, UploadImageState>(
+          listener: (context, state) {
+            if (state is UploadImageSuccess) {
+              setState(() {
+                if (docFront == null) {
+                  docFrontId = state.id;
+                } else {
+                  docBackId = state.id;
+                }
+              });
+            } else if (state is UploadImageFailure) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.message)));
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -124,7 +175,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   CustomDropdown(
                     label: 'Жинс',
                     hintText: 'Жинс',
-                    items: ['Эркак', 'Аёл'],
+                    items: ['male', 'famale'],
                     selectedItem: selectedGender,
                     onChanged:
                         (value) => setState(() => selectedGender = value),
@@ -157,6 +208,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     birthDateController,
                     TextInputType.datetime,
                     validateRequired,
+                    onTap: pickBirthDate,
+                    readOnly: true,
                   ),
                   const SizedBox(height: 16),
                   const Text(
@@ -234,6 +287,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
     TextInputType keyboardType,
     String? Function(String?) validator, {
     bool obscure = false,
+    void Function()? onTap,
+    bool? readOnly,
   }) {
     return TextFieldInput(
       label: label,
@@ -242,6 +297,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       keyboardType: keyboardType,
       validator: validator,
       obscure: obscure,
+      onTap: onTap,
+      readOnly: readOnly,
     );
   }
 

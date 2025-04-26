@@ -17,13 +17,15 @@ class RegisterStep2RepositoryImpl implements RegisterStep2Repository {
       firstName: entity.firstName,
       lastName: entity.lastName,
       selectGender: entity.selectGender,
+      telegramUsername: entity.telegramUsername,
       password: entity.password,
-      telegramId: entity.telegramId,
       birthDate: entity.birthDate,
       documentType: entity.documentType,
       documentNumber: entity.documentNumber,
-      libraryId: entity.libraryId,
+      documentFront: entity.documentFront,
+      documentBack: entity.documentBack,
       userId: entity.userId,
+      libraryId: entity.libraryId,
     );
 
     await remoteDataSource.submitRegisterStep2(model);

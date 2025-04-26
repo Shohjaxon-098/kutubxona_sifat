@@ -12,7 +12,7 @@ class UploadImageInitial extends UploadImageState {}
 class UploadImageLoading extends UploadImageState {}
 
 class UploadImageSuccess extends UploadImageState {
-  final String id;
+  final int id;
   final File file;
 
   const UploadImageSuccess(this.id, this.file);
