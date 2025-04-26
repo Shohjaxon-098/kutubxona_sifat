@@ -26,7 +26,7 @@ Widget buildBody(BuildContext context) {
       children: [
         buildSearch(context),
         const SizedBox(height: 24),
-        const AllCategories(itemCount: 9),
+        const AllCategories(itemCount: 9, categories: []),
       ],
     ),
   );

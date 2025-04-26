@@ -6,6 +6,7 @@ import 'package:kutubxona/features/kutubxona/data/repositories/home_repository_i
 import 'package:kutubxona/features/kutubxona/domain/repository/home_repository.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_books_usecase.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_categories_usecase.dart';
+import 'package:kutubxona/features/kutubxona/domain/usecases/search_books_usecase.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
 
 // Bloc
@@ -44,11 +45,11 @@ Future<void> init() async {
     () => HomeBloc(
       getCategoriesUseCase: sl(),
       getBooksUseCase: sl(),
-      searchBooksUseCase: sl(),
     ),
   );
   sl.registerLazySingleton(() => GetCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => GetBooksUseCase(sl()));
+  sl.registerLazySingleton(() => SearchBooksUseCase(sl()));
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(HomeRemoteDataSource()),
   );
