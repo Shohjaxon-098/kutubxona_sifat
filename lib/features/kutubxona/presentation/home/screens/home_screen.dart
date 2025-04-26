@@ -1,7 +1,7 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_state.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_state.dart';
+
 import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -96,11 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             controller: controller,
                             context: context,
                             enabled: true,
-                            onChanged: (query) {
-                              context.read<SearchBloc>().add(
-                                SearchQueryChanged(query),
-                              );
-                            },
+                            onChanged: (query) {},
                           ),
                           const SizedBox(width: 16),
                           GestureDetector(
@@ -114,11 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     if (showDropdown)
-                      BlocBuilder<SearchBloc, SearchState>(
+                      BlocBuilder<HomeBloc, HomeState>(
                         builder: (context, state) {
-                          if (state is SearchLoading) {
+                          if (state is HomeLoading) {
                             return const LinearProgressIndicator();
-                          } else if (state is SearchLoaded) {
+                          } else if (state is HomeLoaded) {
                             final books = state.books;
                             if (books.isEmpty) {
                               return const Text("Hech qanday kitob topilmadi.");
@@ -147,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               ),
                             );
-                          } else if (state is SearchError) {
+                          } else if (state is HomeError) {
                             return Text("Xatolik: ${state.message}");
                           }
                           return const SizedBox.shrink();
@@ -198,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text( 
+                              Text(
                                 'Куннинг енг яхшилари',
                                 style: TextStyle(
                                   fontSize: 18,

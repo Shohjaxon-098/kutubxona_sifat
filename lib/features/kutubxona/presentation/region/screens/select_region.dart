@@ -14,6 +14,7 @@ class _SelectRegionState extends State<SelectRegion> {
 
   final _formKey = GlobalKey<FormState>();
   late List<LibraryEntity> libraries;
+
   @override
   void initState() {
     super.initState();
@@ -58,100 +59,121 @@ class _SelectRegionState extends State<SelectRegion> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 84,
-              height: 84,
-              decoration: BoxDecoration(
-                color: AppColors().white,
-                borderRadius: BorderRadius.circular(28),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 0,
-                    spreadRadius: 5,
-                    color: AppColors().cardShadow,
-                  ),
-                ],
-                image: DecorationImage(
-                  image: AssetImage(AppImages().splashLogo),
-                  scale: 11,
-                ),
-              ),
-            ),
+            _buildLogo(),
             const SizedBox(height: 33),
-            Text(
-              'Қайси худуддаги кутубхоналардан фойдаланмоқчисиз?',
-              style: TextStyle(
-                color: AppColors().white,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            _buildHeaderText(),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildLogo() {
+    return Container(
+      width: 84,
+      height: 84,
+      decoration: BoxDecoration(
+        color: AppColors().white,
+        borderRadius: BorderRadius.circular(28),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 0,
+            spreadRadius: 5,
+            color: AppColors().cardShadow,
+          ),
+        ],
+        image: DecorationImage(
+          image: AssetImage(AppImages().splashLogo),
+          scale: 11,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderText() {
+    return Text(
+      'Қайси худуддаги кутубхоналардан фойдаланмоқчисиз?',
+      style: TextStyle(
+        color: AppColors().white,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
   Widget _buildDropdowns(List<LibraryEntity> libraries) {
     return Column(
       children: [
-        CustomDropdown(
-          items: getRegions(libraries),
-          onChanged: (value) {
-            setState(() {
-              selectedRegion = value;
-              selectedDistrict = null;
-              selectedLibrary = null;
-            });
-          },
-          selectedItem: selectedRegion,
-          label: 'Вилоят',
-          hintText: 'Вилоят',
-        ),
+        _buildRegionDropdown(libraries),
         const SizedBox(height: 24),
-        CustomDropdown(
-          items:
-              selectedRegion != null
-                  ? getDistricts(libraries, selectedRegion!)
-                  : [],
-          onChanged: (value) {
-            setState(() {
-              selectedDistrict = value;
-              selectedLibrary = null;
-            });
-          },
-          selectedItem: selectedDistrict,
-          label: 'Туман',
-          hintText: 'Туман',
-        ),
+        _buildDistrictDropdown(libraries),
         const SizedBox(height: 24),
-        CustomDropdown(
-          items:
-              (selectedRegion != null && selectedDistrict != null)
-                  ? getLibraries(libraries, selectedRegion!, selectedDistrict!)
-                  : [],
-          onChanged: (value) {
-            setState(() {
-              selectedLibrary = value;
-            });
-          },
-          selectedItem: selectedLibrary,
-          label: 'Кутубхона',
-          hintText: 'Кутубхона',
-        ),
+        _buildLibraryDropdown(libraries),
       ],
     );
   }
 
-  void _handleContinue(List<LibraryEntity> libraries) async {
-    await libraries.firstWhere(
-      (e) =>
-          e.region == selectedRegion &&
-          e.district == selectedDistrict &&
-          e.name == selectedLibrary,
-      orElse: () => throw Exception("Tanlangan kutubxona topilmadi"),
+  Widget _buildRegionDropdown(List<LibraryEntity> libraries) {
+    return CustomDropdown(
+      items: getRegions(libraries),
+      onChanged: (value) {
+        setState(() {
+          selectedRegion = value;
+          selectedDistrict = null;
+          selectedLibrary = null;
+        });
+      },
+      selectedItem: selectedRegion,
+      label: 'Вилоят',
+      hintText: 'Вилоят',
     );
+  }
+
+  Widget _buildDistrictDropdown(List<LibraryEntity> libraries) {
+    return CustomDropdown(
+      items:
+          selectedRegion != null
+              ? getDistricts(libraries, selectedRegion!)
+              : [],
+      onChanged: (value) {
+        setState(() {
+          selectedDistrict = value;
+          selectedLibrary = null;
+        });
+      },
+      selectedItem: selectedDistrict,
+      label: 'Туман',
+      hintText: 'Туман',
+    );
+  }
+
+  Widget _buildLibraryDropdown(List<LibraryEntity> libraries) {
+    return CustomDropdown(
+      items:
+          (selectedRegion != null && selectedDistrict != null)
+              ? getLibraries(libraries, selectedRegion!, selectedDistrict!)
+              : [],
+      onChanged: (value) {
+        setState(() {
+          selectedLibrary = value;
+        });
+      },
+      selectedItem: selectedLibrary,
+      label: 'Кутубхона',
+      hintText: 'Кутубхона',
+    );
+  }
+
+  void _handleContinue(List<LibraryEntity> libraries) async {
+    if (selectedRegion == null ||
+        selectedDistrict == null ||
+        selectedLibrary == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Bo`sh maydonni to`ldiring')));
+      return;
+    }
 
     AppNavigator.pushNamed(context, AppRoutes.login);
   }
@@ -193,17 +215,14 @@ class _SelectRegionState extends State<SelectRegion> {
                             _handleContinue(state.libraries);
                           }
                         },
-                        ttext:
-                            state is LibraryLoading
-                                ? CircularProgressIndicator()
-                                : Text(
-                                  "Давом этиш",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors().white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
+                        ttext: Text(
+                          "Давом этиш",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: AppColors().white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       );
                     },
                   ),
