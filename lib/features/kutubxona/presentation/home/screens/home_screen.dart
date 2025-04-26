@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_state.dart';
 
 import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() => showDropdown = false);
       }
     });
+    context.read<HomeBloc>().add(GetAllHomeDataEvent());
   }
 
   @override
@@ -219,6 +221,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-buildBottomNavigationBar() {
-  return BottomNavigationBar(items: []);
-}
+// buildBottomNavigationBar() {
+//   return BottomNavigationBar(items: []);
+// }

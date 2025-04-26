@@ -1,5 +1,3 @@
-// lib/features/register_step2/data/datasources/register_step2_remote_data_source.dart
-
 import 'package:kutubxona/core/util/important.dart';
 
 abstract class RegisterStep2RemoteDataSource {
@@ -14,10 +12,16 @@ class RegisterStep2RemoteDataSourceImpl
 
   @override
   Future<void> submitRegisterStep2(RegisterStep2Model model) async {
-    final formData = model.toFormData();
-    final response = await dio.post(
-      '${AppConfig.baseUrl}/account/register/step2/',
-      data: formData,
-    );
+    try {
+      final response = await dio.post(
+        '${AppConfig.baseUrl}/account/register/step2/',
+        data: model.toJson(),
+      );
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

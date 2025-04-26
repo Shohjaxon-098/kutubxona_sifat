@@ -26,21 +26,4 @@ class RegisterStep2Entity {
     this.documentFront,
     this.documentBack,
   });
-
-  RegisterStep2Entity copyWith() {
-    return RegisterStep2Entity(
-      firstName: firstName,
-      lastName: lastName,
-      selectGender: selectGender,
-      password: password,
-      telegramUsername: telegramUsername,
-      birthDate: birthDate,
-      documentType: documentType,
-      documentNumber: documentNumber,
-      libraryId: libraryId,
-      userId: userId,
-      documentFront: documentFront,
-      documentBack: documentBack,
-    );
-  }
 }

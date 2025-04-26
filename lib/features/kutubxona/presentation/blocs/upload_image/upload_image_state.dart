@@ -2,9 +2,9 @@ part of 'upload_image_bloc.dart';
 
 abstract class UploadImageState extends Equatable {
   const UploadImageState();
-
+  
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class UploadImageInitial extends UploadImageState {}
@@ -13,12 +13,12 @@ class UploadImageLoading extends UploadImageState {}
 
 class UploadImageSuccess extends UploadImageState {
   final int id;
-  final File file;
+  final bool isFront;
 
-  const UploadImageSuccess(this.id, this.file);
+  const UploadImageSuccess(this.id, this.isFront);
 
   @override
-  List<Object?> get props => [id, file];
+  List<Object> get props => [id, isFront];
 }
 
 class UploadImageFailure extends UploadImageState {
@@ -27,5 +27,5 @@ class UploadImageFailure extends UploadImageState {
   const UploadImageFailure(this.message);
 
   @override
-  List<Object?> get props => [message];
+  List<Object> get props => [message];
 }

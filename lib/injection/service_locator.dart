@@ -41,7 +41,11 @@ Future<void> init() async {
   );
   // === Home ===
   sl.registerFactory(
-    () => HomeBloc(getCategoriesUseCase: sl(), getBooksUseCase: sl()),
+    () => HomeBloc(
+      getCategoriesUseCase: sl(),
+      getBooksUseCase: sl(),
+      searchBooksUseCase: sl(),
+    ),
   );
   sl.registerLazySingleton(() => GetCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => GetBooksUseCase(sl()));

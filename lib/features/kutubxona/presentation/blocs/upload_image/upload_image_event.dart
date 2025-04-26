@@ -4,14 +4,15 @@ abstract class UploadImageEvent extends Equatable {
   const UploadImageEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class StartUploadImage extends UploadImageEvent {
   final File file;
+  final bool isFront;
 
-  const StartUploadImage(this.file);
+  const StartUploadImage(this.file, {required this.isFront});
 
   @override
-  List<Object?> get props => [file];
+  List<Object> get props => [file, isFront];
 }

@@ -1,6 +1,5 @@
 // lib/features/register_step2/data/models/register_step2_model.dart
 
-import 'package:dio/dio.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/register_step2_entity.dart';
 
 class RegisterStep2Model extends RegisterStep2Entity {
@@ -19,20 +18,20 @@ class RegisterStep2Model extends RegisterStep2Entity {
     required super.userId,
   });
 
-  FormData toFormData() {
-    return FormData.fromMap({
+  Map<String, dynamic> toJson() {
+    return {
       'first_name': firstName,
       'last_name': lastName,
       'gender': selectGender,
-      'password': password,
       'telegram_username': telegramUsername,
+      'password': password,
       'birth_date': birthDate,
       'verification_type': documentType,
       'document_number': documentNumber,
       'document_file1': documentFront,
       'document_file2': documentBack,
-      'library_id': libraryId,
-      'user_id': userId,
-    });
+      'library': libraryId,
+      'user': userId,
+    };
   }
 }

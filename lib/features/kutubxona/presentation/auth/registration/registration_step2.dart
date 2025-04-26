@@ -24,7 +24,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   final passportInfoController = TextEditingController();
   bool obsure = true;
   String? apiErrorMessage;
-
+  bool? isFront;
   Future<void> pickImage(bool isFront) async {
     final pickedFile = await pickImageFromCamera();
 
@@ -33,13 +33,17 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       setState(() {
         if (isFront) {
           docFront = pickedFile;
+          context.read<UploadImageBloc>().add(
+            StartUploadImage(file, isFront: true),
+          );
         } else {
           docBack = pickedFile;
+          context.read<UploadImageBloc>().add(
+            StartUploadImage(file, isFront: false),
+          ); // orqa qismi uchun
         }
       });
-      context.read<UploadImageBloc>().add(StartUploadImage(file));
     }
-    if (pickedFile != null) {}
   }
 
   void _submitForm() async {
@@ -75,19 +79,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         userId: userId,
         libraryId: AppConfig.libraryId.toString(),
       );
-      print(nameController.text);
-      print(surnameController.text);
-      print(selectedGender);
-      print(passwordController.text);
-      print(telegramController.text);
-      print(birthDateController.text);
-      print(documentType);
-      print(passportInfoController.text);
-      print(AppConfig.libraryId.toString());
-      print(docFrontId);
-      print(docBackId);
-      print(userId);
 
+      // ignore: use_build_context_synchronously
       context.read<RegisterStep2Bloc>().add(
         SubmitRegisterStep2Event(entity: entity),
       );
@@ -131,10 +124,10 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
           listener: (context, state) {
             if (state is UploadImageSuccess) {
               setState(() {
-                if (docFront == null) {
-                  docFrontId = state.id;
+                if (state.isFront) {
+                  docFrontId = state.id; // Agar front bo'lsa
                 } else {
-                  docBackId = state.id;
+                  docBackId = state.id; // Agar back bo'lsa
                 }
               });
             } else if (state is UploadImageFailure) {

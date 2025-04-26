@@ -27,7 +27,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(
           create:
               (context) => RegisterStep2Bloc(
-                submitUseCase: RegisterStep2Usecases(
+                RegisterStep2Usecases(
                   repository: RegisterStep2RepositoryImpl(
                     remoteDataSource: RegisterStep2RemoteDataSourceImpl(
                       dio: Dio(),
