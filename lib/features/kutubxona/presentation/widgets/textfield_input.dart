@@ -12,7 +12,7 @@ class TextFieldInput extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final bool? readOnly;
- final  void Function()? onTap;
+  final void Function()? onTap;
   const TextFieldInput({
     super.key,
     required this.label,
@@ -25,7 +25,7 @@ class TextFieldInput extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.readOnly,
-    this.onTap
+    this.onTap,
   });
 
   @override
@@ -33,7 +33,7 @@ class TextFieldInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+        Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
         const SizedBox(height: 6),
         TextFormField(
           readOnly: readOnly ?? false,
