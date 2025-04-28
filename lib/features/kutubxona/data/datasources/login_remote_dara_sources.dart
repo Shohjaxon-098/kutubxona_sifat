@@ -13,12 +13,18 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
 
   @override
   Future<void> login(LoginModel model) async {
-    final response = await dio.post(
-      "${AppConfig.baseUrl}/account/login/", // 🔁 Bu yerga API endpoint URL qo‘ying
-      data: model.toJson(),
-    );
-    if (response.statusCode != 201) {
-      throw Exception(response.data ?? 'Registration failed');
+    try {
+      final response = await dio.post(
+        "${AppConfig.baseUrl}/account/login/", // 🔁 Bu yerga API endpoint URL qo‘ying
+        data: model.toJson(),
+      );
+      if (response.statusCode == 200) {
+        return response.data;
+      } else if (response.statusCode != 200) {
+        throw Exception(response.data ?? 'Registration failed');
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

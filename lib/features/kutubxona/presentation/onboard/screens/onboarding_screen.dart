@@ -1,5 +1,5 @@
 
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

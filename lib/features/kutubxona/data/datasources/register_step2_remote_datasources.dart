@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 
 abstract class RegisterStep2RemoteDataSource {
   Future<void> submitRegisterStep2(RegisterStep2Model model);

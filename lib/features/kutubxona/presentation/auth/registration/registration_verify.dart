@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 
 class RegisterVerify extends StatefulWidget {
   const RegisterVerify({super.key});

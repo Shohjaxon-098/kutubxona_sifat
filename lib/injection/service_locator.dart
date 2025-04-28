@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/data/datasources/home_remote_data_source.dart';
 import 'package:kutubxona/features/kutubxona/data/repositories/home_repository_impl.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/home_repository.dart';

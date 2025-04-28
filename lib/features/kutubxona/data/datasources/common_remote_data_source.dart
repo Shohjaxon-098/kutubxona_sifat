@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/data/models/upload_image_response_model.dart';
 
 abstract class CommonRemoteDataSource {

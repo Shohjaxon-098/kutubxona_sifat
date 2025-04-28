@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/upload_image/upload_image_bloc.dart';
 
 class RegisterStep2Screen extends StatefulWidget {

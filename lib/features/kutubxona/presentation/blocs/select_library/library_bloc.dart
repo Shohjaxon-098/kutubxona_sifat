@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_libraries_usecase.dart';
 
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {

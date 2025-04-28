@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
 
 class CategoryScreen extends StatelessWidget {

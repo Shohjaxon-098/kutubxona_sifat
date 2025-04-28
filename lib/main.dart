@@ -1,16 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/kutubxona/data/datasources/common_remote_data_source.dart';
-import 'package:kutubxona/features/kutubxona/data/datasources/login_remote_dara_sources.dart';
-import 'package:kutubxona/features/kutubxona/data/repositories/common_repository_impl.dart';
-import 'package:kutubxona/features/kutubxona/data/repositories/login_repository_impl.dart';
-import 'package:kutubxona/features/kutubxona/domain/usecases/login_usecases.dart';
-import 'package:kutubxona/features/kutubxona/domain/usecases/upload_image_usecase.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/upload_image/upload_image_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/select_library/library_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/region/screens/select_region.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;
 
 void main() async {

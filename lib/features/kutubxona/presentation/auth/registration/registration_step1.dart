@@ -1,4 +1,4 @@
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 
 class RegisterStep1Screen extends StatelessWidget {
   const RegisterStep1Screen({super.key});

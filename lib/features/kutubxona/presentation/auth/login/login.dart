@@ -5,7 +5,7 @@ import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/constants/app_config.dart';
 import 'package:kutubxona/core/services/local_storage.dart';
 import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
@@ -139,19 +139,16 @@ class _LoginState extends State<Login> {
       ),
       onPressed: () async {
         final phone = phoneController.text.trim();
-        await LocalStorage.savePhone(phone);
+
         final id = await AppConfig.libraryId.toString();
-
-        // ignore: use_build_context_synchronously
-
+        context.read<LoginBloc>().add(
+          LoginButtonPressed(
+            phoneNumber: phone,
+            password: passwordController.text,
+            libraryId: id,
+          ),
+        );
         if (_formKey.currentState?.validate() ?? false) {
-          context.read<LoginBloc>().add(
-            LoginButtonPressed(
-              phoneNumber: phone,
-              password: passwordController.text,
-              libraryId: id,
-            ),
-          );
           AppNavigator.pushNamed(context, AppRoutes.home);
         }
       },
