@@ -18,7 +18,7 @@ class CommonRepositoryImpl implements CommonRepository {
       final result = await remoteDataSource.uploadImage(file);
       return Right(result);
     } catch (e) {
-      return Left(ServerFailure( e.toString()));
+      return Left(ServerFailure(message:  e.toString()));
     }
   }
 }

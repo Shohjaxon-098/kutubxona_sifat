@@ -8,6 +8,7 @@ import 'package:kutubxona/core/util/app_images.dart';
 import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_event.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
 import 'package:kutubxona/features/kutubxona/presentation/widgets/textfield_input.dart';
 
@@ -27,27 +28,39 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Form(
-        key: _formKey,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildHeader(),
-                  const SizedBox(height: 50),
-                  _buildPhoneField(),
-                  const SizedBox(height: 24),
-                  _buildPasswordField(),
-                  const SizedBox(height: 100),
-                  _buildLoginButton(context),
-                  const SizedBox(height: 12),
-                  _buildTelegramLoginButton(),
-                  const SizedBox(height: 12),
-                  _buildRegisterButton(context),
-                ],
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state is LoginError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          }
+          if (state is LoginSuccess) {
+            AppNavigator.pushNamed(context, AppRoutes.home);
+          }
+        },
+        child: Form(
+          key: _formKey,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildHeader(),
+                    const SizedBox(height: 50),
+                    _buildPhoneField(),
+                    const SizedBox(height: 24),
+                    _buildPasswordField(),
+                    const SizedBox(height: 100),
+                    _buildLoginButton(context),
+                    const SizedBox(height: 12),
+                    _buildTelegramLoginButton(),
+                    const SizedBox(height: 12),
+                    _buildRegisterButton(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -141,15 +154,15 @@ class _LoginState extends State<Login> {
         final phone = phoneController.text.trim();
 
         final id = await AppConfig.libraryId.toString();
-        context.read<LoginBloc>().add(
-          LoginButtonPressed(
-            phoneNumber: phone,
-            password: passwordController.text,
-            libraryId: id,
-          ),
-        );
+
         if (_formKey.currentState?.validate() ?? false) {
-          AppNavigator.pushNamed(context, AppRoutes.home);
+          context.read<LoginBloc>().add(
+            LoginButtonPressed(
+              phoneNumber: phone,
+              password: passwordController.text,
+              libraryId: id,
+            ),
+          );
         }
       },
       child: Text("Кириш", style: TextStyle(color: AppColors().white)),

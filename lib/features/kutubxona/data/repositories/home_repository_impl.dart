@@ -63,7 +63,7 @@ Future<Either<Failure, List<BookEntity>>> searchBooks(String query) async {
         .toList();
     return Right(books); // Return the list wrapped in Right if success
   } catch (e) {
-    return Left(ServerFailure(e.toString())); // Return a failure if an error occurs
+    return Left(ServerFailure(message:  e.toString())); // Return a failure if an error occurs
   }
 }
 

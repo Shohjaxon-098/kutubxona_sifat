@@ -1,8 +1,12 @@
 abstract class Failure {
   final String message;
-  Failure(this.message);
+  Failure({required this.message});
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(super.message);
+  ServerFailure({required String message}) : super(message: message);
+}
+
+class NetworkFailure extends Failure {
+  NetworkFailure() : super(message:  'Internet aloqasi mavjud emas');
 }
