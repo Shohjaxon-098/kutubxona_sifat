@@ -1,14 +1,12 @@
-import 'package:dartz/dartz.dart';
-import 'package:kutubxona/core/error/failure.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/login_entity.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/login_repository.dart';
 
-class LoginUsecases {
+class LoginUseCases {
   final LoginRepository repository;
 
-  LoginUsecases(this.repository);
+  LoginUseCases(this.repository);
 
-  Future<Either<Failure, void>> call(LoginEntity entity) {
+  Future<void> call(LoginEntity entity) {
     return repository.login(entity);
   }
 }

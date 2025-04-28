@@ -4,29 +4,23 @@ import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_even
 import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginUsecases loginUsecases;
+  final LoginUseCases loginUseCase;
 
-  LoginBloc({required this.loginUsecases}) : super(LoginInitial()) {
-    on<LoginButtonPressed>(_onLoginButtonPressed);
-  }
-
-  Future<void> _onLoginButtonPressed(
-    LoginButtonPressed event,
-    Emitter<LoginState> emit,
-  ) async {
-    emit(LoginLoading());
-
-    final loginEntity = LoginEntity(
-      phoneNumber: event.phoneNumber,
-      password: event.password,
-      libraryId: event.libraryId,
-    );
-
-    final result = await loginUsecases.call(loginEntity);
-
-    result.fold(
-      (failure) => emit(LoginError(message: failure.message)), // ✅ to'g'ri
-      (_) => emit(LoginSuccess()),
-    );
+  LoginBloc({required this.loginUseCase}) : super(LoginInitial()) {
+    on<LoginButtonPressed>((event, emit) async {
+      emit(LoginLoading());
+      try {
+        await loginUseCase.call(
+          LoginEntity(
+            phoneNumber: event.phoneNumber,
+            password: event.password,
+            libraryId: event.libraryId,
+          ),
+        );
+        emit(LoginSuccess());
+      } catch (e) {
+        emit(LoginError(message: e.toString().replaceAll('Exception: ', '')));
+      }
+    });
   }
 }

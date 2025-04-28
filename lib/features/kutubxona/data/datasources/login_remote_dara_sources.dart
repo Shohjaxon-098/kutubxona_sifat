@@ -1,6 +1,6 @@
+import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/core/network/dio_client.dart';
 import 'package:kutubxona/features/kutubxona/data/models/login_model.dart';
-import 'package:kutubxona/core/constants/app_config.dart';
 
 abstract class LoginRemoteDaraSources {
   Future<void> login(LoginModel model);
@@ -18,13 +18,24 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
         "${AppConfig.baseUrl}/account/login/", // 🔁 Bu yerga API endpoint URL qo‘ying
         data: model.toJson(),
       );
-      if (response.statusCode == 200) {
-        return response.data;
-      } else if (response.statusCode != 200) {
-        throw Exception(response.data ?? 'Registration failed');
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Muvaffaqiyatli login
+      } else {
+        throw Exception('Login failed');
       }
-    } catch (e) {
-      print(e.toString());
+    } on DioException catch (e) {
+      if (e.response != null) {
+        final data = e.response!.data;
+        if (data is Map<String, dynamic> &&
+            data.containsKey('non_field_errors')) {
+          throw Exception(
+            data['non_field_errors'][0] == 'Invalid password'
+                ? 'Noto`g`ri kod'
+                : 'Foydalanuvchi topilmadi',
+          );
+        }
+      }
+      throw Exception('Login error');
     }
   }
 }

@@ -57,7 +57,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(
           create:
               (context) => LoginBloc(
-                loginUsecases: LoginUsecases(
+                loginUseCase: LoginUseCases(
                   LoginRepositoryImpl(
                     remoteDataSource: LoginRemoteDaraSourcesImpl(),
                   ),
