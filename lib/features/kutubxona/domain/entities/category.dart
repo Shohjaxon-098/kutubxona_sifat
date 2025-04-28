@@ -1,7 +1,7 @@
 class CategoryEntity {
   final int id;
   final String name;
-  final String? icon;
+  final String icon;
 
-  CategoryEntity({required this.id, required this.name, this.icon});
+  CategoryEntity({required this.id, required this.name,required this.icon});
 }

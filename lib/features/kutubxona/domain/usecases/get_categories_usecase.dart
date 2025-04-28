@@ -6,7 +6,7 @@ class GetCategoriesUseCase {
 
   GetCategoriesUseCase(this.repository);
 
-  Future<List<CategoryEntity>> call() async {
-    return repository.getCategories();
+  Future<List<CategoryEntity>> call(String libraryId) async {
+    return repository.getCategories(libraryId);
   }
 }

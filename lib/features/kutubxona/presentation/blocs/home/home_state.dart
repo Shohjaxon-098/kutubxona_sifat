@@ -1,36 +1,22 @@
-import 'package:equatable/equatable.dart';
+// lib/features/kutubxona/presentation/blocs/home/home_state.dart
 import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/category.dart';
 
-abstract class HomeState extends Equatable {
-  const HomeState();
-}
+abstract class HomeState {}
 
-class HomeInitial extends HomeState {
-  @override
-  List<Object?> get props => [];
-}
+class HomeInitial extends HomeState {}
 
-class HomeLoading extends HomeState {
-  @override
-  List<Object?> get props => [];
-}
+class HomeLoading extends HomeState {}
 
-class HomeLoaded extends HomeState {
-  final List<BookEntity> books;
+class HomeDataLoaded extends HomeState {
   final List<CategoryEntity> categories;
+  final List<BookEntity> books;
 
-  const HomeLoaded({required this.books, required this.categories});
-
-  @override
-  List<Object?> get props => [books, categories];
+  HomeDataLoaded({required this.categories, required this.books});
 }
 
 class HomeError extends HomeState {
   final String message;
 
-  const HomeError(this.message);
-
-  @override
-  List<Object?> get props => [message];
+  HomeError({required this.message});
 }

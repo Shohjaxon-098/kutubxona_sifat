@@ -14,7 +14,7 @@ class AllCategories extends StatelessWidget {
   final int? itemCount;
   @override
   Widget build(BuildContext context) {
-    double height = ((categories.length / 2).ceil()) * 95;
+    double height = 250;
 
     return SizedBox(
       height: height,
@@ -33,7 +33,10 @@ class AllCategories extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(color: AppColors().cardColor),
+              decoration: BoxDecoration(
+                // image: DecorationImage(image: NetworkImage(category.icon)),
+                color: AppColors().cardColor,
+              ),
               child: Center(
                 child: Text(
                   category.name, // Use category name

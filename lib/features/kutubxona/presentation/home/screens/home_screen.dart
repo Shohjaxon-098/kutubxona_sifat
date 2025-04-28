@@ -25,6 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() => showDropdown = false);
       }
     });
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    // Asinxron ishlarni shu yerda bajarish
+    final libraryId = await AppConfig.libraryId.toString();
     context.read<HomeBloc>().add(GetAllHomeDataEvent());
   }
 
@@ -116,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, state) {
                           if (state is HomeLoading) {
                             return const LinearProgressIndicator();
-                          } else if (state is HomeLoaded) {
+                          } else if (state is HomeDataLoaded) {
                             final books = state.books;
                             if (books.isEmpty) {
                               return const Text("Hech qanday kitob topilmadi.");
@@ -186,15 +192,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           BlocBuilder<HomeBloc, HomeState>(
                             builder: (context, state) {
-                              if (state is HomeLoaded) {
-                                final categories = state.categories;
-
+                              if (state is HomeDataLoaded) {
                                 return AllCategories(
-                                  itemCount: 6,
-                                  categories: categories,
+                                  itemCount: state.categories.length,
+                                  categories: state.categories,
                                 );
                               }
-                              return SizedBox();
+                              if (state is HomeError) {
+                                return Center(child: Text(state.message));
+                              }
+                              return Center(
+                                child: Text('Something went wrong.'),
+                              );
                             },
                           ),
                         ],

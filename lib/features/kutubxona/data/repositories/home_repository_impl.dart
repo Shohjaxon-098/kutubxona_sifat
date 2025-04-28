@@ -11,8 +11,8 @@ class HomeRepositoryImpl implements HomeRepository {
   HomeRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<CategoryEntity>> getCategories() async {
-    final result = await remoteDataSource.fetchCategories();
+  Future<List<CategoryEntity>> getCategories(String libraryId) async {
+    final result = await remoteDataSource.fetchCategories(libraryId);
     return result
         .map(
           (model) =>

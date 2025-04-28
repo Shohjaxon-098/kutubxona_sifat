@@ -4,7 +4,7 @@ class BookEntity {
   final String name;
   final String category;
   final String image;
-  final String? rating;
+  final int? rating;
   final String author;
   final String publication;
   final String? publishedDate;
