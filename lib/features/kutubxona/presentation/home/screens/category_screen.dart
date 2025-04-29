@@ -1,5 +1,7 @@
 import 'package:kutubxona/core/constants/important.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_state.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
+import 'package:kutubxona/features/kutubxona/presentation/widgets/shimmer_loading_category.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -26,7 +28,19 @@ Widget buildBody(BuildContext context) {
       children: [
         buildSearch(context),
         const SizedBox(height: 24),
-        const AllCategories(itemCount: 9, categories: []),
+        BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoading) {
+              return ShimmerLoadingAllCategories();
+            } else if (state is HomeDataLoaded) {
+              return AllCategories(categories: state.categories);
+            }
+            if (state is HomeError) {
+              return Center(child: Text(state.message));
+            }
+            return Center(child: Text('Something went wrong.'));
+          },
+        ),
       ],
     ),
   );
@@ -35,7 +49,7 @@ Widget buildBody(BuildContext context) {
 Widget buildSearch(BuildContext context) {
   return Row(
     children: [
-      search(context: context, enabled: true, onChanged: (query) {}),
+      Expanded(child: search(context: context, enabled: true, onChanged: (query) {})),
       const SizedBox(width: 16),
       GestureDetector(
         onTap: () => showFilterModal(context),

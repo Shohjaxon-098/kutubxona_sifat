@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart';
-import 'package:kutubxona/core/error/failure.dart';
 import 'package:kutubxona/features/kutubxona/domain/entities/book_entity.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/home_repository.dart';
 
@@ -8,7 +6,14 @@ class SearchBooksUseCase {
 
   SearchBooksUseCase(this.repository);
 
-  Future<Either<Failure, List<BookEntity>>> call(String query) async {
-    return await repository.searchBooks(query);
+  Future<List<BookEntity>> call(String query) async {
+    final allBooks = await repository.searchBooks(query);
+    return allBooks
+        .where(
+          (book) =>
+              book.name.toLowerCase().contains(query.toLowerCase()) ||
+              book.author.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
   }
 }

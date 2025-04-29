@@ -1,4 +1,5 @@
 import 'package:kutubxona/core/constants/important.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;
 
 void main() async {
@@ -43,6 +44,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider<OtpBloc>(create: (_) => sl<OtpBloc>()),
         BlocProvider(create: (context) => TimerBloc()),
         BlocProvider(create: (context) => sl<HomeBloc>()),
+        BlocProvider(create: (context) => sl<SearchBloc>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),

@@ -41,30 +41,33 @@ class HomeRepositoryImpl implements HomeRepository {
         )
         .toList();
   }
-@override
-Future<Either<Failure, List<BookEntity>>> searchBooks(String query) async {
-  try {
-    final result = await remoteDataSource.fetchBooks(); // Assuming fetchBooks takes query
-    final books = result
-        .map(
-          (model) => BookEntity(
-            id: model.id,
-            name: model.name,
-            author: model.author,
-            image: model.image,
-            slug: model.slug,
-            publishedDate: model.publishedDate,
-            rating: model.rating,
-            reviewsCount: model.reviewsCount,
-            category: model.category,
-            publication: model.publication,
-          ),
-        )
-        .toList();
-    return Right(books); // Return the list wrapped in Right if success
-  } catch (e) {
-    return Left(ServerFailure(message:  e.toString())); // Return a failure if an error occurs
-  }
-}
 
+  @override
+  Future<List<BookEntity>> searchBooks(String query) async {
+    try {
+      final result =
+          await remoteDataSource
+              .fetchBooks(); // Assuming fetchBooks takes query
+      final books =
+          result
+              .map(
+                (model) => BookEntity(
+                  id: model.id,
+                  name: model.name,
+                  author: model.author,
+                  image: model.image,
+                  slug: model.slug,
+                  publishedDate: model.publishedDate,
+                  rating: model.rating,
+                  reviewsCount: model.reviewsCount,
+                  category: model.category,
+                  publication: model.publication,
+                ),
+              )
+              .toList();
+      return books; // Return the list wrapped in Right if success
+    } catch (e) {
+      throw Exception(e.toString()); // Return a failure if an error occurs
+    }
+  }
 }

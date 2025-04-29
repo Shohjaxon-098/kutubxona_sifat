@@ -22,4 +22,6 @@ class AppColors {
   final Color rateCount = const Color(0xffFF7F4D);
   final Color textColor = const Color(0xff131045);
   final Color darkBack = const Color(0xff0A0C1E);
+  Color get shimmerBase => const Color(0xFFEEEEEE);
+  Color get shimmerHighlight => const Color(0xFFF5F5F5);
 }

@@ -8,17 +8,8 @@ abstract class HomeEvent extends Equatable {
 
 class GetAllHomeDataEvent extends HomeEvent {
   GetAllHomeDataEvent();
-  
+
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();  // Bu event, HomeBloc'da barcha ma'lumotlarni olish uchun chaqiriladi
-}
-
-class SearchBooksEvent extends HomeEvent {
-  final String query;
-
-  const SearchBooksEvent(this.query);
-
-  @override
-  List<Object?> get props => [query];
+  List<Object?> get props => throw UnimplementedError(); // Bu event, HomeBloc'da barcha ma'lumotlarni olish uchun chaqiriladi
 }

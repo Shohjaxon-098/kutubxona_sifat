@@ -2,16 +2,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/core/constants/important.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_books_usecase.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_categories_usecase.dart';
+import 'package:kutubxona/features/kutubxona/domain/usecases/search_books_usecase.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_event.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetBooksUseCase getBooksUseCase;
   final GetCategoriesUseCase getCategoriesUseCase;
-
-  HomeBloc({required this.getBooksUseCase, required this.getCategoriesUseCase})
-    : super(HomeInitial()) {
+  
+  HomeBloc({
+    required this.getBooksUseCase,
+    required this.getCategoriesUseCase,
+    
+  }) : super(HomeInitial()) {
     on<GetAllHomeDataEvent>(_onGetAllHomeData);
+  
   }
 
   Future<void> _onGetAllHomeData(
@@ -34,23 +39,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final categoriesResult = await getCategoriesUseCase(libraryId);
       final booksResult = await getBooksUseCase();
 
-
       // Ma'lumotlar muvaffaqiyatli olinganidan keyin
-      emit(
-        HomeDataLoaded(
-          categories: categoriesResult,
-          books: booksResult,
-        ),
-      );
+      emit(HomeDataLoaded(categories: categoriesResult, books: booksResult));
     } catch (e) {
       emit(HomeError(message: e.toString()));
     }
   }
 
   // Local storage'dan 'library_id'ni olish
-  Future<String>  getLibraryId() async {
+  Future<String> getLibraryId() async {
     // Local storage'dan 'library_id' olish
     // Agar Hive yoki SharedPreferences ishlatayotgan bo'lsangiz, shu yerda tegishli kodni yozishingiz kerak
-    return  AppConfig.libraryId!; // Misol uchun, statik 'library_id'
+    return AppConfig.libraryId!; // Misol uchun, statik 'library_id'
   }
 }

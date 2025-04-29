@@ -6,26 +6,34 @@ class AllCategories extends StatelessWidget {
   const AllCategories({
     super.key,
     required this.categories,
-    required this.itemCount,
+    this.crossAxisCount = 3,
+    this.itemHeight = 140,
+    this.mainAxisSpacing = 16,
+    this.crossAxisSpacing = 16,
   });
 
-  final List<CategoryEntity>
-  categories; // Expecting a list of Category objects.
-  final int? itemCount;
+  final List<CategoryEntity> categories;
+  final int crossAxisCount;
+  final double itemHeight;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+
   @override
   Widget build(BuildContext context) {
-    double height = 250;
+    final int rowCount = (categories.length / crossAxisCount).ceil();
+    final double calculatedHeight =
+        rowCount * itemHeight + (rowCount - 1) * mainAxisSpacing;
 
     return SizedBox(
-      height: height,
+      height: calculatedHeight,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount:
-            categories.length, // Use categories length instead of itemCount
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          crossAxisCount: 3,
+        itemCount: categories.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: mainAxisSpacing,
+          crossAxisSpacing: crossAxisSpacing,
+          childAspectRatio: 1, // yoki kerakli nisbatingiz
         ),
         itemBuilder: (context, index) {
           final category = categories[index];
@@ -33,13 +41,10 @@ class AllCategories extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                // image: DecorationImage(image: NetworkImage(category.icon)),
-                color: AppColors().cardColor,
-              ),
+              decoration: BoxDecoration(color: AppColors().cardColor),
               child: Center(
                 child: Text(
-                  category.name, // Use category name
+                  category.name,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors().white,
