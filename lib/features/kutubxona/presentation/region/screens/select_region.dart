@@ -14,6 +14,7 @@ class _SelectRegionState extends State<SelectRegion> {
 
   final _formKey = GlobalKey<FormState>();
   late List<LibraryEntity> libraries;
+  bool isLoading = false; // Add loading state
 
   @override
   void initState() {
@@ -175,6 +176,16 @@ class _SelectRegionState extends State<SelectRegion> {
       return;
     }
 
+    setState(() {
+      isLoading = true; // Start loading
+    });
+
+    await Future.delayed(const Duration(seconds: 2)); // Simulate a delay
+
+    setState(() {
+      isLoading = false; // Stop loading
+    });
+
     AppNavigator.pushNamed(context, AppRoutes.login);
   }
 
@@ -210,19 +221,28 @@ class _SelectRegionState extends State<SelectRegion> {
                   BlocBuilder<LibraryBloc, LibraryState>(
                     builder: (context, state) {
                       return PrimaryButton(
-                        onPressed: () {
-                          if (state is LibraryLoaded) {
-                            _handleContinue(state.libraries);
-                          }
-                        },
-                        ttext: Text(
-                          "Давом этиш",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: AppColors().white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        onPressed:
+                            isLoading
+                                ? null // Disable the button when loading
+                                : () {
+                                  if (state is LibraryLoaded) {
+                                    _handleContinue(state.libraries);
+                                  }
+                                },
+                        ttext:
+                            isLoading
+                                ? CircularProgressIndicator(
+                                  color: AppColors().white,
+                                  padding: EdgeInsets.all(5),
+                                ) // Show loader
+                                : Text(
+                                  "Давом этиш",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors().white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                       );
                     },
                   ),

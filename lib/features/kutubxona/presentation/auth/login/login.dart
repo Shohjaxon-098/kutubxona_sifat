@@ -1,16 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:kutubxona/common/navigator/app_navigator.dart';
-import 'package:kutubxona/config/routes/app_routes.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/constants/app_config.dart';
-import 'package:kutubxona/core/services/local_storage.dart';
-import 'package:kutubxona/core/util/app_images.dart';
+
+
 import 'package:kutubxona/core/constants/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_state.dart';
-import 'package:kutubxona/features/kutubxona/presentation/widgets/phonetextfield_widget.dart';
-import 'package:kutubxona/features/kutubxona/presentation/widgets/textfield_input.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

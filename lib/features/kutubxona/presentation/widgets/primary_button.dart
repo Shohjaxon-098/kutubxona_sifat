@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 
 class PrimaryButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final String? text;
   final double height;
   final double borderRadius;
@@ -11,7 +11,7 @@ class PrimaryButton extends StatelessWidget {
   final Widget? ttext;
   const PrimaryButton({
     super.key,
-    required this.onPressed,
+    this.onPressed,
     this.text,
     this.height = 50,
     this.borderRadius = 16,

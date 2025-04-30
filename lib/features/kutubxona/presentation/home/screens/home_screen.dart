@@ -1,13 +1,4 @@
 import 'package:kutubxona/core/constants/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_state.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_event.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_state.dart';
-
-import 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/widgets/shimmer_loading_book.dart';
-import 'package:kutubxona/features/kutubxona/presentation/widgets/shimmer_loading_category.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
