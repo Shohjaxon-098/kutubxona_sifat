@@ -1,4 +1,5 @@
 import 'package:kutubxona/core/constants/important.dart';
+import 'package:kutubxona/features/kutubxona/presentation/book/screen/book_detail_screen.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/screens/category_screen.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
 
@@ -14,6 +15,7 @@ class AppRoutes {
   static const String bookSearch = '/bookSearch';
   static const String categoryScreen = '/categoryScreen';
   static const String selectRegion = '/regionScreen';
+  static const String bookDetail = '/bookDetail';
 
   // Method to handle routing
   static Route<dynamic> generateRoute(RouteSettings settings) {

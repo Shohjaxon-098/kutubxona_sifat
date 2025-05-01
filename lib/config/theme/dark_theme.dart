@@ -11,7 +11,9 @@ ThemeData darkTheme() {
       secondary: AppColors().searchBackDark,
       primary: AppColors().searchInDark,
       tertiary: AppColors().white,
-      scrim: AppColors().white
+      scrim: AppColors().white,
+      primaryFixed: AppColors().shimmerBaseDark,
+      primaryFixedDim: AppColors().shimmerHighDark,
     ),
   );
 }

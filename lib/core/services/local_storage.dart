@@ -23,7 +23,15 @@ class LocalStorage {
     await _box.put("id", id);
   }
 
- static String? get libraryId {
-  return _box.get("id");
-}
+  static String? get libraryId {
+    return _box.get("id");
+  }
+
+  static Future<void> saveSlug(String slug) async {
+    await _box.put("slug", slug);
+  }
+
+  static String? get slug {
+    return _box.get("slug");
+  }
 }

@@ -37,8 +37,8 @@ class ShimmerLoadingAllCategories extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           return Shimmer.fromColors(
-            baseColor: AppColors().shimmerBase,
-            highlightColor: AppColors().shimmerHighlight,
+            baseColor: Theme.of(context).colorScheme.primaryFixed,
+            highlightColor: Theme.of(context).colorScheme.primaryFixedDim,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Container(

@@ -1,12 +1,17 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:kutubxona/core/constants/important.dart';
+import 'package:kutubxona/features/kutubxona/data/datasources/book_detail_remote_data_source_impl.dart';
 import 'package:kutubxona/features/kutubxona/data/datasources/home_remote_data_source.dart';
+import 'package:kutubxona/features/kutubxona/data/repositories/book_detail_repository_impl.dart';
 import 'package:kutubxona/features/kutubxona/data/repositories/home_repository_impl.dart';
+import 'package:kutubxona/features/kutubxona/domain/repository/book_detail_repository.dart';
 import 'package:kutubxona/features/kutubxona/domain/repository/home_repository.dart';
+import 'package:kutubxona/features/kutubxona/domain/usecases/get_book_detail.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_books_usecase.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_categories_usecase.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/search_books_usecase.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/book_detail_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
 
@@ -54,6 +59,14 @@ Future<void> init() async {
   sl.registerFactory(() => SearchBloc(sl()));
 
   sl.registerLazySingleton(() => SearchBooksUseCase(sl()));
+  // === BookDetail ===
+  sl.registerFactory(() => BookDetailBloc(sl()));
+  sl.registerLazySingleton(() => GetBookDetail(sl()));
+  sl.registerLazySingleton<BookDetailRepository>(
+    () => BookDetailRepositoryImpl(
+      remoteDataSource: BookDetailRemoteDataSourceImpl(dio: sl()),
+    ),
+  );
 
   // === Library ===
   sl.registerFactory(() => LibraryBloc(sl()));

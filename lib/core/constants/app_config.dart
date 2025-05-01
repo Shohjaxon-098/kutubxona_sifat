@@ -5,6 +5,9 @@ class AppConfig {
   static String? get libraryId {
     return LocalStorage.libraryId;
   }
+    static String? get slug {
+    return LocalStorage.slug;
+  }
     static String? get getPhone {
     return LocalStorage.getPhone;
   }

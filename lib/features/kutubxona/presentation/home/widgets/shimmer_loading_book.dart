@@ -16,8 +16,9 @@ class ShimmerLoadingSingleCategories extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 12),
         itemBuilder: (context, index) {
           return Shimmer.fromColors(
-            baseColor: AppColors().shimmerBase, // light grey
-            highlightColor: AppColors().shimmerHighlight, // white-ish
+            baseColor: Theme.of(context).colorScheme.primaryFixed, // light grey
+            highlightColor:
+                Theme.of(context).colorScheme.primaryFixedDim, // white-ish
             child: SizedBox(
               width: 140,
               child: Column(

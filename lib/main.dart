@@ -1,4 +1,8 @@
 import 'package:kutubxona/core/constants/important.dart';
+import 'package:kutubxona/features/kutubxona/data/datasources/book_detail_remote_data_source_impl.dart';
+import 'package:kutubxona/features/kutubxona/data/repositories/book_detail_repository_impl.dart';
+import 'package:kutubxona/features/kutubxona/domain/usecases/get_book_detail.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/book_detail_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;
 
@@ -35,6 +39,7 @@ class KutubxonaApp extends StatelessWidget {
                 ),
               ),
         ),
+
         BlocProvider(
           create:
               (context) => RegisterStep1Bloc(
@@ -51,8 +56,21 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => TimerBloc()),
         BlocProvider(create: (context) => sl<HomeBloc>()),
         BlocProvider(create: (context) => sl<SearchBloc>()),
+        BlocProvider(create: (context) => sl<BookDetailBloc>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
+        ),
+        BlocProvider(
+          create:
+              (context) => BookDetailBloc(
+                GetBookDetail(
+                  BookDetailRepositoryImpl(
+                    remoteDataSource: BookDetailRemoteDataSourceImpl(
+                      dio: Dio(),
+                    ),
+                  ),
+                ),
+              ),
         ),
         BlocProvider(
           create:

@@ -27,8 +27,11 @@ class HomeRemoteDataSource {
   Future<List<BookModel>> fetchBooks() async {
     try {
       final id = await AppConfig.libraryId;
+
+     
       final response = await dio.get("${AppConfig.baseUrl}/books/$id/");
       if (response.statusCode == 200) {
+        LocalStorage.saveSlug(response.data['results'].first['slug']);
         return (response.data['results'] as List)
             .map((json) => BookModel.fromJson(json))
             .toList();
