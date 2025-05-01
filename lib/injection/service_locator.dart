@@ -7,7 +7,7 @@ import 'package:kutubxona/features/kutubxona/domain/repository/home_repository.d
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_books_usecase.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/get_categories_usecase.dart';
 import 'package:kutubxona/features/kutubxona/domain/usecases/search_books_usecase.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
 import 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
 
 // Bloc

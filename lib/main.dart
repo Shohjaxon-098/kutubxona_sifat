@@ -1,12 +1,12 @@
 import 'package:kutubxona/core/constants/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
+import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
 import 'package:kutubxona/injection/service_locator.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await di.init();
-  await Hive.openBox('userBox');
+  await Hive.openBox('userBox'); // Open Hive box
   runApp(const KutubxonaApp());
 }
 
@@ -15,6 +15,12 @@ class KutubxonaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userBox = Hive.box('userBox');
+    final bool isRegistered = userBox.get(
+      'isRegistered',
+      defaultValue: false,
+    ); // Check registration status
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -71,10 +77,16 @@ class KutubxonaApp extends StatelessWidget {
         title: 'Kutubxona',
         theme: theme(),
         darkTheme: darkTheme(),
-        home: SelectRegion(),
+        home:
+            isRegistered
+                ? HomeScreen()
+                : SplashScreen(), // Navigate based on registration status
         debugShowCheckedModeBanner: false,
-        onGenerateRoute: AppRoutes.generateRoute, // Link routes
-        initialRoute: AppRoutes.splash, // Set the initial route
+        onGenerateRoute: AppRoutes.generateRoute,
+        initialRoute:
+            isRegistered
+                ? AppRoutes.home
+                : AppRoutes.splash, // Set initial route
         themeMode: ThemeMode.system,
       ),
     );

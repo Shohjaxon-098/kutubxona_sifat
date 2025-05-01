@@ -69,9 +69,9 @@ export 'package:kutubxona/features/kutubxona/domain/usecases/upload_image_usecas
 export 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_bloc.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/login/login_bloc.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/upload_image/upload_image_bloc.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_bloc.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_event.dart';
-export 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/search_state.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_bloc.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_event.dart';
+export 'package:kutubxona/features/kutubxona/presentation/blocs/search/search_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_event.dart';
 export 'package:kutubxona/features/kutubxona/presentation/blocs/home/home_state.dart';
 export 'package:kutubxona/features/kutubxona/presentation/home/filter_modal_trigger.dart';

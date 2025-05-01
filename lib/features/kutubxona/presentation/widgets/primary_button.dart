@@ -9,6 +9,7 @@ class PrimaryButton extends StatelessWidget {
   final Color? color;
   final TextStyle? textStyle;
   final Widget? ttext;
+  final BorderSide? side;
   const PrimaryButton({
     super.key,
     this.onPressed,
@@ -18,13 +19,14 @@ class PrimaryButton extends StatelessWidget {
     this.color,
     this.textStyle,
     this.ttext,
+    this.side
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
+      style: ElevatedButton.styleFrom(side: side,
         backgroundColor: color ?? AppColors().primaryColor,
         minimumSize: Size(double.infinity, height),
         shape: RoundedRectangleBorder(

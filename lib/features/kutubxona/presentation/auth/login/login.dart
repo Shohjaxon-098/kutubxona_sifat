@@ -1,5 +1,3 @@
-
-
 import 'package:kutubxona/core/constants/important.dart';
 
 class Login extends StatefulWidget {
@@ -13,6 +11,7 @@ class _LoginState extends State<Login> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false; // Track loading state
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +20,17 @@ class _LoginState extends State<Login> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginError) {
+            setState(() {
+              _isLoading = false; // Stop loading on error
+            });
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
           }
           if (state is LoginSuccess) {
+            setState(() {
+              _isLoading = false; // Stop loading on success
+            });
             AppNavigator.pushNamed(context, AppRoutes.home);
           }
         },
@@ -134,49 +139,44 @@ class _LoginState extends State<Login> {
 
   // Kirish tugmasi
   Widget _buildLoginButton(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors().primaryColor,
-        minimumSize: const Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      ),
-      onPressed: () async {
-        final phone = phoneController.text.trim();
+    return PrimaryButton(
+      ttext:
+          _isLoading
+              ? CircularProgressIndicator(color: AppColors().white)
+              : Text("Кириш", style: TextStyle(color: AppColors().white)),
+      onPressed:
+          _isLoading
+              ? null // Disable button when loading
+              : () async {
+                if (_formKey.currentState?.validate() ?? false) {
+                  setState(() {
+                    _isLoading = true; // Start loading
+                  });
+                  final phone = phoneController.text.trim();
+                  final id = await AppConfig.libraryId.toString();
 
-        final id = await AppConfig.libraryId.toString();
-
-        if (_formKey.currentState?.validate() ?? false) {
-          context.read<LoginBloc>().add(
-            LoginButtonPressed(
-              phoneNumber: phone,
-              password: passwordController.text,
-              libraryId: id,
-            ),
-          );
-        }
-      },
-      child: Text("Кириш", style: TextStyle(color: AppColors().white)),
+                  context.read<LoginBloc>().add(
+                    LoginButtonPressed(
+                      phoneNumber: phone,
+                      password: passwordController.text,
+                      libraryId: id,
+                    ),
+                  );
+                }
+              },
     );
   }
 
   // Telegram orqali kirish tugmasi
   Widget _buildTelegramLoginButton() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        side: BorderSide(color: AppColors().primaryColor),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        minimumSize: const Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      ),
-      onPressed: () {},
-      child: Text(
-        "Телеграм орқали кириш",
-        style: TextStyle(
-          color: AppColors().primaryColor,
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
+    return PrimaryButton(
+      side: BorderSide(color: AppColors().primaryColor),
+      color: Theme.of(context).colorScheme.surface,
+      text: "Телеграм орқали кириш",
+      textStyle: TextStyle(color: AppColors().primaryColor),
+      onPressed: () {
+        // Add your Telegram login logic here
+      },
     );
   }
 

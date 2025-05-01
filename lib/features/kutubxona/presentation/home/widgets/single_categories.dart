@@ -34,23 +34,12 @@ class SingleCategories extends StatelessWidget {
                   child: Card(
                     color: AppColors().cardColor,
                     child:
-                        // ignore: unnecessary_null_comparison
-                        book.image != null
-                            ? Image.network(
-                              book.image,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Center(
-                                  child: Icon(
-                                    Icons.broken_image,
-                                    size: 40,
-                                    color: AppColors().black,
-                                  ),
-                                );
-                              },
-                            )
-                            : const Center(child: Icon(Icons.book)),
+                    // ignore: unnecessary_null_comparison
+                    Image.network(
+                      book.image,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   ),
                 ),
               ),
