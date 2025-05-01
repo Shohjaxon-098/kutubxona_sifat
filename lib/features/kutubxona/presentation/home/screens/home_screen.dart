@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CompositedTransformFollower(
               link: _layerLink,
               showWhenUnlinked: false,
-              offset: const Offset(0.0, 50.0),
+              offset: const Offset(0, 50.0),
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
                   if (state is SearchLoading) {
@@ -235,12 +235,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey.shade300),
+                          border: Border.all(color: Colors.grey.shade800),
                         ),
                         constraints: const BoxConstraints(maxHeight: 200),
                         child: ListView.builder(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
                           shrinkWrap: true,
                           itemCount: books.length,
                           itemBuilder: (context, index) {
