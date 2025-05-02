@@ -4,11 +4,11 @@ class BookEntity {
   final String name;
   final String category;
   final String image;
-  final int? rating;
+  final String? rating;
   final String author;
   final String publication;
   final String? publishedDate;
-  final int? reviewsCount;
+  final String? reviewsCount;
 
   BookEntity({
     required this.id,

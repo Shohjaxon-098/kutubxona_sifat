@@ -2,17 +2,28 @@ import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 
 class BookModel extends BookEntity {
   BookModel({
-    required super.id,
-    required super.slug,
-    required super.name,
-    required super.category,
-    required super.image,
-    super.rating,
-    required super.author,
-    required super.publication,
-    super.publishedDate,
-    super.reviewsCount,
-  });
+    required int id,
+    required String slug,
+    required String name,
+    required String category,
+    required String image,
+    String? rating, // Keep as String? to match BookEntity
+    required String author,
+    required String publication,
+    String? publishedDate,
+    String? reviewsCount, // Keep as String? to match BookEntity
+  }) : super(
+         id: id,
+         slug: slug,
+         name: name,
+         category: category,
+         image: image,
+         rating: rating,
+         author: author,
+         publication: publication,
+         publishedDate: publishedDate,
+         reviewsCount: reviewsCount,
+       );
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     return BookModel(
@@ -21,11 +32,15 @@ class BookModel extends BookEntity {
       name: json['name'],
       category: json['category'],
       image: json['image'],
-      rating: json['rating'],
+      rating:
+          json['rating']
+              ?.toString(), // Convert to String if it's a double or int
       author: json['author'],
       publication: json['publication'],
       publishedDate: json['published_date'],
-      reviewsCount: json['reviews_count'],
+      reviewsCount:
+          json['reviews_count']
+              ?.toString(), // Convert to String if it's a number
     );
   }
 

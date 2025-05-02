@@ -93,7 +93,7 @@ export 'package:kutubxona/features/book/domain/repository/book_detail_repository
 export 'package:kutubxona/features/home/domain/repository/home_repository.dart';
 export 'package:kutubxona/features/book/domain/usecase/get_book_detail.dart';
 export 'package:kutubxona/features/home/domain/usecase/search_books_usecase.dart';
-export 'package:kutubxona/features/book/presentation/bloc/book_detail_bloc.dart';
+export 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
 export 'package:kutubxona/features/select_library/domain/usecase/get_libraries_usecase.dart';
 export 'package:kutubxona/features/auth/domain/usecase/verify_otp_usecase.dart';
 export 'package:kutubxona/features/select_library/domain/repository/library_repository.dart';

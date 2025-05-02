@@ -84,7 +84,7 @@ class SingleCategories extends StatelessWidget {
                           SvgPicture.asset(AppImages().rate, width: 15),
                           const SizedBox(width: 6),
                           Text(
-                            book.rating!.toStringAsFixed(1),
+                            book.rating!,
                             style: TextStyle(
                               color: AppColors().rateCount,
                               fontSize: 12,

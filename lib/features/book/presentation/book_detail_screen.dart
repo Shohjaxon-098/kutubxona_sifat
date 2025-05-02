@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/book/presentation/bloc/book_detail_bloc.dart';
-import 'package:kutubxona/features/book/presentation/bloc/book_detail_event.dart';
-import 'package:kutubxona/features/book/presentation/bloc/book_detail_state.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_state.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_state.dart';
 import 'package:kutubxona/features/widgets/book_detail_loading.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:intl/intl.dart';
 
 class BookDetailScreen extends StatefulWidget {
   final int bookId;
@@ -23,7 +26,12 @@ class _BookDetailScreenState extends State<BookDetailScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-
+    context.read<ReviewBloc>().add(
+      FetchReviews(
+        libraryId: AppConfig.libraryId.toString(),
+        slug: AppConfig.slug.toString(),
+      ),
+    );
     _loadBookDetailOnce();
   }
 
@@ -187,11 +195,11 @@ class _BookDetailScreenState extends State<BookDetailScreen>
           indicatorColor: Colors.transparent,
           labelStyle: const TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
           unselectedLabelStyle: const TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
           ),
           labelColor: textColor,
           unselectedLabelColor: Colors.grey,
@@ -199,7 +207,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 300,
+          height: 600,
           child: TabBarView(
             controller: _tabController,
             children: [_buildInfoTab(context, book), _buildCommentTab(context)],
@@ -240,11 +248,66 @@ class _BookDetailScreenState extends State<BookDetailScreen>
   }
 
   Widget _buildCommentTab(BuildContext context) {
-    return Center(
-      child: Text(
-        "Фикрлар бўлими ҳозирча мавжуд эмас.",
-        style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-      ),
+    return BlocBuilder<ReviewBloc, ReviewState>(
+      builder: (context, state) {
+        if (state is ReviewLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is ReviewLoaded) {
+          return SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children:
+                  state.reviews.map((review) {
+                    final user = review.libraryMember!.user;
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: SizedBox(
+                            width: 47,
+                            height: 47,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(user.photoUrl!),
+                              child:
+                                  user.photoUrl == null
+                                      ? Icon(Icons.person)
+                                      : null,
+                            ),
+                          ),
+                          title: Text(
+                            "${user.firstName} ${user.lastName}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                          ),
+                          subtitle: Text(
+                            formatDate(review.createdAt),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          review.review,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    );
+                  }).toList(),
+            ),
+          );
+        } else if (state is ReviewError) {
+          return Center(child: Text(state.message));
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 
@@ -262,4 +325,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
       ),
     );
   }
+}
+
+String formatDate(String createdAt) {
+  final dateTime = DateTime.parse(createdAt);
+  return DateFormat('yyyy.MM.dd').format(dateTime);
 }
