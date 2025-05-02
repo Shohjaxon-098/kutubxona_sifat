@@ -1,7 +1,7 @@
-import 'package:kutubxona/core/constants/important.dart';
-import 'package:kutubxona/features/kutubxona/presentation/book/screen/book_detail_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/screens/category_screen.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
+import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/book/presentation/book_detail_screen.dart';
+import 'package:kutubxona/features/category/presentation/category_screen.dart';
+import 'package:kutubxona/features/home/presentation/home_screen.dart';
 
 class AppRoutes {
   // Define route names

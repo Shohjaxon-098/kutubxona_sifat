@@ -1,18 +1,18 @@
-String assets = 'assets/';
-String images = 'images';
-String icons = 'icons';
+const String assets = 'assets/';
+const String images = 'images';
+const String icons = 'icons';
 
 class AppImages {
-  String splashLogo = '$assets$icons/logo.png';
-  String onBoard1 = '$assets$images/onBoard1.svg';
-  String onBoard2 = '$assets$images/onBoard2.svg';
-  String onBoard3 = '$assets$images/onBoard3.svg';
-  String privacy = '$assets$icons/privacy.png';
-  String mask = '$assets$images/mask.png';
-  String person = '$assets$icons/person.svg';
-  String rate = '$assets$icons/rate.svg';
-  String secure = '$assets$icons/secure.svg';
-  String eyeHide = '$assets$icons/eye-hide.svg';
-  String eyeShow = '$assets$icons/eye-show.svg';
-  String noResult = '$assets$images/no-result.svg';
+  final String splashLogo = '$assets$icons/logo.png';
+  final String onBoard1 = '$assets$images/onBoard1.svg';
+  final String onBoard2 = '$assets$images/onBoard2.svg';
+  final String onBoard3 = '$assets$images/onBoard3.svg';
+  final String privacy = '$assets$icons/privacy.png';
+  final String mask = '$assets$images/mask.png';
+  final String person = '$assets$icons/person.svg';
+  final String rate = '$assets$icons/rate.svg';
+  final String secure = '$assets$icons/secure.svg';
+  final String eyeHide = '$assets$icons/eye-hide.svg';
+  final String eyeShow = '$assets$icons/eye-show.svg';
+  final String noResult = '$assets$images/no-result.svg';
 }

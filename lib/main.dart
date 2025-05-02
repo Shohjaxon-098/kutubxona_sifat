@@ -1,10 +1,10 @@
-import 'package:kutubxona/core/constants/important.dart';
-import 'package:kutubxona/features/kutubxona/data/datasources/book_detail_remote_data_source_impl.dart';
-import 'package:kutubxona/features/kutubxona/data/repositories/book_detail_repository_impl.dart';
-import 'package:kutubxona/features/kutubxona/domain/usecases/get_book_detail.dart';
-import 'package:kutubxona/features/kutubxona/presentation/blocs/bloc/book_detail_bloc.dart';
-import 'package:kutubxona/features/kutubxona/presentation/home/screens/home_screen.dart';
-import 'package:kutubxona/injection/service_locator.dart' as di;
+import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/book/data/datasources/book_detail_remote_data_source_impl.dart';
+import 'package:kutubxona/features/book/data/repository/book_detail_repository_impl.dart';
+import 'package:kutubxona/features/book/domain/usecase/get_book_detail.dart';
+import 'package:kutubxona/features/book/presentation/bloc/book_detail_bloc.dart';
+import 'package:kutubxona/features/home/presentation/home_screen.dart';
+import 'package:kutubxona/core/services/service_locator.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
