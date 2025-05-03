@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kutubxona/core/constants/app_config.dart';
 import 'package:kutubxona/features/book/data/model/review_model.dart';
+import 'package:kutubxona/features/book/data/model/review_request_model.dart';
 
 abstract class ReviewRemoteDataSource {
   Future<List<ReviewModel>> getReviews({
@@ -9,6 +10,7 @@ abstract class ReviewRemoteDataSource {
     int limit,
     int offset,
   });
+  Future<void> postReview(ReviewRequestModel model);
 }
 
 class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
@@ -37,5 +39,10 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
     } else {
       return [];
     }
+  }
+
+  @override
+  Future<void> postReview(ReviewRequestModel model) async {
+    await dio.post('${AppConfig.baseUrl}/books/${AppConfig.libraryId.toString()}/reviews/', data: model.toJson());
   }
 }

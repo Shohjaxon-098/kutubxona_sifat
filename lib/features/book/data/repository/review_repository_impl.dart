@@ -1,8 +1,10 @@
 import 'package:kutubxona/features/book/data/datasources/review_remote_data_source.dart';
+import 'package:kutubxona/features/book/data/model/review_request_model.dart';
 import 'package:kutubxona/features/book/domain/entities/review_entity.dart';
+import 'package:kutubxona/features/book/domain/entities/review_request_entity.dart';
 import 'package:kutubxona/features/book/domain/repository/review_repository.dart';
 
-class ReviewRepositoryImpl implements ReviewRepository {
+ class ReviewRepositoryImpl implements ReviewRepository {
   final ReviewRemoteDataSource remoteDataSource;
 
   ReviewRepositoryImpl(this.remoteDataSource);
@@ -22,5 +24,10 @@ class ReviewRepositoryImpl implements ReviewRepository {
     );
 
     return reviewModels;
+  }
+  @override
+  Future<void> postReview(ReviewRequestEntity entity) {
+    final model = ReviewRequestModel.fromEntity(entity);
+    return remoteDataSource.postReview(model);
   }
 }

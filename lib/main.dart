@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/post_review_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_review/book_reviews_bloc.dart';
 import 'package:kutubxona/features/home/presentation/home_screen.dart';
 import 'package:kutubxona/core/services/service_locator.dart' as di;
 
@@ -55,7 +56,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SearchBloc>()),
         BlocProvider(create: (context) => sl<BookDetailBloc>()),
         BlocProvider(create: (context) => sl<ReviewBloc>()),
-
+        BlocProvider(create: (context) => sl<PostReviewBloc>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),

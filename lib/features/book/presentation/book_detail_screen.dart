@@ -1,18 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_bloc.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_event.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_state.dart';
-import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_event.dart';
-import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_state.dart';
-import 'package:kutubxona/features/widgets/book_detail_loading.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:intl/intl.dart';
 
+
+
+import 'package:kutubxona/core/util/important.dart';
 class BookDetailScreen extends StatefulWidget {
   final int bookId;
 
-  const BookDetailScreen({super.key, required this.bookId});
+  const BookDetailScreen({Key? key, required this.bookId}) : super(key: key);
 
   @override
   State<BookDetailScreen> createState() => _BookDetailScreenState();
@@ -26,22 +19,18 @@ class _BookDetailScreenState extends State<BookDetailScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    context.read<ReviewBloc>().add(
-      FetchReviews(
-        libraryId: AppConfig.libraryId.toString(),
-        slug: AppConfig.slug.toString(),
-      ),
-    );
-    _loadBookDetailOnce();
+    _fetchInitialData();
   }
 
-  Future<void> _loadBookDetailOnce() async {
-    context.read<BookDetailBloc>().add(
-      FetchBookDetail(
-        AppConfig.libraryId.toString(),
-        AppConfig.slug.toString(),
-      ),
-    );
+  void _fetchInitialData() {
+    context.read<ReviewBloc>().add(FetchReviews(
+          libraryId: AppConfig.libraryId.toString(),
+          slug: AppConfig.slug.toString(),
+        ));
+    context.read<BookDetailBloc>().add(FetchBookDetail(
+          AppConfig.libraryId.toString(),
+          AppConfig.slug.toString(),
+        ));
   }
 
   @override
@@ -53,13 +42,13 @@ class _BookDetailScreenState extends State<BookDetailScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      appBar: _buildAppBar(),
       body: BlocBuilder<BookDetailBloc, BookDetailState>(
         builder: (context, state) {
           if (state is BookDetailLoading) {
             return const BookDetailLoadingScreen();
           } else if (state is BookDetailLoaded) {
-            return _buildDetailContent(context, state);
+            return _buildDetailContent(state.book);
           } else if (state is BookDetailError) {
             return Center(child: Text(state.message));
           }
@@ -69,7 +58,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar() {
     return AppBar(
       iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
       title: Text(
@@ -83,8 +72,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     );
   }
 
-  Widget _buildDetailContent(BuildContext context, BookDetailLoaded state) {
-    final book = state.book;
+  Widget _buildDetailContent(book) {
     final textColor = Theme.of(context).colorScheme.tertiary;
 
     return SingleChildScrollView(
@@ -92,16 +80,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildBookHeader(context, book),
+          _buildBookHeader(book),
           const SizedBox(height: 24),
-          Text(
-            'Қисқача',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: textColor,
-            ),
-          ),
+          _buildSectionTitle('Қисқача', textColor),
           const SizedBox(height: 8),
           Text(book.description),
           const SizedBox(height: 24),
@@ -113,20 +94,20 @@ class _BookDetailScreenState extends State<BookDetailScreen>
             ),
           ),
           const SizedBox(height: 20),
-          _buildTabSection(context, book),
+          _buildTabSection(book),
         ],
       ),
     );
   }
 
-  Widget _buildBookHeader(BuildContext context, book) {
+  Widget _buildBookHeader(book) {
     return Row(
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
-            placeholder:
-                (context, url) => _buildShimmerBox(width: 123, height: 158),
+            placeholder: (context, url) =>
+                _buildShimmerBox(width: 123, height: 158),
             imageUrl: book.image,
             width: 123,
             height: 158,
@@ -184,14 +165,13 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     );
   }
 
-  Widget _buildTabSection(BuildContext context, book) {
+  Widget _buildTabSection(book) {
     final textColor = Theme.of(context).colorScheme.tertiary;
 
     return Column(
       children: [
         TabBar(
           controller: _tabController,
-          dividerColor: Colors.transparent,
           indicatorColor: Colors.transparent,
           labelStyle: const TextStyle(
             fontSize: 16,
@@ -210,104 +190,163 @@ class _BookDetailScreenState extends State<BookDetailScreen>
           height: 600,
           child: TabBarView(
             controller: _tabController,
-            children: [_buildInfoTab(context, book), _buildCommentTab(context)],
+            children: [
+              _buildInfoTab(book),
+              _buildCommentTab(),
+            ],
           ),
         ),
       ],
     );
   }
 
-  Widget _buildInfoTab(BuildContext context, book) {
-    final textColor = Theme.of(context).colorScheme.tertiary;
-
-    Widget buildField(String title, String value) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.w700, color: textColor),
-            ),
-            const SizedBox(height: 10),
-            Text(value, style: TextStyle(color: textColor)),
-          ],
-        ),
-      );
-    }
-
+  Widget _buildInfoTab(book) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildField("ISBN", book.isbn),
-        buildField("Тил", book.language),
-        buildField("Сахифалар", book.pageCount.toString()),
+        _buildField("ISBN", book.isbn),
+        _buildField("Тил", book.language),
+        _buildField("Сахифалар", book.pageCount.toString()),
       ],
     );
   }
 
-  Widget _buildCommentTab(BuildContext context) {
+  Widget _buildField(String title, String value) {
+    final textColor = Theme.of(context).colorScheme.tertiary;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w700, color: textColor),
+          ),
+          const SizedBox(height: 10),
+          Text(value, style: TextStyle(color: textColor)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCommentTab() {
+    final _commentController = TextEditingController();
+    int _selectedRating = 0;
+
     return BlocBuilder<ReviewBloc, ReviewState>(
       builder: (context, state) {
         if (state is ReviewLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is ReviewLoaded) {
-          return SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children:
-                  state.reviews.map((review) {
-                    final user = review.libraryMember!.user;
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: SizedBox(
-                            width: 47,
-                            height: 47,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(user.photoUrl!),
-                              child:
-                                  user.photoUrl == null
-                                      ? Icon(Icons.person)
-                                      : null,
-                            ),
-                          ),
-                          title: Text(
-                            "${user.firstName} ${user.lastName}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Theme.of(context).colorScheme.tertiary,
-                            ),
-                          ),
-                          subtitle: Text(
-                            formatDate(review.createdAt),
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          review.review,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
-            ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _buildCommentInputSection(_commentController, _selectedRating),
+              const SizedBox(height: 12),
+              Divider(color: AppColors().border),
+              const SizedBox(height: 12),
+              _buildReviewList(state.reviews),
+            ],
           );
         } else if (state is ReviewError) {
           return Center(child: Text(state.message));
         }
         return const SizedBox.shrink();
       },
+    );
+  }
+
+  Widget _buildCommentInputSection(
+      TextEditingController controller, int selectedRating) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Китоб хақида фикрингиз',
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
+        ),
+        const SizedBox(height: 16),
+        StarRating(onRatingChanged: (rating) => selectedRating = rating),
+        const SizedBox(height: 16),
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            hintText: 'Изох',
+          ),
+          maxLines: 4,
+        ),
+        const SizedBox(height: 12),
+        BlocBuilder<PostReviewBloc, PostReviewState>(
+          builder: (context, state) {
+            return PrimaryButton(
+              onPressed: state is PostReviewLoading
+                  ? null
+                  : () {
+                      final text = controller.text.trim();
+                      if (text.isNotEmpty && selectedRating > 0) {
+                        context.read<PostReviewBloc>().add(SubmitReview(
+                              ReviewRequestEntity(
+                                score: selectedRating.toString(),
+                                review: text,
+                                bookId: widget.bookId,
+                              ),
+                            ));
+                      }
+                    },
+              text: 'Юбориш',
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReviewList(List reviews) {
+    return Column(
+      children: reviews.map((review) {
+        final user = review.libraryMember!.user;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(user.photoUrl ?? ''),
+                child: user.photoUrl == null ? const Icon(Icons.person) : null,
+              ),
+              title: Text(
+                "${user.firstName} ${user.lastName}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+              subtitle: Text(
+                formatDate(review.createdAt),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+            Text(
+              review.review,
+              style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            Divider(color: AppColors().border),
+          ],
+        );
+      }).toList(),
     );
   }
 
@@ -325,9 +364,20 @@ class _BookDetailScreenState extends State<BookDetailScreen>
       ),
     );
   }
-}
 
-String formatDate(String createdAt) {
-  final dateTime = DateTime.parse(createdAt);
-  return DateFormat('yyyy.MM.dd').format(dateTime);
+  Widget _buildSectionTitle(String title, Color textColor) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: textColor,
+      ),
+    );
+  }
+
+  String formatDate(String createdAt) {
+    final dateTime = DateTime.parse(createdAt);
+    return DateFormat('yyyy.MM.dd').format(dateTime);
+  }
 }

@@ -3,8 +3,9 @@ import 'package:kutubxona/features/book/data/datasources/review_remote_data_sour
 import 'package:kutubxona/features/book/data/repository/review_repository_impl.dart';
 import 'package:kutubxona/features/book/domain/repository/review_repository.dart';
 import 'package:kutubxona/features/book/domain/usecase/get_reviews_usecase.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/book_reviews_bloc.dart';
-
+import 'package:kutubxona/features/book/domain/usecase/post_review_usecase.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/post_review_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_review/book_reviews_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -39,15 +40,20 @@ Future<void> init() async {
       remoteDataSource: BookDetailRemoteDataSourceImpl(dio: sl()),
     ),
   );
-// === Review ===
+  // === Review ===
   sl.registerFactory(() => ReviewBloc(sl()));
+
   sl.registerLazySingleton(() => GetReviewsUseCase(sl()));
-  sl.registerLazySingleton<ReviewRepository>(
-    () => ReviewRepositoryImpl( sl()),
-  );
+  sl.registerLazySingleton<ReviewRepository>(() => ReviewRepositoryImpl(sl()));
   sl.registerLazySingleton<ReviewRemoteDataSource>(
-    () => ReviewRemoteDataSourceImpl( sl()),
+    () => ReviewRemoteDataSourceImpl(sl()),
   );
+
+  // === Review ===
+  sl.registerFactory(() => PostReviewBloc(sl()));
+
+  sl.registerLazySingleton(() => PostReviewUseCase(sl()));
+
   // === Library ===
   sl.registerFactory(() => LibraryBloc(sl()));
   sl.registerLazySingleton(() => GetLibrariesUseCase(sl()));
