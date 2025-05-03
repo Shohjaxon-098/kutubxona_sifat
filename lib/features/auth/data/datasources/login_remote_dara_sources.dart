@@ -10,16 +10,22 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
   final dio = DioClient().dio;
 
   LoginRemoteDaraSourcesImpl();
-
   @override
   Future<void> login(LoginModel model) async {
     try {
       final response = await dio.post(
-        "${AppConfig.baseUrl}/account/login/", // 🔁 Bu yerga API endpoint URL qo‘ying
+        "${AppConfig.baseUrl}/account/login/",
         data: model.toJson(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Muvaffaqiyatli login
+        final data = response.data;
+        final access = data['access'];
+        final refresh = data['refresh'];
+
+        await LocalStorage.saveTokens(
+          accessToken: access,
+          refreshToken: refresh,
+        );
       } else {
         throw Exception('Login failed');
       }

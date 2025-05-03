@@ -18,7 +18,14 @@ class RegisterStep2RemoteDataSourceImpl
         data: model.toJson(),
       );
       if (response.statusCode == 200) {
-        return response.data;
+        final data = response.data;
+        final access = data['access'];
+        final refresh = data['refresh'];
+
+        await LocalStorage.saveTokens(
+          accessToken: access,
+          refreshToken: refresh,
+        );
       }
     } catch (e) {
       print(e.toString());

@@ -1,7 +1,6 @@
-
-
-
 import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/features/widgets/review_shimmer.dart';
+
 class BookDetailScreen extends StatefulWidget {
   final int bookId;
 
@@ -14,23 +13,32 @@ class BookDetailScreen extends StatefulWidget {
 class _BookDetailScreenState extends State<BookDetailScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-
+  int _currentTabIndex = 0;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+    });
     _fetchInitialData();
   }
 
   void _fetchInitialData() {
-    context.read<ReviewBloc>().add(FetchReviews(
-          libraryId: AppConfig.libraryId.toString(),
-          slug: AppConfig.slug.toString(),
-        ));
-    context.read<BookDetailBloc>().add(FetchBookDetail(
-          AppConfig.libraryId.toString(),
-          AppConfig.slug.toString(),
-        ));
+    context.read<ReviewBloc>().add(
+      FetchReviews(
+        libraryId: AppConfig.libraryId.toString(),
+        slug: AppConfig.slug.toString(),
+      ),
+    );
+    context.read<BookDetailBloc>().add(
+      FetchBookDetail(
+        AppConfig.libraryId.toString(),
+        AppConfig.slug.toString(),
+      ),
+    );
   }
 
   @override
@@ -106,8 +114,8 @@ class _BookDetailScreenState extends State<BookDetailScreen>
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
-            placeholder: (context, url) =>
-                _buildShimmerBox(width: 123, height: 158),
+            placeholder:
+                (context, url) => _buildShimmerBox(width: 123, height: 158),
             imageUrl: book.image,
             width: 123,
             height: 158,
@@ -186,15 +194,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
           tabs: const [Tab(text: "Маълумотлар"), Tab(text: "Фикрлар")],
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 600,
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildInfoTab(book),
-              _buildCommentTab(),
-            ],
-          ),
+        IndexedStack(
+          index: _currentTabIndex,
+          children: [_buildInfoTab(book), _buildCommentTab()],
         ),
       ],
     );
@@ -236,7 +238,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     return BlocBuilder<ReviewBloc, ReviewState>(
       builder: (context, state) {
         if (state is ReviewLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return ReviewShimmer();
         } else if (state is ReviewLoaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -257,96 +259,134 @@ class _BookDetailScreenState extends State<BookDetailScreen>
   }
 
   Widget _buildCommentInputSection(
-      TextEditingController controller, int selectedRating) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Китоб хақида фикрингиз',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
-            color: Theme.of(context).colorScheme.tertiary,
-          ),
-        ),
-        const SizedBox(height: 16),
-        StarRating(onRatingChanged: (rating) => selectedRating = rating),
-        const SizedBox(height: 16),
-        TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
+    TextEditingController controller,
+    int selectedRating,
+  ) {
+    return BlocListener<PostReviewBloc, PostReviewState>(
+      listener: (context, state) {
+        if (state is PostReviewSuccess) {
+          // Show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Фикр муваффақиятли юборилди")),
+          );
+
+          // Clear the input fields
+          controller.clear();
+          setState(() {
+            selectedRating = 0;
+          });
+
+          // Option 1: Fetch the updated list of reviews (recommended if the list is large or frequently updated)
+          context.read<ReviewBloc>().add(
+            FetchReviews(
+              libraryId: AppConfig.libraryId.toString(),
+              slug: AppConfig.slug.toString(),
             ),
-            hintText: 'Изох',
+          );
+
+          // Option 2: Directly add the new review to the list without fetching (useful for small lists)
+          // context.read<ReviewBloc>().add(AddReview(newReview));
+        } else if (state is PostReviewError) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Хатолик: ${state.message}")));
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Китоб хақида фикрингиз',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
           ),
-          maxLines: 4,
-        ),
-        const SizedBox(height: 12),
-        BlocBuilder<PostReviewBloc, PostReviewState>(
-          builder: (context, state) {
-            return PrimaryButton(
-              onPressed: state is PostReviewLoading
-                  ? null
-                  : () {
-                      final text = controller.text.trim();
-                      if (text.isNotEmpty && selectedRating > 0) {
-                        context.read<PostReviewBloc>().add(SubmitReview(
-                              ReviewRequestEntity(
-                                score: selectedRating.toString(),
-                                review: text,
-                                bookId: widget.bookId,
+          const SizedBox(height: 16),
+          StarRating(onRatingChanged: (rating) => selectedRating = rating),
+          const SizedBox(height: 16),
+          TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              hintText: 'Изох',
+            ),
+            maxLines: 4,
+          ),
+          const SizedBox(height: 12),
+          BlocBuilder<PostReviewBloc, PostReviewState>(
+            builder: (context, state) {
+              return PrimaryButton(
+                onPressed:
+                    state is PostReviewLoading
+                        ? null
+                        : () {
+                          final text = controller.text.trim();
+                          if (text.isNotEmpty && selectedRating > 0) {
+                            context.read<PostReviewBloc>().add(
+                              SubmitReview(
+                                ReviewRequestEntity(
+                                  score: selectedRating.toString(),
+                                  review: text,
+                                  bookId: widget.bookId,
+                                ),
                               ),
-                            ));
-                      }
-                    },
-              text: 'Юбориш',
-            );
-          },
-        ),
-      ],
+                            );
+                          }
+                        },
+                text: 'Юбориш',
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildReviewList(List reviews) {
     return Column(
-      children: reviews.map((review) {
-        final user = review.libraryMember!.user;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(user.photoUrl ?? ''),
-                child: user.photoUrl == null ? const Icon(Icons.person) : null,
-              ),
-              title: Text(
-                "${user.firstName} ${user.lastName}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Theme.of(context).colorScheme.tertiary,
+      children:
+          reviews.map((review) {
+            final user = review.libraryMember!.user;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(user.photoUrl ?? ''),
+                    child:
+                        user.photoUrl == null ? const Icon(Icons.person) : null,
+                  ),
+                  title: Text(
+                    "${user.firstName} ${user.lastName}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                  subtitle: Text(
+                    formatDate(review.createdAt),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                formatDate(review.createdAt),
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Theme.of(context).colorScheme.primary,
+                Text(
+                  review.review,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
-              ),
-            ),
-            Text(
-              review.review,
-              style: TextStyle(
-                fontSize: 14,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            Divider(color: AppColors().border),
-          ],
-        );
-      }).toList(),
+                Divider(color: AppColors().border),
+              ],
+            );
+          }).toList(),
     );
   }
 

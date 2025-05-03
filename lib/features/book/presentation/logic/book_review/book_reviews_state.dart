@@ -1,4 +1,3 @@
-
 import 'package:kutubxona/features/book/domain/entities/review_entity.dart';
 
 abstract class ReviewState {}

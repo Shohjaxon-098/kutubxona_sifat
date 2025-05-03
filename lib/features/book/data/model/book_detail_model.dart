@@ -1,4 +1,4 @@
-import '../../domain/entities/book_detail.dart';
+import 'package:kutubxona/features/book/domain/entities/book_detail.dart';
 
 class BookDetailModel extends BookDetail {
   BookDetailModel({
@@ -19,6 +19,7 @@ class BookDetailModel extends BookDetail {
     required super.reviewsCount,
     required super.relatedBooks,
   });
+
   factory BookDetailModel.fromJson(Map<String, dynamic> json) {
     return BookDetailModel(
       id: json['id'] ?? 0,
@@ -26,7 +27,7 @@ class BookDetailModel extends BookDetail {
       slug: json['slug'] ?? '',
       author: json['author'] ?? '',
       category: json['category'] ?? '',
-      image: json['image'],
+      image: json['image'] ?? '',
       description: json['description'] ?? '',
       isbn: json['isbn'] ?? '',
       publication: json['publication'] ?? '',
@@ -34,9 +35,17 @@ class BookDetailModel extends BookDetail {
       language: json['language'] ?? '',
       pageCount: json['page_count'] ?? 0,
       bookedCount: json['booked_count'] ?? 0,
-      rating: json['rating']?.toString() ?? '0', // now String
-      reviewsCount: json['reviews_count']?.toString() ?? '0', // now String
-      relatedBooks: json['related_books'].toString() ?? '',
+      rating: json['rating']?.toString() ?? '0', // safe string conversion
+      reviewsCount:
+          json['reviews_count']?.toString() ?? '0', // safe string conversion
+      relatedBooks:
+          json['related_books'] != null
+              ? (json['related_books'] is List
+                  ? json['related_books'].join(
+                    ', ',
+                  ) // Assuming related books are a List
+                  : json['related_books'].toString())
+              : '', // Fallback to empty string if null
     );
   }
 }
