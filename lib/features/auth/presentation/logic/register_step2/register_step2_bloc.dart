@@ -1,6 +1,6 @@
 // lib/features/register_step2/presentation/bloc/register_step2_bloc.dart
 import 'package:bloc/bloc.dart';
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/auth/domain/usecase/register_step2_usecases.dart';
 import 'package:kutubxona/features/auth/presentation/logic/register_step2/register_step2_event.dart';
 import 'package:kutubxona/features/auth/presentation/logic/register_step2/register_step2_state.dart';

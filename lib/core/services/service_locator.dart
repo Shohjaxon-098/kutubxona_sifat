@@ -1,11 +1,12 @@
-import 'package:kutubxona/core/util/important.dart';
+
+import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/data/datasources/review_remote_data_source.dart';
 import 'package:kutubxona/features/book/data/repository/review_repository_impl.dart';
 import 'package:kutubxona/features/book/domain/repository/review_repository.dart';
 import 'package:kutubxona/features/book/domain/usecase/get_reviews_usecase.dart';
 import 'package:kutubxona/features/book/domain/usecase/post_review_usecase.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/post_review_bloc.dart';
-import 'package:kutubxona/features/book/presentation/logic/book_review/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
 
 final sl = GetIt.instance;
 

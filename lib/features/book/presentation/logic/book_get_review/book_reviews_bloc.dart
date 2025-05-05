@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/book/domain/repository/review_repository.dart';
-import 'package:kutubxona/features/book/presentation/logic/book_review/book_reviews_event.dart';
-import 'package:kutubxona/features/book/presentation/logic/book_review/book_reviews_state.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_state.dart';
 
 /// ReviewBloc - kitob sharhlarini olish uchun BLoC
 class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {

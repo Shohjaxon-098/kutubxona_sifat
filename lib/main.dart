@@ -1,7 +1,6 @@
-import 'package:kutubxona/core/util/important.dart';
-import 'package:kutubxona/features/book/presentation/logic/bloc/post_review_bloc.dart';
-import 'package:kutubxona/features/book/presentation/logic/book_review/book_reviews_bloc.dart';
-import 'package:kutubxona/features/home/presentation/home_screen.dart';
+import 'package:kutubxona/export.dart';
+
+import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
 import 'package:kutubxona/core/services/service_locator.dart' as di;
 
 void main() async {
@@ -97,8 +96,8 @@ class KutubxonaApp extends StatelessWidget {
         darkTheme: darkTheme(),
         home:
             isRegistered
-                ? HomeScreen()
-                : SplashScreen(), // Navigate based on registration status
+                ? const HomeScreen()
+                : const SplashScreen(), // Navigate based on registration status
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute,
         initialRoute:

@@ -1,5 +1,4 @@
-
-import 'package:kutubxona/core/util/important.dart';
+import 'package:kutubxona/export.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -18,10 +17,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "image": AppImages().onBoard1,
       "text": "Китобларни уйингизга буюртма қилинг",
     },
-    {
-      "image": AppImages().onBoard2,
-      "text": "Китобларни онлайн ўқинг",
-    },
+    {"image": AppImages().onBoard2, "text": "Китобларни онлайн ўқинг"},
     {
       "image": AppImages().onBoard3,
       "text": "Китобларни аудио шаклини тингланг",
@@ -102,9 +98,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8,
       width: 8,
       decoration: BoxDecoration(
-        color: currentIndex == index
-            ? AppColors().enableDot
-            : AppColors().disableDot,
+        color:
+            currentIndex == index
+                ? AppColors().enableDot
+                : AppColors().disableDot,
         borderRadius: BorderRadius.circular(4),
       ),
     );
@@ -114,21 +111,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildStartButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors().primaryColor,
-          minimumSize: const Size(double.infinity, 60),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        ),
+      child: PrimaryButton(
         onPressed: () {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const SelectRegion()),
           );
         },
-        child: Text(
+        ttext: Text(
           "Утказиб юбориш",
           style: TextStyle(color: AppColors().white),
         ),
