@@ -53,6 +53,18 @@ class CommentInputSection extends StatelessWidget {
                   borderSide: BorderSide(color: AppColors().border),
                   borderRadius: BorderRadius.circular(16),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors().border),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors().border),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors().border),
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 hintText: 'Изох',
                 hintStyle: TextStyle(color: AppColors().hintColor),
               ),
