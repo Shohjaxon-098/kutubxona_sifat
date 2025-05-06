@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.dart';
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
-import 'package:kutubxona/features/widgets/fileter_bottom_sheet.dart';
+import 'package:kutubxona/features/home/presentation/widgets/fileter_bottom_sheet.dart';
 
 
 void showFilterModal(BuildContext context) {

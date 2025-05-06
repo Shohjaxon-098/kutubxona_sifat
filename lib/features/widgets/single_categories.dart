@@ -1,9 +1,7 @@
-
 import 'package:kutubxona/export.dart';
 
 import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 import 'package:kutubxona/features/book/presentation/book_detail_screen.dart';
-
 
 class SingleCategories extends StatelessWidget {
   const SingleCategories({super.key, required this.books});
@@ -44,15 +42,10 @@ class SingleCategories extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   child: SizedBox(
                     height: 160,
-                    child: Card(
-                      color: AppColors().cardColor,
-                      child:
-                      // ignore: unnecessary_null_comparison
-                      CachedNetworkImage(
-                        imageUrl: book.image,
-
-                        width: double.infinity,
-                      ),
+                    child: CachedNetworkImage(
+                      imageUrl: book.image,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
                     ),
                   ),
                 ),

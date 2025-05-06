@@ -1,5 +1,4 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/book/presentation/book_detail_screen.dart';
 import 'package:kutubxona/features/category/presentation/category_screen.dart';
 import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
 
@@ -59,14 +58,14 @@ class AppRoutes {
       case registerVerify:
         return PageTransition(
           isIos: true,
-          child: const RegisterVerify(),
+          child: const RegisterVerifyPage(),
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
       case selectRegion:
         return PageTransition(
           isIos: true,
-          child: SelectRegion(),
+          child: SelectRegionScreen(),
           type: PageTransitionType.leftToRight,
           duration: const Duration(milliseconds: 400),
         );

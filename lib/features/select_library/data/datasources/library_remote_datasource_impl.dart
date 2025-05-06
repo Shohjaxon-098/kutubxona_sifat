@@ -1,4 +1,3 @@
-
 import 'package:kutubxona/export.dart';
 
 class LibraryRemoteDataSourceImpl implements LibraryRemoteDataSource {
@@ -10,7 +9,7 @@ class LibraryRemoteDataSourceImpl implements LibraryRemoteDataSource {
   Future<List<LibraryModel>> fetchLibraries() async {
     try {
       final response = await dio.get('${AppConfig.baseUrl}/account/libraries/');
-      print('Region response: ${response.data}'); // Debug uchun
+
       final List data = response.data['results'];
       final libraries = data.map((e) => LibraryModel.fromJson(e)).toList();
       LocalStorage.saveLibraryId(libraries.first.id);

@@ -119,7 +119,13 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 children: [
                   Text(
                     widget.selectedItem ?? widget.hintText ?? '',
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color:
+                          widget.selectedItem == null
+                              ? AppColors().hintColor
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   Icon(
                     isOpen

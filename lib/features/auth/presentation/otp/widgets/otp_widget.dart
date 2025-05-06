@@ -21,8 +21,8 @@ class OtpWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 40,
-      height: 40,
+      width: 50,
+      height: 50,
       child: Center(
         child: TextFormField(
           focusNode: focusNode,

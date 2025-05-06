@@ -115,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         onPressed: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const SelectRegion()),
+            MaterialPageRoute(builder: (context) => const SelectRegionScreen()),
           );
         },
         ttext: Text(

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/util/formatters/phone_formatter.dart';
 
 class PhoneTextfieldWidget extends StatelessWidget {
   const PhoneTextfieldWidget({super.key, required this.phoneController});
@@ -55,7 +56,10 @@ class PhoneTextfieldWidget extends StatelessWidget {
                   keyboardType: TextInputType.phone,
                   cursorHeight: 22,
                   style: const TextStyle(fontSize: 16),
-                  inputFormatters: [LengthLimitingTextInputFormatter(9)],
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(12),
+                    PhoneNumberFormatter(),
+                  ],
                   decoration: InputDecoration(
                     isDense: true,
                     hintStyle: TextStyle(
