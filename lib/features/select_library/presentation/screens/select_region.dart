@@ -24,11 +24,11 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<LibraryBloc>().add(FetchLibrariesEvent());
+
     libraries = [];
   }
 
-  void _handleContinue(List<LibraryEntity> libraries) async {
+  void _handleContinue() async {
     if (selectedRegion == null ||
         selectedDistrict == null ||
         selectedLibrary == null) {
@@ -107,10 +107,7 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
                 BlocBuilder<LibraryBloc, LibraryState>(
                   builder: (context, state) {
                     return PrimaryButton(
-                      onPressed:
-                          isLoading || state is! LibraryLoaded
-                              ? null
-                              : () => _handleContinue(state.libraries),
+                      onPressed: isLoading ? null : () => _handleContinue(),
                       ttext:
                           isLoading
                               ? CircularProgressIndicator(

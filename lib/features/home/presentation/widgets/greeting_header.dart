@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:kutubxona/export.dart';
 
 class GreetingHeader extends StatelessWidget {
@@ -21,7 +20,7 @@ class GreetingHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Ассалому алайкум!\nИсмоилбек',
+            'Ассалому алайкум!\n',
             style: TextStyle(
               fontSize: 20,
               color: AppColors().white,

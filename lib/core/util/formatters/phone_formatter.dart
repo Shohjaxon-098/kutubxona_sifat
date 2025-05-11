@@ -9,15 +9,24 @@ class PhoneNumberFormatter extends TextInputFormatter {
     String digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
 
     final buffer = StringBuffer();
-    for (int i = 0; i < digitsOnly.length && i < 9; i++) {
-      buffer.write(digitsOnly[i]);
-      if (i == 1 || i == 4 || i == 6) {
+    int usedDigits = 0;
+    int selectionIndex = newValue.selection.end;
+
+    for (int i = 0; i < digitsOnly.length && usedDigits < 9; i++) {
+      if (usedDigits == 2 || usedDigits == 5 || usedDigits == 7) {
         buffer.write(' ');
+        if (i < selectionIndex) selectionIndex++;
       }
+      buffer.write(digitsOnly[i]);
+      usedDigits++;
     }
 
     final formatted = buffer.toString();
-    int selectionIndex = formatted.length;
+
+    // ⚠️ Kursor pozitsiyasi matndan oshmasligi kerak
+    if (selectionIndex > formatted.length) {
+      selectionIndex = formatted.length;
+    }
 
     return TextEditingValue(
       text: formatted,

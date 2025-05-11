@@ -1,6 +1,5 @@
 // features/book_detail/presentation/widgets/book_header.dart
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/widgets/review_shimmer.dart';
 
 class BookHeader extends StatelessWidget {
   final dynamic book;
@@ -46,7 +45,26 @@ class BookHeader extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Icon(Icons.star, color: Colors.orange),
+                  Row(
+                    children: List.generate(5, (index) {
+                      return GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          child: Icon(
+                            index < double.parse(book.rating)
+                                ? Icons.star
+                                : Icons.star_border,
+                            size: 18,
+                            color:
+                                index < double.parse(book.rating)
+                                    ? Colors.orange
+                                    : Colors.grey,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                  SizedBox(width: 6),
                   Text('${book.rating}'),
                 ],
               ),

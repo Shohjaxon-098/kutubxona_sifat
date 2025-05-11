@@ -23,7 +23,7 @@ class LoginButton extends StatelessWidget {
           isLoading
               ? CircularProgressIndicator(
                 color: AppColors().white,
-                strokeAlign: 2,
+                strokeWidth: 2,
               )
               : Text("Кириш", style: TextStyle(color: AppColors().white)),
       onPressed:

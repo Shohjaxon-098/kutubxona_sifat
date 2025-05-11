@@ -113,6 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
       child: PrimaryButton(
         onPressed: () {
+          context.read<LibraryBloc>().add(FetchLibrariesEvent());
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const SelectRegionScreen()),
