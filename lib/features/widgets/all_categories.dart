@@ -39,20 +39,38 @@ class AllCategories extends StatelessWidget {
           final category = categories[index];
           return ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(color: AppColors().cardColor),
-              child: Center(
-                child: Text(
-                  category.name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors().white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Background image
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(category.icon),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
+
+                // Black overlay
+                Container(color: Colors.black.withOpacity(0.45)),
+
+                // Text
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: Text(
+                      category.name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors().white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
