@@ -1,5 +1,5 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/home/presentation/widgets/custom_drawer.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
