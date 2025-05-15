@@ -26,6 +26,7 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
           accessToken: access,
           refreshToken: refresh,
         );
+        print('Access token: $access');
         return response.data;
       } else {
         throw Exception('Login failed');

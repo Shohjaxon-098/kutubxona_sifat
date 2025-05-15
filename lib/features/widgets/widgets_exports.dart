@@ -2,7 +2,7 @@ export '../auth/presentation/otp/widgets/otp_widget.dart';
 export 'textfield_input.dart';
 export 'phonetextfield_widget.dart';
 export 'all_categories.dart';
-export 'single_categories.dart';
+export '../home/presentation/widgets/single_categories.dart';
 export 'custom_selecter.dart';
 export 'primary_button.dart';
 export 'image_picker_helper.dart';

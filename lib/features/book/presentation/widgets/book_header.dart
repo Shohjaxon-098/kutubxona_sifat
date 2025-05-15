@@ -23,7 +23,7 @@ class BookHeader extends StatelessWidget {
         const SizedBox(width: 16),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, 
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 book.name,

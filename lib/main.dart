@@ -97,7 +97,7 @@ class KutubxonaApp extends StatelessWidget {
         home:
             isRegistered
                 ? const HomeScreen()
-                : HomeScreen(), // Navigate based on registration status
+                : SplashScreen(), // Navigate based on registration status
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute,
         initialRoute:

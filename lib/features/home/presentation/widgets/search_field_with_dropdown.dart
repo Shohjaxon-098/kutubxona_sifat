@@ -25,14 +25,19 @@ class SearchFieldWithDropdown extends StatelessWidget {
         children: [
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  Scaffold.of(context).openDrawer();
+              Builder(
+                builder: (context) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: 24,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  );
                 },
-                child: Icon(
-                  Icons.menu,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
               ),
               Expanded(child: _buildSearchField(context)),
               const SizedBox(width: 12),

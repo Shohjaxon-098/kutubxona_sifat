@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
         listener: (context, state) {
           if (state is LoginError) {
             setState(() => _isLoading = false);
-            ToastMessage.show(state.message);
+            ToastMessage.showToast(state.message);
           }
           if (state is LoginSuccess) {
             setState(() => _isLoading = false);

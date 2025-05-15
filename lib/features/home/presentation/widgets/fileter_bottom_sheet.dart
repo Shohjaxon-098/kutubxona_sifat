@@ -24,29 +24,28 @@ class FilterBottomSheet extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               // Year
-              ExpansionTile(
-                tilePadding: const EdgeInsets.symmetric(horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: AppColors().border),
-                ),
-                title: Text(
-                  "Йил бўйича",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.tertiary,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ExpansionTile(
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(color: AppColors().border),
                   ),
-                ),
-                iconColor: Theme.of(context).colorScheme.tertiary,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 24,
-                      right: 24,
-                      bottom: 39,
-                      top: 18,
+                  title: Text(
+                    "Йил бўйича",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
-                    child: DropdownButtonFormField<String>(
+                  ),
+                  iconColor: Theme.of(context).colorScheme.tertiary,
+                  childrenPadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
+                  children: [
+                    DropdownButtonFormField<String>(
                       iconDisabledColor: Theme.of(context).colorScheme.tertiary,
                       iconEnabledColor: Theme.of(context).colorScheme.tertiary,
                       borderRadius: BorderRadius.circular(16),
@@ -88,14 +87,18 @@ class FilterBottomSheet extends StatelessWidget {
                               )
                               .toList(),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               // Rating
               Padding(
-                padding: const EdgeInsets.only(top: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
                 child: ExpansionTile(
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 24),
                   iconColor: Theme.of(context).colorScheme.tertiary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -108,7 +111,10 @@ class FilterBottomSheet extends StatelessWidget {
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
-                  childrenPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  childrenPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 16,
+                  ),
                   children: List.generate(5, (index) {
                     final rating = 5 - index;
                     final selected = filter.selectedRatings.contains(rating);
@@ -127,15 +133,11 @@ class FilterBottomSheet extends StatelessWidget {
                           children: List.generate(5, (i) {
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Icon(
+                              child: SvgPicture.asset(
                                 i < rating
-                                    ? Icons.star_rate_sharp
-                                    : Icons.star_rate_outlined,
-                                size: 35,
-                                color:
-                                    i < rating
-                                        ? AppColors().rateColor
-                                        : Colors.grey.shade300,
+                                    ? AppImages().rate
+                                    : AppImages().rateDefault,
+                                width: 30,
                               ),
                             );
                           }),
@@ -147,7 +149,7 @@ class FilterBottomSheet extends StatelessWidget {
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top: 35),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: PrimaryButton(
                   onPressed:
                       () => context.read<FilterBloc>().add(ClearFiltersEvent()),

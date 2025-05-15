@@ -32,7 +32,7 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
     if (selectedRegion == null ||
         selectedDistrict == null ||
         selectedLibrary == null) {
-      ToastMessage.show('Бўш майдонни тўлдиринг');
+      ToastMessage.showToast('Бўш майдонни тўлдиринг');
       return;
     }
 
@@ -60,7 +60,7 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
                 BlocBuilder<LibraryBloc, LibraryState>(
                   builder: (context, state) {
                     if (state is LibraryError) {
-                      ToastMessage.show(state.message);
+                      ToastMessage.showToast(state.message);
                     } else if (state is LibraryLoaded) {
                       libraries = state.libraries;
                     }

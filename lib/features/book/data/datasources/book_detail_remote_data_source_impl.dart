@@ -21,9 +21,13 @@ class BookDetailRemoteDataSourceImpl implements BookDetailRemoteDataSource {
         throw Exception('Kitob topilmadi');
       }
     } on DioException catch (e) {
-      print('URL: ${AppConfig.baseUrl}/books/$libraryId/$slug/');
-
-      throw Exception('Server xatosi: ${e.message}');
+      if (e.response?.statusCode == 404) {
+        throw Exception('Kitob topilmadi');
+      } else if (e.response?.statusCode == 500) {
+        throw Exception('Server xatosi');
+      } else {
+        throw Exception('Tarmoq xatosi: ${e.message}');
+      }
     }
   }
 }

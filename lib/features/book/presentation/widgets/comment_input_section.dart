@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 
 class CommentInputSection extends StatelessWidget {
@@ -15,9 +16,7 @@ class CommentInputSection extends StatelessWidget {
       listener: (context, state) {
         if (state is PostReviewSuccess) {
           commentController.clear();
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text("Фикр юборилди!")));
+          ToastMessage.showToast("Фикр юборилди");
         } else if (state is PostReviewError) {
           ScaffoldMessenger.of(
             context,
@@ -80,22 +79,32 @@ class CommentInputSection extends StatelessWidget {
                       state is PostReviewLoading
                           ? null
                           : () {
-                            final comment = commentController.text.trim();
-                            if (comment.isNotEmpty && selectedRating > 0) {
+                            final review = ReviewRequestEntity(
+                              score: selectedRating.toString(),
+                              review: commentController.text.trim(),
+                              bookId: bookId,
+                            );
+                            if (review.review.isNotEmpty && review.score != 0) {
                               context.read<PostReviewBloc>().add(
                                 SubmitReview(
-                                  ReviewRequestEntity(
-                                    score: selectedRating.toString(),
-                                    review: comment,
-                                    bookId: bookId,
-                                  ),
+                                  review: review,
+                                  reviewBloc:
+                                      context
+                                          .read<
+                                            ReviewBloc
+                                          >(), // bu orqali review qo‘shiladi
                                 ),
                               );
+
+                              commentController.clear(); // maydonni tozalash
                             }
                           },
                   ttext:
                       state is PostReviewLoading
-                          ? const CircularProgressIndicator()
+                          ? CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: AppColors().white,
+                          )
                           : Text(
                             "Юбориш",
                             style: TextStyle(color: AppColors().white),

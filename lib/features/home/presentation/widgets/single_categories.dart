@@ -18,7 +18,7 @@ class SingleCategories extends StatelessWidget {
         itemCount: books.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
-          mainAxisSpacing: 12,
+          mainAxisSpacing: 17,
           childAspectRatio: 1.9,
         ),
         itemBuilder: (context, index) {
@@ -29,7 +29,7 @@ class SingleCategories extends StatelessWidget {
                 context,
                 PageTransition(
                   isIos: true,
-                  child: BookDetailScreen(bookId: book.id),
+                  child: BookDetailScreen(book: book),
                   type: PageTransitionType.rightToLeft,
                   duration: const Duration(milliseconds: 400),
                 ),

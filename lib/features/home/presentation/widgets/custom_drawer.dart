@@ -1,0 +1,125 @@
+import 'package:flutter/material.dart';
+import 'package:kutubxona/export.dart';
+
+class CustomDrawer extends StatelessWidget {
+  final VoidCallback onLogout;
+  const CustomDrawer({super.key, required this.onLogout});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(16),
+          bottomRight: Radius.circular(16),
+        ),
+      ),
+      child: Material(
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              // Profile section
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://randomuser.me/api/portraits/men/1.jpg', // TODO: Replace with real photoUrl
+                  ),
+                  radius: 24,
+                ),
+                title: Text(
+                  'Darin Kunde', // TODO: Replace with dynamic name
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: const Text(
+                  '+998 90 253 77 53',
+                ), // TODO: Replace with dynamic phone
+              ),
+              Divider(color: Theme.of(context).colorScheme.tertiary),
+              DrawerItem(
+                icon: SvgPicture.asset(
+                  AppImages().handCoin,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Ҳисса қўшиш',
+              ),
+              DrawerItem(
+                icon: SvgPicture.asset(
+                  AppImages().bookShelf,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Зарур китоблар',
+              ),
+              DrawerItem(
+                icon: SvgPicture.asset(
+                  AppImages().barChart,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Статистика',
+              ),
+              DrawerItem(
+                icon: SvgPicture.asset(
+                  AppImages().customer,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Контакт',
+              ),
+              DrawerItem(
+                icon: SvgPicture.asset(
+                  AppImages().settings,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Созламалар',
+              ),
+              DrawerItem(
+                icon: SvgPicture.asset(
+                  AppImages().accountCircle,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Профиль',
+              ),
+              DrawerItem(
+                icon: Icon(
+                  Icons.info_outline,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                label: 'Биз ҳақимизда',
+              ),
+              const Spacer(),
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text(
+                  'Профилдан чиқиш',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: onLogout,
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerItem extends StatelessWidget {
+  final Widget icon;
+  final String label;
+
+  const DrawerItem({super.key, required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: icon,
+      title: Text(
+        label,
+        style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+      ),
+      onTap: () {
+        // TODO: handle navigation
+      },
+    );
+  }
+}

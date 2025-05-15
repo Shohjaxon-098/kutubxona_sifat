@@ -1,4 +1,5 @@
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/home/presentation/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,6 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(
+        onLogout: () {
+          // TODO: handle logout with Bloc or LocalStorage
+        },
+      ),
+      drawerEnableOpenDragGesture: false, // faqat tugma orqali ochiladi
       backgroundColor: AppColors().cardColor,
       body: Stack(
         children: [
