@@ -27,6 +27,9 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
           refreshToken: refresh,
         );
         print('Access token: $access');
+        final userBox = Hive.box('userBox');
+        userBox.put('isRegistered', true);
+        userBox.put('userData', response.data);
         return response.data;
       } else {
         throw Exception('Login failed');

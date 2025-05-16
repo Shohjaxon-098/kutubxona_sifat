@@ -31,6 +31,7 @@ class _LoginState extends State<Login> {
             ToastMessage.showToast(state.message);
           }
           if (state is LoginSuccess) {
+          
             setState(() => _isLoading = false);
             AppNavigator.pushNamed(context, AppRoutes.home);
           }

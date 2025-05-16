@@ -55,4 +55,25 @@ class LocalStorage {
     await _box.delete('access_token');
     await _box.delete('refresh_token');
   }
+
+  static Future<void> setIsRegistered(bool value) async {
+    await _box.put('isRegistered', value);
+  }
+
+  static bool get isRegistered {
+    return _box.get('isRegistered', defaultValue: false);
+  }
+
+  static Future<void> saveUserData(Map<String, dynamic> userData) async {
+    await _box.put('userData', userData);
+  }
+
+  static Map<String, dynamic>? get userData {
+    return _box.get('userData');
+  }
+
+  static Future<void> clearUser() async {
+    await _box.delete('isRegistered');
+    await _box.delete('userData');
+  }
 }
