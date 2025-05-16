@@ -46,14 +46,19 @@ class _CustomDropdownState extends State<CustomDropdown> {
         return Positioned(
           width: size.width,
           child: CompositedTransformFollower(
-            offset: Offset(0, size.height + 20),
+            offset: Offset(0, size.height + 16),
             link: _layerLink,
             showWhenUnlinked: false,
             child: Material(
-              elevation: 4,
-              borderRadius: BorderRadius.circular(12),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 200),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                  border: Border.all(color: AppColors().border),
+                ),
+                constraints: BoxConstraints(maxHeight: 300),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,

@@ -1,12 +1,6 @@
 import 'package:kutubxona/export.dart';
 
 class SearchFieldWithDropdown extends StatelessWidget {
-  final TextEditingController controller;
-  final FocusNode focusNode;
-  final LayerLink layerLink;
-  final bool showDropdown;
-  final ValueChanged<bool> onDropdownVisibilityChanged;
-
   const SearchFieldWithDropdown({
     super.key,
     required this.controller,
@@ -15,6 +9,11 @@ class SearchFieldWithDropdown extends StatelessWidget {
     required this.showDropdown,
     required this.onDropdownVisibilityChanged,
   });
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final LayerLink layerLink;
+  final bool showDropdown;
+  final ValueChanged<bool> onDropdownVisibilityChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +24,6 @@ class SearchFieldWithDropdown extends StatelessWidget {
         children: [
           Row(
             children: [
-              Builder(
-                builder: (context) {
-                  return IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      size: 24,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  );
-                },
-              ),
               Expanded(child: _buildSearchField(context)),
               const SizedBox(width: 12),
               GestureDetector(
@@ -48,6 +33,7 @@ class SearchFieldWithDropdown extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
+                      // ignore: deprecated_member_use
                     ).colorScheme.primary.withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
@@ -101,7 +87,11 @@ class SearchFieldWithDropdown extends StatelessWidget {
                   child: const Center(
                     child: Padding(
                       padding: EdgeInsets.all(16),
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: SizedBox(
+                        width: 26,
+                        height: 26,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
                     ),
                   ),
                 );
@@ -169,16 +159,19 @@ class SearchFieldWithDropdown extends StatelessWidget {
             ),
             title: Text(
               book.name,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   book.author,
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   book.category,
                   style: TextStyle(

@@ -24,7 +24,6 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
   @override
   void initState() {
     super.initState();
-
     libraries = [];
   }
 
@@ -33,9 +32,18 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
         selectedDistrict == null ||
         selectedLibrary == null) {
       ToastMessage.showToast('Бўш майдонни тўлдиринг');
-      return;
-    }
 
+      return;
+    } // Tanlangan kutubxonani topamiz
+    final selected = libraries.firstWhere(
+      (lib) =>
+          lib.name == selectedLibrary &&
+          lib.region == selectedRegion &&
+          lib.district == selectedDistrict,
+    );
+
+    // Saqlash
+    await LocalStorage.saveLibraryId(selected.id);
     setState(() => isLoading = true);
     await Future.delayed(const Duration(seconds: 2));
     setState(() => isLoading = false);
@@ -53,66 +61,77 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
+            child: Stack(
               children: [
-                const HeaderCardWidget(),
-                const SizedBox(height: 30),
-                BlocBuilder<LibraryBloc, LibraryState>(
-                  builder: (context, state) {
-                    if (state is LibraryError) {
-                      ToastMessage.showToast(state.message);
-                    } else if (state is LibraryLoaded) {
-                      libraries = state.libraries;
-                    }
+                Column(
+                  children: [
+                    const HeaderCardWidget(),
+                    const SizedBox(height: 30),
+                    Expanded(
+                      child: BlocBuilder<LibraryBloc, LibraryState>(
+                        builder: (context, state) {
+                          if (state is LibraryError) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ToastMessage.showToast(state.message);
+                            });
+                          } else if (state is LibraryLoaded) {
+                            libraries = state.libraries;
+                          }
 
-                    return Column(
-                      children: [
-                        RegionDropdownWidget(
-                          libraries: libraries,
-                          selectedRegion: selectedRegion,
-                          onChanged: (val) {
-                            setState(() {
-                              selectedRegion = val;
-                              selectedDistrict = null;
-                              selectedLibrary = null;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        DistrictDropdownWidget(
-                          libraries: libraries,
-                          region: selectedRegion,
-                          selectedDistrict: selectedDistrict,
-                          onChanged: (val) {
-                            setState(() {
-                              selectedDistrict = val;
-                              selectedLibrary = null;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        LibraryDropdownWidget(
-                          libraries: libraries,
-                          region: selectedRegion,
-                          district: selectedDistrict,
-                          selectedLibrary: selectedLibrary,
-                          onChanged:
-                              (val) => setState(() => selectedLibrary = val),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                const Spacer(),
-                BlocBuilder<LibraryBloc, LibraryState>(
-                  builder: (context, state) {
-                    return PrimaryButton(
-                      onPressed: isLoading ? null : () => _handleContinue(),
+                          return Column(
+                            children: [
+                              RegionDropdownWidget(
+                                libraries: libraries,
+                                selectedRegion: selectedRegion,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedRegion = val;
+                                    selectedDistrict = null;
+                                    selectedLibrary = null;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 24),
+                              DistrictDropdownWidget(
+                                libraries: libraries,
+                                region: selectedRegion,
+                                selectedDistrict: selectedDistrict,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedDistrict = val;
+                                    selectedLibrary = null;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 24),
+                              LibraryDropdownWidget(
+                                libraries: libraries,
+                                region: selectedRegion,
+                                district: selectedDistrict,
+                                selectedLibrary: selectedLibrary,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedLibrary = val;
+                                  });
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    PrimaryButton(
+                      onPressed: isLoading ? null : _handleContinue,
                       ttext:
                           isLoading
-                              ? CircularProgressIndicator(
-                                color: AppColors().white,
-                                strokeWidth: 2,
+                              ? const SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
                               )
                               : Text(
                                 "Давом этиш",
@@ -122,10 +141,10 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                    );
-                  },
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                 ),
-                const SizedBox(height: 12),
               ],
             ),
           ),

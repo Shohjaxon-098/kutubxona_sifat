@@ -21,9 +21,11 @@ class LoginButton extends StatelessWidget {
     return PrimaryButton(
       ttext:
           isLoading
-              ? CircularProgressIndicator(
-                color: AppColors().white,
-                strokeWidth: 2,
+              ? SizedBox(width: 26, height: 26,
+                child: CircularProgressIndicator(
+                  color: AppColors().white,
+                  strokeWidth: 2,
+                ),
               )
               : Text("Кириш", style: TextStyle(color: AppColors().white)),
       onPressed:

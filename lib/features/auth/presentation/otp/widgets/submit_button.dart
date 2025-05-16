@@ -5,10 +5,7 @@ class SubmitButton extends StatelessWidget {
   final List<TextEditingController> controllers;
   final OtpState state;
 
-  SubmitButton({
-    required this.controllers,
-    required this.state,
-  });
+  SubmitButton({required this.controllers, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +23,17 @@ class SubmitButton extends StatelessWidget {
           ),
         );
       },
-      ttext: state is OtpLoading
-          ? const CircularProgressIndicator()
-          : Text(
-              "Кириш",
-              style: TextStyle(color: AppColors().white, fontSize: 15),
-            ),
+      ttext:
+          state is OtpLoading
+              ? SizedBox(
+                width: 26,
+                height: 26,
+                child: const CircularProgressIndicator(),
+              )
+              : Text(
+                "Кириш",
+                style: TextStyle(color: AppColors().white, fontSize: 15),
+              ),
     );
   }
 }

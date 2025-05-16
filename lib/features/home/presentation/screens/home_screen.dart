@@ -33,45 +33,45 @@ class _HomeScreenState extends State<HomeScreen> {
           // TODO: handle logout with Bloc or LocalStorage
         },
       ),
-      drawerEnableOpenDragGesture: false, // faqat tugma orqali ochiladi
+      drawerEnableOpenDragGesture: false,
       backgroundColor: AppColors().cardColor,
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              const Expanded(child: GreetingHeader()),
-              Expanded(
-                flex: 3,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(33),
-                    ),
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SearchFieldWithDropdown(
-                          controller: controller,
-                          focusNode: focusNode,
-                          layerLink: _layerLink,
-                          showDropdown: showDropdown,
-                          onDropdownVisibilityChanged:
-                              (visible) =>
-                                  setState(() => showDropdown = visible),
-                        ),
-                        const SizedBox(height: 24),
-                        const CategorySectionWidget(),
-                        const SizedBox(height: 24),
-                        const BookSectionWidget(),
-                      ],
-                    ),
-                  ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            iconTheme: IconThemeData(color: AppColors().white),
+            pinned: true,
+
+            expandedHeight: 160,
+            backgroundColor: AppColors().cardColor,
+            flexibleSpace: FlexibleSpaceBar(background: GreetingHeader()),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(33),
                 ),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
-            ],
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+              child: Column(
+                children: [
+                  SearchFieldWithDropdown(
+                    controller: controller,
+                    focusNode: focusNode,
+                    layerLink: _layerLink,
+                    showDropdown: showDropdown,
+                    onDropdownVisibilityChanged:
+                        (visible) => setState(() => showDropdown = visible),
+                  ),
+                  const SizedBox(height: 24),
+                  const CategorySectionWidget(),
+                  const SizedBox(height: 24),
+                  const BookSectionWidget(),
+                  const SizedBox(height: 16),
+                ],
+              ),
+            ),
           ),
         ],
       ),

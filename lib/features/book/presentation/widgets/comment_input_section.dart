@@ -101,9 +101,11 @@ class CommentInputSection extends StatelessWidget {
                           },
                   ttext:
                       state is PostReviewLoading
-                          ? CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppColors().white,
+                          ? SizedBox(width: 26,height: 26,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors().white,
+                            ),
                           )
                           : Text(
                             "Юбориш",

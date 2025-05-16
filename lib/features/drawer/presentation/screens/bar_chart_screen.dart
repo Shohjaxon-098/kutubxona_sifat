@@ -69,7 +69,6 @@ class StatistikaScreen extends StatelessWidget {
   }) {
     final total = leftValue + rightValue;
     final leftPercent = leftValue / total;
-    final rightPercent = rightValue / total;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -102,8 +101,8 @@ class StatistikaScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            progressColor: Color(0xffFF92AE),
-            backgroundColor: Color(0xff67E9F1),
+            progressColor: const Color(0xffFF92AE),
+            backgroundColor: const Color(0xff67E9F1),
             circularStrokeCap: CircularStrokeCap.round,
           ),
         ],

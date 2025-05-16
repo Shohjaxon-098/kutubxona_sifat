@@ -7,7 +7,7 @@ class AllCategories extends StatelessWidget {
     super.key,
     required this.categories,
     this.crossAxisCount = 3,
-    this.itemHeight = 140,
+    this.itemHeight = 130,
     this.mainAxisSpacing = 16,
     this.crossAxisSpacing = 16,
   });

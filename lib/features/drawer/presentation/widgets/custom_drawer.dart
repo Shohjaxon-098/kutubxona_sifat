@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/bar_chart_screen.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
 import 'package:kutubxona/features/widgets/drawer_widget.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -59,11 +60,10 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 label: 'Зарур китоблар',
                 onTap: () {
-                  // Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (_) => const ZarurKitoblarScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => NeedBooksScreen()),
+                  );
                 },
               ),
 
@@ -74,7 +74,6 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 label: 'Статистика',
                 onTap: () {
-                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const StatistikaScreen()),

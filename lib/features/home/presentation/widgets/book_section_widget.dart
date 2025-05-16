@@ -16,7 +16,7 @@ class BookSectionWidget extends StatelessWidget {
         const SizedBox(height: 12),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            if (state is HomeLoading) return ShimmerLoadingSingleCategories();
+            if (state is HomeLoading) return const ShimmerLoadingSingleCategories();
             if (state is HomeDataLoaded) return SingleCategories(books: state.books);
             if (state is HomeError) return Center(child: Text(state.message));
             return const SizedBox.shrink();
