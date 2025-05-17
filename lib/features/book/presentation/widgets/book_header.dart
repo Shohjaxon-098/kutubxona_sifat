@@ -13,7 +13,6 @@ class BookHeader extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
-            placeholder: (context, url) => ReviewShimmer(),
             imageUrl: book.image,
             width: 123,
             height: 158,

@@ -1,4 +1,6 @@
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.dart';
+import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
 import 'package:kutubxona/core/services/service_locator.dart' as di;
@@ -56,6 +58,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<BookDetailBloc>()),
         BlocProvider(create: (context) => sl<ReviewBloc>()),
         BlocProvider(create: (context) => sl<PostReviewBloc>()),
+        BlocProvider(create: (context) => FilterBloc(ClearFiltersUseCase())),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),
@@ -94,16 +97,10 @@ class KutubxonaApp extends StatelessWidget {
         title: 'Kutubxona',
         theme: theme(),
         darkTheme: darkTheme(),
-        home:
-            isRegistered
-                ? const HomeScreen()
-                : SplashScreen(), // Navigate based on registration status
+        home: SplashScreen(), // Navigate based on registration status
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute,
-        initialRoute:
-            isRegistered
-                ? AppRoutes.home
-                : AppRoutes.splash, // Set initial route
+        initialRoute: AppRoutes.splash, // Set initial route
         themeMode: ThemeMode.system,
       ),
     );

@@ -22,8 +22,19 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _controller = AnimationController(vsync: this, duration: _splashDuration)
       ..forward();
+
     Future.delayed(_delayDuration, () {
-      AppNavigator.pushReplacementNamed(context, AppRoutes.onBoardScreen);
+      final userBox = Hive.box('userBox');
+      final bool isRegistered = userBox.get(
+        'isRegistered',
+        defaultValue: false,
+      );
+
+      if (isRegistered) {
+        AppNavigator.pushReplacementNamed(context, AppRoutes.home);
+      } else {
+        AppNavigator.pushReplacementNamed(context, AppRoutes.onBoardScreen);
+      }
     });
   }
 

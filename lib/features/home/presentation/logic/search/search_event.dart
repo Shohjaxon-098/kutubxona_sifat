@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:kutubxona/features/home/domain/entities/filter_entity.dart';
 
 abstract class SearchEvent extends Equatable {
   const SearchEvent();
@@ -6,12 +7,10 @@ abstract class SearchEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
-
 class SearchQueryChanged extends SearchEvent {
   final String query;
+  final FilterEntity filters;
 
-  const SearchQueryChanged(this.query);
-
-  @override
-  List<Object?> get props => [query];
+  SearchQueryChanged(this.query, this.filters);
 }
+

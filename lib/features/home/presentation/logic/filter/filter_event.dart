@@ -12,3 +12,4 @@ class ToggleRatingEvent extends FilterEvent {
 }
 
 class ClearFiltersEvent extends FilterEvent {}
+class ApplyFiltersEvent extends FilterEvent {}

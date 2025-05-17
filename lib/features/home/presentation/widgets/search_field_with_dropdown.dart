@@ -1,4 +1,6 @@
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/book/presentation/screens/book_detail_screen.dart';
+import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 class SearchFieldWithDropdown extends StatelessWidget {
   const SearchFieldWithDropdown({
@@ -59,7 +61,9 @@ class SearchFieldWithDropdown extends StatelessWidget {
       context: context,
       enabled: true,
       onChanged: (query) {
-        context.read<SearchBloc>().add(SearchQueryChanged(query));
+        final filters = context.read<FilterBloc>().state.filters;
+        context.read<SearchBloc>().add(SearchQueryChanged(query, filters));
+
         onDropdownVisibilityChanged(query.isNotEmpty && focusNode.hasFocus);
       },
     );
@@ -197,6 +201,15 @@ class SearchFieldWithDropdown extends StatelessWidget {
               ],
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  isIos: true,
+                  child: BookDetailScreen(book: book),
+                  type: PageTransitionType.rightToLeft,
+                  duration: const Duration(milliseconds: 400),
+                ),
+              );
               controller.text = book.name;
               focusNode.unfocus();
               onDropdownVisibilityChanged(false);

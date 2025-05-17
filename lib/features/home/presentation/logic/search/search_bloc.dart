@@ -7,23 +7,29 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchBooksUseCase searchBooksUseCase;
 
   SearchBloc(this.searchBooksUseCase) : super(SearchInitial()) {
-    on<SearchQueryChanged>(_onSearchBooks);
-  }
-
-  Future<void> _onSearchBooks(
-    SearchQueryChanged event,
-    Emitter<SearchState> emit,
-  ) async {
-    try {
+    on<SearchQueryChanged>((event, emit) async {
       emit(SearchLoading());
+      try {
+        final results = await searchBooksUseCase(event.query);
 
-      final result = await searchBooksUseCase(
-        event.query,
-      ); // query bilan qidirish
+        // Filter qo‘llash
+        final filteredResults =
+            results.where((book) {
+              final matchYear =
+                  event.filters.selectedYear == null ||
+                  book.publishedDate.toString() == event.filters.selectedYear;
 
-      emit(SearchLoaded(result));
-    } catch (e) {
-      emit(SearchError(e.toString()));
-    }
+              final matchRating =
+                  event.filters.selectedRatings.isEmpty ||
+                  event.filters.selectedRatings.contains(book.rating.toString());
+
+              return matchYear && matchRating;
+            }).toList();
+
+        emit(SearchLoaded(filteredResults));
+      } catch (e) {
+        emit(SearchError("Qidirishda xatolik: $e"));
+      }
+    });
   }
 }

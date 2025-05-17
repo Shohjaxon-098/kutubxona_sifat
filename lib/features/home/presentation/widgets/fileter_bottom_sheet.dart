@@ -150,10 +150,25 @@ class FilterBottomSheet extends StatelessWidget {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: PrimaryButton(
-                  onPressed:
-                      () => context.read<FilterBloc>().add(ClearFiltersEvent()),
-                  text: 'Тозалаш',
+                child: Column(
+                  children: [
+                    PrimaryButton(
+                      onPressed:
+                          () => context.read<FilterBloc>().add(
+                            ClearFiltersEvent(),
+                          ),
+                      text: 'Тозалаш',
+                    ),
+                    const SizedBox(height: 12),
+                    PrimaryButton(
+                      onPressed: () {
+                        // Foydalanuvchi tanlagan filterlar asosida qidiruvni ishga tushiring
+                        context.read<FilterBloc>().add(ApplyFiltersEvent());
+                        Navigator.of(context).pop(); // BottomSheet ni yopish
+                      },
+                      text: 'Қўллаш',
+                    ),
+                  ],
                 ),
               ),
             ],
