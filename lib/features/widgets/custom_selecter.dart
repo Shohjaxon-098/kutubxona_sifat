@@ -6,7 +6,7 @@ class CustomDropdown extends StatefulWidget {
   final String? selectedItem;
   final ValueChanged<String?> onChanged;
   final String? hintText;
-  final String label;
+  final String? label;
 
   const CustomDropdown({
     super.key,
@@ -14,7 +14,7 @@ class CustomDropdown extends StatefulWidget {
     required this.selectedItem,
     required this.onChanged,
     this.hintText,
-    required this.label,
+    this.label,
   });
 
   @override
@@ -107,8 +107,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.label, style: TextStyle(fontWeight: FontWeight.w600)),
-          const SizedBox(height: 6),
+          Text(
+            widget.label ?? '',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 6),
           GestureDetector(
             onTap: _toggleDropdown,
             child: Container(

@@ -16,7 +16,7 @@ class CommentInputSection extends StatelessWidget {
       listener: (context, state) {
         if (state is PostReviewSuccess) {
           commentController.clear();
-          ToastMessage.showToast("Фикр юборилди");
+          ToastMessage.showToast("Фикр юборилди",context);
         } else if (state is PostReviewError) {
           ScaffoldMessenger.of(
             context,

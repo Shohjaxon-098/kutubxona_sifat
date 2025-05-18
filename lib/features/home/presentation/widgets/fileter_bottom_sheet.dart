@@ -45,33 +45,10 @@ class FilterBottomSheet extends StatelessWidget {
                     vertical: 16,
                   ),
                   children: [
-                    DropdownButtonFormField<String>(
-                      iconDisabledColor: Theme.of(context).colorScheme.tertiary,
-                      iconEnabledColor: Theme.of(context).colorScheme.tertiary,
-                      borderRadius: BorderRadius.circular(16),
-                      value: filter.selectedYear,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: AppColors().border),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: AppColors().border),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: AppColors().border),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: AppColors().border),
-                        ),
-                      ),
-                      hint: const Text(
-                        "1900",
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
+                    CustomDropdown(
+                      hintText: '2000',
+                      items: List.generate(8, (i) => (2020 + i).toString()),
+                      selectedItem: filter.selectedYear,
                       onChanged: (value) {
                         if (value != null) {
                           context.read<FilterBloc>().add(
@@ -79,14 +56,49 @@ class FilterBottomSheet extends StatelessWidget {
                           );
                         }
                       },
-                      items:
-                          List.generate(8, (i) => (1900 + i).toString())
-                              .map(
-                                (e) =>
-                                    DropdownMenuItem(value: e, child: Text(e)),
-                              )
-                              .toList(),
                     ),
+                    // DropdownButtonFormField<String>(
+                    //   iconDisabledColor: Theme.of(context).colorScheme.tertiary,
+                    //   iconEnabledColor: Theme.of(context).colorScheme.tertiary,
+                    //   borderRadius: BorderRadius.circular(16),
+                    //   value: filter.selectedYear,
+                    //   decoration: InputDecoration(
+                    //     border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(16),
+                    //       borderSide: BorderSide(color: AppColors().border),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(16),
+                    //       borderSide: BorderSide(color: AppColors().border),
+                    //     ),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(16),
+                    //       borderSide: BorderSide(color: AppColors().border),
+                    //     ),
+                    //     disabledBorder: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(16),
+                    //       borderSide: BorderSide(color: AppColors().border),
+                    //     ),
+                    //   ),
+                    //   hint: const Text(
+                    //     "1900",
+                    //     style: TextStyle(fontWeight: FontWeight.w500),
+                    //   ),
+                    //   onChanged: (value) {
+                    //     if (value != null) {
+                    //       context.read<FilterBloc>().add(
+                    //         SelectYearEvent(value),
+                    //       );
+                    //     }
+                    //   },
+                    //   items:
+                    //       List.generate(8, (i) => (1900 + i).toString())
+                    //           .map(
+                    //             (e) =>
+                    //                 DropdownMenuItem(value: e, child: Text(e),),
+                    //           )
+                    //           .toList(),
+                    // ),
                   ],
                 ),
               ),

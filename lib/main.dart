@@ -1,9 +1,10 @@
+import 'package:kutubxona/app/connectivy_listener.dart';
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.dart';
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
-import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
-import 'package:kutubxona/core/services/service_locator.dart' as di;
+import 'package:kutubxona/core/services/di.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +19,6 @@ class KutubxonaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userBox = Hive.box('userBox');
-    final bool isRegistered = userBox.get(
-      'isRegistered',
-      defaultValue: false,
-    ); // Check registration status
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -59,6 +54,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<ReviewBloc>()),
         BlocProvider(create: (context) => sl<PostReviewBloc>()),
         BlocProvider(create: (context) => FilterBloc(ClearFiltersUseCase())),
+        BlocProvider(create: (_) => sl<ConnectivityCubit>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),
@@ -97,11 +93,16 @@ class KutubxonaApp extends StatelessWidget {
         title: 'Kutubxona',
         theme: theme(),
         darkTheme: darkTheme(),
-        home: SplashScreen(), // Navigate based on registration status
+        home: AppConnectivityOverlay(
+          child: SplashScreen(),
+        ), // Navigate based on registration status
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute,
         initialRoute: AppRoutes.splash, // Set initial route
         themeMode: ThemeMode.system,
+        builder: (context, child) {
+          return AppConnectivityOverlay(child: child!);
+        },
       ),
     );
   }

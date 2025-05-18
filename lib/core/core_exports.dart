@@ -10,7 +10,7 @@ export 'package:intl/intl.dart' hide TextDirection;
 export 'package:kutubxona/core/util/app_images.dart';
 export 'error/validators.dart';
 export 'services/local_storage.dart';
-export 'services/service_locator.dart';
+export 'services/di.dart';
 export 'network/dio_client.dart';
 export 'package:get_it/get_it.dart';
 export 'dart:io';

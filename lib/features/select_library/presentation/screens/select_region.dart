@@ -31,7 +31,7 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
     if (selectedRegion == null ||
         selectedDistrict == null ||
         selectedLibrary == null) {
-      ToastMessage.showToast('Бўш майдонни тўлдиринг');
+      ToastMessage.showToast('Бўш майдонни тўлдиринг',context);
 
       return;
     } // Tanlangan kutubxonani topamiz
@@ -71,9 +71,9 @@ class _SelectRegionScreenState extends State<SelectRegionScreen> {
                       child: BlocBuilder<LibraryBloc, LibraryState>(
                         builder: (context, state) {
                           if (state is LibraryError) {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ToastMessage.showToast(state.message);
-                            });
+                            WidgetsBinding.instance.addPostFrameCallback(
+                              (_) {},
+                            );
                           } else if (state is LibraryLoaded) {
                             libraries = state.libraries;
                           }

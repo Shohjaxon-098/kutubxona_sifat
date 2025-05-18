@@ -27,13 +27,19 @@ class _LoginState extends State<Login> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginError) {
+            if (!context.mounted) return;
             setState(() => _isLoading = false);
-            ToastMessage.showToast(state.message);
+            ToastMessage.showToast(state.message,context);
           }
+
           if (state is LoginSuccess) {
-          
+            if (!context.mounted) return;
             setState(() => _isLoading = false);
-            AppNavigator.pushNamed(context, AppRoutes.home);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) {
+                AppNavigator.pushReplacementNamed(context, AppRoutes.home);
+              }
+            });
           }
         },
         child: Form(

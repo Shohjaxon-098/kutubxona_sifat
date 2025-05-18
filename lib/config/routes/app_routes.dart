@@ -1,5 +1,5 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/category/presentation/category_screen.dart';
+import 'package:kutubxona/features/category/presentation/screens/category_screen.dart';
 import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
 
 class AppRoutes {
