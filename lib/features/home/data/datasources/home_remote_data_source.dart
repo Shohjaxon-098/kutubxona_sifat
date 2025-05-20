@@ -6,7 +6,7 @@ class HomeRemoteDataSource {
   // Fetch categories with error handling
   Future<List<CategoryModel>> fetchCategories(String libraryId) async {
     try {
-      final id = await AppConfig.libraryId;
+      final id = await AppConfig.libraryId.toString();
       final response = await dio.get(
         "${AppConfig.baseUrl}/books/$id/categories/",
       );
@@ -18,20 +18,22 @@ class HomeRemoteDataSource {
         throw Exception('Failed to load categories');
       }
     } catch (e) {
-      print('Error fetching categories: $e');
+      // print('Error fetching categories: $e');
       rethrow; // Re-throw to allow higher layers to handle it
     }
   }
 
   // Fetch books with error handling
-  Future<List<BookModel>> fetchBooks() async {
+  Future<List<BookModel>> fetchBooks({int? categoryId}) async {
     try {
       final id = await AppConfig.libraryId;
 
-      final response = await dio.get("${AppConfig.baseUrl}/books/$id/");
+      final response = await dio.get(
+        "${AppConfig.baseUrl}/books/$id/",
+        queryParameters: {"category": categoryId},
+      );
+
       if (response.statusCode == 200) {
-        LocalStorage.saveSlug(response.data['results'].first['slug']);
-        print(response.data['results'][0]['image']);
         return (response.data['results'] as List)
             .map((json) => BookModel.fromJson(json))
             .toList();
@@ -40,7 +42,7 @@ class HomeRemoteDataSource {
       }
     } catch (e) {
       print('Error fetching books: $e');
-      rethrow; // Re-throw to allow higher layers to handle it
+      rethrow;
     }
   }
 }

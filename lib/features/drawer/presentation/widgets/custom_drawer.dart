@@ -1,8 +1,12 @@
 import 'dart:ui';
 
+import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/bar_chart_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_state.dart';
 import 'package:kutubxona/features/widgets/drawer_widget.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -23,20 +27,72 @@ class CustomDrawer extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              ListTile(
-                leading: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://randomuser.me/api/portraits/men/1.jpg',
-                  ),
-                  radius: 24,
-                ),
-                title: const Text(
-                  'Darin Kunde',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: const Text('+998 90 253 77 53'),
+              BlocBuilder<UserProfileBloc, UserProfileState>(
+                builder: (context, state) {
+                  print('Drawer BlocBuilder state: $state');
+
+                  if (state is UserProfileLoaded) {
+                    final profile = state.user;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: AppColors().white,
+                            radius: 28,
+                            backgroundImage:
+                                state.user.photoPath.isEmpty
+                                    ? null
+                                    : CachedNetworkImageProvider(
+                                      state.user.photoPath,
+                                    ),
+                            child:
+                                state.user.photoPath.isEmpty
+                                    ? Padding(
+                                      padding: EdgeInsets.only(bottom: 3),
+                                      child: SvgPicture.asset(
+                                        AppImages().person,
+                                        width: 40,
+                                      ),
+                                    )
+                                    : null,
+                          ),
+                          const SizedBox(width: 12),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${profile.firstName} ${profile.lastName}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                formatPhoneNumber(profile.phoneNumber),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (state is UserProfileLoading) {
+                    return const CircularProgressIndicator();
+                  } else if (state is UserProfileError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ToastMessage.showToast(state.message, context);
+                    });
+                    return const SizedBox();
+                  }
+                  return const SizedBox();
+                },
               ),
-              Divider(color: Theme.of(context).colorScheme.tertiary),
+              SizedBox(height: 24),
 
               DrawerItem(
                 icon: SvgPicture.asset(
@@ -155,5 +211,15 @@ class CustomDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatPhoneNumber(String rawPhone) {
+    if (rawPhone.length != 9) return rawPhone; // fallback
+    final part1 = rawPhone.substring(0, 2); // 50
+    final part2 = rawPhone.substring(2, 5); // 779
+    final part3 = rawPhone.substring(5, 7); // 14
+    final part4 = rawPhone.substring(7); // 02
+
+    return '+998 $part1 $part2 $part3 $part4';
   }
 }

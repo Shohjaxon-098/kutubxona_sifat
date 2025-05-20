@@ -53,8 +53,8 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SplashLogo(),
-            const SizedBox(height: 12),
-            const SplashText(),
+            // const SizedBox(height: 12),
+            // const SplashText(),
             const SizedBox(height: 150),
             SplashProgressBar(controller: _controller),
           ],
@@ -63,3 +63,4 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 }
+  

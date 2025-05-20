@@ -17,7 +17,7 @@ class ReviewModel extends ReviewEntity {
           json['library_member'] != null
               ? LibraryMemberModel.fromJson(json['library_member'])
               : LibraryMemberEntity(
-                user: UserEntity(firstName: '', lastName: ''),
+                user: UserEntity(firstName: '', lastName: '', id: 0),
               ), // fallback
     );
   }
@@ -29,6 +29,7 @@ class LibraryMemberModel extends LibraryMemberEntity {
   factory LibraryMemberModel.fromJson(Map<String, dynamic> json) {
     return LibraryMemberModel(
       user: UserModel(
+        id: json['id'],
         firstName: json['first_name'],
         lastName: json['last_name'],
         middleName: json['middle_name'],
@@ -40,6 +41,8 @@ class LibraryMemberModel extends LibraryMemberEntity {
 
 class UserModel extends UserEntity {
   UserModel({
+    required super.id,
+
     required super.firstName,
     required super.lastName,
     super.middleName,

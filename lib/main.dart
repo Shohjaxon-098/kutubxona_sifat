@@ -1,10 +1,12 @@
 import 'package:kutubxona/app/connectivy_listener.dart';
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.dart';
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 import 'package:kutubxona/core/services/di.dart' as di;
+import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +55,8 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<BookDetailBloc>()),
         BlocProvider(create: (context) => sl<ReviewBloc>()),
         BlocProvider(create: (context) => sl<PostReviewBloc>()),
+        BlocProvider(create: (context) => sl<UserProfileBloc>()),
+        BlocProvider(create: (context) => sl<CategoryBloc>()),
         BlocProvider(create: (context) => FilterBloc(ClearFiltersUseCase())),
         BlocProvider(create: (_) => sl<ConnectivityCubit>()),
         BlocProvider(

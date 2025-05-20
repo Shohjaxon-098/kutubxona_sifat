@@ -20,9 +20,10 @@ class HomeRepositoryImpl implements HomeRepository {
         .toList();
   }
 
+
   @override
-  Future<List<BookEntity>> getBooks() async {
-    final result = await remoteDataSource.fetchBooks();
+  Future<List<BookEntity>> getBooks({int? categoryId}) async {
+    final result = await remoteDataSource.fetchBooks(categoryId: categoryId);
     return result
         .map(
           (model) => BookEntity(
