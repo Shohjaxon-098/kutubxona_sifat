@@ -15,7 +15,7 @@ class SplashProgressBar extends StatelessWidget {
           return LinearProgressIndicator(
             value: controller.value,
             backgroundColor: AppColors().linerBackgroundColor,
-            valueColor: AlwaysStoppedAnimation(AppColors().linerValueColor),
+            valueColor: AlwaysStoppedAnimation(AppColors().white),
             borderRadius: BorderRadius.circular(5),
           );
         },

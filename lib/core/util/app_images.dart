@@ -3,7 +3,7 @@ const String images = 'images';
 const String icons = 'icons';
 
 class AppImages {
-  final String splashLogo = '$assets$icons/logo.png';
+  final String splashLogo = '$assets$images/logo_splash.svg';
   final String onBoard1 = '$assets$images/onBoard1.svg';
   final String onBoard2 = '$assets$images/onBoard2.svg';
   final String onBoard3 = '$assets$images/onBoard3.svg';

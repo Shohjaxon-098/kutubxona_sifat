@@ -159,7 +159,12 @@ class SearchFieldWithDropdown extends StatelessWidget {
           return ListTile(
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(book.image, fit: BoxFit.cover, height: 100),
+              child: CachedNetworkImage(
+                imageUrl: book.image,
+                fit: BoxFit.cover,
+                height: 100,
+                width: 45,
+              ),
             ),
             title: Text(
               book.name,

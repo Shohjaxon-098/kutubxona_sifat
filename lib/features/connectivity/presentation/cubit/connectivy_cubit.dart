@@ -5,11 +5,11 @@ enum ConnectivityStatus { online, offline }
 
 class ConnectivityCubit extends Cubit<ConnectivityStatus> {
   final WatchConnectionUseCase _watchConnection;
-  ConnectivityCubit(this._watchConnection)
-      : super(ConnectivityStatus.online) {
+  ConnectivityCubit(this._watchConnection) : super(ConnectivityStatus.online) {
     _watchConnection().listen((hasInternet) {
-      emit(hasInternet ? ConnectivityStatus.online
-                       : ConnectivityStatus.offline);
+      emit(
+        hasInternet ? ConnectivityStatus.online : ConnectivityStatus.offline,
+      );
     });
   }
 }
