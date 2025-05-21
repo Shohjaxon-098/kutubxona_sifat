@@ -1,18 +1,18 @@
 // star_rating.dart
 import 'package:flutter/material.dart';
+import 'package:kutubxona/export.dart';
 
+// ignore: must_be_immutable
 class StarRating extends StatefulWidget {
   final ValueChanged<int> onRatingChanged;
-
-  const StarRating({super.key, required this.onRatingChanged});
+  int rating;
+  StarRating({super.key, required this.onRatingChanged, required this.rating});
 
   @override
   _StarRatingState createState() => _StarRatingState();
 }
 
 class _StarRatingState extends State<StarRating> {
-  int _rating = 0;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -20,16 +20,16 @@ class _StarRatingState extends State<StarRating> {
         return GestureDetector(
           onTap: () {
             setState(() {
-              _rating = index + 1;
-              widget.onRatingChanged(_rating);
+              widget.rating = index + 1;
+              widget.onRatingChanged(widget.rating);
             });
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Icon(
-              index < _rating ? Icons.star : Icons.star_border,
-              size: 32,
-              color: index < _rating ? Colors.amber : Colors.grey,
+            child: SvgPicture.asset(
+              AppImages().rate,
+
+              color: index < widget.rating ? Color(0xffFF7F4D) : Colors.grey,
             ),
           ),
         );

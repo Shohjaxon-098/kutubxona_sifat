@@ -28,7 +28,7 @@ class NeedBooksScreen extends StatelessWidget {
         if (state is HomeLoading) return const ShimmerLoadingSingleCategories();
         if (state is HomeError) return Center(child: Text(state.message));
         if (state is HomeDataLoaded) {
-          return SingleCategories(books: state.books);
+          return BooksGrid(books: state.books);
         }
         return const SizedBox.shrink();
       },

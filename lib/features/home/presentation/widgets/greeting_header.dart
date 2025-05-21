@@ -26,7 +26,7 @@ class GreetingHeader extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Ассалому алайкум!\nShohjaxon',
+                      'Ассалому алайкум!\n${state.user.firstName}',
                       style: TextStyle(
                         fontSize: 20,
                         color: AppColors().white,

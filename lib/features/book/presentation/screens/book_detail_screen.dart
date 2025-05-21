@@ -46,56 +46,70 @@ class _BookDetailScreenState extends State<BookDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
-        title: Text(
-          "Китоб ҳақида",
-          style: TextStyle(
+    return BlocListener<PostReviewBloc, PostReviewState>(
+      listener: (context, state) {
+        if (state is PostReviewSuccess) {
+          context.read<ReviewBloc>().add(
+            FetchReviews(
+              libraryId: AppConfig.libraryId.toString(),
+              slug: widget.book.slug,
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(
             color: Theme.of(context).colorScheme.tertiary,
-            fontWeight: FontWeight.w500,
           ),
+          title: Text(
+            "Китоб ҳақида",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.tertiary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: BlocBuilder<BookDetailBloc, BookDetailState>(
-        builder: (context, state) {
-          if (state is BookDetailLoading) {
-            return const BookDetailLoadingScreen();
-          } else if (state is BookDetailLoaded) {
-            final book = state.book;
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BookHeader(book: book),
-                  const SizedBox(height: 24),
-                  SectionTitle(title: 'Қисқача'),
-                  const SizedBox(height: 8),
-                  Text(book.description),
-                  const SizedBox(height: 24),
-                  PrimaryButton(
-                    onPressed: () {},
-                    ttext: Text(
-                      "Банд қилиш",
-                      style: TextStyle(color: AppColors().white),
+        body: BlocBuilder<BookDetailBloc, BookDetailState>(
+          builder: (context, state) {
+            if (state is BookDetailLoading) {
+              return const BookDetailLoadingScreen();
+            } else if (state is BookDetailLoaded) {
+              final book = state.book;
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BookHeader(book: book),
+                    const SizedBox(height: 24),
+                    SectionTitle(title: 'Қисқача'),
+                    const SizedBox(height: 8),
+                    Text(book.description),
+                    const SizedBox(height: 24),
+                    PrimaryButton(
+                      onPressed: () {},
+                      ttext: Text(
+                        "Банд қилиш",
+                        style: TextStyle(color: AppColors().white),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  BookTabSection(
-                    book: book,
-                    controller: _tabController,
-                    currentTabIndex: _currentTabIndex,
-                  ),
-                ],
-              ),
-            );
-          } else if (state is BookDetailError) {
-            return Center(child: Text(state.message));
-          }
-          return const SizedBox.shrink();
-        },
+                    const SizedBox(height: 20),
+                    BookTabSection(
+                      book: book,
+                      controller: _tabController,
+                      currentTabIndex: _currentTabIndex,
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is BookDetailError) {
+              return Center(child: Text(state.message));
+            }
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }

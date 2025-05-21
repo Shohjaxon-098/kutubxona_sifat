@@ -59,11 +59,10 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
     try {
       final token = await LocalStorage.getAccessToken();
       final data = model.toJson();
-      print('POST data: $data');
-      print('POST token: $token');
+
       await dio.post(
         '${AppConfig.baseUrl}/books/${AppConfig.libraryId.toString()}/reviews/',
-        data: data, // Ensure you're sending the correct data format
+        data: data,
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -71,8 +70,31 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           },
         ),
       );
-    } catch (e) {
-      print('Error posting review: $e');
+    } on DioException catch (e) {
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        String errorMessage = "Фикр юборишда хатолик";
+
+        if (errorData is List && errorData.isNotEmpty) {
+          final msg = errorData.first.toString();
+          if (msg == 'You have already reviewed this book.') {
+            errorMessage = 'Сиз бу китоб учун аллақачон фикр билдиргансиз';
+          } else {
+            errorMessage = msg;
+          }
+        } else if (errorData is Map<String, dynamic>) {
+          final value = errorData.values.first;
+          if (value is List && value.isNotEmpty) {
+            errorMessage = value.first.toString();
+          } else {
+            errorMessage = value.toString();
+          }
+        }
+
+        throw Exception(errorMessage); // bu BLoC ga tushadi
+      } else {
+        throw Exception("Тармоқ хатолиги: ${e.message}");
+      }
     }
   }
 }

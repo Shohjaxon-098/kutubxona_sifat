@@ -1,26 +1,44 @@
-import 'package:flutter/material.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
-import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/book/domain/entities/review_request_entity.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_state.dart';
+import 'package:kutubxona/features/widgets/primary_button.dart';
+import 'package:kutubxona/features/widgets/star_reting.dart';
 
-class CommentInputSection extends StatelessWidget {
+class CommentInputSection extends StatefulWidget {
   const CommentInputSection({super.key, required this.bookId});
   final int bookId;
 
   @override
+  State<CommentInputSection> createState() => _CommentInputSectionState();
+}
+
+class _CommentInputSectionState extends State<CommentInputSection> {
+  int selectedRating = 0;
+  final commentController = TextEditingController();
+
+  void _clearFields() {
+    commentController.clear();
+    setState(() {
+      selectedRating = 0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int selectedRating = 0;
-    final commentController = TextEditingController();
     final colorScheme = Theme.of(context).colorScheme;
 
     return BlocConsumer<PostReviewBloc, PostReviewState>(
       listener: (context, state) {
         if (state is PostReviewSuccess) {
-          commentController.clear();
-          ToastMessage.showToast("Фикр юборилди",context);
+          _clearFields(); // ⭐ Yuborilgandan keyin hammasi tozalanadi
+          ToastMessage.showToast("Фикр юборилди", context);
         } else if (state is PostReviewError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("Хатолик: ${state.message}")));
+          ToastMessage.showToast(state.message, context);
         }
       },
       builder: (context, state) {
@@ -35,7 +53,14 @@ class CommentInputSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            StarRating(onRatingChanged: (rating) => selectedRating = rating),
+            StarRating(
+              rating:
+                  selectedRating, // ⭐ Qo‘shamiz: mavjud qiymatni ko‘rsatish uchun
+              onRatingChanged:
+                  (rating) => setState(() {
+                    selectedRating = rating;
+                  }),
+            ),
             const SizedBox(height: 16),
             Text(
               "Изох",
@@ -53,10 +78,6 @@ class CommentInputSection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors().border),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                disabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors().border),
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -82,29 +103,36 @@ class CommentInputSection extends StatelessWidget {
                             final review = ReviewRequestEntity(
                               score: selectedRating.toString(),
                               review: commentController.text.trim(),
-                              bookId: bookId,
+                              bookId: widget.bookId,
                             );
-                            if (review.review.isNotEmpty && review.score != 0) {
+
+                            if (review.review.isEmpty) {
+                              ToastMessage.showToast(
+                                "Илтимос, изоҳ киритинг",
+                                context,
+                              );
+                            } else if (selectedRating == 0) {
+                              ToastMessage.showToast(
+                                "Илтимос, баҳо танланг",
+                                context,
+                              );
+                            } else {
                               context.read<PostReviewBloc>().add(
                                 SubmitReview(
                                   review: review,
-                                  reviewBloc:
-                                      context
-                                          .read<
-                                            ReviewBloc
-                                          >(), // bu orqali review qo‘shiladi
+                                  reviewBloc: context.read<ReviewBloc>(),
                                 ),
                               );
-
-                              commentController.clear(); // maydonni tozalash
                             }
                           },
                   ttext:
                       state is PostReviewLoading
-                          ? SizedBox(width: 26,height: 26,
+                          ? const SizedBox(
+                            width: 26,
+                            height: 26,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              color: AppColors().white,
+                              color: Colors.white,
                             ),
                           )
                           : Text(

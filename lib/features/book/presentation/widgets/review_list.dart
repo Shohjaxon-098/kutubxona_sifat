@@ -17,10 +17,22 @@ class ReviewList extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     radius: 25,
-                    backgroundImage: Image.network(user.photoUrl ?? '').image,
                     child:
-                        user.photoUrl == null ? const Icon(Icons.person) : null,
+                        user.photoUrl == null
+                            ? Padding(
+                              padding: EdgeInsets.only(bottom: 3),
+                              child: SvgPicture.asset(
+                                AppImages().person,
+                                width: 40,
+                              ),
+                            )
+                            : null,
+                    backgroundImage:
+                        user.photoUrl == null
+                            ? null
+                            : CachedNetworkImageProvider(user.photoUrl),
                   ),
                   title: Text(
                     "${user.firstName} ${user.lastName}",

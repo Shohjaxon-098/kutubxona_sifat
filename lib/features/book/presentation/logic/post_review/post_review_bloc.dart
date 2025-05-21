@@ -2,12 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/features/book/domain/usecase/post_review_usecase.dart';
 import 'post_review_event.dart';
 import 'post_review_state.dart';
-class PostReviewBloc extends Bloc<PostReviewEvent, PostReviewState> {
-  final PostReviewUseCase useCase;
 
+class PostReviewBloc extends Bloc<PostReviewEvent, PostReviewState> {
   PostReviewBloc(this.useCase) : super(PostReviewInitial()) {
     on<SubmitReview>(_onSubmitReview);
   }
+  final PostReviewUseCase useCase;
 
   Future<void> _onSubmitReview(
     SubmitReview event,
@@ -18,7 +18,7 @@ class PostReviewBloc extends Bloc<PostReviewEvent, PostReviewState> {
       await useCase(event.review); // faqat 1 marta chaqiriladi
       emit(PostReviewSuccess());
     } catch (e) {
-      emit(PostReviewError(e.toString()));
+      emit(PostReviewError(e.toString().replaceAll("Exception: ", "")));
     }
   }
 }
