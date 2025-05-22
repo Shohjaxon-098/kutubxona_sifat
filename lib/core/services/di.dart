@@ -10,6 +10,11 @@ import 'package:kutubxona/features/connectivity/data/repositories/connectivity_r
 import 'package:kutubxona/features/connectivity/domain/repositories/connectivity_repository.dart';
 import 'package:kutubxona/features/connectivity/domain/usecases/watch_connection_usecase.dart';
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
+import 'package:kutubxona/features/drawer/data/datasources/about_us_remote_datasource.dart';
+import 'package:kutubxona/features/drawer/data/repositories/about_us_repository_impl.dart';
+import 'package:kutubxona/features/drawer/domain/repositories/about_us_repository.dart';
+import 'package:kutubxona/features/drawer/domain/usecases/get_about_us_usecase.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/bloc/about_us_bloc.dart';
 import 'package:kutubxona/features/profile/data/datasources/user_profile_remote_data_source.dart';
 import 'package:kutubxona/features/profile/data/repositories/user_profile_repository_impl.dart';
 import 'package:kutubxona/features/profile/domain/repositories/user_profile_repository.dart';
@@ -93,5 +98,19 @@ Future<void> init() async {
     () => UserProfileRepositoryImpl(sl()),
   );
   sl.registerFactory(() => CategoryBloc(sl()));
+  // BLoC
+  sl.registerFactory(() => AboutUsBloc(sl()));
 
+  // UseCase
+  sl.registerLazySingleton(() => GetAboutUsUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<AboutUsRepository>(
+    () => AboutUsRepositoryImpl(sl()),
+  );
+
+  // Remote DataSource
+  sl.registerLazySingleton<AboutUsRemoteDataSource>(
+    () => AboutUsRemoteDataSourceImpl(sl()),
+  );
 }

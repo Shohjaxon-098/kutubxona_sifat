@@ -3,6 +3,7 @@ import 'package:kutubxona/features/book/presentation/screens/book_detail_screen.
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_event.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_state.dart';
+import 'package:kutubxona/features/widgets/no_field_widget.dart';
 
 class CategoryBooks extends StatefulWidget {
   final int categoryId;
@@ -32,20 +33,30 @@ class _CategoryBooksState extends State<CategoryBooks> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.categoryName)),
-      body: BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          if (state is CategoryLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is CategoryLoadedState) {
-            final books = state.books;
-            return Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  search(context: context),
-                  SizedBox(height: 25),
-                  Expanded(
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            search(context: context),
+            SizedBox(height: 25),
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is CategoryLoadedState) {
+                  final books = state.books;
+                  if (books.isEmpty) {
+                    return const Expanded(
+                  
+                      child: NoDataWidget(
+                        imagePath: 'assets/images/no-result.svg',
+                        text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                      ),
+                    );
+                  }
+
+                  return Expanded(
                     child: GridView.builder(
                       scrollDirection: Axis.vertical,
                       physics: const BouncingScrollPhysics(),
@@ -106,8 +117,7 @@ class _CategoryBooksState extends State<CategoryBooks> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    SizedBox(height: 3),
-
+                                    const SizedBox(height: 3),
                                     Text(
                                       book.category,
                                       style: TextStyle(
@@ -116,7 +126,7 @@ class _CategoryBooksState extends State<CategoryBooks> {
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Row(
                                       children: [
                                         SvgPicture.asset(
@@ -125,7 +135,7 @@ class _CategoryBooksState extends State<CategoryBooks> {
                                         ),
                                         const SizedBox(width: 6),
                                         Text(
-                                          book.rating!,
+                                          book.rating ?? '0',
                                           style: TextStyle(
                                             color: AppColors().rateCount,
                                             fontSize: 12,
@@ -142,15 +152,15 @@ class _CategoryBooksState extends State<CategoryBooks> {
                         );
                       },
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else if (state is CategoryErrorState) {
-            return Center(child: Text('Xatolik: ${state.message}'));
-          }
-          return const SizedBox();
-        },
+                  );
+                } else if (state is CategoryErrorState) {
+                  return Center(child: Text('Xatolik: ${state.message}'));
+                }
+                return const SizedBox();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

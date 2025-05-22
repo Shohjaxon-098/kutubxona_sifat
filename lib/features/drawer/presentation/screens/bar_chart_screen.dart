@@ -42,7 +42,7 @@ class StatistikaScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     const Text(
-                      "Етишмаётган китоблар",
+                      "Энг кўп ўқилган китоблар",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -84,38 +84,64 @@ class StatistikaScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildLegend(color: Color(0xffFF92AE), label: leftLabel),
-              const SizedBox(width: 16),
-              _buildLegend(color: Color(0xff67E9F1), label: rightLabel),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildLegend(
+                    color: Color(0xffFF92AE),
+                    label: leftLabel,
+                    number: '5000',
+                  ),
+                  const SizedBox(height: 21),
+                  _buildLegend(
+                    color: Color(0xffA6B7D4),
+                    label: rightLabel,
+                    number: '2000',
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              CircularPercentIndicator(
+                radius: 50,
+                lineWidth: 12,
+                percent: leftPercent,
+                center: Text(
+                  "$total\nжами",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                progressColor: const Color(0xffFF92AE),
+                backgroundColor: const Color(0xffA6B7D4),
+                circularStrokeCap: CircularStrokeCap.round,
+              ),
             ],
-          ),
-          const SizedBox(height: 16),
-          CircularPercentIndicator(
-            radius: 50,
-            lineWidth: 12,
-            percent: leftPercent,
-            center: Text(
-              "$total\nжами",
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-            progressColor: const Color(0xffFF92AE),
-            backgroundColor: const Color(0xff67E9F1),
-            circularStrokeCap: CircularStrokeCap.round,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildLegend({required Color color, required String label}) {
-    return Row(
+  Widget _buildLegend({
+    required Color color,
+    required String label,
+    required String number,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CircleAvatar(radius: 6, backgroundColor: color),
-        const SizedBox(width: 6),
-        Text(label, style: const TextStyle(fontSize: 12)),
+        Row(
+          children: [
+            CircleAvatar(radius: 6, backgroundColor: color),
+            const SizedBox(width: 6),
+            Text(
+              number,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        Text(label, style: TextStyle(color: Color(0xff718096), fontSize: 12)),
       ],
     );
   }

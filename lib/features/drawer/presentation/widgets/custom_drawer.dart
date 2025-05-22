@@ -1,9 +1,7 @@
-import 'dart:ui';
-
-import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/bar_chart_screen.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/contact_card_page.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
 import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_state.dart';
@@ -29,8 +27,6 @@ class CustomDrawer extends StatelessWidget {
               const SizedBox(height: 16),
               BlocBuilder<UserProfileBloc, UserProfileState>(
                 builder: (context, state) {
-                  print('Drawer BlocBuilder state: $state');
-
                   if (state is UserProfileLoaded) {
                     final profile = state.user;
                     return Padding(
@@ -38,7 +34,8 @@ class CustomDrawer extends StatelessWidget {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: AppColors().white,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
                             radius: 28,
                             backgroundImage:
                                 state.user.photoPath.isEmpty
@@ -63,15 +60,15 @@ class CustomDrawer extends StatelessWidget {
                             children: [
                               Text(
                                 "${profile.firstName} ${profile.lastName}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Text(
                                 formatPhoneNumber(profile.phoneNumber),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
                                 ),
@@ -144,11 +141,10 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 label: 'Контакт',
                 onTap: () {
-                  // Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (_) => const KontaktScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ContactCardScreen()),
+                  );
                 },
               ),
 
