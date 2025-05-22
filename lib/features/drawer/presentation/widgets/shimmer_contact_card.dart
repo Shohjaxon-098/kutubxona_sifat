@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerContactCard extends StatelessWidget {
