@@ -22,9 +22,9 @@ class CategoryLoadedState extends CategoryState {
 }
 
 class CategoryErrorState extends CategoryState {
-  final String message;
 
   const CategoryErrorState(this.message);
+  final String message;
 
   @override
   List<Object?> get props => [message];
