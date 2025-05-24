@@ -1,5 +1,4 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/core/network/dio_client.dart';
 import 'package:kutubxona/features/auth/data/model/login_model.dart';
 
 abstract class LoginRemoteDaraSources {
@@ -7,7 +6,7 @@ abstract class LoginRemoteDaraSources {
 }
 
 class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
-  final dio = DioClient().dio;
+  final dio = Dio();
 
   LoginRemoteDaraSourcesImpl();
   @override
@@ -17,19 +16,22 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
         "${AppConfig.baseUrl}/account/login/",
         data: model.toJson(),
       );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.data;
         final access = data['access'];
         final refresh = data['refresh'];
+        final userId = data['user_id'];
 
-        await LocalStorage.saveTokens(
-          accessToken: access,
-          refreshToken: refresh,
-        );
+        await LocalStorage.saveAccessToken(access);
+        await LocalStorage.saveRefreshToken(refresh); // ✅ to‘g‘ri saqlash
+        await LocalStorage.saveUserId(userId);
+
         print('Access token: $access');
-        LocalStorage.saveUserData(response.data);
+        print('Refresh token: $refresh');
+
+        LocalStorage.saveUserData(data);
         LocalStorage.setIsRegistered(true);
-        return response.data;
       } else {
         throw Exception('Login failed');
       }

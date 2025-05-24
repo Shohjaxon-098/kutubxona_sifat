@@ -13,25 +13,26 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
   final Dio dio;
 
   UserProfileRemoteDataSourceImpl({required this.dio});
-
   @override
   Future<UserProfileModel> getUserProfile() async {
+    final token = await LocalStorage.getAccessToken();
     try {
-      final token = await LocalStorage.getAccessToken();
-
       final response = await dio.get(
         '${AppConfig.baseUrl}/account/profile/${AppConfig.libraryId}/',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
       final data = response.data;
+
       return UserProfileModel.fromJson(data);
     } on DioException catch (e) {
-      final message =
-          e.response?.data.toString() ??
-          e.response?.statusMessage ??
-          'Nomaʼlum server xatolik';
-      throw ServerException(message: message); // ✅ to'g'ri exception
+      final errorMessage =
+          e.response?.data?['detail'] ??
+          e.response?.data?['message'] ??
+          e.message ??
+          'Noma’lum xatolik yuz berdi';
+      print(token);
+      throw ServerException(message: errorMessage);
     }
   }
 }

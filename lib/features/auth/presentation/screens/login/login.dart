@@ -1,11 +1,11 @@
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/auth/presentation/login/widgets/login_button.dart';
-import 'package:kutubxona/features/auth/presentation/login/widgets/login_header.dart';
-import 'package:kutubxona/features/auth/presentation/login/widgets/login_password_field.dart';
-import 'package:kutubxona/features/auth/presentation/login/widgets/login_phone_field.dart';
-import 'package:kutubxona/features/auth/presentation/login/widgets/login_register_button.dart';
-import 'package:kutubxona/features/auth/presentation/login/widgets/login_telegram_button.dart';
+import 'package:kutubxona/features/auth/presentation/screens/login/widgets/login_button.dart';
+import 'package:kutubxona/features/auth/presentation/screens/login/widgets/login_header.dart';
+import 'package:kutubxona/features/auth/presentation/screens/login/widgets/login_password_field.dart';
+import 'package:kutubxona/features/auth/presentation/screens/login/widgets/login_phone_field.dart';
+import 'package:kutubxona/features/auth/presentation/screens/login/widgets/login_register_button.dart';
+import 'package:kutubxona/features/auth/presentation/screens/login/widgets/login_telegram_button.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

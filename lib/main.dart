@@ -7,7 +7,7 @@ import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.da
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 import 'package:kutubxona/core/services/di.dart' as di;
-import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/auth/presentation/otp/widgets/otp_input_fields.dart';
-import 'package:kutubxona/features/auth/presentation/otp/widgets/otp_verification_header.dart';
-import 'package:kutubxona/features/auth/presentation/otp/widgets/phone_change_button.dart';
-import 'package:kutubxona/features/auth/presentation/otp/widgets/submit_button.dart';
-import 'package:kutubxona/features/auth/presentation/otp/widgets/timer_widget.dart';
+import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/otp_input_fields.dart';
+import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/otp_verification_header.dart';
+import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/phone_change_button.dart';
+import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/submit_button.dart';
+import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/timer_widget.dart';
 
 class RegisterVerifyPage extends StatefulWidget {
   const RegisterVerifyPage({super.key});

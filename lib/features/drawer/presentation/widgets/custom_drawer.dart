@@ -3,8 +3,8 @@ import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/bar_chart_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/contact_card_page.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_state.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
 import 'package:kutubxona/features/widgets/drawer_widget.dart';
 
 class CustomDrawer extends StatelessWidget {

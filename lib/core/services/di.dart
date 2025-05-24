@@ -19,7 +19,7 @@ import 'package:kutubxona/features/profile/data/datasources/user_profile_remote_
 import 'package:kutubxona/features/profile/data/repositories/user_profile_repository_impl.dart';
 import 'package:kutubxona/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:kutubxona/features/profile/domain/usecases/get_user_profile_usecase.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 
 final sl = GetIt.instance;
 

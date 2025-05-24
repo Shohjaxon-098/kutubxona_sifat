@@ -1,6 +1,8 @@
 class AboutUsEntity {
   final int id;
   final String title;
+  final String library_name;
+
   final String description;
   final String address;
   final String phone1;
@@ -16,6 +18,7 @@ class AboutUsEntity {
   const AboutUsEntity({
     required this.id,
     required this.title,
+    required this.library_name,
     required this.description,
     required this.address,
     required this.phone1,

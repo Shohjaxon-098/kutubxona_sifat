@@ -4,6 +4,7 @@ class AboutUsModel extends AboutUsEntity {
   AboutUsModel({
     required int id,
     required String title,
+    required String library_name,
     required String description,
     required String address,
     required String phone1,
@@ -18,6 +19,7 @@ class AboutUsModel extends AboutUsEntity {
   }) : super(
          id: id,
          title: title,
+         library_name: library_name,
          description: description,
          address: address,
          phone1: phone1,
@@ -34,6 +36,7 @@ class AboutUsModel extends AboutUsEntity {
   factory AboutUsModel.fromJson(Map<String, dynamic> json) {
     return AboutUsModel(
       id: json['id'] ?? '',
+      library_name: json['library_name'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       address: json['address'] ?? '',

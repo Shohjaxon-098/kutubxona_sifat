@@ -1,7 +1,7 @@
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_bloc.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/user_profile_state.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
 
 class GreetingHeader extends StatelessWidget {
   const GreetingHeader({super.key});

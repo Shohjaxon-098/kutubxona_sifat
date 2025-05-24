@@ -22,7 +22,7 @@ class ContactCard extends StatelessWidget {
           const SizedBox(height: 24),
 
           Text(
-            info.title,
+            info.library_name,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 18,

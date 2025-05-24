@@ -13,7 +13,7 @@ class AboutUsRepositoryImpl implements AboutUsRepository {
       final model = await remoteDataSource.getAboutUs();
       return AboutUsEntity(
         id: model.id,
-        title: model.title,
+        title: model.title,library_name: model.library_name,
         description: model.description,
         address: model.address,
         phone1: model.phone1,
