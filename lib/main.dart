@@ -30,7 +30,6 @@ class KutubxonaApp extends StatelessWidget {
                 RegisterStep2Usecases(
                   repository: RegisterStep2RepositoryImpl(
                     remoteDataSource: RegisterStep2RemoteDataSourceImpl(
-                      dio: Dio(),
                     ),
                   ),
                 ),
@@ -43,7 +42,7 @@ class KutubxonaApp extends StatelessWidget {
                 RegisterPhoneUseCase(
                   RegisterStep1RepositoryImpl(
                     remoteDataSource: RegisterStep1RemoteDataSourceImpl(
-                      dio: Dio(),
+              
                     ),
                   ),
                 ),
@@ -71,7 +70,6 @@ class KutubxonaApp extends StatelessWidget {
                 GetBookDetail(
                   BookDetailRepositoryImpl(
                     remoteDataSource: BookDetailRemoteDataSourceImpl(
-                      dio: Dio(),
                     ),
                   ),
                 ),
@@ -81,7 +79,7 @@ class KutubxonaApp extends StatelessWidget {
           create:
               (context) => UploadImageBloc(
                 uploadImageUseCase: UploadImageUseCase(
-                  CommonRepositoryImpl(CommonRemoteDataSourceImpl(Dio())),
+                  CommonRepositoryImpl(CommonRemoteDataSourceImpl()),
                 ),
               ),
         ),

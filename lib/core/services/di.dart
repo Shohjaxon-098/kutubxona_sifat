@@ -31,7 +31,7 @@ Future<void> init() async {
   sl.registerFactory(() => OtpBloc(sl()));
   sl.registerLazySingleton(() => VerifyOtpUseCase(sl()));
   sl.registerLazySingleton<OtpRepository>(
-    () => OtpRepositoryImpl(OtpRemoteDataSourceImpl(dio: sl())),
+    () => OtpRepositoryImpl(OtpRemoteDataSourceImpl()),
   );
   // === Home ===
   sl.registerFactory(
@@ -51,7 +51,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetBookDetail(sl()));
   sl.registerLazySingleton<BookDetailRepository>(
     () => BookDetailRepositoryImpl(
-      remoteDataSource: BookDetailRemoteDataSourceImpl(dio: sl()),
+      remoteDataSource: BookDetailRemoteDataSourceImpl(),
     ),
   );
   // === Review ===
@@ -60,7 +60,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetReviewsUseCase(sl()));
   sl.registerLazySingleton<ReviewRepository>(() => ReviewRepositoryImpl(sl()));
   sl.registerLazySingleton<ReviewRemoteDataSource>(
-    () => ReviewRemoteDataSourceImpl(sl()),
+    () => ReviewRemoteDataSourceImpl(),
   );
 
   // === Review ===
@@ -75,7 +75,7 @@ Future<void> init() async {
     () => LibraryRepositoryImpl(remoteDataSource: sl()),
   );
   sl.registerLazySingleton<LibraryRemoteDataSource>(
-    () => LibraryRemoteDataSourceImpl(dio: sl()),
+    () => LibraryRemoteDataSourceImpl(),
   );
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
 
@@ -90,7 +90,7 @@ Future<void> init() async {
   sl.registerFactory(() => UserProfileBloc(sl()));
 
   sl.registerLazySingleton<UserProfileRemoteDataSource>(
-    () => UserProfileRemoteDataSourceImpl(dio: sl()),
+    () => UserProfileRemoteDataSourceImpl(),
   );
   sl.registerLazySingleton(() => GetUserProfileUseCase(sl()));
 
@@ -111,6 +111,6 @@ Future<void> init() async {
 
   // Remote DataSource
   sl.registerLazySingleton<AboutUsRemoteDataSource>(
-    () => AboutUsRemoteDataSourceImpl(sl()),
+    () => AboutUsRemoteDataSourceImpl(),
   );
 }

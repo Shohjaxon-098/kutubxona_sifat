@@ -7,9 +7,8 @@ abstract class OtpRemoteDataSource {
 }
 
 class OtpRemoteDataSourceImpl implements OtpRemoteDataSource {
-  final Dio dio;
-
-  OtpRemoteDataSourceImpl({required this.dio});
+  final  dio=DioClient().dio;
+  OtpRemoteDataSourceImpl();
 
   @override
   Future<void> verifyOtp(OtpVerifyModel model) async {

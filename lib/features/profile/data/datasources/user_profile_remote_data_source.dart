@@ -1,4 +1,5 @@
 import 'package:kutubxona/core/error/exeptions.dart';
+import 'package:kutubxona/core/network/dio_client.dart';
 import 'package:kutubxona/core/services/local_storage.dart';
 import 'package:kutubxona/features/profile/data/model/user_profile_model.dart';
 import 'package:dio/dio.dart';
@@ -10,9 +11,8 @@ abstract class UserProfileRemoteDataSource {
 }
 
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
-  final Dio dio;
-
-  UserProfileRemoteDataSourceImpl({required this.dio});
+  final  dio=DioClient().dio;
+  UserProfileRemoteDataSourceImpl();
   @override
   Future<UserProfileModel> getUserProfile() async {
     final token = await LocalStorage.getAccessToken();

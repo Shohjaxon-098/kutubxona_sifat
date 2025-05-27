@@ -28,22 +28,23 @@ class AuthInterceptor extends Interceptor {
       if (refreshToken != null) {
         try {
           final response = await dio.post(
-            '${AppConfig.baseUrl}/account/token/refresh/', // backend refresh endpoint
+            '${AppConfig.baseUrl}/account/token/refresh/',
             data: {'refresh': refreshToken},
           );
 
           final newAccessToken = response.data['access'];
           await LocalStorage.saveAccessToken(newAccessToken);
 
-          // Retry old request
+          // So‘rovni qayta jo‘natamiz
           final options = err.requestOptions;
           options.headers['Authorization'] = 'Bearer $newAccessToken';
 
+          // ❗️ Yangi Dio emas, eski interceptorlar ishlashi uchun `dio.fetch()` emas, `dio.request()` chaqilmasin
           final cloneReq = await dio.fetch(options);
           return handler.resolve(cloneReq);
         } catch (e) {
-          // Refresh token ham muddati o'tgan bo'lishi mumkin
-          await LocalStorage.clearTokens();
+          // Refresh token ham tugagan – ammo siz logout qilishni xohlamayapsiz
+          // Shunchaki xatoni uzatamiz
           return handler.reject(err);
         }
       }

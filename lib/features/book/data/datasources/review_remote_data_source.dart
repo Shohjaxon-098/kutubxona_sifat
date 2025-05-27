@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kutubxona/core/constants/app_config.dart';
+import 'package:kutubxona/core/network/dio_client.dart';
 import 'package:kutubxona/core/services/local_storage.dart';
 import 'package:kutubxona/features/book/data/model/review_model.dart';
 import 'package:kutubxona/features/book/data/model/review_request_model.dart';
@@ -15,9 +16,8 @@ abstract class ReviewRemoteDataSource {
 }
 
 class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
-  final Dio dio;
-
-  ReviewRemoteDataSourceImpl(this.dio);
+  final  dio=DioClient().dio;
+  ReviewRemoteDataSourceImpl();
 
   @override
   Future<List<ReviewModel>> getReviews({

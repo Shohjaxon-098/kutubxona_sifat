@@ -1,19 +1,16 @@
-import 'package:dio/dio.dart';
-import 'package:kutubxona/core/constants/app_config.dart';
-import 'auth_interceptor.dart';
+import 'package:kutubxona/core/network/auth_interceptor.dart';
+import 'package:kutubxona/export.dart';
 
 class DioClient {
-  static Dio createDio() {
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: AppConfig.baseUrl,
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 15),
-        contentType: 'application/json',
-      ),
-    );
+  static final DioClient _instance = DioClient._internal();
+  late final Dio dio;
 
+  factory DioClient() {
+    return _instance;
+  }
+
+  DioClient._internal() {
+    dio = Dio(BaseOptions(baseUrl: AppConfig.baseUrl));
     dio.interceptors.add(AuthInterceptor(dio));
-    return dio;
   }
 }

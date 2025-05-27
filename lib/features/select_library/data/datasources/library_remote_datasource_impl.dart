@@ -1,9 +1,8 @@
 import 'package:kutubxona/export.dart';
 
 class LibraryRemoteDataSourceImpl implements LibraryRemoteDataSource {
-  final Dio dio;
-
-  LibraryRemoteDataSourceImpl({required this.dio});
+  final  dio=DioClient().dio;
+  LibraryRemoteDataSourceImpl();
 
   @override
   Future<List<LibraryModel>> fetchLibraries() async {

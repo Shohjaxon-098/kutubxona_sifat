@@ -1,8 +1,7 @@
 import 'package:kutubxona/export.dart';
 
 class HomeRemoteDataSource {
-  final Dio dio = Dio();
-
+  final  dio=DioClient().dio;
   // Fetch categories with error handling
   Future<List<CategoryModel>> fetchCategories(String libraryId) async {
     try {

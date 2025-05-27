@@ -6,8 +6,8 @@ abstract class CommonRemoteDataSource {
 }
 
 class CommonRemoteDataSourceImpl implements CommonRemoteDataSource {
-  final Dio dio;
-  CommonRemoteDataSourceImpl(this.dio);
+  final dio = DioClient().dio;
+  CommonRemoteDataSourceImpl();
 
   @override
   Future<UploadImageResponseModel> uploadImage(File file) async {

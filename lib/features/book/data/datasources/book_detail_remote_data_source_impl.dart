@@ -4,9 +4,8 @@ import '../model/book_detail_model.dart';
 import 'book_detail_remote_data_source.dart';
 
 class BookDetailRemoteDataSourceImpl implements BookDetailRemoteDataSource {
-  final Dio dio;
-
-  BookDetailRemoteDataSourceImpl({required this.dio});
+  final  dio=DioClient().dio;
+  BookDetailRemoteDataSourceImpl();
 
   @override
   Future<BookDetailModel> getBookDetail(String libraryId, String slug) async {

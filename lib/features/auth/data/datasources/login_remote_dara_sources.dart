@@ -6,8 +6,7 @@ abstract class LoginRemoteDaraSources {
 }
 
 class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
-  final dio = Dio();
-
+  final  dio=DioClient().dio;
   LoginRemoteDaraSourcesImpl();
   @override
   Future<void> login(LoginModel model) async {

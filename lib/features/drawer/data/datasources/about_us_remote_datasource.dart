@@ -7,9 +7,8 @@ abstract class AboutUsRemoteDataSource {
 }
 
 class AboutUsRemoteDataSourceImpl implements AboutUsRemoteDataSource {
-  final Dio dio;
-
-  AboutUsRemoteDataSourceImpl(this.dio);
+  final  dio=DioClient().dio;
+  AboutUsRemoteDataSourceImpl();
 
   @override
   Future<AboutUsModel> getAboutUs() async {

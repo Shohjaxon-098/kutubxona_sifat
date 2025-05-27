@@ -1,3 +1,4 @@
+
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/custom_drawer.dart';
@@ -21,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         setState(() => showDropdown = false);

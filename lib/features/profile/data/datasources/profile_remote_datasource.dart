@@ -8,9 +8,8 @@ abstract class ProfileRemoteDataSource {
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
-  final Dio dio;
-
-  ProfileRemoteDataSourceImpl({required this.dio});
+  final  dio=DioClient().dio;
+  ProfileRemoteDataSourceImpl();
 
   @override
   Future<void> updateProfile(UpdateProfileModel model) async {
