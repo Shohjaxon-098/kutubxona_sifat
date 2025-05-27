@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/bloc/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/about_us_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/contact_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/shimmer_contact_card.dart';
 
@@ -35,7 +36,7 @@ class _AboutusScreenState extends State<AboutusScreen> {
           } else if (state is AboutUsError) {
             return Center(child: Text(state.message));
           } else if (state is AboutUsLoaded) {
-            return ContactCard(info: state.aboutUs);
+            return AboutUsCard(info: state.aboutUs);
           }
           return const SizedBox.shrink();
         },

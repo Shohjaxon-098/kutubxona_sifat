@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/bloc/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/about_us_card.dart';
 
 class ContributeScreen extends StatelessWidget {
   const ContributeScreen({super.key});
@@ -10,16 +13,12 @@ class ContributeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: const Text(
           "Хисса қўшиш",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
       ),
-      body: _buildBody(context),
+      // body: _buildBody(context),
     );
   }
 }
-Widget _buildBody(BuildContext context){
-  return Column(children: [
 
-  ],);
-}

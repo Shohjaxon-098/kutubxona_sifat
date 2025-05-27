@@ -6,7 +6,7 @@ import 'package:kutubxona/features/drawer/presentation/widgets/social_media_row.
 
 class AboutUsCard extends StatelessWidget {
   const AboutUsCard({super.key, required this.info});
- final AboutUsEntity info;
+  final AboutUsEntity info;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -15,29 +15,47 @@ class AboutUsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(14),
-            child: CachedNetworkImage(imageUrl: info.image),
+            borderRadius: BorderRadius.circular(16),
+            child: CachedNetworkImage(
+              imageUrl: info.image,
+              height: 166,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              placeholder:
+                  (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+            ),
+          ),
+          const SizedBox(height: 18),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: CachedNetworkImage(
+              imageUrl: info.image,
+              height: 166,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              placeholder:
+                  (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+            ),
           ),
           const SizedBox(height: 24),
 
           Text(
-            info.library_name,
+            info.title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
           const SizedBox(height: 24),
-
-          ContactInfoRow(title: 'Манзил', value: info.address),
-          ContactInfoRow(
-            title: 'Телефон',
-            value: '${info.phone1}\n${info.phone2}',
+          Text(
+            info.description,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+            ),
           ),
-          ContactInfoRow(title: 'Электрон почта', value: info.email),
-
-          const SizedBox(height: 24),
-          const SocialMediaRow(),
         ],
       ),
     );
