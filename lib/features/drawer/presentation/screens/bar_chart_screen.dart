@@ -44,6 +44,9 @@ class StatistikaScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
               _buildMonthlyActivityChart(),
+              SizedBox(height: 24),
+              buildBooksStatistic(context, 'Энг кўп ўқилган китоблар'),
+              buildBooksStatistic(context, 'Топ 100 китоблар'),
             ],
           ),
         ),
@@ -317,31 +320,44 @@ Widget _buildMonthlyActivityChart() {
             children: List.generate(months.length, (index) {
               final percent = values[index] / 100;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Column(
                   children: [
                     Row(
                       children: [
                         Text(
                           months[index],
-                          style: const TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 9,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors().textBodyMuted,
+                          ),
                         ),
                         SizedBox(width: 10),
                         Expanded(
-                          child: LinearProgressIndicator(
-                            value: percent,
-                            backgroundColor: const Color(0xffF1F5F9),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Color(0xffFF92AE),
-                            ),
-                            minHeight: 8,
-                            borderRadius: BorderRadius.circular(8),
+                          child: Column(
+                            children: [
+                              LinearProgressIndicator(
+                                value: percent,
+                                backgroundColor: const Color(0xffF1F5F9),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xffA6B7D4),
+                                ),
+                                minHeight: 8,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              SizedBox(height: 3),
+                              LinearProgressIndicator(
+                                value: percent,
+                                backgroundColor: const Color(0xffF1F5F9),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xffFF92AE),
+                                ),
+                                minHeight: 8,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          "${values[index]}",
-                          style: const TextStyle(fontSize: 12),
                         ),
                       ],
                     ),
@@ -354,4 +370,147 @@ Widget _buildMonthlyActivityChart() {
       ),
     ),
   );
+}
+
+Widget buildBooksStatistic(BuildContext context, String title) {
+  final books = List.generate(3, (_) => DummyBookData());
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+      const SizedBox(height: 12),
+      ...books.map(
+        (book) => Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: BookCard(book: book),
+        ),
+      ),
+    ],
+  );
+}
+
+class DummyBookData {
+  final String title;
+  final String author;
+  final String imageUrl;
+  final int year;
+  final int borrowed;
+  final int available;
+  DummyBookData({
+    this.title = 'Стив Джобс',
+    this.author = 'Жорж Оруел',
+    this.imageUrl = '',
+    this.year = 2016,
+    this.available = 56,
+    this.borrowed = 34,
+  });
+}
+
+class BookCard extends StatelessWidget {
+  final DummyBookData book;
+
+  const BookCard({super.key, required this.book});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: AppColors().border),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                width: 100,
+                height: 165,
+                color: Colors.grey.shade300,
+                child:
+                    book.imageUrl.isEmpty
+                        ? const Icon(Icons.book, size: 30)
+                        : Image.network(book.imageUrl, fit: BoxFit.cover),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    book.title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    book.author,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  InfoRow(
+                    title: 'Чоп қилинган йили:',
+                    value: book.year.toString(),
+                  ),
+                  const SizedBox(height: 12),
+                  InfoRow(
+                    title: 'Банд қилинган китоблар:',
+                    value: book.borrowed.toString(),
+                  ),
+                  const SizedBox(height: 12),
+                  InfoRow(
+                    title: 'Мавжуд китоблар:',
+                    value: book.available.toString(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class InfoRow extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const InfoRow({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 13,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

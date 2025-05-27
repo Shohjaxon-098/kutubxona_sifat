@@ -1,10 +1,13 @@
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/about_us.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/bar_chart_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/contact_card_page.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/contribute_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
+import 'package:kutubxona/features/profile/presentation/screens/profile_screen.dart';
 import 'package:kutubxona/features/widgets/drawer_widget.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -98,11 +101,10 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 label: 'Ҳисса қўшиш',
                 onTap: () {
-                  // Navigator.pop(context); // Drawer yopiladi
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (_) => const HissaQoshishScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ContributeScreen()),
+                  );
                 },
               ),
 
@@ -170,11 +172,10 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 label: 'Профиль',
                 onTap: () {
-                  // Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (_) => const ProfilScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ProfileScreen()),
+                  );
                 },
               ),
 
@@ -182,11 +183,10 @@ class CustomDrawer extends StatelessWidget {
                 icon: const Icon(Icons.info_outline, color: Colors.grey),
                 label: 'Биз ҳақимизда',
                 onTap: () {
-                  // Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (_) => const BizHaqimizdaScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AboutusScreen()),
+                  );
                 },
               ),
 

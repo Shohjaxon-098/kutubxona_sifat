@@ -26,4 +26,5 @@ class AppColors {
   Color get shimmerHighLight => Colors.grey[100]!;
   Color get shimmerBaseDark => Colors.grey[800]!;
   Color get shimmerHighDark => Colors.grey[600]!;
+  Color get textBodyMuted => Color(0xff718096);
 }
