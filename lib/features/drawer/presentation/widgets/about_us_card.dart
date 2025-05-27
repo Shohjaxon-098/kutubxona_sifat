@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/domain/entities/about_us_entity.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/contact_info_row.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/social_media_row.dart';
+
 
 class AboutUsCard extends StatelessWidget {
   const AboutUsCard({super.key, required this.info});
