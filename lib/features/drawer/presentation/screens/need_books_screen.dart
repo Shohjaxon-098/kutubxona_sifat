@@ -13,7 +13,7 @@ class NeedBooksScreen extends StatelessWidget {
         title: Text(
           'Зарур китоблар',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             color: Theme.of(context).colorScheme.tertiary,
             fontWeight: FontWeight.w500,
           ),

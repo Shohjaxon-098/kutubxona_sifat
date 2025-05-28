@@ -2,7 +2,10 @@ import 'package:kutubxona/app/connectivy_listener.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/bloc/contribution_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/contribute_card.dart';
 import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.dart';
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
@@ -60,7 +63,8 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => FilterBloc(ClearFiltersUseCase())),
         BlocProvider(create: (_) => sl<ConnectivityCubit>()),
         BlocProvider(create: (context) => sl<AboutUsBloc>()),
-
+        BlocProvider(create: (context) => sl<StatisticBloc>()),
+        BlocProvider(create: (context) => sl<ContributionBloc>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),

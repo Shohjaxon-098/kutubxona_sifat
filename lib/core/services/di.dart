@@ -11,10 +11,20 @@ import 'package:kutubxona/features/connectivity/domain/repositories/connectivity
 import 'package:kutubxona/features/connectivity/domain/usecases/watch_connection_usecase.dart';
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/drawer/data/datasources/about_us_remote_datasource.dart';
+import 'package:kutubxona/features/drawer/data/datasources/contribution_remote_data_source.dart';
+import 'package:kutubxona/features/drawer/data/datasources/statistic_remote_datasource.dart';
 import 'package:kutubxona/features/drawer/data/repositories/about_us_repository_impl.dart';
+import 'package:kutubxona/features/drawer/data/repositories/contribution_repository_impl.dart';
+import 'package:kutubxona/features/drawer/data/repositories/statistik_repository_impl.dart';
 import 'package:kutubxona/features/drawer/domain/repositories/about_us_repository.dart';
+import 'package:kutubxona/features/drawer/domain/repositories/contribution_repository.dart';
+import 'package:kutubxona/features/drawer/domain/repositories/statistic_repository.dart';
 import 'package:kutubxona/features/drawer/domain/usecases/get_about_us_usecase.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/domain/usecases/get_contributions.dart';
+import 'package:kutubxona/features/drawer/domain/usecases/get_statistik_usecase.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/bloc/contribution_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
 import 'package:kutubxona/features/profile/data/datasources/user_profile_remote_data_source.dart';
 import 'package:kutubxona/features/profile/data/repositories/user_profile_repository_impl.dart';
 import 'package:kutubxona/features/profile/domain/repositories/user_profile_repository.dart';
@@ -112,5 +122,37 @@ Future<void> init() async {
   // Remote DataSource
   sl.registerLazySingleton<AboutUsRemoteDataSource>(
     () => AboutUsRemoteDataSourceImpl(),
+  );
+
+   sl.registerFactory(() => StatisticBloc(sl()));
+
+  // UseCase
+  sl.registerLazySingleton(() => GetStatisticsUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<StatisticRepository>(
+    () => StatisticRepositoryImpl(sl()),
+  );
+
+  // Remote DataSource
+  sl.registerLazySingleton<StatisticRemoteDataSource>(
+    () => StatisticRemoteDataSourceImpl(),
+  );
+
+
+
+   sl.registerFactory(() => ContributionBloc(sl()));
+
+  // UseCase
+  sl.registerLazySingleton(() => GetContributions(sl()));
+
+  // Repository
+  sl.registerLazySingleton<ContributionRepository>(
+    () => ContributionRepositoryImpl(sl()),
+  );
+
+  // Remote DataSource
+  sl.registerLazySingleton<ContributionRemoteDataSource>(
+    () => ContributionRemoteDataSourceImpl(),
   );
 }

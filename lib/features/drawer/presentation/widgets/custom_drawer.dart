@@ -1,7 +1,7 @@
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/about_us.dart';
-import 'package:kutubxona/features/drawer/presentation/screens/bar_chart_screen.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/statistic_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/contact_card_page.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/contribute_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
@@ -131,7 +131,7 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const StatistikaScreen()),
+                    MaterialPageRoute(builder: (_) => const StatisticsPage()),
                   );
                 },
               ),

@@ -1,5 +1,5 @@
 import 'package:kutubxona/core/core_exports.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/about_us_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/about_us_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/contact_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/shimmer_contact_card.dart';
