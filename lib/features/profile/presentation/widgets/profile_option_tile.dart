@@ -19,7 +19,12 @@ class ProfileOptionTile extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          SvgPicture.asset(iconPath, width: 24, height: 24),
+          SvgPicture.asset(
+            iconPath,
+            width: 24,
+            height: 24,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
           const SizedBox(width: 16),
           Text(
             title,

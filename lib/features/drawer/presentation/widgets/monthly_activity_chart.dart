@@ -86,7 +86,7 @@ class _Legend extends StatelessWidget {
   final Color color;
   final String text;
 
-  const _Legend({super.key, required this.color, required this.text});
+  const _Legend({required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {

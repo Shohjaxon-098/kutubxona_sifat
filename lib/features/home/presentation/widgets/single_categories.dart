@@ -1,6 +1,6 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 import 'package:kutubxona/features/book/presentation/screens/book_detail_screen.dart';
+import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 
 class BooksGrid extends StatelessWidget {
   final List<BookEntity> books;

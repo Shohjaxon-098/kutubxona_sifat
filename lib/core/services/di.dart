@@ -1,10 +1,18 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/book/data/datasources/book_reserve_remote_data_source.dart';
 import 'package:kutubxona/features/book/data/datasources/review_remote_data_source.dart';
+import 'package:kutubxona/features/book/data/repository/book_reserve_repository_impl.dart';
 import 'package:kutubxona/features/book/data/repository/review_repository_impl.dart';
+import 'package:kutubxona/features/book/domain/repository/book_reserved_repository.dart';
 import 'package:kutubxona/features/book/domain/repository/review_repository.dart';
 import 'package:kutubxona/features/book/domain/usecase/get_reviews_usecase.dart';
 import 'package:kutubxona/features/book/domain/usecase/post_review_usecase.dart';
+import 'package:kutubxona/features/book/domain/usecase/reserve_book_usecase.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
 import 'package:kutubxona/features/connectivity/data/repositories/connectivity_repository_impl.dart';
 import 'package:kutubxona/features/connectivity/domain/repositories/connectivity_repository.dart';
@@ -124,7 +132,7 @@ Future<void> init() async {
     () => AboutUsRemoteDataSourceImpl(),
   );
 
-   sl.registerFactory(() => StatisticBloc(sl()));
+  sl.registerFactory(() => StatisticBloc(sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetStatisticsUseCase(sl()));
@@ -139,9 +147,7 @@ Future<void> init() async {
     () => StatisticRemoteDataSourceImpl(),
   );
 
-
-
-   sl.registerFactory(() => ContributionBloc(sl()));
+  sl.registerFactory(() => ContributionBloc(sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetContributions(sl()));
@@ -155,4 +161,20 @@ Future<void> init() async {
   sl.registerLazySingleton<ContributionRemoteDataSource>(
     () => ContributionRemoteDataSourceImpl(),
   );
+
+  // Data source
+  sl.registerLazySingleton<BookReserveRemoteDataSource>(
+    () => BookReserveRemoteDataSourceImpl(),
+  );
+
+  // Repository
+  sl.registerLazySingleton<BookReserveRepository>(
+    () => BookReserveRepositoryImpl(sl()),
+  );
+
+  // Use Case
+  sl.registerLazySingleton(() => ReserveBookUseCase(sl()));
+
+  // Cubit
+  sl.registerFactory(() => ReserveBookCubit(sl()));
 }

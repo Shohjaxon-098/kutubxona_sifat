@@ -9,7 +9,6 @@ export 'image_picker_helper.dart';
 export '../home/presentation/widgets/search_widget.dart';
 export 'shimmer_loading_book.dart';
 export 'shimmer_loading_category.dart';
-export '../book/presentation/widgets/book_detail_loading.dart';
 export 'review_shimmer.dart';
 export 'star_reting.dart';
 export 'package:page_transition/page_transition.dart';

@@ -1,4 +1,13 @@
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_state.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_state.dart';
+import 'package:kutubxona/features/book/presentation/widgets/book_detail_loading.dart';
 import 'package:kutubxona/features/book/presentation/widgets/book_header.dart';
 import 'package:kutubxona/features/book/presentation/widgets/book_tab_section.dart';
 import 'package:kutubxona/features/book/presentation/widgets/section_title.dart';
@@ -17,7 +26,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   int _currentTabIndex = 0;
-
+  String? _takenAt;
   @override
   void initState() {
     super.initState();
@@ -88,12 +97,47 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                     const SizedBox(height: 8),
                     Text(book.description),
                     const SizedBox(height: 24),
-                    PrimaryButton(
-                      onPressed: () {},
-                      ttext: Text(
-                        "Банд қилиш",
-                        style: TextStyle(color: AppColors().white),
-                      ),
+                    BlocConsumer<ReserveBookCubit, ReserveBookState>(
+                      listener: (context, state) {
+                        if (state is ReserveBookSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Банд қилинди: ${state.reservedBook.takenAt}",
+                              ),
+                            ),
+                          );
+                        } else if (state is ReserveBookError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                          print(state.message);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is ReserveBookLoading) {
+                          return const CircularProgressIndicator();
+                        } else if (state is ReserveBookSuccess) {
+                          return Text(
+                            "Банд қилинган вақт: ${state.reservedBook.takenAt}",
+                          );
+                        }
+                        return PrimaryButton(
+                          onPressed: () {
+                        
+                            context.read<ReserveBookCubit>().reserveBook(
+                              widget.book.id,
+                            );
+                          },
+                          ttext: const Text(
+                            "Банд қилиш",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
                     BookTabSection(

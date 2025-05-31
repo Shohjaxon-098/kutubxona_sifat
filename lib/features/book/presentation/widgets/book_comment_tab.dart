@@ -1,6 +1,10 @@
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/domain/entities/review_entity.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_state.dart';
+import 'package:kutubxona/features/book/presentation/widgets/comment_input_section.dart';
 import 'package:kutubxona/features/book/presentation/widgets/rating_summary_widget.dart';
+import 'package:kutubxona/features/book/presentation/widgets/review_list.dart';
 
 class BookCommentTab extends StatelessWidget {
   const BookCommentTab({super.key, required this.bookId});

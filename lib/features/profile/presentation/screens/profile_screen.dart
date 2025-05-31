@@ -35,18 +35,23 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   ProfileHeaderCard(user: user),
                   const SizedBox(height: 24),
-                  const ProfileOptionTile(
-                    iconPath: 'assets/icons/book-shelf.svg',
-                    title: 'Китобларим',
-                    onTap: null, // TODO: Implement navigation
+                  GestureDetector(onTap: (){
+                  },
+                    child: const ProfileOptionTile(
+                      iconPath: 'assets/icons/book-shelf.svg',
+                      title: 'Китобларим',
+                      onTap: null, // TODO: Implement navigation
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Divider(thickness: 2, color: AppColors().border),
                   const SizedBox(height: 16),
-                  const ProfileOptionTile(
-                    iconPath: 'assets/icons/book-mark.svg',
-                    title: 'Банд қилинганлар',
-                    onTap: null,
+                  GestureDetector(onTap: (){AppNavigator.pushNamed(context, AppRoutes.bookedBookScreen);},
+                    child: const ProfileOptionTile(
+                      iconPath: 'assets/icons/book-mark.svg',
+                      title: 'Банд қилинганлар',
+                      onTap: null,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Divider(thickness: 2, color: AppColors().border),

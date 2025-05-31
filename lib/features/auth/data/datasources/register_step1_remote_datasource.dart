@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:kutubxona/core/network/dio_client.dart';
 import 'package:kutubxona/features/auth/data/model/register_step1.dart';
 import 'package:kutubxona/core/constants/app_config.dart';

@@ -123,7 +123,7 @@ class _InfoRow extends StatelessWidget {
   final String title;
   final String value;
 
-  const _InfoRow({super.key, required this.title, required this.value});
+  const _InfoRow({required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
