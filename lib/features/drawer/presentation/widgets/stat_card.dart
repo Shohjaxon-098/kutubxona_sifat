@@ -120,7 +120,7 @@ class StatCard extends StatelessWidget {
         ),
         Text(
           label,
-          style: const TextStyle(color: Color(0xff718096), fontSize: 12),
+          style: TextStyle(color: AppColors().textBodyMuted, fontSize: 12),
         ),
       ],
     );

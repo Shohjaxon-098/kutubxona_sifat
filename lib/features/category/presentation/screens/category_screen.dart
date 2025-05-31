@@ -14,7 +14,15 @@ class CategoryScreen extends StatelessWidget {
 
 buildAppbar(BuildContext context) {
   return AppBar(
-    title: const Text('Рукнлар'),
+    title: Text(
+      'Рукнлар',
+      style: TextStyle(
+        fontSize: 18,
+        color: Theme.of(context).colorScheme.tertiary,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+
     centerTitle: true,
     iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
     backgroundColor: Theme.of(context).colorScheme.surface,
@@ -49,7 +57,9 @@ Widget buildBody(BuildContext context) {
 Widget buildSearch(BuildContext context) {
   return Row(
     children: [
-      Expanded(child: search(context: context, enabled: true, onChanged: (query) {})),
+      Expanded(
+        child: search(context: context, enabled: true, onChanged: (query) {}),
+      ),
       const SizedBox(width: 16),
       GestureDetector(
         onTap: () => showFilterModal(context),

@@ -32,8 +32,7 @@ class KutubxonaApp extends StatelessWidget {
               (context) => RegisterStep2Bloc(
                 RegisterStep2Usecases(
                   repository: RegisterStep2RepositoryImpl(
-                    remoteDataSource: RegisterStep2RemoteDataSourceImpl(
-                    ),
+                    remoteDataSource: RegisterStep2RemoteDataSourceImpl(),
                   ),
                 ),
               ),
@@ -44,9 +43,7 @@ class KutubxonaApp extends StatelessWidget {
               (context) => RegisterStep1Bloc(
                 RegisterPhoneUseCase(
                   RegisterStep1RepositoryImpl(
-                    remoteDataSource: RegisterStep1RemoteDataSourceImpl(
-              
-                    ),
+                    remoteDataSource: RegisterStep1RemoteDataSourceImpl(),
                   ),
                 ),
               ),
@@ -73,8 +70,7 @@ class KutubxonaApp extends StatelessWidget {
               (context) => BookDetailBloc(
                 GetBookDetail(
                   BookDetailRepositoryImpl(
-                    remoteDataSource: BookDetailRemoteDataSourceImpl(
-                    ),
+                    remoteDataSource: BookDetailRemoteDataSourceImpl(),
                   ),
                 ),
               ),
@@ -100,7 +96,7 @@ class KutubxonaApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Kutubxona',
-        theme: theme(),
+        theme: theme(context),
         darkTheme: darkTheme(),
         home: AppConnectivityOverlay(
           child: SplashScreen(),

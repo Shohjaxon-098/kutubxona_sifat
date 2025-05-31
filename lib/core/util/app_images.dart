@@ -4,6 +4,7 @@ const String icons = 'icons';
 
 class AppImages {
   String get splashLogo => '$assets$images/logo_splash.svg';
+  String get logo => '$assets$icons/logo.png';
   String get onBoard1 => '$assets$images/onBoard1.svg';
   String get onBoard2 => '$assets$images/onBoard2.svg';
   String get onBoard3 => '$assets$images/onBoard3.svg';

@@ -32,7 +32,17 @@ class _CategoryBooksState extends State<CategoryBooks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.categoryName)),
+      appBar: AppBar(
+        title: Text(
+          widget.categoryName,
+          style: TextStyle(
+            fontSize: 18,
+            color: Theme.of(context).colorScheme.tertiary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -48,7 +58,6 @@ class _CategoryBooksState extends State<CategoryBooks> {
                   final books = state.books;
                   if (books.isEmpty) {
                     return const Expanded(
-                  
                       child: NoDataWidget(
                         imagePath: 'assets/images/no-result.svg',
                         text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',

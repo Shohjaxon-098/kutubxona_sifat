@@ -21,22 +21,27 @@ class RegisterStep1Form extends StatefulWidget {
 
 class _RegisterStep1FormState extends State<RegisterStep1Form> {
   TextEditingController phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildHeader(),
-              const SizedBox(height: 50),
-              PhoneTextfieldWidget(phoneController: phoneController),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
-              _buildButtons(context),
-            ],
+    return Form(
+      key: _formKey,
+
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 50),
+                PhoneTextfieldWidget(phoneController: phoneController),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
+                _buildButtons(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -73,7 +78,7 @@ class _RegisterStep1FormState extends State<RegisterStep1Form> {
                 ),
               ],
               image: DecorationImage(
-                image: AssetImage(AppImages().splashLogo),
+                image: AssetImage(AppImages().logo),
                 scale: 11,
               ),
             ),
@@ -105,15 +110,17 @@ class _RegisterStep1FormState extends State<RegisterStep1Form> {
             ),
           ),
           onPressed: () async {
-  final phone = phoneController.text.replaceAll(' ', '').trim();
+            final phone = phoneController.text.replaceAll(' ', '').trim();
+            if (_formKey.currentState!.validate()) {
 
-            await LocalStorage.savePhone(phone);
-            final id = await AppConfig.libraryId.toString();
-            // ignore: use_build_context_synchronously
-            context.read<RegisterStep1Bloc>().add(
-              SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
-            );
-            AppNavigator.pushNamed(context, AppRoutes.registerVerify);
+              await LocalStorage.savePhone(phone);
+              final id = await AppConfig.libraryId.toString();
+              // ignore: use_build_context_synchronously
+              context.read<RegisterStep1Bloc>().add(
+                SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
+              );
+              AppNavigator.pushNamed(context, AppRoutes.registerVerify);
+            }
           },
           child: Text(
             "Давом этиш",

@@ -45,7 +45,7 @@ class HeaderCardWidget extends StatelessWidget {
           ),
         ],
         image: DecorationImage(
-          image: AssetImage(AppImages().splashLogo),
+          image: AssetImage(AppImages().logo),
           scale: 11,
         ),
       ),

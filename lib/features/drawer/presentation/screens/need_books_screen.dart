@@ -15,9 +15,10 @@ class NeedBooksScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             color: Theme.of(context).colorScheme.tertiary,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

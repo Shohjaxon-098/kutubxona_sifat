@@ -7,6 +7,7 @@ import 'package:kutubxona/features/drawer/presentation/widgets/books_static_sect
 import 'package:kutubxona/features/drawer/presentation/widgets/monthly_activity_chart.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/stat_card.dart';
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/static_shimmer.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -19,7 +20,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
   @override
   void initState() {
     super.initState();
-    // Misol uchun: libraryId ni o'zgartiring yoki context orqali oling
     final libraryId = AppConfig.libraryId.toString();
     context.read<StatisticBloc>().add(LoadStatistics(libraryId));
   }
@@ -35,7 +35,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
           child: BlocBuilder<StatisticBloc, StatisticState>(
             builder: (context, state) {
               if (state is StatisticLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const StatisticsShimmer();
               } else if (state is StatisticLoaded) {
                 // Ma'lumotlar yuklandi, UI ni ko'rsatish
                 return Column(
@@ -92,9 +92,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
         style: TextStyle(
           fontSize: 18,
           color: Theme.of(context).colorScheme.tertiary,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
         ),
       ),
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
       centerTitle: true,
     );
   }

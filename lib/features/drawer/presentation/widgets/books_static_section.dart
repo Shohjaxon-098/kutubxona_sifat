@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kutubxona/config/theme/app_colors.dart';
 
 class BooksStatisticsSection extends StatelessWidget {
   final int value;
@@ -12,26 +13,11 @@ class BooksStatisticsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = [
-      {
-        "label": "Умумий ўқиш учун берилган китоблар",
-     
-      },
-      {
-        "label": "Кунлик бериладиган китоблар сони",
- 
-      },
-      {
-        "label": "Охирги ойда берилган китоблар",
-       
-      },
-      {
-        "label": "Охирги ҳафтада берилган китоблар",
-    
-      },
-      {
-        "label": "Охирги 24 соат ичида берилган китоблар",
-       
-      },
+      {"label": "Умумий ўқиш учун берилган китоблар"},
+      {"label": "Кунлик бериладиган китоблар сони"},
+      {"label": "Охирги ойда берилган китоблар"},
+      {"label": "Охирги ҳафтада берилган китоблар"},
+      {"label": "Охирги 24 соат ичида берилган китоблар"},
     ];
 
     return Card(
@@ -53,12 +39,15 @@ class BooksStatisticsSection extends StatelessWidget {
                         width: 150,
                         child: Text(
                           stat['label'].toString(),
-                          style: const TextStyle(fontSize: 11),
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: AppColors().textBodyMuted,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: LinearProgressIndicator(
-                          value:        percent,
+                          value: percent,
                           backgroundColor: const Color(0xFFE2E8F0),
                           valueColor: const AlwaysStoppedAnimation(
                             Color(0xFFFF70B5),
@@ -70,7 +59,7 @@ class BooksStatisticsSection extends StatelessWidget {
                       SizedBox(
                         width: 60,
                         child: Text(
-                            value.toString(),
+                          value.toString(),
                           textAlign: TextAlign.end,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,

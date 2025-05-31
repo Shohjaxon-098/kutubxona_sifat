@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 
-ThemeData theme() {
+ThemeData theme(BuildContext context) {
   return ThemeData(
+
     brightness: Brightness.light,
     fontFamily: 'Cairo',
     colorScheme: ColorScheme.light(
@@ -10,8 +11,10 @@ ThemeData theme() {
       secondary: AppColors().searchBackLight,
       primary: AppColors().searchInLight,
       tertiary: AppColors().textColor,
-      scrim: AppColors().cardColor, primaryFixed: AppColors().shimmerBaseLight,
+      scrim: AppColors().cardColor,
+      primaryFixed: AppColors().shimmerBaseLight,
       primaryFixedDim: AppColors().shimmerHighLight,
     ),
   );
 }
+

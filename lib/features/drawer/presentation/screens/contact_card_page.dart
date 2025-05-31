@@ -24,12 +24,13 @@ class _ContactCardScreenState extends State<ContactCardScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         title:  Text(
           'Контактлар',
-        style: TextStyle(
-            fontSize: 18,
-            color: Theme.of(context).colorScheme.tertiary,
-            fontWeight: FontWeight.w500,
-          ),
+     style: TextStyle(
+          fontSize: 18,
+          color: Theme.of(context).colorScheme.tertiary,
+          fontWeight: FontWeight.w600,
         ),
+      ),
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
       ),
       body: BlocBuilder<AboutUsBloc, AboutUsState>(
