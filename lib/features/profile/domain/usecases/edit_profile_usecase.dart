@@ -6,7 +6,7 @@ class UpdateProfileUseCase {
 
   UpdateProfileUseCase(this.repository);
 
-  Future<void> call(String libraryId, EditProfileEntity entity) {
-    return repository.updateProfile(libraryId, entity);
+  Future<void> call( EditProfileEntity entity) {
+    return repository.updateProfile( entity);
   }
 }

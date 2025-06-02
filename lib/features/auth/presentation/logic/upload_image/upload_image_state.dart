@@ -14,8 +14,9 @@ class UploadImageLoading extends UploadImageState {}
 class UploadImageSuccess extends UploadImageState {
   final int id;
   final bool isFront;
+  final String? type;
 
-  const UploadImageSuccess(this.id, this.isFront);
+  const UploadImageSuccess(this.id, this.isFront,this.type);
 
   @override
   List<Object> get props => [id, isFront];

@@ -27,7 +27,7 @@ class UploadImageBloc extends Bloc<UploadImageEvent, UploadImageState> {
 
     result.fold(
       (failure) => emit(UploadImageFailure(_mapFailureToMessage(failure))),
-      (response) => emit(UploadImageSuccess(response.id, event.isFront)),
+      (response) => emit(UploadImageSuccess(response.id, event.isFront, event.type)),
     );
   }
 

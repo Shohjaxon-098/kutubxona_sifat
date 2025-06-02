@@ -38,11 +38,17 @@ import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_b
 import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_book_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
+import 'package:kutubxona/features/profile/data/datasources/edit_profile_remote_datasource.dart';
 import 'package:kutubxona/features/profile/data/datasources/user_profile_remote_data_source.dart';
+import 'package:kutubxona/features/profile/data/repositories/edit_profile_repository_impl.dart';
 import 'package:kutubxona/features/profile/data/repositories/user_profile_repository_impl.dart';
+import 'package:kutubxona/features/profile/domain/repositories/edit_profile_repository.dart';
 import 'package:kutubxona/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:kutubxona/features/profile/domain/usecases/get_user_profile_usecase.dart';
+import 'package:kutubxona/features/profile/domain/usecases/edit_profile_usecase.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/screens/edit_profile/controller/edit_profile_controller.dart';
 
 final sl = GetIt.instance;
 
@@ -191,4 +197,17 @@ Future<void> init() async {
   );
   sl.registerFactory(() => GetDeficientBooksUseCase(sl()));
   sl.registerFactory(() => DeficientBooksCubit(sl()));
+
+  // Repository
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(),
+  );
+  // UseCase
+  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
+
+  // Bloc
+  sl.registerFactory(() => ProfileBloc(sl()));
 }

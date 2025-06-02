@@ -14,6 +14,7 @@ import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.da
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 import 'package:kutubxona/core/services/di.dart' as di;
+import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 
 void main() async {
@@ -68,7 +69,7 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<ContributionBloc>()),
         BlocProvider(create: (context) => sl<ReserveBookCubit>()),
         BlocProvider(create: (context) => sl<DeficientBooksCubit>()),
-
+        BlocProvider(create: (_) => sl<ProfileBloc>()),
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),

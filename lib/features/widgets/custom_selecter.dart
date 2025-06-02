@@ -109,7 +109,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
         children: [
           Text(
             widget.label ?? '',
-            style: TextStyle(fontWeight: FontWeight.w600),
+            style: TextStyle(fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 6),
           GestureDetector(

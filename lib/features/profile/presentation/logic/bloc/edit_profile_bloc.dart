@@ -1,7 +1,7 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/profile/domain/usecases/update_profile_usecase.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/profile_event.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/profile_state.dart';
+import 'package:kutubxona/features/profile/domain/usecases/edit_profile_usecase.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_event.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UpdateProfileUseCase updateProfile;
@@ -16,7 +16,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async {
     emit(ProfileLoading());
     try {
-      await updateProfile(event.libraryId, event.entity);
+      await updateProfile( event.entity);
       emit(ProfileUpdated());
     } catch (e) {
       emit(ProfileError(e.toString()));
