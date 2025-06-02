@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
+import 'package:kutubxona/core/util/formatters/phone_formatter.dart';
 import 'package:kutubxona/features/profile/domain/entities/user_entity.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
@@ -49,7 +50,7 @@ class ProfileHeaderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "+998 ${user.phoneNumber}",
+                  FormatterUtil().formatPhoneNumber(user.phoneNumber),
                   style: TextStyle(fontSize: 12, color: AppColors().border),
                 ),
               ],

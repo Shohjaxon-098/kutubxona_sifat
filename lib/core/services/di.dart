@@ -20,18 +20,23 @@ import 'package:kutubxona/features/connectivity/domain/usecases/watch_connection
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/drawer/data/datasources/about_us_remote_datasource.dart';
 import 'package:kutubxona/features/drawer/data/datasources/contribution_remote_data_source.dart';
+import 'package:kutubxona/features/drawer/data/datasources/deficient_book_datasources.dart';
 import 'package:kutubxona/features/drawer/data/datasources/statistic_remote_datasource.dart';
 import 'package:kutubxona/features/drawer/data/repositories/about_us_repository_impl.dart';
 import 'package:kutubxona/features/drawer/data/repositories/contribution_repository_impl.dart';
+import 'package:kutubxona/features/drawer/data/repositories/deficient_repository_impl.dart';
 import 'package:kutubxona/features/drawer/data/repositories/statistik_repository_impl.dart';
 import 'package:kutubxona/features/drawer/domain/repositories/about_us_repository.dart';
 import 'package:kutubxona/features/drawer/domain/repositories/contribution_repository.dart';
+import 'package:kutubxona/features/drawer/domain/repositories/deficient_book_repository.dart';
 import 'package:kutubxona/features/drawer/domain/repositories/statistic_repository.dart';
 import 'package:kutubxona/features/drawer/domain/usecases/get_about_us_usecase.dart';
 import 'package:kutubxona/features/drawer/domain/usecases/get_contributions.dart';
+import 'package:kutubxona/features/drawer/domain/usecases/get_deficient_book_usecase.dart';
 import 'package:kutubxona/features/drawer/domain/usecases/get_statistik_usecase.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_bloc.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/contribution_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_book_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
 import 'package:kutubxona/features/profile/data/datasources/user_profile_remote_data_source.dart';
 import 'package:kutubxona/features/profile/data/repositories/user_profile_repository_impl.dart';
@@ -177,4 +182,13 @@ Future<void> init() async {
 
   // Cubit
   sl.registerFactory(() => ReserveBookCubit(sl()));
+
+  sl.registerFactory<DeficientBooksRemoteDataSource>(
+    () => DeficientBooksRemoteDataSourceImpl(),
+  );
+  sl.registerFactory<DeficientBooksRepository>(
+    () => DeficientBooksRepositoryImpl(sl()),
+  );
+  sl.registerFactory(() => GetDeficientBooksUseCase(sl()));
+  sl.registerFactory(() => DeficientBooksCubit(sl()));
 }

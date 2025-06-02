@@ -21,7 +21,7 @@ class BooksStatistic extends StatelessWidget {
         ...books.map(
           (book) => Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: BookCard(book: book),
+            child: BookCardStatistic(book: book),
           ),
         ),
       ],
@@ -47,10 +47,10 @@ class DummyBookData {
   });
 }
 
-class BookCard extends StatelessWidget {
+class BookCardStatistic extends StatelessWidget {
   final DummyBookData book;
 
-  const BookCard({super.key, required this.book});
+  const BookCardStatistic({super.key, required this.book});
 
   @override
   Widget build(BuildContext context) {

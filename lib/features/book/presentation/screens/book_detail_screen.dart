@@ -105,6 +105,10 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                             state.reservedBook.takenAt.toString(),
                             context,
                           );
+                          // local state yangilansin
+                          setState(() {
+                            _takenAt = state.reservedBook.takenAt.toString();
+                          });
                         } else if (state is ReserveBookError) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -112,24 +116,36 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                               backgroundColor: Colors.red,
                             ),
                           );
-                          print(state.message);
                         }
                       },
                       builder: (context, state) {
+                        final takenAt =
+                            _takenAt != null
+                                ? _takenAt
+                                : state is ReserveBookSuccess
+                                ? state.reservedBook.takenAt
+                                : null;
+
                         if (state is ReserveBookLoading) {
                           return const CircularProgressIndicator();
-                        } else if (state is ReserveBookSuccess) {
-                          return TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: "Олиб кетиш санаси",
+                        } else if (takenAt != null) {
+                          return TextFieldInput(
+                            label: "Олиб кетиш санаси",
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.highlight_remove,
+                                size: 24,
+                              ),
                             ),
-                            initialValue: state.reservedBook.takenAt.toString(),
+                            initialValue: takenAt.toString(),
                             readOnly: true,
                             onChanged: (value) {
                               _takenAt = value;
                             },
                           );
                         }
+
                         return PrimaryButton(
                           onPressed: () {
                             context.read<ReserveBookCubit>().reserveBook(
@@ -143,6 +159,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                         );
                       },
                     ),
+
                     const SizedBox(height: 20),
                     BookTabSection(
                       book: book,

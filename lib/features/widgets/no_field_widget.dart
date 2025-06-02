@@ -5,14 +5,12 @@ class NoDataWidget extends StatelessWidget {
   final String imagePath;
   final String text;
   final double imageHeight;
-  final double spacing;
 
   const NoDataWidget({
     Key? key,
     required this.imagePath,
     required this.text,
     this.imageHeight = 180,
-    this.spacing = 20,
   }) : super(key: key);
 
   @override
@@ -21,7 +19,7 @@ class NoDataWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SvgPicture.asset(imagePath, height: imageHeight),
-        SizedBox(height: spacing),
+        SizedBox(height: 40),
         Text(
           text,
           textAlign: TextAlign.center,

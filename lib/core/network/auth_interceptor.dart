@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:kutubxona/config/config_exports.dart';
+import 'package:kutubxona/core/constants/app_config.dart';
 import 'package:kutubxona/core/core_exports.dart';
 
 class AuthInterceptor extends Interceptor {
@@ -8,11 +7,8 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor(this.dio);
 
   @override
-  void onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) async {
-    final token = await LocalStorage.getAccessToken();
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final token = LocalStorage.getAccessToken();
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -22,8 +18,8 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401 &&
-        !err.requestOptions.path.contains('refresh')) {
-      final refreshToken = await LocalStorage.getRefreshToken();
+        !err.requestOptions.path.contains('/token/refresh')) {
+      final refreshToken = LocalStorage.getRefreshToken();
 
       if (refreshToken != null) {
         try {
@@ -35,16 +31,27 @@ class AuthInterceptor extends Interceptor {
           final newAccessToken = response.data['access'];
           await LocalStorage.saveAccessToken(newAccessToken);
 
-          // So‘rovni qayta jo‘natamiz
+          if (response.data.containsKey('refresh')) {
+            final newRefreshToken = response.data['refresh'];
+            await LocalStorage.saveRefreshToken(newRefreshToken);
+          }
+
           final options = err.requestOptions;
           options.headers['Authorization'] = 'Bearer $newAccessToken';
 
-          // ❗️ Yangi Dio emas, eski interceptorlar ishlashi uchun `dio.fetch()` emas, `dio.request()` chaqilmasin
-          final cloneReq = await dio.fetch(options);
-          return handler.resolve(cloneReq);
+          final clonedResponse = await dio.request(
+            options.path,
+            data: options.data,
+            queryParameters: options.queryParameters,
+            options: Options(
+              method: options.method,
+              headers: options.headers,
+            ),
+          );
+
+          return handler.resolve(clonedResponse);
         } catch (e) {
-          // Refresh token ham tugagan – ammo siz logout qilishni xohlamayapsiz
-          // Shunchaki xatoni uzatamiz
+          await LocalStorage.clearTokens(); // optional
           return handler.reject(err);
         }
       }

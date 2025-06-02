@@ -1,12 +1,12 @@
-import 'package:kutubxona/features/profile/data/model/update_profile_model.dart';
-import 'package:kutubxona/features/profile/domain/repositories/profile_repository.dart';
+import 'package:kutubxona/features/profile/domain/entities/edit_profile_entity.dart';
+import 'package:kutubxona/features/profile/domain/repositories/edit_profile_repository.dart';
 
 class UpdateProfileUseCase {
   final ProfileRepository repository;
 
   UpdateProfileUseCase(this.repository);
 
-  Future<void> call(UpdateProfileModel model) {
-    return repository.updateProfile(model);
+  Future<void> call(String libraryId, EditProfileEntity entity) {
+    return repository.updateProfile(libraryId, entity);
   }
 }

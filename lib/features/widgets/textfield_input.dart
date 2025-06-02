@@ -3,7 +3,7 @@ import 'package:kutubxona/export.dart';
 
 class TextFieldInput extends StatelessWidget {
   final String label;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool obscure;
   final String? hint;
   final int? lengthInput;
@@ -13,10 +13,11 @@ class TextFieldInput extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? readOnly;
   final void Function()? onTap;
+  final String? initialValue;
   const TextFieldInput({
     super.key,
     required this.label,
-    required this.controller,
+     this.controller,
     this.obscure = false,
     this.hint,
     this.lengthInput,
@@ -26,6 +27,7 @@ class TextFieldInput extends StatelessWidget {
     this.validator,
     this.readOnly,
     this.onTap,
+    this.initialValue
   });
 
   @override
@@ -59,6 +61,7 @@ class TextFieldInput extends StatelessWidget {
           cursorColor: Theme.of(context).colorScheme.tertiary,
           cursorWidth: 1,
           cursorHeight: 22,
+          initialValue:initialValue,
           decoration: InputDecoration(
             constraints: const BoxConstraints(minHeight: 50),
             suffixIcon: suffixIcon,

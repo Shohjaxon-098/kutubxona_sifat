@@ -2,6 +2,8 @@ import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/screens/category_screen.dart';
 import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
 import 'package:kutubxona/features/profile/presentation/screens/booked_books_screen.dart';
+import 'package:kutubxona/features/profile/presentation/screens/edit_profile/edit_profile_screen.dart';
+import 'package:kutubxona/features/profile/presentation/screens/my_books_screen.dart';
 
 class AppRoutes {
   // Define route names
@@ -17,6 +19,9 @@ class AppRoutes {
   static const String selectRegion = '/regionScreen';
   static const String bookDetail = '/bookDetail';
   static const String bookedBookScreen = '/bookedBookScreen';
+  static const String myBookScreen = '/myBookScreen';
+
+  static const String editProfile = '/editProfile';
 
   // Method to handle routing
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -82,6 +87,20 @@ class AppRoutes {
         return PageTransition(
           isIos: true,
           child: BookedBooksPage(),
+          type: PageTransitionType.rightToLeft,
+          duration: const Duration(milliseconds: 400),
+        );
+      case myBookScreen:
+        return PageTransition(
+          isIos: true,
+          child: MyBooksScreen(),
+          type: PageTransitionType.rightToLeft,
+          duration: const Duration(milliseconds: 400),
+        );
+      case editProfile:
+        return PageTransition(
+          isIos: true,
+          child: EditProfileScreen(),
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );

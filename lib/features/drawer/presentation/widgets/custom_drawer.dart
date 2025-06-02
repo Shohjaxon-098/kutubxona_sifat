@@ -1,10 +1,11 @@
 import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/core/util/formatters/phone_formatter.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/about_us.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/statistic_screen.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/contact_card_page.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/contribute_screen.dart';
-import 'package:kutubxona/features/drawer/presentation/screens/need_books_screen.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/deficient_book_screen.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
 import 'package:kutubxona/features/profile/presentation/screens/profile_screen.dart';
@@ -70,7 +71,9 @@ class CustomDrawer extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                formatPhoneNumber(profile.phoneNumber),
+                                FormatterUtil().formatPhoneNumber(
+                                  profile.phoneNumber,
+                                ),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
@@ -117,7 +120,7 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => NeedBooksScreen()),
+                    MaterialPageRoute(builder: (_) => DeficientBookScreen()),
                   );
                 },
               ),
@@ -207,15 +210,5 @@ class CustomDrawer extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String formatPhoneNumber(String rawPhone) {
-    if (rawPhone.length != 9) return rawPhone; // fallback
-    final part1 = rawPhone.substring(0, 2); // 50
-    final part2 = rawPhone.substring(2, 5); // 779
-    final part3 = rawPhone.substring(5, 7); // 14
-    final part4 = rawPhone.substring(7); // 02
-
-    return '+998 $part1 $part2 $part3 $part4';
   }
 }

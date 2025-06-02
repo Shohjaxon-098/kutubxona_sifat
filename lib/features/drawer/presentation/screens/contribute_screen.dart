@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kutubxona/core/constants/app_config.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/contribution_bloc.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/contribution_event.dart';
-import 'package:kutubxona/features/drawer/presentation/logic/bloc/contribution_state.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_bloc.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_event.dart';
+import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_state.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/contribute_card.dart';
 
 class ContributeScreen extends StatefulWidget {

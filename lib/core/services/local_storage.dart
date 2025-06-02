@@ -35,8 +35,8 @@ class LocalStorage {
     return _box.get("slug");
   }
 
-  static Future<String?> getAccessToken() async => _box.get('access_token');
-  static Future<String?> getRefreshToken() async => _box.get('refresh_token');
+  static String? getAccessToken() => _box.get('access_token');
+  static String? getRefreshToken() => _box.get('refresh_token');
 
   static Future<void> saveAccessToken(String token) async =>
       _box.put('access_token', token);
