@@ -1,3 +1,4 @@
+import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
@@ -100,12 +101,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                     BlocConsumer<ReserveBookCubit, ReserveBookState>(
                       listener: (context, state) {
                         if (state is ReserveBookSuccess) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "Банд қилинди: ${state.reservedBook.takenAt}",
-                              ),
-                            ),
+                          ToastMessage.showToast(
+                            state.reservedBook.takenAt.toString(),
+                            context,
                           );
                         } else if (state is ReserveBookError) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -121,13 +119,19 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                         if (state is ReserveBookLoading) {
                           return const CircularProgressIndicator();
                         } else if (state is ReserveBookSuccess) {
-                          return Text(
-                            "Банд қилинган вақт: ${state.reservedBook.takenAt}",
+                          return TextFormField(
+                            decoration: const InputDecoration(
+                              labelText: "Олиб кетиш санаси",
+                            ),
+                            initialValue: state.reservedBook.takenAt.toString(),
+                            readOnly: true,
+                            onChanged: (value) {
+                              _takenAt = value;
+                            },
                           );
                         }
                         return PrimaryButton(
                           onPressed: () {
-                        
                             context.read<ReserveBookCubit>().reserveBook(
                               widget.book.id,
                             );
