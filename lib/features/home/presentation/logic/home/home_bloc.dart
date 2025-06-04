@@ -13,33 +13,35 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetAllHomeDataEvent>(_onGetAllHomeData);
   
   }
+Future<void> _onGetAllHomeData(
+  GetAllHomeDataEvent event,
+  Emitter<HomeState> emit,
+) async {
+  try {
+    emit(HomeLoading());
 
-  Future<void> _onGetAllHomeData(
-    GetAllHomeDataEvent event,
-    Emitter<HomeState> emit,
-  ) async {
-    try {
-      emit(HomeLoading());
+    final libraryId = await getLibraryId();
 
-      // Local storage'dan library_id olish
-      String libraryId =
-          await getLibraryId(); // Bu yerda getLibraryId() ni chaqiring
-
-      if (libraryId.isEmpty) {
-        emit(HomeError(message: "Library ID is missing"));
-        return;
-      }
-
-      // Get Categories va Get Books ma'lumotlarini olish
-      final categoriesResult = await getCategoriesUseCase(libraryId);
-      final booksResult = await getBooksUseCase();
-
-      // Ma'lumotlar muvaffaqiyatli olinganidan keyin
-      emit(HomeDataLoaded(categories: categoriesResult, books: booksResult));
-    } catch (e) {
-      emit(HomeError(message: e.toString()));
+    if (libraryId.isEmpty) {
+      emit(HomeError(message: "Library ID is missing"));
+      return;
     }
+
+    final categoriesResult = await getCategoriesUseCase(libraryId);
+    final booksResult = await getBooksUseCase(
+      categoryId: event.categoryId,
+      year: event.year,
+      ratings: event.ratings,
+    );
+
+    emit(HomeDataLoaded(
+      categories: categoriesResult,
+      books: booksResult,
+    ));
+  } catch (e) {
+    emit(HomeError(message: e.toString()));
   }
+}
 
   // Local storage'dan 'library_id'ni olish
   Future<String> getLibraryId() async {

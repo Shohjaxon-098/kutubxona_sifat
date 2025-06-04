@@ -6,7 +6,15 @@ class GetBooksUseCase {
 
   GetBooksUseCase(this.repository);
 
-  Future<List<BookEntity>> call({int? categoryId}) async {
-    return repository.getBooks(categoryId: categoryId);
+  Future<List<BookEntity>> call({
+    int? categoryId,
+    String? year,
+    List<int>? ratings,
+  }) {
+    return repository.getBooks(
+      categoryId: categoryId,
+      year: year,
+      ratings: ratings,
+    );
   }
 }

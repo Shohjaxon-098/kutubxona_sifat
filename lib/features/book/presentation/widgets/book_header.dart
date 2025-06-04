@@ -81,7 +81,9 @@ class BookHeader extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            fontFamily: 'Roboto',
             color: Theme.of(context).colorScheme.tertiary,
           ),
         ),

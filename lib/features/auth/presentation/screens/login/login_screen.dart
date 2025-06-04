@@ -39,6 +39,10 @@ class LoginBody extends StatelessWidget {
         child: Form(
           key: controller.formKey,
           child: SafeArea(
+            bottom: false,
+            top: true,
+            left: true,
+            right: true,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(

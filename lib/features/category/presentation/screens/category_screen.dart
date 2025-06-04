@@ -1,7 +1,4 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/home/presentation/logic/home/home_state.dart';
-import 'package:kutubxona/features/home/presentation/filter_modal_trigger.dart';
-import 'package:kutubxona/features/widgets/shimmer_loading_category.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -34,40 +31,23 @@ Widget buildBody(BuildContext context) {
     padding: const EdgeInsets.only(left: 16, right: 16, top: 11),
     child: Column(
       children: [
-        buildSearch(context),
         const SizedBox(height: 24),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading) {
               return ShimmerLoadingAllCategories();
             } else if (state is HomeDataLoaded) {
-              return AllCategories(categories: state.categories);
+              return AllCategories(
+                categories: state.categories,
+              ); // ❗ Bu yerda to‘liq ro‘yxat
             }
             if (state is HomeError) {
               return Center(child: Text(state.message));
             }
-            return Center(child: Text('Something went wrong.'));
+            return Center(child: Text('Nimadir xato ketdi.'));
           },
         ),
       ],
     ),
-  );
-}
-
-Widget buildSearch(BuildContext context) {
-  return Row(
-    children: [
-      Expanded(
-        child: search(context: context, enabled: true, onChanged: (query) {}),
-      ),
-      const SizedBox(width: 16),
-      GestureDetector(
-        onTap: () => showFilterModal(context),
-        child: Icon(
-          Icons.dashboard,
-          color: Theme.of(context).colorScheme.scrim,
-        ),
-      ),
-    ],
   );
 }

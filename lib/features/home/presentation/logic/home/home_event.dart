@@ -7,7 +7,10 @@ abstract class HomeEvent extends Equatable {
 // lib/features/kutubxona/presentation/blocs/home/home_event.dart
 
 class GetAllHomeDataEvent extends HomeEvent {
-  GetAllHomeDataEvent();
+  final int? categoryId;
+  final String? year;
+  final List<int>? ratings;
+  const GetAllHomeDataEvent({this.categoryId, this.year, this.ratings});
 
   @override
   // TODO: implement props

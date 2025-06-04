@@ -22,7 +22,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
 
   @override
-  Future<List<BookEntity>> getBooks({int? categoryId}) async {
+  Future<List<BookEntity>> getBooks({int? categoryId, String? year, List<int>? ratings}) async {
     final result = await remoteDataSource.fetchBooks(categoryId: categoryId);
     return result
         .map(

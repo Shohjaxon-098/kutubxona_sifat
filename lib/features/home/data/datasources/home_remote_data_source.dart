@@ -1,7 +1,7 @@
 import 'package:kutubxona/export.dart';
 
 class HomeRemoteDataSource {
-  final  dio=DioClient().dio;
+  final dio = DioClient().dio;
   // Fetch categories with error handling
   Future<List<CategoryModel>> fetchCategories(String libraryId) async {
     try {
@@ -22,13 +22,29 @@ class HomeRemoteDataSource {
   }
 
   // Fetch books with error handling
-  Future<List<BookModel>> fetchBooks({int? categoryId}) async {
+  Future<List<BookModel>> fetchBooks({
+    int? categoryId,
+    String? year,
+    List<int>? ratings,
+  }) async {
     try {
       final id = await AppConfig.libraryId;
 
+      final queryParams = <String, dynamic>{};
+
+      if (categoryId != null) {
+        queryParams['category'] = categoryId;
+      }
+      if (year != null) {
+        queryParams['year'] = year;
+      }
+      if (ratings != null && ratings.isNotEmpty) {
+        queryParams['rating'] = ratings;
+      }
+
       final response = await dio.get(
         "${AppConfig.baseUrl}/books/$id/",
-        queryParameters: {"category": categoryId},
+        queryParameters: queryParams,
       );
 
       if (response.statusCode == 200) {

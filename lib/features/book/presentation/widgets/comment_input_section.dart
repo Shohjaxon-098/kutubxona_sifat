@@ -101,6 +101,7 @@ class _CommentInputSectionState extends State<CommentInputSection> {
                       state is PostReviewLoading
                           ? null
                           : () {
+                            FocusScope.of(context).unfocus();
                             final review = ReviewRequestEntity(
                               score: selectedRating.toString(),
                               review: commentController.text.trim(),
@@ -138,7 +139,12 @@ class _CommentInputSectionState extends State<CommentInputSection> {
                           )
                           : Text(
                             "Юбориш",
-                            style: TextStyle(color: AppColors().white),
+                            style: TextStyle(
+                              color: AppColors().white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              fontFamily: 'Roboto',
+                            ),
                           ),
                 ),
               ),

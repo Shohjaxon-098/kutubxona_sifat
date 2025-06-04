@@ -6,9 +6,10 @@ import 'package:kutubxona/features/book/presentation/widgets/comment_input_secti
 import 'package:kutubxona/features/book/presentation/widgets/rating_summary_widget.dart';
 import 'package:kutubxona/features/book/presentation/widgets/review_list.dart';
 
-class BookCommentTab extends StatelessWidget {
-  const BookCommentTab({super.key, required this.bookId});
+class BookCommentsScreen extends StatelessWidget {
   final int bookId;
+
+  const BookCommentsScreen({super.key, required this.bookId});
 
   double calculateAverageRating(List<ReviewEntity> reviews) {
     if (reviews.isEmpty) return 0.0;
@@ -46,49 +47,61 @@ class BookCommentTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BlocBuilder<ReviewBloc, ReviewState>(
-          builder: (context, state) {
-            if (state is ReviewLoading) {
-              return const SizedBox(); // yoki progress indicator
-            } else if (state is ReviewLoaded) {
-              final average = calculateAverageRating(state.reviews);
-              final percentages = calculateRatingPercentages(state.reviews);
-              return RatingSummaryWidget(
-                averageRating: average,
-                ratingPercentages: percentages,
-              );
-            }
-            return const SizedBox(); // Error holatida siz xohlagancha qaytaring
-          },
-        ),
-        const SizedBox(height: 16),
-        CommentInputSection(bookId: bookId),
-        const SizedBox(height: 12),
-        Divider(color: AppColors().border),
-        Text(
-          "Фикрлар",
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Фикрлар',
           style: TextStyle(
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
             color: Theme.of(context).colorScheme.tertiary,
+            fontFamily: 'Roboto',
           ),
         ),
-        const SizedBox(height: 12),
-        BlocBuilder<ReviewBloc, ReviewState>(
-          builder: (context, state) {
-            if (state is ReviewLoading) {
-              return ReviewShimmer();
-            } else if (state is ReviewLoaded) {
-              return ReviewList(reviews: state.reviews);
-            } else if (state is ReviewError) {
-              return Center(child: Text(state.message));
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-      ],
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: BlocBuilder<ReviewBloc, ReviewState>(
+        builder: (context, state) {
+          if (state is ReviewLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ReviewLoaded) {
+            final average = calculateAverageRating(state.reviews);
+            final percentages = calculateRatingPercentages(state.reviews);
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RatingSummaryWidget(
+                    averageRating: average,
+                    ratingPercentages: percentages,
+                  ),
+                  const SizedBox(height: 16),
+                  CommentInputSection(bookId: bookId),
+                  const SizedBox(height: 12),
+                  Divider(color: AppColors().border),
+                  const SizedBox(height: 12),
+                  Text(
+                    "Фикрлар",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ReviewList(reviews: state.reviews),
+                ],
+              ),
+            );
+          } else if (state is ReviewError) {
+            return Center(child: Text(state.message));
+          }
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 }

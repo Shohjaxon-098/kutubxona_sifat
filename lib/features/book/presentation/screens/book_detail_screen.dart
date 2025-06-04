@@ -77,6 +77,8 @@ class _BookDetailScreenState extends State<BookDetailScreen>
             style: TextStyle(
               color: Theme.of(context).colorScheme.tertiary,
               fontWeight: FontWeight.w500,
+              fontSize: 18,
+              fontFamily: 'Roboto',
             ),
           ),
           centerTitle: true,
@@ -96,7 +98,14 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                     const SizedBox(height: 24),
                     SectionTitle(title: 'Қисқача'),
                     const SizedBox(height: 8),
-                    Text(book.description),
+                    Text(
+                      book.description,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
                     const SizedBox(height: 24),
                     BlocConsumer<ReserveBookCubit, ReserveBookState>(
                       listener: (context, state) {
@@ -154,7 +163,12 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                           },
                           child: const Text(
                             "Банд қилиш",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         );
                       },

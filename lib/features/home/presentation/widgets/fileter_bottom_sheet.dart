@@ -35,7 +35,8 @@ class FilterBottomSheet extends StatelessWidget {
                   title: Text(
                     "Йил бўйича",
                     style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
@@ -57,48 +58,6 @@ class FilterBottomSheet extends StatelessWidget {
                         }
                       },
                     ),
-                    // DropdownButtonFormField<String>(
-                    //   iconDisabledColor: Theme.of(context).colorScheme.tertiary,
-                    //   iconEnabledColor: Theme.of(context).colorScheme.tertiary,
-                    //   borderRadius: BorderRadius.circular(16),
-                    //   value: filter.selectedYear,
-                    //   decoration: InputDecoration(
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(16),
-                    //       borderSide: BorderSide(color: AppColors().border),
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(16),
-                    //       borderSide: BorderSide(color: AppColors().border),
-                    //     ),
-                    //     enabledBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(16),
-                    //       borderSide: BorderSide(color: AppColors().border),
-                    //     ),
-                    //     disabledBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(16),
-                    //       borderSide: BorderSide(color: AppColors().border),
-                    //     ),
-                    //   ),
-                    //   hint: const Text(
-                    //     "1900",
-                    //     style: TextStyle(fontWeight: FontWeight.w500),
-                    //   ),
-                    //   onChanged: (value) {
-                    //     if (value != null) {
-                    //       context.read<FilterBloc>().add(
-                    //         SelectYearEvent(value),
-                    //       );
-                    //     }
-                    //   },
-                    //   items:
-                    //       List.generate(8, (i) => (1900 + i).toString())
-                    //           .map(
-                    //             (e) =>
-                    //                 DropdownMenuItem(value: e, child: Text(e),),
-                    //           )
-                    //           .toList(),
-                    // ),
                   ],
                 ),
               ),
@@ -119,7 +78,8 @@ class FilterBottomSheet extends StatelessWidget {
                   title: Text(
                     "Рейтинг бўйича фильтер",
                     style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
@@ -144,12 +104,15 @@ class FilterBottomSheet extends StatelessWidget {
                         Row(
                           children: List.generate(5, (i) {
                             return Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: SvgPicture.asset(
-                                i < rating
-                                    ? AppImages().rate
-                                    : AppImages().rateDefault,
+                                AppImages().rate,
+
                                 width: 30,
+                                color:
+                                    i < rating
+                                        ? AppColors().rateColor
+                                        : AppColors().border,
                               ),
                             );
                           }),
@@ -165,17 +128,16 @@ class FilterBottomSheet extends StatelessWidget {
                 child: Column(
                   children: [
                     PrimaryButton(
-                      onPressed:
-                          () => context.read<FilterBloc>().add(
-                            ClearFiltersEvent(),
-                          ),
-                      text: 'Тозалаш',
-                    ),
-                    const SizedBox(height: 12),
-                    PrimaryButton(
                       onPressed: () {
-                        // Foydalanuvchi tanlagan filterlar asosida qidiruvni ishga tushiring
-                        context.read<FilterBloc>().add(ApplyFiltersEvent());
+                        final filterState = context.read<FilterBloc>().state;
+
+                        context.read<HomeBloc>().add(
+                          GetAllHomeDataEvent(
+                            year: filterState.filters.selectedYear,
+                            ratings: filterState.filters.selectedRatings,
+                          ),
+                        );
+
                         Navigator.of(context).pop(); // BottomSheet ni yopish
                       },
                       text: 'Қўллаш',
