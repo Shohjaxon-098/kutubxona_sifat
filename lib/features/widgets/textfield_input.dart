@@ -17,7 +17,7 @@ class TextFieldInput extends StatelessWidget {
   const TextFieldInput({
     super.key,
     required this.label,
-     this.controller,
+    this.controller,
     this.obscure = false,
     this.hint,
     this.lengthInput,
@@ -27,7 +27,7 @@ class TextFieldInput extends StatelessWidget {
     this.validator,
     this.readOnly,
     this.onTap,
-    this.initialValue
+    this.initialValue,
   });
 
   @override
@@ -35,7 +35,14 @@ class TextFieldInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
+          ),
+        ),
         const SizedBox(height: 6),
         TextFormField(
           readOnly: readOnly ?? false,
@@ -57,11 +64,15 @@ class TextFieldInput extends StatelessWidget {
             if (lengthInput != null)
               LengthLimitingTextInputFormatter(lengthInput),
           ],
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            fontFamily: 'Roboto',
+          ),
           cursorColor: Theme.of(context).colorScheme.tertiary,
           cursorWidth: 1,
           cursorHeight: 22,
-          initialValue:initialValue,
+          initialValue: initialValue,
           decoration: InputDecoration(
             constraints: const BoxConstraints(minHeight: 50),
             suffixIcon: suffixIcon,
@@ -69,6 +80,7 @@ class TextFieldInput extends StatelessWidget {
             hintText: hint,
             errorStyle: const TextStyle(fontSize: 12),
             hintStyle: TextStyle(
+              fontFamily: 'Roboto',
               color: AppColors().hintColor,
               fontSize: 14,
               fontWeight: FontWeight.w400,

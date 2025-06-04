@@ -1,3 +1,5 @@
+import 'daily_statistic_entity.dart';
+
 class StatisticEntity {
   final int totalMembers;
   final int maleMembers;
@@ -14,6 +16,7 @@ class StatisticEntity {
   final List<dynamic> topReservedBooksLastWeek;
   final List<dynamic> topBooks;
   final List<dynamic> topReaders;
+  final List<DailyStatisticEntity> last30DaysStatistics;
 
   const StatisticEntity({
     required this.totalMembers,
@@ -31,5 +34,6 @@ class StatisticEntity {
     required this.topReservedBooksLastWeek,
     required this.topBooks,
     required this.topReaders,
+    required this.last30DaysStatistics,
   });
 }

@@ -1,7 +1,6 @@
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/splash/presentation/widgets/splash_logo.dart';
 import 'package:kutubxona/features/splash/presentation/widgets/splash_progress_bar.dart';
-import 'package:kutubxona/features/splash/presentation/widgets/splash_text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

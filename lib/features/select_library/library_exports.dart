@@ -15,4 +15,4 @@ export 'data/model/library_model.dart';
 export 'data/repository/library_repository_impl.dart';
 
 // UI
-export 'presentation/screens/select_region.dart';
+export 'presentation/screens/select_region_screen.dart';

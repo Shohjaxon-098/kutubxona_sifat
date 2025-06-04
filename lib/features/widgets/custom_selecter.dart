@@ -109,7 +109,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
         children: [
           Text(
             widget.label ?? '',
-            style: TextStyle(fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              fontFamily: 'Roboto',
+            ),
           ),
           SizedBox(height: 6),
           GestureDetector(
@@ -129,6 +133,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                     widget.selectedItem ?? widget.hintText ?? '',
                     style: TextStyle(
                       fontSize: 14,
+                      fontFamily: 'Roboto',
                       color:
                           widget.selectedItem == null
                               ? AppColors().hintColor

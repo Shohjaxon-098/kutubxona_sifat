@@ -16,6 +16,13 @@ class RegisterStep2Screen extends StatefulWidget {
 class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   final _formKey = GlobalKey<FormState>();
   late RegisterStep2Controller controller;
+  bool _obscureText = true;
+
+  void toggleVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   void initState() {
@@ -71,9 +78,10 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         child: Text(
                           'Рўйхатдан ўтиш',
                           style: TextStyle(
+                            fontFamily: 'Roboto',
                             color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 20,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -95,7 +103,18 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         controller: controller.passwordController,
                         keyboardType: TextInputType.text,
                         validator: validatePassword,
-                        obscure: true,
+                        obscure: _obscureText,
+                        suffixIcon: GestureDetector(
+                          onTap: toggleVisibility,
+                          child: SvgPicture.asset(
+                            fit: BoxFit.scaleDown,
+                            _obscureText
+                                ? 'assets/icons/eye-hide.svg'
+                                : 'assets/icons/eye-show.svg',
+
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 16),
                       CustomTextField(

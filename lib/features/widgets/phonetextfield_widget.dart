@@ -27,7 +27,7 @@ class PhoneTextfieldWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 16),
           inputFormatters: [
             LengthLimitingTextInputFormatter(12),
-            FormatterUtil(),
+            PhoneNumberFormatter(),
           ],
           validator: (value) {
             if (value == null || value.isEmpty) {

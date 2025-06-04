@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
+import 'package:kutubxona/features/drawer/domain/entities/statistic_entity.dart';
 
 class BooksStatisticsSection extends StatelessWidget {
-  final int value;
+  final StatisticEntity value;
   final double percent;
   const BooksStatisticsSection({
     super.key,
@@ -13,12 +14,30 @@ class BooksStatisticsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = [
-      {"label": "Умумий ўқиш учун берилган китоблар"},
-      {"label": "Кунлик бериладиган китоблар сони"},
-      {"label": "Охирги ойда берилган китоблар"},
-      {"label": "Охирги ҳафтада берилган китоблар"},
-      {"label": "Охирги 24 соат ичида берилган китоблар"},
+      {
+        "label": "Умумий ўқиш учун берилган китоблар",
+        'value': value.totalReservations,
+      },
+      {
+        "label": "Кунлик бериладиган китоблар сони",
+        'value': value.reservationsLastDay,
+      },
+      {
+        "label": "Охирги ойда берилган китоблар",
+        'value': value.reservationsLastWeek,
+      },
+      {
+        "label": "Охирги ҳафтада берилган китоблар",
+        'value': value.reservationsLastMonth,
+      },
+      {
+        "label": "Охирги 24 соат ичида берилган китоблар",
+        'value': value.averageReservationsPerDay,
+      },
     ];
+    final maxValue = stats
+        .map((e) => e['value'] as int)
+        .reduce((a, b) => a > b ? a : b);
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -31,6 +50,8 @@ class BooksStatisticsSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children:
               stats.map((stat) {
+                final statValue = stat['value'] as int;
+                final localPercent = maxValue == 0 ? 0.0 : statValue / maxValue;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
@@ -47,7 +68,7 @@ class BooksStatisticsSection extends StatelessWidget {
                       ),
                       Expanded(
                         child: LinearProgressIndicator(
-                          value: percent,
+                          value: localPercent,
                           backgroundColor: const Color(0xFFE2E8F0),
                           valueColor: const AlwaysStoppedAnimation(
                             Color(0xFFFF70B5),
@@ -59,7 +80,7 @@ class BooksStatisticsSection extends StatelessWidget {
                       SizedBox(
                         width: 60,
                         child: Text(
-                          value.toString(),
+                          stat['value'].toString(),
                           textAlign: TextAlign.end,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,

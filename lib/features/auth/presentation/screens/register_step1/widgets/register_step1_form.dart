@@ -1,16 +1,5 @@
 import 'package:kutubxona/export.dart';
-
-class RegisterStep1Screen extends StatelessWidget {
-  const RegisterStep1Screen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: RegisterStep1Form(),
-    );
-  }
-}
+import 'package:kutubxona/features/auth/presentation/screens/register_step1/controller/register_step1_controller.dart';
 
 class RegisterStep1Form extends StatefulWidget {
   const RegisterStep1Form({super.key});
@@ -20,27 +9,30 @@ class RegisterStep1Form extends StatefulWidget {
 }
 
 class _RegisterStep1FormState extends State<RegisterStep1Form> {
-  TextEditingController phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
+    final controller = context.watch<RegisterStep1Controller>();
 
+    return Form(
+      key: controller.formKey,
       child: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildHeader(),
-                const SizedBox(height: 50),
-                PhoneTextfieldWidget(phoneController: phoneController),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
-                _buildButtons(context),
-              ],
+            child: BlocListener<RegisterStep1Bloc, RegisterStep1State>(
+              listener: (context, state) => controller.handleState(state, context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildHeader(),
+                  const SizedBox(height: 50),
+                  PhoneTextfieldWidget(
+                    phoneController: controller.phoneController,
+                  ),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
+                  _buildButtons(context, controller),
+                ],
+              ),
             ),
           ),
         ),
@@ -98,48 +90,43 @@ class _RegisterStep1FormState extends State<RegisterStep1Form> {
     );
   }
 
-  Widget _buildButtons(BuildContext context) {
+  Widget _buildButtons(
+    BuildContext context,
+    RegisterStep1Controller controller,
+  ) {
     return Column(
       children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors().primaryColor,
-            minimumSize: const Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          onPressed: () async {
-            final phone = phoneController.text.replaceAll(' ', '').trim();
-            if (_formKey.currentState!.validate()) {
-
-              await LocalStorage.savePhone(phone);
-              final id = await AppConfig.libraryId.toString();
-              // ignore: use_build_context_synchronously
-              context.read<RegisterStep1Bloc>().add(
-                SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
-              );
-              AppNavigator.pushNamed(context, AppRoutes.registerVerify);
-            }
-          },
-          child: Text(
-            "Давом этиш",
-            style: TextStyle(
-              color: AppColors().white,
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+        PrimaryButton(
+          onPressed:
+              controller.isLoading
+                  ? null
+                  : () => controller.submitPhoneNumber(context),
+          child:
+              controller.isLoading
+                  ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                  : Text(
+                    "Давом этиш",
+                    style: TextStyle(
+                      color: AppColors().white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
         ),
+
         const SizedBox(height: 12),
         TextButton(
           style: ButtonStyle(
-            // ignore: deprecated_member_use
             overlayColor: MaterialStateProperty.all(Colors.transparent),
           ),
-          onPressed: () {
-            AppNavigator.pop(context);
-          },
+          onPressed: () => controller.goToLogin(context),
           child: Text(
             "Кириш",
             style: TextStyle(

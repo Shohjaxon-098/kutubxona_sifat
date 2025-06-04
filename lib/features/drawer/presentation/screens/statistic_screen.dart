@@ -42,6 +42,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     StatCard(
+                      cntrLabel: '',
+                      cntrvalue: 0,
+                      showExtraText: false,
                       title: "Китобхонлар",
                       leftLabel: "Аёллар",
                       leftValue: state.statistic.femaleMembers,
@@ -51,23 +54,23 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     ),
                     const SizedBox(height: 16),
                     StatCard(
+                      showExtraText: true,
+                      cntrLabel: 'Брон килинмаган китоблар',
+                      cntrvalue: state.statistic.availableBooks,
                       title: "Барча китоблар",
                       leftLabel: "Айни вақтда ўқилаётган китоблар",
-                      leftValue: state.statistic.availableBooks,
+                      leftValue: state.statistic.activeReservations,
                       rightLabel: "Келишилган мудатда қайтарилмаган китоблар",
-                      rightValue: state.statistic.activeReservations,
+                      rightValue: state.statistic.overdueBooks,
                       total: state.statistic.totalBooks,
                     ),
                     const SizedBox(height: 24),
                     BooksStatisticsSection(
-                      value:
-                          state
-                              .statistic
-                              .totalReservations, // Replace with appropriate value
+                      value: state.statistic, // Replace with appropriate value
                       percent: 0.5, // Replace with appropriate percent
                     ),
                     const SizedBox(height: 24),
-                    MonthlyActivityChart(),
+                    MonthlyActivityChart(statistic: state.statistic),
                     const SizedBox(height: 24),
                     BooksStatistic(title: 'Энг кўп ўқилган китоблар'),
                     BooksStatistic(title: 'Топ 100 китоблар'),

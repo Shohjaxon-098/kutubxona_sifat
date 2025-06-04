@@ -4,8 +4,7 @@ import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_boo
 import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_book_state.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/book_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/deficient_loading.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/shimmer_contact_card.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/static_shimmer.dart';
+
 import 'package:kutubxona/features/widgets/no_field_widget.dart';
 
 class DeficientBookScreen extends StatefulWidget {

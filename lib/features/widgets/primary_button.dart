@@ -8,7 +8,7 @@ class PrimaryButton extends StatelessWidget {
   final double borderRadius;
   final Color? color;
   final TextStyle? textStyle;
-  final Widget? ttext;
+  final Widget? child;
   final BorderSide? side;
   const PrimaryButton({
     super.key,
@@ -18,15 +18,16 @@ class PrimaryButton extends StatelessWidget {
     this.borderRadius = 16,
     this.color,
     this.textStyle,
-    this.ttext,
-    this.side
+    this.child,
+    this.side,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(side: side,
+      style: ElevatedButton.styleFrom(
+        side: side,
         backgroundColor: color ?? AppColors().primaryColor,
         minimumSize: Size(double.infinity, height),
         shape: RoundedRectangleBorder(
@@ -34,7 +35,7 @@ class PrimaryButton extends StatelessWidget {
         ),
       ),
       child:
-          ttext ??
+          child ??
           Text(
             text!,
             style:

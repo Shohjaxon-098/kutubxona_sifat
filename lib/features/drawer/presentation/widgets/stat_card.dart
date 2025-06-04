@@ -1,15 +1,18 @@
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/state_doun_chart.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
+  final bool showExtraText;
   final String leftLabel;
   final int leftValue;
   final String rightLabel;
   final int rightValue;
   final int total;
-
+  final String? cntrLabel;
+  final int? cntrvalue;
   const StatCard({
     super.key,
     required this.title,
@@ -17,12 +20,19 @@ class StatCard extends StatelessWidget {
     required this.leftValue,
     required this.rightLabel,
     required this.rightValue,
+    this.cntrLabel,
+    this.cntrvalue,
     required this.total,
+    this.showExtraText = false,
   });
-
   @override
   Widget build(BuildContext context) {
     final leftPercent = total == 0 ? 0.0 : leftValue / total;
+    // final centerPercent =
+    //     (showExtraText && cntrvalue != null && total != 0)
+    //         ? cntrvalue! / total
+    //         : 0.0;
+    // final rightPercent = total == 0 ? 0.0 : rightValue / total;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -40,31 +50,45 @@ class StatCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                // Legend uchun joyni moslashtirish
                 Expanded(
                   child: _buildLegendColumn(
                     leftLabel,
                     leftValue,
                     rightLabel,
                     rightValue,
+                    cntrLabel,
+                    cntrvalue,
                   ),
                 ),
-
-                // Spacer qo‘shib bo‘shliq ochish (ixtiyoriy)
                 const SizedBox(width: 12),
-
-                // Indicatorni qat'iy o‘lcham bilan cheklash
                 SizedBox(
                   width: 100,
                   height: 100,
-                  child: CircularPercentIndicator(
-                    radius: 50,
-                    lineWidth: 12,
-                    percent: leftPercent,
-                    center: Text("$total\nжами", textAlign: TextAlign.center),
-                    progressColor: const Color(0xffFF92AE),
-                    backgroundColor: const Color(0xffA6B7D4),
-                    circularStrokeCap: CircularStrokeCap.round,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CircularPercentIndicator(
+                        radius: 50,
+                        lineWidth: 12,
+                        percent: leftPercent,
+                        progressColor: const Color(0xffFF92AE), // pink
+                        backgroundColor: AppColors().donutRight,
+                        circularStrokeCap: CircularStrokeCap.round,
+                      ),
+                      if (showExtraText)
+                        StatDonutChart(
+                          left: leftValue,
+                          center: cntrvalue ?? 0,
+                          right: rightValue,
+                          total: total,
+                        ),
+
+                      Text(
+                        "$total\nжами",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -80,18 +104,33 @@ class StatCard extends StatelessWidget {
     int leftValue,
     String rightLabel,
     int rightValue,
+    String? cntrLabel,
+    int? cntrValue,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLegend(
-          color: const Color(0xffFF92AE),
+          color: AppColors().donutLeft,
           label: leftLabel,
           number: leftValue.toString(),
         ),
-        const SizedBox(height: 21),
+        const SizedBox(height: 12),
+
+        if (showExtraText && cntrLabel != null && cntrValue != null)
+          Column(
+            children: [
+              _buildLegend(
+                color: AppColors().donutCenter,
+                label: cntrLabel,
+                number: cntrValue.toString(),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+
         _buildLegend(
-          color: const Color(0xffA6B7D4),
+          color: AppColors().donutRight,
           label: rightLabel,
           number: rightValue.toString(),
         ),

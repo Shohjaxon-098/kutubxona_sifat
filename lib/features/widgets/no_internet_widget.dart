@@ -51,7 +51,7 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                 const Spacer(),
                 PrimaryButton(
                   onPressed: handleRetry,
-                  ttext:
+                  child:
                       isLoading
                           ? SizedBox(
                             width: 26,

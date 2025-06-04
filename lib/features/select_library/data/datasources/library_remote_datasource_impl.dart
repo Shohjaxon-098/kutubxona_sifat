@@ -1,7 +1,7 @@
 import 'package:kutubxona/export.dart';
 
 class LibraryRemoteDataSourceImpl implements LibraryRemoteDataSource {
-  final  dio=DioClient().dio;
+  final dio = DioClient().dio;
   LibraryRemoteDataSourceImpl();
 
   @override
@@ -11,12 +11,15 @@ class LibraryRemoteDataSourceImpl implements LibraryRemoteDataSource {
 
       final List data = response.data['results'];
       final libraries = data.map((e) => LibraryModel.fromJson(e)).toList();
-      
-      print('Library ID: ${libraries.first.id}');
+
       return libraries;
     } catch (e) {
-      print('getRegions error: $e');
-      rethrow;
+      if (e is DioException) {
+        final errorMessage = e.response?.data['detail'] ?? 'Unknown error';
+        throw Exception('Network error: $errorMessage');
+      } else {
+        throw Exception('Unexpected error: $e');
+      }
     }
   }
 }

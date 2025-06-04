@@ -17,6 +17,7 @@ class RegisterStep2Controller extends ChangeNotifier {
   int? docFrontId;
   int? docBackId;
 
+ 
   // API error message
   String? apiErrorMessage;
 
@@ -120,7 +121,6 @@ class RegisterStep2Controller extends ChangeNotifier {
       );
     }
   }
-
   void setGender(String? value) {
     selectedGender = value;
     notifyListeners();

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kutubxona/export.dart'; // AppColors uchun kerak bo‘lsa
+import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/drawer/domain/entities/statistic_entity.dart'; // AppColors uchun kerak bo‘lsa
 
 class MonthlyActivityChart extends StatelessWidget {
-  const MonthlyActivityChart({super.key});
-
+  const MonthlyActivityChart({super.key, required this.statistic});
+  final StatisticEntity statistic;
   @override
   Widget build(BuildContext context) {
-    final dates = List.generate(12, (i) => "12.05.2025");
-    final values = [30, 50, 40, 70, 90, 80, 60, 40, 20, 50, 70, 100];
-
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -31,14 +29,16 @@ class MonthlyActivityChart extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 24),
-            ...List.generate(dates.length, (i) {
-              final percent = values[i] / 100;
+            ...List.generate(statistic.last30DaysStatistics.length, (i) {
+              final dayStat = statistic.last30DaysStatistics[i];
+              final takenPercent = dayStat.takenBooks / 100;
+              final returnedPercent = dayStat.returnedBooks / 100;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Row(
                   children: [
                     Text(
-                      dates[i],
+                      dayStat.date,
                       style: TextStyle(
                         fontSize: 9,
                         fontWeight: FontWeight.w600,
@@ -50,7 +50,7 @@ class MonthlyActivityChart extends StatelessWidget {
                       child: Column(
                         children: [
                           LinearProgressIndicator(
-                            value: percent,
+                            value: takenPercent,
                             backgroundColor: const Color(0xffF1F5F9),
                             valueColor: const AlwaysStoppedAnimation(
                               Color(0xffA6B7D4),
@@ -60,7 +60,7 @@ class MonthlyActivityChart extends StatelessWidget {
                           ),
                           const SizedBox(height: 3),
                           LinearProgressIndicator(
-                            value: percent,
+                            value: returnedPercent,
                             backgroundColor: const Color(0xffF1F5F9),
                             valueColor: const AlwaysStoppedAnimation(
                               Color(0xffFF92AE),

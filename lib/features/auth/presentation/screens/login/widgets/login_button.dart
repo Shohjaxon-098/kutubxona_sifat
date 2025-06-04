@@ -1,52 +1,38 @@
+import 'package:flutter/material.dart';
 import 'package:kutubxona/export.dart';
 
 class LoginButton extends StatelessWidget {
   final bool isLoading;
-  final GlobalKey<FormState> formKey;
-  final TextEditingController phoneController;
-  final TextEditingController passwordController;
-  final Function(bool) onLoading;
+  final VoidCallback onPressed;
 
   const LoginButton({
     super.key,
     required this.isLoading,
-    required this.formKey,
-    required this.phoneController,
-    required this.passwordController,
-    required this.onLoading,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
-      ttext:
+      onPressed: isLoading ? null : onPressed,
+      child:
           isLoading
-              ? SizedBox(width: 26, height: 26,
+              ? const SizedBox(
+                width: 26,
+                height: 26,
                 child: CircularProgressIndicator(
-                  color: AppColors().white,
                   strokeWidth: 2,
+                  color: Colors.white,
                 ),
               )
-              : Text("Кириш", style: TextStyle(color: AppColors().white)),
-      onPressed:
-          isLoading
-              ? null
-              : () async {
-                if (formKey.currentState?.validate() ?? false) {
-                  onLoading(true);
-                  final phone = phoneController.text.replaceAll(' ', '').trim();
-
-                  final id = await AppConfig.libraryId.toString();
-
-                  context.read<LoginBloc>().add(
-                    LoginButtonPressed(
-                      phoneNumber: phone,
-                      password: passwordController.text,
-                      libraryId: id,
-                    ),
-                  );
-                }
-              },
+              : Text(
+                "Кириш",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: AppColors().white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
     );
   }
 }

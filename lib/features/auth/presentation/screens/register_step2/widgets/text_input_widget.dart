@@ -9,7 +9,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscure;
   final VoidCallback? onTap;
   final bool readOnly;
-
+  final Widget? suffixIcon;
   const CustomTextField({
     Key? key,
     required this.label,
@@ -19,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     this.obscure = false,
     this.onTap,
     this.readOnly = false,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -32,6 +33,7 @@ class CustomTextField extends StatelessWidget {
       obscure: obscure,
       onTap: onTap,
       readOnly: readOnly,
+      suffixIcon: suffixIcon,
     );
   }
 }

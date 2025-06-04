@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/otp_input_fields.dart';
 import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/otp_verification_header.dart';
@@ -51,14 +52,12 @@ class _RegisterVerifyPageState extends State<RegisterVerifyPage> {
         child: BlocConsumer<OtpBloc, OtpState>(
           listener: (context, state) {
             if (state is OtpSuccess) {
-              Navigator.pushReplacementNamed(
+              AppNavigator.pushNamedAndRemoveUntil(
                 context,
                 AppRoutes.registerStep2Screen,
               );
             } else if (state is OtpFailure) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
+              ToastMessage.showToast(state.message, context);
             }
           },
           builder: (context, state) {
@@ -77,9 +76,9 @@ class _RegisterVerifyPageState extends State<RegisterVerifyPage> {
                     ),
                     const SizedBox(height: 16),
                     TimerWidget(),
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 150),
                     PhoneChangeButton(),
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 24),
                     SubmitButton(controllers: controllers, state: state),
                   ],
                 ),

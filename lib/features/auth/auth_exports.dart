@@ -1,7 +1,7 @@
 // Presentation
-export 'presentation/screens/login/login.dart';
-export 'presentation/screens/otp/registration_verify.dart';
-export 'presentation/screens/register_step1/registration_step1.dart';
+export 'presentation/screens/login/login_screen.dart';
+export 'presentation/screens/otp/screen/registration_verify.dart';
+export 'presentation/screens/register_step1/screen/registration_step1_screen.dart';
 export 'presentation/screens/register_step2/registration_step2.dart';
 
 // Logic

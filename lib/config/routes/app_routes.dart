@@ -37,7 +37,7 @@ class AppRoutes {
           isIos: true,
           child: const HomeScreen(),
           type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 400),
         );
       case login:
         return MaterialPageRoute(builder: (context) => const Login());
@@ -53,14 +53,14 @@ class AppRoutes {
           isIos: true,
           child: const OnboardingScreen(),
           type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 400),
         );
       case registerStep2Screen:
         return PageTransition(
           isIos: true,
           child: const RegisterStep2Screen(),
           type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 400),
         );
       case registerVerify:
         return PageTransition(
@@ -73,7 +73,7 @@ class AppRoutes {
         return PageTransition(
           isIos: true,
           child: SelectRegionScreen(),
-          type: PageTransitionType.leftToRight,
+          type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
       case categoryScreen:

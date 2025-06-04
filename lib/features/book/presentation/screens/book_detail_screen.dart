@@ -152,7 +152,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                               widget.book.id,
                             );
                           },
-                          ttext: const Text(
+                          child: const Text(
                             "Банд қилиш",
                             style: TextStyle(color: Colors.white),
                           ),

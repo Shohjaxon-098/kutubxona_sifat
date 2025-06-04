@@ -126,7 +126,7 @@ class _CommentInputSectionState extends State<CommentInputSection> {
                               );
                             }
                           },
-                  ttext:
+                  child:
                       state is PostReviewLoading
                           ? const SizedBox(
                             width: 26,

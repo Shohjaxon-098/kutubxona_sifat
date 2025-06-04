@@ -1,7 +1,7 @@
 
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/custom_drawer.dart';
+import 'package:kutubxona/features/drawer/presentation/screens/custom_drawer.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_event.dart';
 import 'package:kutubxona/features/widgets/no_internet_widget.dart';

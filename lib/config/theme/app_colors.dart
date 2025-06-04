@@ -27,4 +27,7 @@ class AppColors {
   Color get shimmerBaseDark => Colors.grey[800]!;
   Color get shimmerHighDark => Colors.grey[600]!;
   Color get textBodyMuted => Color(0xff718096);
+  Color get donutLeft => const Color(0xffFF92AE); // Pink
+  Color get donutCenter => const Color(0xffA6B7D4); // Blue (middle)
+  Color get donutRight => Colors.blue; // Gray
 }

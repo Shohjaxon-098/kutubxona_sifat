@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-class FormatterUtil extends TextInputFormatter {
+class PhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
@@ -32,15 +32,5 @@ class FormatterUtil extends TextInputFormatter {
       text: formatted,
       selection: TextSelection.collapsed(offset: selectionIndex),
     );
-  }
-
-  String formatPhoneNumber(String rawPhone) {
-    if (rawPhone.length != 9) return rawPhone; // fallback
-    final part1 = rawPhone.substring(0, 2); // 50
-    final part2 = rawPhone.substring(2, 5); // 779
-    final part3 = rawPhone.substring(5, 7); // 14
-    final part4 = rawPhone.substring(7); // 02
-
-    return '+998 $part1 $part2 $part3 $part4';
   }
 }

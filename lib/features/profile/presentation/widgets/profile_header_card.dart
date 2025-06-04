@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/app_images.dart';
-import 'package:kutubxona/core/util/formatters/phone_formatter.dart';
+import 'package:kutubxona/core/util/formatters/user_phone_formatter.dart';
 import 'package:kutubxona/features/profile/domain/entities/user_entity.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
@@ -50,7 +50,7 @@ class ProfileHeaderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  FormatterUtil().formatPhoneNumber(user.phoneNumber),
+                  formatPhoneNumber(user.phoneNumber),
                   style: TextStyle(fontSize: 12, color: AppColors().border),
                 ),
               ],
@@ -59,5 +59,15 @@ class ProfileHeaderCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatPhoneNumber(String rawPhone) {
+    if (rawPhone.length != 9) return rawPhone; // fallback
+    final part1 = rawPhone.substring(0, 2); // 50
+    final part2 = rawPhone.substring(2, 5); // 779
+    final part3 = rawPhone.substring(5, 7); // 14
+    final part4 = rawPhone.substring(7); // 02
+
+    return '+998 $part1 $part2 $part3 $part4';
   }
 }
