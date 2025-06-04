@@ -13,9 +13,6 @@ class UpdateProfileModel extends EditProfileEntity {
     int? documentFile2,
     int? photo,
     String? verificationType,
-    String? documentFile1Path,
-    String? documentFile2Path,
-    String? photoPath,
   }) : super(
          firstName: firstName,
          lastName: lastName,
@@ -28,9 +25,6 @@ class UpdateProfileModel extends EditProfileEntity {
          documentFile2: documentFile2,
          photo: photo,
          verificationType: verificationType,
-         documentFile1Path: documentFile1Path,
-         documentFile2Path: documentFile2Path,
-         photoPath: photoPath,
        );
 
   Map<String, dynamic> toJson() {
@@ -46,9 +40,6 @@ class UpdateProfileModel extends EditProfileEntity {
       'document_file2': documentFile2,
       'photo': photo,
       'verification_type': verificationType,
-      'document_file1_path': documentFile1Path,
-      'document_file2_path': documentFile2Path,
-      'photo_path': photoPath,
     };
   }
 }

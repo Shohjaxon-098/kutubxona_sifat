@@ -10,9 +10,6 @@ class EditProfileEntity {
   final int? photo;
   final String? verificationType;
   final String password;
-  final String? documentFile1Path;
-  final String? documentFile2Path;
-  final String? photoPath;
 
   EditProfileEntity({
     required this.firstName,
@@ -26,8 +23,5 @@ class EditProfileEntity {
     this.photo,
     this.verificationType,
     required this.password,
-    this.documentFile1Path,
-    this.documentFile2Path,
-    this.photoPath,
   });
 }

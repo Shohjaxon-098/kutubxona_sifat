@@ -48,7 +48,8 @@ import 'package:kutubxona/features/profile/domain/usecases/get_user_profile_usec
 import 'package:kutubxona/features/profile/domain/usecases/edit_profile_usecase.dart';
 import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
-import 'package:kutubxona/features/profile/presentation/screens/edit_profile/controller/edit_profile_controller.dart';
+import 'package:kutubxona/features/select_library/presentation/library_bloc/library_bloc.dart';
+
 
 final sl = GetIt.instance;
 
@@ -210,4 +211,5 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(() => ProfileBloc(sl()));
+
 }

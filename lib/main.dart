@@ -16,6 +16,8 @@ import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.da
 import 'package:kutubxona/core/services/di.dart' as di;
 import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
+import 'package:kutubxona/features/select_library/presentation/library_bloc/library_bloc.dart';
+import 'package:kutubxona/features/select_library/presentation/library_bloc/library_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

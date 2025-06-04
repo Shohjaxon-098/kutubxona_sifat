@@ -11,7 +11,7 @@ class LibraryRemoteDataSourceImpl implements LibraryRemoteDataSource {
 
       final List data = response.data['results'];
       final libraries = data.map((e) => LibraryModel.fromJson(e)).toList();
-
+      print('Fetched libraries: ${response.data}');
       return libraries;
     } catch (e) {
       if (e is DioException) {
