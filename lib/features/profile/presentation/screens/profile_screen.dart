@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kutubxona/config/config_exports.dart';
+import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/drawer_widget.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
 import 'package:kutubxona/features/profile/presentation/widgets/profile_header_card.dart';
@@ -67,15 +70,10 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Divider(thickness: 2, color: AppColors().border),
                   const SizedBox(height: 16),
-                  GestureDetector(
-                    onTap: () {
-                      AppNavigator.pushNamed(context, AppRoutes.editProfile);
-                    },
-                    child: const ProfileOptionTile(
-                      iconPath: 'assets/icons/account-setting.svg',
-                      title: 'Profilni o’zgartirish',
-                      onTap: null,
-                    ),
+                  ProfileOptionTile(
+                    iconPath: AppImages().settings,
+                    title: ' Созламалар',
+                    onTap: () {},
                   ),
                   const SizedBox(height: 16),
                   Divider(thickness: 2, color: AppColors().border),

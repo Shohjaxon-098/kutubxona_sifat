@@ -36,7 +36,7 @@ class GreetingHeader extends StatelessWidget {
                   ),
                   CircleAvatar(
                     backgroundColor: AppColors().white,
-                    radius: 28,
+                    radius: 26,
                     child:
                         state.user.photoPath.isEmpty
                             ? Padding(

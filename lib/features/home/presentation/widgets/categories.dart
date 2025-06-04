@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
+
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/screens/category_books.dart';
 import 'package:kutubxona/features/home/domain/entities/category.dart';
 
-class AllCategories extends StatelessWidget {
-  const AllCategories({
+class Categories extends StatelessWidget {
+  const Categories({
     super.key,
     required this.categories,
     this.crossAxisCount = 3,

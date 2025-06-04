@@ -12,11 +12,11 @@ class BookSectionWidget extends StatelessWidget {
           children: [
             Text(
               'Куннинг енг яхшилари',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 24),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading)

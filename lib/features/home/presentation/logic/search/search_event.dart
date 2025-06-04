@@ -14,3 +14,4 @@ class SearchQueryChanged extends SearchEvent {
   SearchQueryChanged(this.query, this.filters);
 }
 
+

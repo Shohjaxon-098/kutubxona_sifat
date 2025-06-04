@@ -34,7 +34,17 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Профилни ўзгартириш"),
+        title: const Text(
+          "Профилни ўзгартириш",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
       ),
       body: BlocListener<UploadImageBloc, UploadImageState>(

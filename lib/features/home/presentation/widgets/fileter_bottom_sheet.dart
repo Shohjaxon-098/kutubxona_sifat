@@ -130,12 +130,15 @@ class FilterBottomSheet extends StatelessWidget {
                     PrimaryButton(
                       onPressed: () {
                         final filterState = context.read<FilterBloc>().state;
+                        final currentQuery =
+                            context
+                                .read<SearchBloc>()
+                                .state
+                                .query; // hozirgi qidiruv so'zi
 
-                        context.read<HomeBloc>().add(
-                          GetAllHomeDataEvent(
-                            year: filterState.filters.selectedYear,
-                            ratings: filterState.filters.selectedRatings,
-                          ),
+                        // SearchBloc ga filter va query bilan yangi event yuborish
+                        context.read<SearchBloc>().add(
+                          SearchQueryChanged(currentQuery, filterState.filters),
                         );
 
                         Navigator.of(context).pop(); // BottomSheet ni yopish

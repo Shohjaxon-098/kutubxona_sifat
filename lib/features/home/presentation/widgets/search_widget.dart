@@ -37,6 +37,7 @@ Widget search({
       ),
       hintStyle: TextStyle(
         fontSize: 14,
+        fontFamily: 'Roboto',
         color: Theme.of(context).colorScheme.primary,
       ),
       hintText: "Қидириш",

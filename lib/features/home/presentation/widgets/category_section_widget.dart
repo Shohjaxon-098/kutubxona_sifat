@@ -12,10 +12,7 @@ class CategorySectionWidget extends StatelessWidget {
           builder: (context, state) {
             if (state is HomeLoading) return ShimmerLoadingAllCategories();
             if (state is HomeDataLoaded) {
-              return AllCategories(
-                categories: state.categories,
-                limitItems: true,
-              );
+              return Categories(categories: state.categories, limitItems: true);
             }
             if (state is HomeError) {
               return Center(child: Text(state.message));
@@ -33,7 +30,7 @@ class CategorySectionWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         GestureDetector(
           onTap: () => AppNavigator.pushNamed(context, route),

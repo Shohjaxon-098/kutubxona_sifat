@@ -8,27 +8,32 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   SearchBloc(this.searchBooksUseCase) : super(SearchInitial()) {
     on<SearchQueryChanged>((event, emit) async {
-      emit(SearchLoading());
+      emit(SearchLoading(event.query));
       try {
         final results = await searchBooksUseCase(event.query);
 
-        // Filter qo‘llash
         final filteredResults =
             results.where((book) {
+              final publishedYear =
+                  book.publishedDate != null
+                      ? DateTime.tryParse(book.publishedDate.toString())?.year
+                      : null;
+
               final matchYear =
                   event.filters.selectedYear == null ||
-                  book.publishedDate.toString() == event.filters.selectedYear;
+                  event.filters.selectedYear == publishedYear;
 
+              final bookRating = book.rating ?? 0;
               final matchRating =
                   event.filters.selectedRatings.isEmpty ||
-                  event.filters.selectedRatings.contains(book.rating.toString());
+                  event.filters.selectedRatings.contains(bookRating);
 
               return matchYear && matchRating;
             }).toList();
 
-        emit(SearchLoaded(filteredResults));
+        emit(SearchLoaded(filteredResults, event.query));
       } catch (e) {
-        emit(SearchError("Qidirishda xatolik: $e"));
+        emit(SearchError("Qidirishda xatolik: $e", event.query));
       }
     });
   }

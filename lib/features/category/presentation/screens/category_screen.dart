@@ -37,7 +37,7 @@ Widget buildBody(BuildContext context) {
             if (state is HomeLoading) {
               return ShimmerLoadingAllCategories();
             } else if (state is HomeDataLoaded) {
-              return AllCategories(
+              return Categories(
                 categories: state.categories,
               ); // ❗ Bu yerda to‘liq ro‘yxat
             }
