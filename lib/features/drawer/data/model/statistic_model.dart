@@ -1,5 +1,9 @@
+import 'package:kutubxona/features/drawer/data/model/book_static_model.dart';
 import 'package:kutubxona/features/drawer/data/model/daily_statistic_model.dart';
+import 'package:kutubxona/features/drawer/data/model/top_reader_model.dart';
+import 'package:kutubxona/features/drawer/domain/entities/book_statistic_entity.dart';
 import 'package:kutubxona/features/drawer/domain/entities/daily_statistic_entity.dart';
+import 'package:kutubxona/features/drawer/domain/entities/top_reader_entity.dart';
 
 import '../../domain/entities/statistic_entity.dart';
 
@@ -17,9 +21,9 @@ class StatisticModel extends StatisticEntity {
     required int reservationsLastWeek,
     required int reservationsLastMonth,
     required int averageReservationsPerDay,
-    required List<dynamic> topReservedBooksLastWeek,
-    required List<dynamic> topBooks,
-    required List<dynamic> topReaders,
+    required List<BookStatisticEntity> topReservedBooksLastWeek,
+    required List<BookStatisticEntity> topBooks,
+    required List<TopReaderEntity> topReaders,
     required List<DailyStatisticEntity> last30DaysStatistics,
   }) : super(
          totalMembers: totalMembers,
@@ -53,9 +57,24 @@ class StatisticModel extends StatisticEntity {
       reservationsLastWeek: json['reservations_last_week'] ?? 0,
       reservationsLastMonth: json['reservations_last_month'] ?? 0,
       averageReservationsPerDay: json['average_reservations_per_day'] ?? 0,
-      topReservedBooksLastWeek: json['top_reserved_books_last_week'] ?? [],
-      topBooks: json['top_books'] ?? [],
-      topReaders: json['top_readers'] ?? [],
+      topBooks:
+          (json['top_books'] as List)
+              .map((e) => BookStatisticModel.fromJson(e))
+              .toList()
+              .cast<BookStatisticEntity>(),
+
+      topReservedBooksLastWeek:
+          (json['top_reserved_books_last_week'] as List)
+              .map((e) => BookStatisticModel.fromJson(e))
+              .toList()
+              .cast<BookStatisticEntity>(),
+
+      topReaders:
+          (json['top_readers'] as List)
+              .map((e) => TopReaderModel.fromJson(e))
+              .toList()
+              .cast<TopReaderEntity>(),
+
       last30DaysStatistics:
           (json['last_30_days_statistics'] as List<dynamic>? ?? [])
               .map((e) => DailyStatisticModel.fromJson(e))

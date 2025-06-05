@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/home/presentation/widgets/greeting_shimmer_widget.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
 
@@ -19,7 +20,9 @@ class GreetingHeader extends StatelessWidget {
 
       child: BlocBuilder<UserProfileBloc, UserProfileState>(
         builder: (context, state) {
-          if (state is UserProfileLoaded) {
+          if (state is UserProfileLoading) {
+            return const GreetingHeaderShimmer();
+          } else if (state is UserProfileLoaded) {
             return Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, top: 40),
               child: Row(
@@ -58,7 +61,6 @@ class GreetingHeader extends StatelessWidget {
           } else if (state is UserProfileError) {
             ToastMessage.showToast(state.message, context);
           }
-
           return SizedBox();
         },
       ),

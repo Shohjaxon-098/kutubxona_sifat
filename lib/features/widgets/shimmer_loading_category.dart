@@ -20,35 +20,29 @@ class ShimmerLoadingAllCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int rowCount = (itemCount / crossAxisCount).ceil();
-    final double calculatedHeight =
-        rowCount * itemHeight + (rowCount - 1) * mainAxisSpacing;
-
-    return SizedBox(
-      height: calculatedHeight,
-      child: GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: itemCount,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-          mainAxisSpacing: mainAxisSpacing,
-          crossAxisSpacing: crossAxisSpacing,
-          childAspectRatio: 1,
-        ),
-        itemBuilder: (context, index) {
-          return Shimmer.fromColors(
-            baseColor: Theme.of(context).colorScheme.primaryFixed,
-            highlightColor: Theme.of(context).colorScheme.primaryFixedDim,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(color: Colors.white),
-              ),
-            ),
-          );
-        },
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: itemCount,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        mainAxisSpacing: mainAxisSpacing,
+        crossAxisSpacing: crossAxisSpacing,
+        childAspectRatio: 1,
       ),
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: Theme.of(context).colorScheme.primaryFixed,
+          highlightColor: Theme.of(context).colorScheme.primaryFixedDim,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(color: Colors.white),
+            ),
+          ),
+        );
+      },
     );
   }
 }

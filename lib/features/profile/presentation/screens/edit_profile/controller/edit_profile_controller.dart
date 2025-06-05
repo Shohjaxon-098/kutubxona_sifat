@@ -1,9 +1,9 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/auth/presentation/logic/upload_image/upload_image_bloc.dart';
 import 'package:kutubxona/features/profile/data/model/edit_profile_model.dart';
+import 'package:kutubxona/features/profile/domain/entities/edit_profile_entity.dart';
+
 
 class EditProfileController extends ChangeNotifier {
   final BuildContext context;
@@ -128,7 +128,7 @@ class EditProfileController extends ChangeNotifier {
   }
 
   /// Validate form and build profile model
-  UpdateProfileModel? validateAndBuildModel(GlobalKey<FormState> formKey) {
+  EditProfileEntity? validateAndBuildModel(GlobalKey<FormState> formKey) {
     if (!formKey.currentState!.validate()) return null;
 
     if (photoFile == null) {

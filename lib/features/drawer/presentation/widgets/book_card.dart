@@ -1,5 +1,6 @@
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/drawer/domain/entities/deficient_book_entity.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/info_row_widget.dart';
 
 class BookCard extends StatelessWidget {
   final DeficientBookEntity book;
@@ -38,9 +39,21 @@ class BookCard extends StatelessWidget {
                 children: [
                   Text(
                     book.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
-                  Text(book.author),
+                  Text(
+                    book.author,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      fontFamily: 'Roboto',
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   InfoRow(
                     title: 'Чоп қилинган йили:',
@@ -59,40 +72,6 @@ class BookCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class InfoRow extends StatelessWidget {
-  final String title;
-  final String value;
-
-  const InfoRow({super.key, required this.title, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 2),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 13,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).colorScheme.tertiary,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
 
 class ShimmerLoadingSingleCategories extends StatelessWidget {
   const ShimmerLoadingSingleCategories({super.key});
@@ -12,7 +11,6 @@ class ShimmerLoadingSingleCategories extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: 4,
-
         separatorBuilder: (_, __) => const SizedBox(width: 12),
         itemBuilder: (context, index) {
           return Shimmer.fromColors(

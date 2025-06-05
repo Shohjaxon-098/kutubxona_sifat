@@ -31,12 +31,13 @@ class _ContributeScreenState extends State<ContributeScreen> {
         title: Text(
           "Хисса қўшиш",
           style: TextStyle(
-          fontSize: 18,
-          color: Theme.of(context).colorScheme.tertiary,
-          fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontFamily: 'Roboto',
+            color: Theme.of(context).colorScheme.tertiary,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
       ),
       body: BlocBuilder<ContributionBloc, ContributionState>(

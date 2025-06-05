@@ -3,11 +3,13 @@ import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_event.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_state.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/book_card_statistic.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/books_static.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/books_static_section.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/monthly_activity_chart.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/stat_card.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/static_shimmer.dart';
+import 'package:kutubxona/features/drawer/presentation/widgets/top_reader_section.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -72,8 +74,15 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     const SizedBox(height: 24),
                     MonthlyActivityChart(statistic: state.statistic),
                     const SizedBox(height: 24),
-                    BooksStatistic(title: 'Энг кўп ўқилган китоблар'),
-                    BooksStatistic(title: 'Топ 100 китоблар'),
+                    BooksStatistic(
+                      title: 'Энг кўп ўқилган китоблар',
+                      books: state.statistic.topReservedBooksLastWeek,
+                    ),
+                    BooksStatistic(
+                      title: 'Топ 100 китоблар',
+                      books: state.statistic.topBooks,
+                    ),
+                    TopReadersSection(readers: state.statistic.topReaders),
                   ],
                 );
               } else if (state is StatisticError) {

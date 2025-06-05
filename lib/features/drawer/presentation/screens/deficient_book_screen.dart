@@ -30,7 +30,8 @@ class _DeficientBookScreenState extends State<DeficientBookScreen> {
           style: TextStyle(
             fontSize: 18,
             color: Theme.of(context).colorScheme.tertiary,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
           ),
         ),
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),

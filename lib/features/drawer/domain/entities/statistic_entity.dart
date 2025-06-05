@@ -1,3 +1,6 @@
+import 'package:kutubxona/features/drawer/domain/entities/book_statistic_entity.dart';
+import 'package:kutubxona/features/drawer/domain/entities/top_reader_entity.dart';
+
 import 'daily_statistic_entity.dart';
 
 class StatisticEntity {
@@ -13,9 +16,9 @@ class StatisticEntity {
   final int reservationsLastWeek;
   final int reservationsLastMonth;
   final int averageReservationsPerDay;
-  final List<dynamic> topReservedBooksLastWeek;
-  final List<dynamic> topBooks;
-  final List<dynamic> topReaders;
+  final List<BookStatisticEntity> topReservedBooksLastWeek;
+  final List<BookStatisticEntity> topBooks;
+  final List<TopReaderEntity> topReaders;
   final List<DailyStatisticEntity> last30DaysStatistics;
 
   const StatisticEntity({

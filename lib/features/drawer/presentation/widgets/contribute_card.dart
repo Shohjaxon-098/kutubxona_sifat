@@ -31,7 +31,8 @@ class ContributeCard extends StatelessWidget {
           Text(
             'Бепул кутубхонага хисса қўшиш',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'OpenSans',
               fontSize: 18,
             ),
           ),

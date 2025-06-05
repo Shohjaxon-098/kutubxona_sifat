@@ -18,21 +18,35 @@ class MonthlyActivityChart extends StatelessWidget {
           children: [
             const Text(
               "Охирги ой ичида олинган ва қайтарилган китоблар",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'OpenSans',
+              ),
             ),
             const SizedBox(height: 12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
-                _Legend(color: Color(0xffFF92AE), text: 'Қайтарилган китоблар'),
-                _Legend(color: Color(0xffA6B7D4), text: 'Олинган китоблар'),
+                Expanded(
+                  child: Legend(
+                    color: Color(0xffFF92AE),
+                    text: 'Қайтарилган китоблар',
+                  ),
+                ),
+                Expanded(
+                  child: Legend(
+                    color: Color(0xffA6B7D4),
+                    text: 'Олинган китоблар',
+                  ),
+                ),
               ],
             ),
+
             const SizedBox(height: 24),
             ...List.generate(statistic.last30DaysStatistics.length, (i) {
               final dayStat = statistic.last30DaysStatistics[i];
-              final takenPercent = dayStat.takenBooks / 100;
-              final returnedPercent = dayStat.returnedBooks / 100;
+              final takenPercent = dayStat.takenBooks / 10;
+              final returnedPercent = dayStat.returnedBooks / 10;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Row(
@@ -82,11 +96,11 @@ class MonthlyActivityChart extends StatelessWidget {
   }
 }
 
-class _Legend extends StatelessWidget {
+class Legend extends StatelessWidget {
   final Color color;
   final String text;
 
-  const _Legend({required this.color, required this.text});
+  const Legend({super.key, required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +108,17 @@ class _Legend extends StatelessWidget {
       children: [
         CircleAvatar(radius: 4, backgroundColor: color),
         const SizedBox(width: 6),
-        Text(
-          text,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        Flexible(
+          child: Text(
+            text,
+
+            overflow: TextOverflow.clip,
+            style: const TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 10,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ],
     );

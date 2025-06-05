@@ -152,20 +152,6 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
 
-              // DrawerItem(
-              //   icon: SvgPicture.asset(
-              //     AppImages().settings,
-              //     color: Theme.of(context).colorScheme.tertiary,
-              //   ),
-              //   label: 'Созламалар',
-              //   onTap: () {
-              //     // Navigator.pop(context);
-              //     // Navigator.push(
-              //     //   context,
-              //     //   MaterialPageRoute(builder: (_) => const SozlamalarScreen()),
-              //     // );
-              //   },
-              // ),
               DrawerItem(
                 icon: SvgPicture.asset(
                   AppImages().accountCircle,
@@ -197,7 +183,14 @@ class CustomDrawer extends StatelessWidget {
                 leading: const Icon(Icons.logout, color: Colors.red),
                 title: const Text(
                   'Профилдан чиқиш',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Roboto',
+                    letterSpacing: 0.5,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
                 onTap: onLogout,
               ),

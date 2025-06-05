@@ -1,4 +1,5 @@
 import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/auth/presentation/logic/upload_image/upload_image_bloc.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/birth_date_picker_field.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/document_image_picker.dart';
@@ -7,6 +8,8 @@ import 'package:kutubxona/features/auth/presentation/screens/register_step2/widg
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/text_input_widget.dart';
 import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_event.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_event.dart';
 import 'package:kutubxona/features/profile/presentation/screens/edit_profile/controller/edit_profile_controller.dart';
 import 'package:kutubxona/features/profile/presentation/screens/edit_profile/widgets/profile_image_picker.dart';
 import 'package:kutubxona/features/widgets/primary_button.dart';
@@ -24,6 +27,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
   void _submitForm(EditProfileController controller) {
     final profile = controller.validateAndBuildModel(_formKey);
     if (profile != null) {
+      Navigator.of(context).pop();
+      context.read<UserProfileBloc>().add(GetUserProfileEvent());
       context.read<ProfileBloc>().add(UpdateProfileEvent(profile));
     }
   }
@@ -50,9 +55,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
       body: BlocListener<UploadImageBloc, UploadImageState>(
         listener: (ctx, state) {
           if (state is UploadImageFailure) {
-            ScaffoldMessenger.of(
-              ctx,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ToastMessage.showToast(state.message, context);
           }
         },
         child: SafeArea(
