@@ -2,7 +2,8 @@ import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/data/model/reserved_book_model.dart';
 
 abstract class BookReserveRemoteDataSource {
-  Future<ReservedBookModel> reserveBook(int bookId);
+  Future<ReserveBookModel> reserveBook(int bookId);
+  Future<void> cancelReservation(int reservationId);
 }
 
 class BookReserveRemoteDataSourceImpl implements BookReserveRemoteDataSource {
@@ -11,7 +12,7 @@ class BookReserveRemoteDataSourceImpl implements BookReserveRemoteDataSource {
   BookReserveRemoteDataSourceImpl();
 
   @override
-  Future<ReservedBookModel> reserveBook(int bookId) async {
+  Future<ReserveBookModel> reserveBook(int bookId) async {
     final token = await LocalStorage.getAccessToken();
 
     try {
@@ -23,27 +24,49 @@ class BookReserveRemoteDataSourceImpl implements BookReserveRemoteDataSource {
 
       print("✅ Response data: ${response.data}");
 
-      return ReservedBookModel.fromJson(response.data);
+      return ReserveBookModel.fromJson(response.data);
     } on DioException catch (e) {
-      if (e.response != null) {
-        print("❌ Server Error:");
-        print("🔗 URL: ${e.requestOptions.uri}");
-        print("📦 Data: ${e.response?.data}");
-        print("📄 Status Code: ${e.response?.statusCode}");
-        print(token);
-        final errorMessage =
-            e.response?.data['detail'] ??
-            e.response?.data.toString() ??
-            'Xatolik yuz berdi (status: ${e.response?.statusCode})';
+      final errorData = e.response?.data;
 
-        throw Exception('Server xatoligi: $errorMessage');
+      if (e.response != null) {
+        print(e.response?.data);
+        throw Exception('$errorData');
       } else {
-        print("❌ Tarmoq xatosi: ${e.message}");
         throw Exception('Tarmoq xatosi: ${e.message}');
       }
     } catch (e) {
-      print("❌ Noma'lum xatolik: $e");
       throw Exception('Noma\'lum xatolik: $e');
+    }
+  }
+
+  @override
+  Future<void> cancelReservation(int reservationId) async {
+    final token = await LocalStorage.getAccessToken();
+
+    try {
+      final response = await dio.put(
+        '${AppConfig.baseUrl}/books/${AppConfig.libraryId}/reserved-book/$reservationId/cancel/',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      print("✅ Cancel response: ${response.data}");
+    } on DioException catch (e) {
+      if (e.response != null) {
+        // Serverdan kelgan aniq xabarni olamiz
+        final statusCode = e.response?.statusCode ?? 0;
+        final message =
+            e.response?.data?['message'] ??
+            e.response?.statusMessage ??
+            'Xatolik yuz berdi';
+        throw Exception('Xato ($statusCode): $message');
+      } else {
+        // Tarmoq xatoliklari
+        throw Exception(
+          'Internet ulanmagan yoki serverga ulanib bo‘lmadi: ${e.message}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Nomaʼlum xatolik: $e');
     }
   }
 }

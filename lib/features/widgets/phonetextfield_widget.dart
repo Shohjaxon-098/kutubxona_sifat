@@ -21,7 +21,7 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
     super.initState();
     _controller = widget.phoneController;
     _focusNode = FocusNode();
-
+    if (!mounted) return;
     _controller.addListener(() {
       setState(() {});
     });

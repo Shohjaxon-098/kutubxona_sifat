@@ -12,7 +12,7 @@ class RegisterStep1Screen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => RegisterStep1Controller(),
       child: const Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: RegisterStep1Form(),
       ),
     );

@@ -14,6 +14,7 @@ class _LoginPasswordFieldState extends State<LoginPasswordField> {
   bool _obscureText = true;
 
   void _toggleVisibility() {
+    if (!mounted) return;
     setState(() {
       _obscureText = !_obscureText;
     });

@@ -1,6 +1,8 @@
-class ReservedBookEntity {
-  final int? id;
-  final DateTime? takenAt;
+class ReserveBookEntity {
+  final int? book;
+  final int? reservationId;
+  final String? takenAt;
+  final String? message;
 
-  ReservedBookEntity({this.takenAt, this.id});
+  ReserveBookEntity({this.takenAt, this.reservationId, this.message,this.book});
 }

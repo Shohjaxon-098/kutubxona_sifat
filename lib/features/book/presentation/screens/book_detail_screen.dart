@@ -1,6 +1,9 @@
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
+
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_event.dart';
+import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_state.dart';
 import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_event.dart';
 import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_state.dart';
@@ -27,7 +30,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   int _currentTabIndex = 0;
-  String? _takenAt;
+  String? takenAt;
+  int? reservationId;
+
   @override
   void initState() {
     super.initState();
@@ -89,6 +94,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
               return const BookDetailLoadingScreen();
             } else if (state is BookDetailLoaded) {
               final book = state.book;
+
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -96,85 +102,94 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                   children: [
                     BookHeader(book: book),
                     const SizedBox(height: 24),
+
                     SectionTitle(title: 'Қисқача'),
                     const SizedBox(height: 8),
+
                     Text(
                       book.description,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'OpenSans',
                       ),
                     ),
+
                     const SizedBox(height: 24),
-                    BlocConsumer<ReserveBookCubit, ReserveBookState>(
+                    BlocConsumer<ReserveBookBloc, ReserveBookState>(
                       listener: (context, state) {
-                        if (state is ReserveBookSuccess) {
+                        if (state is ReserveBookSuccess &&
+                            state.reserveBook.book == widget.book.id) {
+                          setState(() {
+                            takenAt = state.reserveBook.takenAt;
+                            reservationId = state.reserveBook.reservationId;
+                          });
                           ToastMessage.showToast(
-                            state.reservedBook.takenAt.toString(),
+                            state.reserveBook.message.toString(),
                             context,
                           );
-                          // local state yangilansin
+                        } else if (state is CancelReservationSuccess) {
                           setState(() {
-                            _takenAt = state.reservedBook.takenAt.toString();
+                            takenAt = null;
+                            reservationId = null;
                           });
-                        } else if (state is ReserveBookError) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(state.message),
-                              backgroundColor: Colors.red,
-                            ),
+                          ToastMessage.showToast(
+                            "Bandlik bekor qilindi",
+                            context,
                           );
+                        } else if (state is ReserveBookError) {
+                          ToastMessage.showToast(state.message, context);
                         }
                       },
                       builder: (context, state) {
-                        final takenAt =
-                            _takenAt != null
-                                ? _takenAt
-                                : state is ReserveBookSuccess
-                                ? state.reservedBook.takenAt
-                                : null;
-
                         if (state is ReserveBookLoading) {
                           return const CircularProgressIndicator();
-                        } else if (takenAt != null) {
+                        }
+
+                        final reservedBook =
+                            state is ReserveBookSuccess
+                                ? state.reserveBook
+                                : null;
+
+                        if (reservedBook != null &&
+                            reservedBook.takenAt != null &&
+                            reservedBook.book == widget.book.id) {
                           return TextFieldInput(
                             label: "Олиб кетиш санаси",
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.highlight_remove,
-                                size: 24,
-                              ),
-                            ),
-                            initialValue: takenAt.toString(),
+                            initialValue: reservedBook.takenAt!,
                             readOnly: true,
-                            onChanged: (value) {
-                              _takenAt = value;
-                            },
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                if (reservedBook.reservationId != null) {
+                                  context.read<ReserveBookBloc>().add(
+                                    CancelReservationRequested(
+                                      reservedBook.reservationId!,
+                                    ),
+                                  );
+                                }
+                              },
+                              icon: const Icon(Icons.highlight_remove),
+                            ),
+                            onChanged: (_) {},
                           );
                         }
 
                         return PrimaryButton(
                           onPressed: () {
-                            context.read<ReserveBookCubit>().reserveBook(
-                              widget.book.id,
+                            context.read<ReserveBookBloc>().add(
+                              ReserveBookRequested(book.id),
                             );
                           },
                           child: const Text(
                             "Банд қилиш",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Roboto',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: TextStyle(color: Colors.white),
                           ),
                         );
                       },
                     ),
 
                     const SizedBox(height: 20),
+
                     BookTabSection(
                       book: book,
                       controller: _tabController,

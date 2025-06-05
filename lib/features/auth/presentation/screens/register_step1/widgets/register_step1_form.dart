@@ -16,23 +16,22 @@ class _RegisterStep1FormState extends State<RegisterStep1Form> {
     return Form(
       key: controller.formKey,
       child: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: BlocListener<RegisterStep1Bloc, RegisterStep1State>(
-              listener: (context, state) => controller.handleState(state, context),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildHeader(),
-                  const SizedBox(height: 50),
-                  PhoneTextfieldWidget(
-                    phoneController: controller.phoneController,
-                  ),
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.31),
-                  _buildButtons(context, controller),
-                ],
-              ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: BlocListener<RegisterStep1Bloc, RegisterStep1State>(
+            listener:
+                (context, state) => controller.handleState(state, context),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 50),
+                PhoneTextfieldWidget(
+                  phoneController: controller.phoneController,
+                ),
+                Spacer(),
+                _buildButtons(context, controller),
+              ],
             ),
           ),
         ),

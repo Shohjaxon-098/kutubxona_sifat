@@ -1,7 +1,7 @@
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/profile/domain/usecases/edit_profile_usecase.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_event.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_state.dart';
+import 'package:kutubxona/features/profile/presentation/logic/edit_profile/edit_profile_event.dart';
+import 'package:kutubxona/features/profile/presentation/logic/edit_profile/edit_profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UpdateProfileUseCase updateProfile;

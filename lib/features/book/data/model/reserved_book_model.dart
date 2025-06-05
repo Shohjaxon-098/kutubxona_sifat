@@ -1,14 +1,24 @@
 import 'package:kutubxona/features/book/domain/entities/reserved_book_entity.dart';
 
-class ReservedBookModel extends ReservedBookEntity {
-  ReservedBookModel({DateTime? takenAt, int? id})
-    : super(takenAt: takenAt, id: id);
+class ReserveBookModel extends ReserveBookEntity {
+  ReserveBookModel({
+    String? takenAt,
+    int? reservationId,
+    String? message,
+    int? book,
+  }) : super(
+         takenAt: takenAt,
+         reservationId: reservationId,
+         message: message,
+         book: book,
+       );
 
-  factory ReservedBookModel.fromJson(Map<String, dynamic> json) {
-    return ReservedBookModel(
-      takenAt:
-          json['taken_at'] != null ? DateTime.parse(json['taken_at']) : null,
-      id: json['id'] != null ? int.tryParse(json['id'].toString()) : null,
+  factory ReserveBookModel.fromJson(Map<String, dynamic> json) {
+    return ReserveBookModel(
+      book: json['data']['book'] ?? 0,
+      message: json['message'] ?? '',
+      takenAt: json['data']['taken_at'] ?? '',
+      reservationId: json['data']['reservation_id'] ?? 0,
     );
   }
 }

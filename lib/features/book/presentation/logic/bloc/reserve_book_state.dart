@@ -1,28 +1,20 @@
-part of 'reserve_book_bloc.dart';
+import 'package:kutubxona/features/book/data/model/reserved_book_model.dart';
+import 'package:kutubxona/features/profile/data/model/reserved_book_model.dart';
 
-abstract class ReserveBookState extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+abstract class ReserveBookState {}
 
 class ReserveBookInitial extends ReserveBookState {}
 
 class ReserveBookLoading extends ReserveBookState {}
 
 class ReserveBookSuccess extends ReserveBookState {
-  final ReservedBookEntity reservedBook;
-
-  ReserveBookSuccess(this.reservedBook);
-
-  @override
-  List<Object?> get props => [reservedBook];
+  final ReserveBookModel reserveBook;
+  ReserveBookSuccess(this.reserveBook);
 }
+
+class CancelReservationSuccess extends ReserveBookState {}
 
 class ReserveBookError extends ReserveBookState {
   final String message;
-
   ReserveBookError(this.message);
-
-  @override
-  List<Object?> get props => [message];
 }

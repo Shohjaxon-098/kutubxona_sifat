@@ -86,7 +86,7 @@ class AppRoutes {
       case bookedBookScreen:
         return PageTransition(
           isIos: true,
-          child: BookedBooksPage(),
+          child: BookedBooksPage(libraryId: AppConfig.libraryId.toString()),
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );

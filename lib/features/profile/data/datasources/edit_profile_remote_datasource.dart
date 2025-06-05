@@ -14,10 +14,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<void> updateProfile(UpdateProfileModel model) async {
+    final token = await LocalStorage.getAccessToken();
     try {
       await dio.put(
         '${AppConfig.baseUrl}/account/profile/${AppConfig.libraryId}/',
         data: model.toJson(),
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
     } on DioError catch (e) {
       // DioError turi bilan aniqlik kiritish

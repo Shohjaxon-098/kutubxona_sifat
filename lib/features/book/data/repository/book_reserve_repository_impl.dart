@@ -12,7 +12,7 @@ class BookReserveRepositoryImpl implements BookReserveRepository {
   BookReserveRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<ReservedBookModel> reserveBook({required int bookId}) {
+  Future<ReserveBookModel> reserveBook({required int bookId}) {
     return remoteDataSource.reserveBook(bookId);
   }
 }

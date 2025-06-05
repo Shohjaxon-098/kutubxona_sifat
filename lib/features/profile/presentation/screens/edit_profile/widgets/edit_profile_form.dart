@@ -6,8 +6,8 @@ import 'package:kutubxona/features/auth/presentation/screens/register_step2/widg
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/document_type_selector.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/gender_dropdown.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/text_input_widget.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_event.dart';
+import 'package:kutubxona/features/profile/presentation/logic/edit_profile/edit_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/edit_profile/edit_profile_event.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_event.dart';
 import 'package:kutubxona/features/profile/presentation/screens/edit_profile/controller/edit_profile_controller.dart';

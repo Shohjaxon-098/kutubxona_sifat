@@ -14,7 +14,8 @@ import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.da
 import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 import 'package:kutubxona/core/services/di.dart' as di;
-import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/reserved_book_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/edit_profile/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/select_library/presentation/library_bloc/library_bloc.dart';
 import 'package:kutubxona/features/select_library/presentation/library_bloc/library_event.dart';
@@ -69,9 +70,13 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<AboutUsBloc>()),
         BlocProvider(create: (context) => sl<StatisticBloc>()),
         BlocProvider(create: (context) => sl<ContributionBloc>()),
-        BlocProvider(create: (context) => sl<ReserveBookCubit>()),
+        BlocProvider(create: (context) => sl<ReserveBookBloc>()),
         BlocProvider(create: (context) => sl<DeficientBooksCubit>()),
         BlocProvider(create: (_) => sl<ProfileBloc>()),
+       
+
+        BlocProvider(create: (_) => sl<ReservedBookBloc>()),
+
         BlocProvider(
           create: (_) => di.sl<LibraryBloc>()..add(FetchLibrariesEvent()),
         ),

@@ -8,7 +8,7 @@ class LoginController extends ChangeNotifier {
   final libraryId = AppConfig.libraryId.toString();
   bool isLoading = false;
 
-  Future<void> login(BuildContext context) async {
+  void login(BuildContext context) {
     if (!formKey.currentState!.validate()) return;
 
     isLoading = true;
@@ -27,17 +27,22 @@ class LoginController extends ChangeNotifier {
   void handleState(BuildContext context, LoginState state) {
     if (state is LoginError) {
       ToastMessage.showToast(state.message, context);
-      isLoading = false;
-      notifyListeners();
+      _stopLoading();
     } else if (state is LoginSuccess) {
-      isLoading = false;
-      notifyListeners();
+      _stopLoading();
       AppNavigator.pushReplacementNamed(context, AppRoutes.home);
     }
   }
 
-  void disposeControllers() {
+  void _stopLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
     phoneController.dispose();
     passwordController.dispose();
+    super.dispose();
   }
 }

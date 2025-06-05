@@ -6,7 +6,7 @@ class ReserveBookUseCase {
 
   ReserveBookUseCase(this.repository);
 
-  Future<ReservedBookEntity> call(int bookId) {
+  Future<ReserveBookEntity> call(int bookId) {
     return repository.reserveBook(bookId: bookId);
   }
 }

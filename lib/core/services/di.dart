@@ -39,17 +39,21 @@ import 'package:kutubxona/features/drawer/presentation/logic/contribution/contri
 import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_book_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
 import 'package:kutubxona/features/profile/data/datasources/edit_profile_remote_datasource.dart';
+import 'package:kutubxona/features/profile/data/datasources/reserved_book_remote_datasource.dart';
 import 'package:kutubxona/features/profile/data/datasources/user_profile_remote_data_source.dart';
 import 'package:kutubxona/features/profile/data/repositories/edit_profile_repository_impl.dart';
+import 'package:kutubxona/features/profile/data/repositories/reserved_book_repository_impl.dart';
 import 'package:kutubxona/features/profile/data/repositories/user_profile_repository_impl.dart';
 import 'package:kutubxona/features/profile/domain/repositories/edit_profile_repository.dart';
+import 'package:kutubxona/features/profile/domain/repositories/reserved_book_repository.dart';
 import 'package:kutubxona/features/profile/domain/repositories/user_profile_repository.dart';
+import 'package:kutubxona/features/profile/domain/usecases/get_reserved_books_usecase.dart';
 import 'package:kutubxona/features/profile/domain/usecases/get_user_profile_usecase.dart';
 import 'package:kutubxona/features/profile/domain/usecases/edit_profile_usecase.dart';
-import 'package:kutubxona/features/profile/presentation/logic/bloc/edit_profile_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/reserved_book_bloc.dart';
+import 'package:kutubxona/features/profile/presentation/logic/edit_profile/edit_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/select_library/presentation/library_bloc/library_bloc.dart';
-
 
 final sl = GetIt.instance;
 
@@ -188,7 +192,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ReserveBookUseCase(sl()));
 
   // Cubit
-  sl.registerFactory(() => ReserveBookCubit(sl()));
+  sl.registerFactory(() => ReserveBookBloc(sl()));
 
   sl.registerFactory<DeficientBooksRemoteDataSource>(
     () => DeficientBooksRemoteDataSourceImpl(),
@@ -211,5 +215,15 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(() => ProfileBloc(sl()));
+
+  sl.registerLazySingleton<ReservedBookRemoteDataSource>(
+    () => ReservedBookRemoteDataSourceImpl(sl<Dio>()));
+
+sl.registerLazySingleton<ReservedBookRepository>(
+    () => ReservedBookRepositoryImpl(sl()));
+
+sl.registerLazySingleton(() => GetReservedBooksUseCase(sl()));
+
+sl.registerFactory(() => ReservedBookBloc(sl()));
 
 }

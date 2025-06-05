@@ -1,15 +1,11 @@
-part of 'reserve_book_bloc.dart';
+abstract class ReserveBookEvent {}
 
-abstract class ReserveBookEvent extends Equatable {
-  @override
-  List<Object> get props => [];
+class ReserveBookRequested extends ReserveBookEvent {
+  final int bookId;
+  ReserveBookRequested(this.bookId);
 }
 
-class ReserveBookPressed extends ReserveBookEvent {
-  final int bookId;
-
-  ReserveBookPressed(this.bookId);
-
-  @override
-  List<Object> get props => [bookId];
+class CancelReservationRequested extends ReserveBookEvent {
+  final int reservationId;
+  CancelReservationRequested(this.reservationId);
 }
