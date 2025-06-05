@@ -23,6 +23,10 @@ class CategoryBooks extends StatefulWidget {
 }
 
 class _CategoryBooksState extends State<CategoryBooks> {
+  final TextEditingController controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+  bool showDropdown = false;
+  final LayerLink _layerLink = LayerLink();
   @override
   void initState() {
     super.initState();
@@ -60,7 +64,14 @@ class _CategoryBooksState extends State<CategoryBooks> {
         child: Column(
           children: [
             // Search va filter qatori
-            _buildSearchRow(context),
+            SearchFieldWithDropdown(
+              controller: controller,
+              focusNode: focusNode,
+              layerLink: _layerLink,
+              showDropdown: showDropdown,
+              onDropdownVisibilityChanged:
+                  (visible) => setState(() => showDropdown = visible),
+            ),
             const SizedBox(height: 20),
             // Kitoblar ro'yxati uchun Expanded
             Expanded(

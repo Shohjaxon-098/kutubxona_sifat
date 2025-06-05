@@ -3,6 +3,7 @@ import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/home/presentation/widgets/greeting_shimmer_widget.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
+import 'package:kutubxona/features/profile/presentation/screens/profile_screen.dart';
 
 class GreetingHeader extends StatelessWidget {
   const GreetingHeader({super.key});
@@ -37,23 +38,36 @@ class GreetingHeader extends StatelessWidget {
                       ),
                     ),
                   ),
-                  CircleAvatar(
-                    backgroundColor: AppColors().white,
-                    radius: 26,
-                    child:
-                        state.user.photoPath.isEmpty
-                            ? Padding(
-                              padding: EdgeInsets.only(bottom: 3),
-                              child: SvgPicture.asset(
-                                AppImages().person,
-                                width: 40,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: ProfileScreen(),
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: AppColors().white,
+                      radius: 26,
+                      child:
+                          state.user.photoPath.isEmpty
+                              ? Padding(
+                                padding: EdgeInsets.only(bottom: 3),
+                                child: SvgPicture.asset(
+                                  AppImages().person,
+                                  width: 40,
+                                ),
+                              )
+                              : null,
+                      backgroundImage:
+                          state.user.photoPath.isEmpty
+                              ? null
+                              : CachedNetworkImageProvider(
+                                state.user.photoPath,
                               ),
-                            )
-                            : null,
-                    backgroundImage:
-                        state.user.photoPath.isEmpty
-                            ? null
-                            : CachedNetworkImageProvider(state.user.photoPath),
+                    ),
                   ),
                 ],
               ),

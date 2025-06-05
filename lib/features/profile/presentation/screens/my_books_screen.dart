@@ -32,22 +32,43 @@ class MyBooksScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Китобларим',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
+          ),
         ),
         centerTitle: true,
         leading: const BackButton(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: GridView.builder(
-          itemCount: books.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 0.58, // Adjust aspect ratio as needed
-          ),
-          itemBuilder: (context, index) => BookItemCard(book: books[index]),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final screenHeight = MediaQuery.of(context).size.height;
+
+            // Hisoblangan ratio
+            final itemWidth = (screenWidth - 36) / 2; // padding + spacing
+            final itemHeight = screenHeight * 0.38;
+            final aspectRatio = itemWidth / itemHeight;
+
+            return GridView.builder(
+              physics: const BouncingScrollPhysics(),
+
+              padding: const EdgeInsets.all(12),
+              itemCount: books.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio:
+                    aspectRatio, // Bu muvozanatli ko‘rinish uchun yaxshi
+              ),
+              itemBuilder: (context, index) {
+                return BookItemCard(book: books[index]);
+              },
+            );
+          },
         ),
       ),
     );

@@ -22,15 +22,17 @@ class _AboutusScreenState extends State<AboutusScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title:  Text(
-          'Контактлар',
+        title: Text(
+          'Биз хакимизда',
           style: TextStyle(
-          fontSize: 18,
-          color: Theme.of(context).colorScheme.tertiary,
-          fontWeight: FontWeight.w600,
+            fontFamily: 'Roboto',
+            fontSize: 18,
+            color: Theme.of(context).colorScheme.tertiary,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
+        leading: BackButton(),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
       ),
       body: BlocBuilder<AboutUsBloc, AboutUsState>(

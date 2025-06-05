@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_event.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_state.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/book_card_statistic.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/books_static.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/books_static_section.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/monthly_activity_chart.dart';

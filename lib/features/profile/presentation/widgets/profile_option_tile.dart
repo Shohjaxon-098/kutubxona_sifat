@@ -29,8 +29,9 @@ class ProfileOptionTile extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
+              fontFamily: 'Roboto',
               fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w400,
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
