@@ -1,6 +1,5 @@
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/screens/book_detail_screen.dart';
-import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 class SearchFieldWithDropdown extends StatelessWidget {
   const SearchFieldWithDropdown({
@@ -24,29 +23,7 @@ class SearchFieldWithDropdown extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(child: _buildSearchField(context)),
-              const SizedBox(width: 12),
-              GestureDetector(
-                onTap: () => showFilterModal(context),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                      // ignore: deprecated_member_use
-                    ).colorScheme.primary.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.filter_list,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          _buildSearchField(context),
           const SizedBox(height: 4),
           if (showDropdown) _buildDropdown(),
         ],
@@ -60,9 +37,9 @@ class SearchFieldWithDropdown extends StatelessWidget {
       focusNode: focusNode,
       context: context,
       enabled: true,
-      onChanged: (query) {
-        final filters = context.read<FilterBloc>().state.filters;
-        context.read<SearchBloc>().add(SearchQueryChanged(query, filters));
+      onSubmitted: (query) {
+        
+        context.read<SearchBloc>().add(SearchQueryChanged(query,));
 
         onDropdownVisibilityChanged(query.isNotEmpty && focusNode.hasFocus);
       },

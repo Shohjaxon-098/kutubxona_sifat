@@ -8,9 +8,7 @@ abstract class HomeEvent extends Equatable {
 
 class GetAllHomeDataEvent extends HomeEvent {
   final int? categoryId;
-  final String? year;
-  final List<int>? ratings;
-  const GetAllHomeDataEvent({this.categoryId, this.year, this.ratings});
+  const GetAllHomeDataEvent({this.categoryId,});
 
   @override
   // TODO: implement props

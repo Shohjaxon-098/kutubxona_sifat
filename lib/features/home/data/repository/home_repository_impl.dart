@@ -1,4 +1,3 @@
-
 import 'package:kutubxona/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 import 'package:kutubxona/features/home/domain/entities/category.dart';
@@ -20,10 +19,19 @@ class HomeRepositoryImpl implements HomeRepository {
         .toList();
   }
 
-
   @override
-  Future<List<BookEntity>> getBooks({int? categoryId, String? year, List<int>? ratings}) async {
-    final result = await remoteDataSource.fetchBooks(categoryId: categoryId);
+  Future<List<BookEntity>> getBooks({
+    int? categoryId,
+    int? year,
+    String? ratings,
+    String? searchQuery,
+  }) async {
+    final result = await remoteDataSource.fetchBooks(
+      categoryId: categoryId,
+      search: searchQuery,
+      ratings: ratings,
+      year: year,
+    );
     return result
         .map(
           (model) => BookEntity(

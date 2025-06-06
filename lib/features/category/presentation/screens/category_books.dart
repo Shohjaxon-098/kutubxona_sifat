@@ -26,7 +26,7 @@ class _CategoryBooksState extends State<CategoryBooks> {
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
   bool showDropdown = false;
-  final LayerLink _layerLink = LayerLink();
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +46,7 @@ class _CategoryBooksState extends State<CategoryBooks> {
     if (size.width >= 900) crossAxisCount = 4;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           widget.categoryName,
@@ -61,56 +62,53 @@ class _CategoryBooksState extends State<CategoryBooks> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            // Search va filter qatori
-            SearchFieldWithDropdown(
-              controller: controller,
-              focusNode: focusNode,
-              layerLink: _layerLink,
-              showDropdown: showDropdown,
-              onDropdownVisibilityChanged:
-                  (visible) => setState(() => showDropdown = visible),
-            ),
-            const SizedBox(height: 20),
-            // Kitoblar ro'yxati uchun Expanded
-            Expanded(
-              child: BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  if (state is CategoryLoadingState) {
-                    return const ShimmerLoadingCategoryBooks();
-                  } else if (state is CategoryLoadedState) {
-                    final books = state.books;
+        child: SizedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Search va filter qatori
+              _buildSearchRow(context),
+              const SizedBox(height: 20),
+              Expanded(
+                child: BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    if (state is CategoryLoadingState) {
+                      return const ShimmerLoadingCategoryBooks();
+                    } else if (state is CategoryLoadedState) {
+                      final books = state.books;
 
-                    if (books.isEmpty) {
-                      return const NoDataWidget(
-                        imagePath: 'assets/images/no-result.svg',
-                        text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                      if (books.isEmpty) {
+                        return const NoDataWidget(
+                          imagePath: 'assets/images/no-result.svg',
+                          text:
+                              'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                        );
+                      }
+
+                      return GridView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 17,
+                          childAspectRatio:
+                              163 / 290, // kartaning kengligi/bo'yi
+                        ),
+                        itemCount: books.length,
+                        itemBuilder: (context, index) {
+                          final book = books[index];
+                          return BookCard(book: book);
+                        },
                       );
+                    } else if (state is CategoryErrorState) {
+                      return Center(child: Text('Xatolik: ${state.message}'));
                     }
-
-                    return GridView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 17,
-                        childAspectRatio: 163 / 290, // kartaning kengligi/bo'yi
-                      ),
-                      itemCount: books.length,
-                      itemBuilder: (context, index) {
-                        final book = books[index];
-                        return BookCard(book: book);
-                      },
-                    );
-                  } else if (state is CategoryErrorState) {
-                    return Center(child: Text('Xatolik: ${state.message}'));
-                  }
-                  return const SizedBox();
-                },
+                    return const SizedBox();
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -123,14 +121,16 @@ class _CategoryBooksState extends State<CategoryBooks> {
           child: search(
             context: context,
             enabled: true,
-            onChanged: (query) {
-              // search logikasi bu yerda yozilishi mumkin
+            onSubmitted: (query) {
+              context.read<CategoryBloc>().add(
+                GetBooksByCategoryEvent(widget.categoryId, searchQuery: query),
+              );
             },
           ),
         ),
         const SizedBox(width: 16),
         GestureDetector(
-          onTap: () => showFilterModal(context),
+          onTap: () => showFilterModal(context, widget.categoryId),
           child: Icon(
             Icons.dashboard,
             color: Theme.of(context).colorScheme.scrim,
@@ -141,7 +141,6 @@ class _CategoryBooksState extends State<CategoryBooks> {
   }
 }
 
-// Kitob kartasi widgeti alohida
 class BookCard extends StatelessWidget {
   final BookEntity book;
 
@@ -164,17 +163,15 @@ class BookCard extends StatelessWidget {
         );
       },
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: SizedBox(
-              width: 163,
-              height: 209,
+            child: AspectRatio(
+              // Bu childAspectRatio ga moslashadi
+              aspectRatio: 163 / 209,
               child: CachedNetworkImage(
                 imageUrl: book.image,
                 fit: BoxFit.cover,
-                width: double.infinity,
                 errorWidget:
                     (context, url, error) => Icon(
                       Icons.broken_image,
@@ -186,7 +183,7 @@ class BookCard extends StatelessWidget {
           ),
           const SizedBox(height: 9),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

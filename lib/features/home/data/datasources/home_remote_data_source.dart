@@ -21,11 +21,15 @@ class HomeRemoteDataSource {
     }
   }
 
-  // Fetch books with error handling
   Future<List<BookModel>> fetchBooks({
     int? categoryId,
-    String? year,
-    List<int>? ratings,
+    int? year,
+    String? ratings,
+    String? search,
+    String? language,
+    String? author,
+    int? page,
+    int? pageSize,
   }) async {
     try {
       final id = await AppConfig.libraryId;
@@ -40,6 +44,21 @@ class HomeRemoteDataSource {
       }
       if (ratings != null && ratings.isNotEmpty) {
         queryParams['rating'] = ratings;
+      }
+      if (search != null && search.isNotEmpty) {
+        queryParams['search'] = search;
+      }
+      if (language != null && language.isNotEmpty) {
+        queryParams['language'] = language;
+      }
+      if (author != null && author.isNotEmpty) {
+        queryParams['author'] = author;
+      }
+      if (page != null) {
+        queryParams['page'] = page;
+      }
+      if (pageSize != null) {
+        queryParams['page_size'] = pageSize;
       }
 
       final response = await dio.get(

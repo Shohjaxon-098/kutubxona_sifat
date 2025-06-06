@@ -1,24 +1,14 @@
 import 'package:kutubxona/export.dart';
 
 class NoInternetWidget extends StatefulWidget {
-  final Future<void> Function() onRetry;
 
-  const NoInternetWidget({super.key, required this.onRetry});
+  const NoInternetWidget({super.key,});
 
   @override
   State<NoInternetWidget> createState() => _NoInternetWidgetState();
 }
 
 class _NoInternetWidgetState extends State<NoInternetWidget> {
-  bool isLoading = false;
-
-  Future<void> handleRetry() async {
-    setState(() => isLoading = true);
-    await widget.onRetry();
-    if (mounted) {
-      setState(() => isLoading = false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +37,6 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                 Text(
                   'Проверьте подключение к интернету',
                   style: TextStyle(color: AppColors().grey),
-                ),
-                const Spacer(),
-                PrimaryButton(
-                  onPressed: handleRetry,
-                  child:
-                      isLoading
-                          ? SizedBox(
-                            width: 26,
-                            height: 26,
-                            child: CircularProgressIndicator(
-                              color: AppColors().cardColor,
-                              strokeWidth: 2,
-                            ),
-                          )
-                          : Text(
-                            'Retry',
-                            style: TextStyle(
-                              color: AppColors().black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                  color: AppColors().white,
                 ),
               ],
             ),

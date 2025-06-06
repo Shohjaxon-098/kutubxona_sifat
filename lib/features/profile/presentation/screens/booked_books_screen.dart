@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
+import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_event.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_state.dart';
@@ -83,31 +84,85 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
                       final reservedBook = state.books[index];
                       final book = reservedBook.book;
 
-                      return ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            imageUrl: book.image,
-                            width: 96,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 16,
                         ),
-                        trailing: IconButton(
-                          icon: SvgPicture.asset(
-                            'assets/icons/off_close.svg',
-                            width: 24,
-                            height: 24,
-                            color: Theme.of(context).colorScheme.tertiary,
-                          ),
-                          onPressed: () {
-                            context.read<ReserveBookBloc>().add(
-                              CancelReservationRequested(reservedBook.id),
-                            );
-                          },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CachedNetworkImage(
+                                imageUrl: book.image,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    book.name,
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      letterSpacing: 0.15,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 9),
+                                  Row(
+                                    children: List.generate(5, (index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 2,
+                                        ),
+                                        child: SvgPicture.asset(
+                                          AppImages().rate,
+                                          height: 16,
+                                          color:
+                                              index < double.parse(book.rating!)
+                                                  ? AppColors().rateColor
+                                                  : AppColors().grey,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    book.author,
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      letterSpacing: 0.15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              icon: SvgPicture.asset(
+                                'assets/icons/off_close.svg',
+                                width: 24,
+                                height: 24,
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
+                              onPressed: () {
+                                context.read<ReserveBookBloc>().add(
+                                  CancelReservationRequested(reservedBook.id),
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                        title: Text(book.name),
-                        subtitle: Text(book.author),
                       );
                     },
                   );

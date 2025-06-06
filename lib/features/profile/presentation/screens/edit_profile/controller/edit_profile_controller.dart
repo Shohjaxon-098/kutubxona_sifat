@@ -2,6 +2,7 @@ import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/auth/presentation/logic/upload_image/upload_image_bloc.dart';
 import 'package:kutubxona/features/profile/data/model/edit_profile_model.dart';
 import 'package:kutubxona/features/profile/domain/entities/edit_profile_entity.dart';
+import 'package:kutubxona/features/profile/domain/entities/user_entity.dart';
 
 class EditProfileController extends ChangeNotifier {
   final BuildContext context;
@@ -64,6 +65,22 @@ class EditProfileController extends ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  void setInitialValues(UserProfileEntity profile) {
+    nameController.text = profile.firstName;
+    surnameController.text = profile.lastName;
+    telegramController.text = profile.telegramUsername;
+    passwordController.text =
+        ""; // Parolni ko‘rsatmaslik kerak, lekin o‘zgartirish mumkin
+    birthDateController.text =
+        profile.birthDate; // YYYY-MM-DD formatda bo‘lishi kerak
+    selectedGender = profile.gender;
+    verificationType = profile.verificationType;
+    passportInfoController.text = profile.documentNumber;
+    // Agar suratlar mavjud bo‘lsa:
+    // photoFile = profile.photoFile; <-- Agar URL ko‘rsatilsa, sizga NetworkImage kerak
+    // docFront, docBack <-- hozircha fayl bo‘lmasa, null bo‘lib qoladi
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/profile/data/model/my_book_model.dart';
+import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 
 class BookItemCard extends StatelessWidget {
-  final BookUiModel book;
+  final BookEntity book;
 
   const BookItemCard({super.key, required this.book});
 
@@ -21,17 +21,17 @@ class BookItemCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                book.imageUrl,
+                book.image,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
-                    Container(color: Colors.grey.shade300),
+                errorBuilder:
+                    (_, __, ___) => Container(color: Colors.grey.shade300),
               ),
             ),
           ),
           const SizedBox(height: 6),
           // Kitob nomi
           Text(
-            book.title,
+            book.name,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: screenWidth < 360 ? 12 : 14,
@@ -59,9 +59,10 @@ class BookItemCard extends StatelessWidget {
                 child: SvgPicture.asset(
                   AppImages().rate,
                   height: 16,
-                  color: i < book.rating
-                      ? AppColors().rateColor
-                      : AppColors().grey,
+                  color:
+                      i < double.parse(book.rating!)
+                          ? AppColors().rateColor
+                          : AppColors().grey,
                 ),
               );
             }),

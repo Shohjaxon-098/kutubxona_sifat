@@ -1,6 +1,7 @@
+import 'dart:async';
 
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/custom_drawer.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_event.dart';
@@ -18,20 +19,35 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode focusNode = FocusNode();
   bool showDropdown = false;
   final LayerLink _layerLink = LayerLink();
-
+  bool isConnectedinternet = false;
+  StreamSubscription? intertnetStreamSubscription;
   @override
   void initState() {
     super.initState();
-
-
+    intertnetStreamSubscription = InternetConnection().onStatusChange.listen((
+      event,
+    ) {
+      print(event);
+      switch (event) {
+        case InternetStatus.connected:
+          setState(() {
+            isConnectedinternet = true;
+          });
+          context.read<UserProfileBloc>().add(GetUserProfileEvent());
+          context.read<HomeBloc>().add(GetAllHomeDataEvent());
+          break;
+        case InternetStatus.disconnected:
+          setState(() {
+            isConnectedinternet = false;
+          });
+          break;
+      }
+    });
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         setState(() => showDropdown = false);
       }
     });
-
-    context.read<UserProfileBloc>().add(GetUserProfileEvent());
-    context.read<HomeBloc>().add(GetAllHomeDataEvent());
   }
 
   Future<void> _onRefresh() async {
@@ -43,8 +59,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    intertnetStreamSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       drawer: CustomDrawer(
         onLogout: () async {
           await LocalStorage.clearUser();
@@ -59,77 +82,59 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawerEnableOpenDragGesture: false,
       backgroundColor: AppColors().cardColor,
-      body: BlocListener<ConnectivityCubit, ConnectivityStatus>(
-        listener: (context, state) {
-          if (state == ConnectivityStatus.online) {
-            context.read<UserProfileBloc>().add(GetUserProfileEvent());
-            context.read<HomeBloc>().add(GetAllHomeDataEvent());
-          }
-        },
-        child: BlocBuilder<ConnectivityCubit, ConnectivityStatus>(
-          builder: (context, state) {
-            if (state == ConnectivityStatus.offline) {
-              return NoInternetWidget(
-                onRetry: () async {
-                  context.read<UserProfileBloc>().add(GetUserProfileEvent());
-                  context.read<HomeBloc>().add(GetAllHomeDataEvent());
-                  await Future.delayed(const Duration(seconds: 2));
-                },
-              );
-            }
-            return RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    iconTheme: IconThemeData(color: AppColors().white),
-                    pinned: true,
+      body:
+          isConnectedinternet
+              ? RefreshIndicator(
+                onRefresh: _onRefresh,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      iconTheme: IconThemeData(color: AppColors().white),
+                      pinned: true,
 
-                    expandedHeight: 160,
-                    backgroundColor: AppColors().cardColor,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: GreetingHeader(),
+                      expandedHeight: 160,
+                      backgroundColor: AppColors().cardColor,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: GreetingHeader(),
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(33),
-                        ),
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                      ),
-                      padding: const EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        top: 16,
-                      ),
-                      child: Column(
-                        children: [
-                          SearchFieldWithDropdown(
-                            controller: controller,
-                            focusNode: focusNode,
-                            layerLink: _layerLink,
-                            showDropdown: showDropdown,
-                            onDropdownVisibilityChanged:
-                                (visible) =>
-                                    setState(() => showDropdown = visible),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(33),
                           ),
-                          const SizedBox(height: 24),
-                          const CategorySectionWidget(),
-                          const SizedBox(height: 24),
-                          const BookSectionWidget(),
-                          const SizedBox(height: 16),
-                        ],
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          top: 16,
+                        ),
+                        child: Column(
+                          children: [
+                            SearchFieldWithDropdown(
+                              controller: controller,
+                              focusNode: focusNode,
+                              layerLink: _layerLink,
+                              showDropdown: showDropdown,
+                              onDropdownVisibilityChanged:
+                                  (visible) =>
+                                      setState(() => showDropdown = visible),
+                            ),
+                            const SizedBox(height: 24),
+                            const CategorySectionWidget(),
+                            const SizedBox(height: 24),
+                            const BookSectionWidget(),
+                            const SizedBox(height: 16),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                  ],
+                ),
+              )
+              : const NoInternetWidget(),
     );
   }
 }

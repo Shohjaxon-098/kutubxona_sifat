@@ -1,7 +1,7 @@
 import 'package:kutubxona/export.dart';
 
 Widget search({
-  void Function(String)? onChanged,
+  void Function(String)? onSubmitted,
   TextEditingController? controller,
   FocusNode? focusNode,
   bool? enabled,
@@ -42,6 +42,6 @@ Widget search({
       ),
       hintText: "Қидириш",
     ),
-    onChanged: onChanged,
+    onChanged: onSubmitted,
   );
 }

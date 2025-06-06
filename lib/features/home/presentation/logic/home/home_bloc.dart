@@ -30,8 +30,7 @@ Future<void> _onGetAllHomeData(
     final categoriesResult = await getCategoriesUseCase(libraryId);
     final booksResult = await getBooksUseCase(
       categoryId: event.categoryId,
-      year: event.year,
-      ratings: event.ratings,
+
     );
 
     emit(HomeDataLoaded(

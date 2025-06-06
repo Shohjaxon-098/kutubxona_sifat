@@ -8,13 +8,15 @@ class GetBooksUseCase {
 
   Future<List<BookEntity>> call({
     int? categoryId,
-    String? year,
-    List<int>? ratings,
+    String? searchQuery,
+    int? year,
+    String? ratings,
   }) {
     return repository.getBooks(
       categoryId: categoryId,
       year: year,
       ratings: ratings,
+      searchQuery: searchQuery,
     );
   }
 }

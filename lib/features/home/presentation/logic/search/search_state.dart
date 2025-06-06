@@ -20,7 +20,7 @@ class SearchLoading extends SearchState {
 class SearchLoaded extends SearchState {
   final List<BookEntity> books;
 
-  const SearchLoaded(this.books, String query) : super(query);
+  const SearchLoaded(this.books, ) : super('');
 
   @override
   List<Object?> get props => [books, query];

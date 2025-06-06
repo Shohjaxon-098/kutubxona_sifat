@@ -1,4 +1,3 @@
-import 'package:kutubxona/app/connectivy_listener.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
@@ -10,8 +9,6 @@ import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_b
 import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_book_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
-import 'package:kutubxona/features/home/domain/usecase/clear_filters_usecases.dart';
-import 'package:kutubxona/features/home/presentation/logic/filter/filter_bloc.dart';
 
 import 'package:kutubxona/core/services/di.dart' as di;
 import 'package:kutubxona/features/profile/presentation/logic/bloc/reserved_book_bloc.dart';
@@ -65,7 +62,6 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<PostReviewBloc>()),
         BlocProvider(create: (context) => sl<UserProfileBloc>()),
         BlocProvider(create: (context) => sl<CategoryBloc>()),
-        BlocProvider(create: (context) => FilterBloc(ClearFiltersUseCase())),
         BlocProvider(create: (_) => sl<ConnectivityCubit>()),
         BlocProvider(create: (context) => sl<AboutUsBloc>()),
         BlocProvider(create: (context) => sl<StatisticBloc>()),
@@ -73,7 +69,6 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<ReserveBookBloc>()),
         BlocProvider(create: (context) => sl<DeficientBooksCubit>()),
         BlocProvider(create: (_) => sl<ProfileBloc>()),
-       
 
         BlocProvider(create: (_) => sl<ReservedBookBloc>()),
 
@@ -113,16 +108,11 @@ class KutubxonaApp extends StatelessWidget {
         title: 'Kutubxona',
         theme: theme(context),
         darkTheme: darkTheme(),
-        home: AppConnectivityOverlay(
-          child: SplashScreen(),
-        ), // Navigate based on registration status
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute,
         initialRoute: AppRoutes.splash, // Set initial route
         themeMode: ThemeMode.system,
-        builder: (context, child) {
-          return AppConnectivityOverlay(child: child!);
-        },
       ),
     );
   }
