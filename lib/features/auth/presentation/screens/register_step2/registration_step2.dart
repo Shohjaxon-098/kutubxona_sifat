@@ -1,3 +1,4 @@
+import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/controller/register_step2_controller.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/widgets/document_image_picker.dart';
@@ -44,20 +45,16 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         BlocListener<RegisterStep2Bloc, RegisterStep2State>(
           listener: (ctx, state) {
             if (state is RegisterStep2Failure) {
-              ScaffoldMessenger.of(
-                ctx,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
+              ToastMessage.showToast(state.message, context);
             } else if (state is RegisterStep2Success) {
-              Navigator.pushNamed(ctx, AppRoutes.home);
+              Navigator.pushNamed(ctx, AppRoutes.login);
             }
           },
         ),
         BlocListener<UploadImageBloc, UploadImageState>(
           listener: (ctx, state) {
             if (state is UploadImageFailure) {
-              ScaffoldMessenger.of(
-                ctx,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
+              ToastMessage.showToast(state.message, context);
             }
           },
         ),
@@ -91,6 +88,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         controller: controller.nameController,
                         keyboardType: TextInputType.name,
                         validator: validateRequired,
+                        hint: 'Исмингиз',
                       ),
                       const SizedBox(height: 16),
                       GenderDropdown(
@@ -104,6 +102,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         keyboardType: TextInputType.text,
                         validator: validatePassword,
                         obscure: _obscureText,
+                        hint: '******',
                         suffixIcon: GestureDetector(
                           onTap: toggleVisibility,
                           child: SvgPicture.asset(
@@ -122,6 +121,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         controller: controller.surnameController,
                         keyboardType: TextInputType.name,
                         validator: validateRequired,
+                        hint: 'Фамилиянгиз',
                       ),
                       const SizedBox(height: 16),
                       CustomTextField(
@@ -129,6 +129,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         controller: controller.telegramController,
                         keyboardType: TextInputType.text,
                         validator: validateRequired,
+                        hint: '@telegram_username',
                       ),
                       const SizedBox(height: 16),
                       BirthDatePickerField(
@@ -154,6 +155,12 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         controller: controller.passportInfoController,
                         keyboardType: TextInputType.text,
                         validator: validateRequired,
+                        hint:
+                            controller.documentType == 'passport'
+                                ? 'AD1234567'
+                                : 'I-NV 12345678',
+                        lengthInput:
+                            controller.documentType == 'passport' ? 9 : 12,
                       ),
                       if (controller.documentType == 'passport') ...[
                         const SizedBox(height: 16),
@@ -184,8 +191,29 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         ),
                       const SizedBox(height: 12),
                       PrimaryButton(
-                        text: "Кириш",
-                        onPressed: () => controller.submitForm(_formKey),
+                        onPressed:
+                            controller.isLoading
+                                ? null
+                                : () => controller.submitForm(_formKey),
+                        child:
+                            controller.isLoading
+                                ? SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors().white,
+                                  ),
+                                )
+                                : Text(
+                                  'Кириш',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors().white,
+                                    fontSize: 15,
+                                  ),
+                                ),
                       ),
                     ],
                   );

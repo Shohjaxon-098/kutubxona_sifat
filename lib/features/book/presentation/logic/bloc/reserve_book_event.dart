@@ -6,6 +6,6 @@ class ReserveBookRequested extends ReserveBookEvent {
 }
 
 class CancelReservationRequested extends ReserveBookEvent {
-  final int reservationId;
+  final int? reservationId;
   CancelReservationRequested(this.reservationId);
 }

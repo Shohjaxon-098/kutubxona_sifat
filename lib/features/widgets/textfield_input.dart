@@ -14,6 +14,7 @@ class TextFieldInput extends StatelessWidget {
   final bool? readOnly;
   final void Function()? onTap;
   final String? initialValue;
+  final int? maxLength;
   const TextFieldInput({
     super.key,
     required this.label,
@@ -28,6 +29,7 @@ class TextFieldInput extends StatelessWidget {
     this.readOnly,
     this.onTap,
     this.initialValue,
+    this.maxLength,
   });
 
   @override
@@ -45,6 +47,7 @@ class TextFieldInput extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         TextFormField(
+          maxLength: maxLength,
           readOnly: readOnly ?? false,
           controller: controller,
           obscureText: obscure,

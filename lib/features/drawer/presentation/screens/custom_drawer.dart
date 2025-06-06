@@ -1,6 +1,4 @@
 import 'package:kutubxona/core/core_exports.dart';
-import 'package:kutubxona/core/util/formatters/phone_formatter.dart';
-import 'package:kutubxona/core/util/formatters/user_phone_formatter.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/about_us.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/statistic_screen.dart';

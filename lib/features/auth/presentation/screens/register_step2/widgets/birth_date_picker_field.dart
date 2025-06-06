@@ -18,7 +18,7 @@ class BirthDatePickerField extends StatelessWidget {
     return TextFieldInput(
       label: "Туғилган санаси",
       controller: controller,
-      hint: "Туғилган санаси",
+      hint: "2000-01-02",
       keyboardType: TextInputType.datetime,
       validator: validator,
       onTap: onTap,

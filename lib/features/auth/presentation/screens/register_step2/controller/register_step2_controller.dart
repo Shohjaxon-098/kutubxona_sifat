@@ -16,8 +16,8 @@ class RegisterStep2Controller extends ChangeNotifier {
   File? docBack;
   int? docFrontId;
   int? docBackId;
+  bool isLoading = false;
 
- 
   // API error message
   String? apiErrorMessage;
 
@@ -27,6 +27,10 @@ class RegisterStep2Controller extends ChangeNotifier {
   RegisterStep2Controller({required this.context}) {
     // Subscribe to UploadImageBloc changes
     _listenUploadImageBloc();
+  }
+  void setLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
   }
 
   void _listenUploadImageBloc() {
@@ -81,46 +85,51 @@ class RegisterStep2Controller extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  Future<void> submitForm(GlobalKey<FormState> formKey) async {
-    final userId = await LocalStorage.getUserId();
-    if (userId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("User ID topilmadi. Илтимос, қайта рўйхатдан ўтинг."),
-        ),
-      );
-      return;
-    }
-
-    if (formKey.currentState!.validate()) {
-      if (docFront == null || docBack == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Илтимос, ҳужжат файлларини танланг!")),
-        );
-        return;
-      }
-
-      final entity = RegisterStep2Entity(
-        firstName: nameController.text,
-        lastName: surnameController.text,
-        selectGender: selectedGender!,
-        telegramUsername: telegramController.text,
-        password: passwordController.text,
-        birthDate: birthDateController.text,
-        documentType: documentType!,
-        documentNumber: passportInfoController.text,
-        documentFront: docFrontId,
-        documentBack: docBackId,
-        userId: userId,
-        libraryId: AppConfig.libraryId.toString(),
-      );
-
-      context.read<RegisterStep2Bloc>().add(
-        SubmitRegisterStep2Event(entity: entity),
-      );
-    }
+Future<void> submitForm(GlobalKey<FormState> formKey) async {
+  final userId = await LocalStorage.getUserId();
+  if (userId == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("User ID topilmади. Илтимос, қайта рўйхатдан ўтинг."),
+      ),
+    );
+    return;
   }
+
+  if (!formKey.currentState!.validate()) return;
+
+  if (docFront == null || docBack == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Илтимос, ҳужжат файлларини танланг!")),
+    );
+    return;
+  }
+
+  // Loading state ON
+  setLoading(true);
+
+  final entity = RegisterStep2Entity(
+    firstName: nameController.text,
+    lastName: surnameController.text,
+    selectGender: selectedGender!,
+    telegramUsername: telegramController.text,
+    password: passwordController.text,
+    birthDate: birthDateController.text,
+    documentType: documentType!,
+    documentNumber: passportInfoController.text,
+    documentFront: docFrontId,
+    documentBack: docBackId,
+    userId: userId,
+    libraryId: AppConfig.libraryId.toString(),
+  );
+
+  context.read<RegisterStep2Bloc>().add(
+    SubmitRegisterStep2Event(entity: entity),
+  );
+
+  // Loading state OFF is managed from BlocListener when success or failure
+}
+
   void setGender(String? value) {
     selectedGender = value;
     notifyListeners();
@@ -131,6 +140,10 @@ class RegisterStep2Controller extends ChangeNotifier {
     docFront = null;
     docBack = null;
     notifyListeners();
+  }
+
+  void onSubmissionComplete() {
+    setLoading(false);
   }
 
   void disposeController() {

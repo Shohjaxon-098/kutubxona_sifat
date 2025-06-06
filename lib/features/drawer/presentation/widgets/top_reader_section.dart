@@ -8,6 +8,9 @@ class TopReadersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (readers.isEmpty) {
+      return SizedBox.shrink();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

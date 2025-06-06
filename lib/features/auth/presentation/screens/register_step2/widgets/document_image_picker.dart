@@ -21,7 +21,11 @@ class ImagePickerBox extends StatelessWidget {
         ),
         child:
             file == null
-                ? const Icon(Icons.image, size: 40)
+                ? Icon(
+                  Icons.image,
+                  size: 40,
+                  color: Theme.of(context).colorScheme.primary,
+                )
                 : Image.file(file!, fit: BoxFit.cover),
       ),
     );

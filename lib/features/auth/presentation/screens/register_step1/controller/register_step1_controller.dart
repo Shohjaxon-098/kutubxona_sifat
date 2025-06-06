@@ -37,7 +37,7 @@ class RegisterStep1Controller extends ChangeNotifier {
     } else if (state is RegisterSuccess) {
       isLoading = false;
       notifyListeners();
-      AppNavigator.pushReplacementNamed(context, AppRoutes.registerVerify);
+      AppNavigator.pushNamed(context, AppRoutes.registerVerify);
     }
   }
 

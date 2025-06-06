@@ -31,7 +31,7 @@ class ReserveBookBloc extends Bloc<ReserveBookEvent, ReserveBookState> {
   ) async {
     emit(ReserveBookLoading());
     try {
-      await dataSource.cancelReservation(event.reservationId);
+      await dataSource.cancelReservation(event.reservationId!);
       emit(CancelReservationSuccess());
     } catch (e) {
       emit(ReserveBookError(e.toString()));

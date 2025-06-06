@@ -11,10 +11,7 @@ class BooksStatistic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (books.isEmpty) {
-      return Text(
-        '$title - маълумот йўқ',
-        style: TextStyle(color: Colors.grey),
-      );
+      return SizedBox.shrink();
     }
 
     return Column(
