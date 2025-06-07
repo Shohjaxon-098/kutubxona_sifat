@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kutubxona</string>
+    <string name="Kutubxona">Kutubxona</string>  <!-- Optional, if you want to keep your manifest as is -->
+</resources>

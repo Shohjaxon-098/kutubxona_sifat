@@ -106,7 +106,6 @@ class KutubxonaApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Kutubxona',
         theme: theme(context),
         darkTheme: darkTheme(),
         home: SplashScreen(),

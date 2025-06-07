@@ -77,11 +77,23 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
                       ),
                     );
                   }
+                  final bookedBooks =
+                      state.books
+                          .where((book) => book.status == 'booked')
+                          .toList();
 
+                  if (bookedBooks.isEmpty) {
+                    return const Center(
+                      child: NoDataWidget(
+                        imagePath: 'assets/images/no-result.svg',
+                        text: 'Банд қилинган китоблар мавжуд эмас',
+                      ),
+                    );
+                  }
                   return ListView.builder(
-                    itemCount: state.books.length,
+                    itemCount: bookedBooks.length,
                     itemBuilder: (_, index) {
-                      final reservedBook = state.books[index];
+                      final reservedBook = bookedBooks[index];
                       final book = reservedBook.book;
 
                       return Padding(

@@ -1,6 +1,5 @@
-import 'package:kutubxona/core/util/toast_message.dart';
+import 'package:collection/collection.dart';
 import 'package:kutubxona/export.dart';
-
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_event.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_state.dart';
@@ -16,6 +15,7 @@ import 'package:kutubxona/features/book/presentation/widgets/book_header.dart';
 import 'package:kutubxona/features/book/presentation/widgets/book_tab_section.dart';
 import 'package:kutubxona/features/book/presentation/widgets/section_title.dart';
 import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
+import 'package:kutubxona/features/profile/presentation/logic/bloc/reserved_book_bloc.dart';
 
 class BookDetailScreen extends StatefulWidget {
   final BookEntity book;
@@ -116,102 +116,90 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                     ),
 
                     const SizedBox(height: 24),
-                    // ... BlocConsumer<ReserveBookBloc, ReserveBookState>(
-                    BlocConsumer<ReserveBookBloc, ReserveBookState>(
+                    BlocListener<ReserveBookBloc, ReserveBookState>(
                       listener: (context, state) {
-                        if (state is ReserveBookSuccess &&
-                            state.reserveBook.book == widget.book.id) {
-                          setState(() {
-                            takenAt = state.reserveBook.takenAt;
-                            reservationId = state.reserveBook.reservationId;
-                          });
-                          ToastMessage.showToast(
-                            state.reserveBook.message.toString(),
-                            context,
+                        if (state is ReserveBookSuccess ||
+                            state is CancelReservationSuccess) {
+                          context.read<ReservedBookBloc>().add(
+                            LoadReservedBooks(AppConfig.libraryId.toString()),
                           );
-                        } else if (state is CancelReservationSuccess) {
-                          setState(() {
-                            takenAt = null;
-                            reservationId = null;
-                          });
-                          ToastMessage.showToast(
-                            "Bandlik bekor qilindi",
-                            context,
-                          );
-                        } else if (state is ReserveBookError) {
-                          ToastMessage.showToast(state.message, context);
                         }
                       },
-                      builder: (context, state) {
-                        if (state is ReserveBookLoading) {
-                          return const CircularProgressIndicator();
-                        }
+                      child: BlocBuilder<ReservedBookBloc, ReservedBookState>(
+                        builder: (context, reservedState) {
+                          if (reservedState is ReservedBookError) {
+                            return Text('Xatolik: ${reservedState.message}');
+                          }
+                          if (reservedState is ReservedBookLoaded) {
+                            final reservedBook = reservedState.books
+                                .firstWhereOrNull(
+                                  (e) => e.book.id == widget.book.id,
+                                );
 
-                        final reservedBook =
-                            state is ReserveBookSuccess
-                                ? state.reserveBook
-                                : null;
+                            if (reservedBook != null &&
+                                reservedBook.takenAt != null) {
+                              return TextFieldInput(
+                                label: "Олиб кетиш санаси",
+                                initialValue: reservedBook.takenAt!,
+                                readOnly: true,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    context.read<ReserveBookBloc>().add(
+                                      CancelReservationRequested(
+                                        reservedBook.id,
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.highlight_remove),
+                                ),
+                                onChanged: (_) {},
+                              );
+                            }
+                            if (!book.isAvailable) {
+                              return const Text("Китоб колмаган");
+                            }
 
-                        // Agar allaqachon band qilingan bo‘lsa
-                        if (reservedBook != null &&
-                            reservedBook.takenAt != null &&
-                            reservedBook.book == widget.book.id) {
-                          return TextFieldInput(
-                            label: "Олиб кетиш санаси",
-                            initialValue: reservedBook.takenAt!,
-                            readOnly: true,
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                if (reservedBook.reservationId != null) {
-                                  context.read<ReserveBookBloc>().add(
-                                    CancelReservationRequested(
-                                      reservedBook.reservationId!,
-                                    ),
-                                  );
-                                }
+                            return BlocBuilder<
+                              ReserveBookBloc,
+                              ReserveBookState
+                            >(
+                              builder: (context, reserveState) {
+                                final isLoading =
+                                    reserveState is ReserveBookLoading;
+
+                                return PrimaryButton(
+                                  onPressed:
+                                      isLoading
+                                          ? null
+                                          : () {
+                                            context.read<ReserveBookBloc>().add(
+                                              ReserveBookRequested(book.id),
+                                            );
+                                          },
+                                  child:
+                                      isLoading
+                                          ? const SizedBox(
+                                            height: 24,
+                                            width: 24,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                          : Text(
+                                            "Банд қилиш",
+                                            style: TextStyle(
+                                              color: AppColors().white,
+                                            ),
+                                          ),
+                                );
                               },
-                              icon: const Icon(Icons.highlight_remove),
-                            ),
-                            onChanged: (_) {},
-                          );
-                        }
-
-                        // ❗ Kitob mavjud emas bo‘lsa, tugma chiqmasin
-                        if (book.isAvailable == false) {
-                          return Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Text(
-                                  "Китоб колмаган",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-
-                        // Band qilish mumkin
-                        return PrimaryButton(
-                          onPressed: () {
-                            context.read<ReserveBookBloc>().add(
-                              ReserveBookRequested(book.id),
                             );
-                          },
-                          child: const Text(
-                            "Банд қилиш",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        );
-                      },
+                          }
+
+                          return const SizedBox.shrink();
+                        },
+                      ),
                     ),
 
                     const SizedBox(height: 20),
