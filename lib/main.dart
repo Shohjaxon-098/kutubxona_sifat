@@ -1,3 +1,4 @@
+import 'package:kutubxona/core/network/internet_status_handler.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/book_detail/book_detail_bloc.dart';
@@ -113,6 +114,10 @@ class KutubxonaApp extends StatelessWidget {
         onGenerateRoute: AppRoutes.generateRoute,
         initialRoute: AppRoutes.splash, // Set initial route
         themeMode: ThemeMode.system,
+        builder: (context, child) {
+          final builtChild = child ?? const SplashScreen(); // fallback widget
+          return InternetStatusHandler(child: builtChild);
+        },
       ),
     );
   }

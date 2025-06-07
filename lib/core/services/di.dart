@@ -17,7 +17,6 @@ import 'package:kutubxona/features/category/presentation/logic/bloc/category_blo
 import 'package:kutubxona/features/connectivity/data/repositories/connectivity_repository_impl.dart';
 import 'package:kutubxona/features/connectivity/domain/repositories/connectivity_repository.dart';
 import 'package:kutubxona/features/connectivity/domain/usecases/watch_connection_usecase.dart';
-import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/drawer/data/datasources/about_us_remote_datasource.dart';
 import 'package:kutubxona/features/drawer/data/datasources/contribution_remote_data_source.dart';
 import 'package:kutubxona/features/drawer/data/datasources/deficient_book_datasources.dart';
@@ -119,7 +118,6 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton(() => WatchConnectionUseCase(sl()));
-  sl.registerFactory(() => ConnectivityCubit(sl()));
   // === User Profile ===
   sl.registerFactory(() => UserProfileBloc(sl()));
 
