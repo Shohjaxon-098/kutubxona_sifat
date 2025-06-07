@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kutubxona/features/drawer/domain/entities/top_reader_entity.dart';
 
 class TopReadersSection extends StatelessWidget {
-  final List<TopReaderEntity> readers;
+  final List<TopReaderEntity?> readers;
 
   const TopReadersSection({super.key, required this.readers});
 
@@ -30,7 +30,7 @@ class TopReadersSection extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("${reader.firstName} ${reader.lastName}"),
+                Text("${reader!.firstName} ${reader.lastName}"),
                 Text("${reader.total} та китоб"),
               ],
             ),

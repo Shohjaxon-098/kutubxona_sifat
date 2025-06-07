@@ -4,7 +4,7 @@ import 'package:kutubxona/features/drawer/domain/entities/statistic_entity.dart'
 
 class MonthlyActivityChart extends StatelessWidget {
   const MonthlyActivityChart({super.key, required this.statistic});
-  final StatisticEntity statistic;
+  final StatisticEntity? statistic;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -43,9 +43,9 @@ class MonthlyActivityChart extends StatelessWidget {
             ),
 
             const SizedBox(height: 24),
-            ...List.generate(statistic.last30DaysStatistics.length, (i) {
-              final dayStat = statistic.last30DaysStatistics[i];
-              final takenPercent = dayStat.takenBooks / 10;
+            ...List.generate(statistic!.last30DaysStatistics.length, (i) {
+              final dayStat = statistic!.last30DaysStatistics[i];
+              final takenPercent = dayStat!.takenBooks / 10;
               final returnedPercent = dayStat.returnedBooks / 10;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),

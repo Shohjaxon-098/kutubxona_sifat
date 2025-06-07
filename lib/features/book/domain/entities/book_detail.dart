@@ -12,9 +12,10 @@ class BookDetail {
   final String language;
   final int pageCount;
   final int bookedCount;
-  final String rating;         // ✅ double emas, endi String
-  final String reviewsCount;   // ✅ int emas, endi String
+  final String rating; // ✅ double emas, endi String
+  final String reviewsCount; // ✅ int emas, endi String
   final String relatedBooks;
+  final bool isAvailable;
 
   BookDetail({
     required this.id,
@@ -33,5 +34,6 @@ class BookDetail {
     required this.rating,
     required this.reviewsCount,
     required this.relatedBooks,
+    required this.isAvailable,
   });
 }

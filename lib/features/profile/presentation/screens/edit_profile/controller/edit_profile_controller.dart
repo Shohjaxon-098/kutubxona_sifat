@@ -72,12 +72,15 @@ class EditProfileController extends ChangeNotifier {
     surnameController.text = profile.lastName;
     telegramController.text = profile.telegramUsername;
     passwordController.text =
-        ""; // Parolni ko‘rsatmaslik kerak, lekin o‘zgartirish mumkin
+        "*******"; // Parolni ko‘rsatmaslik kerak, lekin o‘zgartirish mumkin
     birthDateController.text =
         profile.birthDate; // YYYY-MM-DD formatda bo‘lishi kerak
     selectedGender = profile.gender;
     verificationType = profile.verificationType;
     passportInfoController.text = profile.documentNumber;
+    docFront = File(profile.documentFile1Path);
+    docBack = File(profile.documentFile2Path);
+    photoFile = File(profile.photoPath);
     // Agar suratlar mavjud bo‘lsa:
     // photoFile = profile.photoFile; <-- Agar URL ko‘rsatilsa, sizga NetworkImage kerak
     // docFront, docBack <-- hozircha fayl bo‘lmasa, null bo‘lib qoladi

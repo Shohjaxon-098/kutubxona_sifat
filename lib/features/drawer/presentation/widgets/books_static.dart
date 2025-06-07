@@ -4,7 +4,7 @@ import 'package:kutubxona/features/drawer/presentation/widgets/book_card_statist
 
 class BooksStatistic extends StatelessWidget {
   final String title;
-  final List<BookStatisticEntity> books;
+  final List<BookStatisticEntity?> books;
 
   const BooksStatistic({super.key, required this.title, required this.books});
 
@@ -29,7 +29,7 @@ class BooksStatistic extends StatelessWidget {
         ...books.map(
           (book) => Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: BookCardStatistic(book: book),
+            child: BookCardStatistic(book: book!),
           ),
         ),
       ],

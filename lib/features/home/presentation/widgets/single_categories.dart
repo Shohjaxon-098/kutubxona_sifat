@@ -23,7 +23,6 @@ class BooksGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final grid = GridView.builder(
       scrollDirection: scrollDirection,
-      shrinkWrap: true,
       physics:
           scrollDirection == Axis.horizontal
               ? const BouncingScrollPhysics()
@@ -59,6 +58,11 @@ class BooksGrid extends StatelessWidget {
                     imageUrl: book.image,
                     fit: BoxFit.cover,
                     width: double.infinity,
+                    placeholder:
+                        (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                    errorWidget:
+                        (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
               ),

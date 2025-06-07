@@ -94,7 +94,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
               return const BookDetailLoadingScreen();
             } else if (state is BookDetailLoaded) {
               final book = state.book;
-
+              print(book.isAvailable);
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -116,6 +116,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                     ),
 
                     const SizedBox(height: 24),
+                    // ... BlocConsumer<ReserveBookBloc, ReserveBookState>(
                     BlocConsumer<ReserveBookBloc, ReserveBookState>(
                       listener: (context, state) {
                         if (state is ReserveBookSuccess &&
@@ -151,6 +152,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                 ? state.reserveBook
                                 : null;
 
+                        // Agar allaqachon band qilingan bo‘lsa
                         if (reservedBook != null &&
                             reservedBook.takenAt != null &&
                             reservedBook.book == widget.book.id) {
@@ -174,6 +176,30 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                           );
                         }
 
+                        // ❗ Kitob mavjud emas bo‘lsa, tugma chiqmasin
+                        if (book.isAvailable == false) {
+                          return Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade100,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Text(
+                                  "Китоб колмаган",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+
+                        // Band qilish mumkin
                         return PrimaryButton(
                           onPressed: () {
                             context.read<ReserveBookBloc>().add(

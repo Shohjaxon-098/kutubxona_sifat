@@ -3,13 +3,13 @@ class CategoryModel {
   final String name;
   final String icon;
 
-  CategoryModel({required this.id, required this.name,required this.icon});
+  CategoryModel({required this.id, required this.name, required this.icon});
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: json['id'],
-      name: json['name'],
-      icon: json['icon'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      icon: json['icon'] ?? '',
     );
   }
 }

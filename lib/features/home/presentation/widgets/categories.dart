@@ -1,4 +1,3 @@
-
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/screens/category_books.dart';
 import 'package:kutubxona/features/home/domain/entities/category.dart';
@@ -43,8 +42,8 @@ class Categories extends StatelessWidget {
               PageTransition(
                 isIos: true,
                 child: CategoryBooks(
-                  categoryId: category.id,
-                  categoryName: category.name,
+                  categoryId: category.id!,
+                  categoryName: category.name!,
                 ),
                 type: PageTransitionType.rightToLeft,
                 duration: const Duration(milliseconds: 400),
@@ -59,7 +58,7 @@ class Categories extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(category.icon),
+                      image: NetworkImage(category.icon!),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -69,7 +68,7 @@ class Categories extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Center(
                     child: Text(
-                      category.name,
+                      category.name!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors().white,

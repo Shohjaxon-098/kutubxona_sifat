@@ -17,6 +17,9 @@ class BookHeader extends StatelessWidget {
             width: 123,
             height: 158,
             fit: BoxFit.cover,
+            errorWidget:
+                (context, url, error) =>
+                    Icon(Icons.broken_image, color: Colors.grey[400]),
           ),
         ),
         const SizedBox(width: 16),

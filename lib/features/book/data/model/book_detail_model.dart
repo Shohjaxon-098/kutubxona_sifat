@@ -18,6 +18,7 @@ class BookDetailModel extends BookDetail {
     required super.rating,
     required super.reviewsCount,
     required super.relatedBooks,
+    required super.isAvailable,
   });
 
   factory BookDetailModel.fromJson(Map<String, dynamic> json) {
@@ -46,6 +47,8 @@ class BookDetailModel extends BookDetail {
                   ) // Assuming related books are a List
                   : json['related_books'].toString())
               : '', // Fallback to empty string if null
+
+      isAvailable: json['is_available'],
     );
   }
 }

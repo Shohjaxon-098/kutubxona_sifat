@@ -9,22 +9,22 @@ import '../../domain/entities/statistic_entity.dart';
 
 class StatisticModel extends StatisticEntity {
   const StatisticModel({
-    required int totalMembers,
-    required int maleMembers,
-    required int femaleMembers,
-    required int totalBooks,
-    required int availableBooks,
-    required int totalReservations,
-    required int activeReservations,
-    required int overdueBooks,
-    required int reservationsLastDay,
-    required int reservationsLastWeek,
-    required int reservationsLastMonth,
-    required int averageReservationsPerDay,
-    required List<BookStatisticEntity> topReservedBooksLastWeek,
-    required List<BookStatisticEntity> topBooks,
-    required List<TopReaderEntity> topReaders,
-    required List<DailyStatisticEntity> last30DaysStatistics,
+    required int? totalMembers,
+    required int? maleMembers,
+    required int? femaleMembers,
+    required int? totalBooks,
+    required int? availableBooks,
+    required int? totalReservations,
+    required int? activeReservations,
+    required int? overdueBooks,
+    required int? reservationsLastDay,
+    required int? reservationsLastWeek,
+    required int? reservationsLastMonth,
+    required int? averageReservationsPerDay,
+    required List<BookStatisticEntity?> topReservedBooksLastWeek,
+    required List<BookStatisticEntity?> topBooks,
+    required List<TopReaderEntity?> topReaders,
+    required List<DailyStatisticEntity?> last30DaysStatistics,
   }) : super(
          totalMembers: totalMembers,
          maleMembers: maleMembers,
@@ -57,28 +57,34 @@ class StatisticModel extends StatisticEntity {
       reservationsLastWeek: json['reservations_last_week'] ?? 0,
       reservationsLastMonth: json['reservations_last_month'] ?? 0,
       averageReservationsPerDay: json['average_reservations_per_day'] ?? 0,
+
       topBooks:
-          (json['top_books'] as List)
+          (json['top_books'] as List? ?? [])
+              .where((e) => e != null)
               .map((e) => BookStatisticModel.fromJson(e))
               .toList()
               .cast<BookStatisticEntity>(),
 
       topReservedBooksLastWeek:
-          (json['top_reserved_books_last_week'] as List)
+          (json['top_reserved_books_last_week'] as List? ?? [])
+              .where((e) => e != null)
               .map((e) => BookStatisticModel.fromJson(e))
               .toList()
               .cast<BookStatisticEntity>(),
 
       topReaders:
-          (json['top_readers'] as List)
+          (json['top_readers'] as List? ?? [])
+              .where((e) => e != null)
               .map((e) => TopReaderModel.fromJson(e))
               .toList()
               .cast<TopReaderEntity>(),
 
       last30DaysStatistics:
-          (json['last_30_days_statistics'] as List<dynamic>? ?? [])
+          (json['last_30_days_statistics'] as List? ?? [])
+              .where((e) => e != null)
               .map((e) => DailyStatisticModel.fromJson(e))
-              .toList(),
+              .toList()
+              .cast<DailyStatisticEntity>(),
     );
   }
 }

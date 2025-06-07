@@ -4,7 +4,7 @@ import '../model/book_detail_model.dart';
 import 'book_detail_remote_data_source.dart';
 
 class BookDetailRemoteDataSourceImpl implements BookDetailRemoteDataSource {
-  final  dio=DioClient().dio;
+  final dio = DioClient().dio;
   BookDetailRemoteDataSourceImpl();
 
   @override
@@ -15,6 +15,7 @@ class BookDetailRemoteDataSourceImpl implements BookDetailRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
+   
         return BookDetailModel.fromJson(response.data);
       } else {
         throw Exception('Kitob topilmadi');

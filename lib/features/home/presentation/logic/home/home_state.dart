@@ -14,7 +14,11 @@ class HomeDataLoaded extends HomeState {
 
   HomeDataLoaded({required this.categories, required this.books});
 }
+class HomeDataEmpty extends HomeState {
+ 
 
+  HomeDataEmpty();
+}
 class HomeError extends HomeState {
   final String message;
 

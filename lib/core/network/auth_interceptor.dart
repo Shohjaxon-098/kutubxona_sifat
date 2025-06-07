@@ -18,7 +18,9 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401 &&
-        !err.requestOptions.path.contains('/token/refresh')) {
+        !err.requestOptions.path.contains(
+          '${AppConfig.baseUrl}/token/refresh',
+        )) {
       final refreshToken = LocalStorage.getRefreshToken();
 
       if (refreshToken != null) {
@@ -27,6 +29,7 @@ class AuthInterceptor extends Interceptor {
             '${AppConfig.baseUrl}/account/token/refresh/',
             data: {'refresh': refreshToken},
           );
+          print('New access token: ${response.data['access']}');
 
           final newAccessToken = response.data['access'];
           await LocalStorage.saveAccessToken(newAccessToken);
@@ -43,10 +46,7 @@ class AuthInterceptor extends Interceptor {
             options.path,
             data: options.data,
             queryParameters: options.queryParameters,
-            options: Options(
-              method: options.method,
-              headers: options.headers,
-            ),
+            options: Options(method: options.method, headers: options.headers),
           );
 
           return handler.resolve(clonedResponse);

@@ -1,4 +1,5 @@
 import 'package:kutubxona/export.dart';
+import 'package:kutubxona/features/widgets/no_field_widget.dart';
 
 class CategorySectionWidget extends StatelessWidget {
   const CategorySectionWidget({super.key});
@@ -12,8 +13,15 @@ class CategorySectionWidget extends StatelessWidget {
           builder: (context, state) {
             if (state is HomeLoading) return ShimmerLoadingAllCategories();
             if (state is HomeDataLoaded) {
+              if (state.categories.isEmpty) {
+                return const NoDataWidget(
+                  imagePath: 'assets/images/no-result.svg',
+                  text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                );
+              }
               return Categories(categories: state.categories, limitItems: true);
             }
+
             if (state is HomeError) {
               return Center(child: Text(state.message));
             }

@@ -1,7 +1,6 @@
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/domain/entities/book_statistic_entity.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/book_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/info_row_widget.dart';
 
 class BookCardStatistic extends StatelessWidget {
@@ -29,7 +28,15 @@ class BookCardStatistic extends StatelessWidget {
                 child:
                     book.imageId == 0
                         ? const Icon(Icons.book, size: 30)
-                        : CachedNetworkImage(imageUrl: ""),
+                        : CachedNetworkImage(
+                          imageUrl: "",
+                          placeholder:
+                              (context, url) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                          errorWidget:
+                              (context, url, error) => const Icon(Icons.error),
+                        ),
               ),
             ),
             const SizedBox(width: 12),
@@ -38,12 +45,12 @@ class BookCardStatistic extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    book.title,
+                    book.title!,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    book.author,
+                    book.author!,
                     style: TextStyle(
                       fontSize: 13,
                       fontFamily: 'Roboto',
@@ -53,7 +60,7 @@ class BookCardStatistic extends StatelessWidget {
                   const SizedBox(height: 12),
                   InfoRow(
                     title: 'Чоп қилинган йили:',
-                    value: '${book.publishedDate.year}',
+                    value: '${book.publishedDate!.year}',
                   ),
                   const SizedBox(height: 12),
                   InfoRow(

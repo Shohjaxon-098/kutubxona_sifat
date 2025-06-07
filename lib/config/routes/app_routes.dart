@@ -4,6 +4,7 @@ import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
 import 'package:kutubxona/features/profile/presentation/screens/booked_books_screen.dart';
 import 'package:kutubxona/features/profile/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:kutubxona/features/profile/presentation/screens/my_books_screen.dart';
+import 'package:kutubxona/features/widgets/no_internet_widget.dart';
 
 class AppRoutes {
   // Define route names
@@ -20,7 +21,7 @@ class AppRoutes {
   static const String bookDetail = '/bookDetail';
   static const String bookedBookScreen = '/bookedBookScreen';
   static const String myBookScreen = '/myBookScreen';
-
+  static const String noInternetScreen = '/no-internet';
   static const String editProfile = '/editProfile';
 
   // Method to handle routing
@@ -30,6 +31,12 @@ class AppRoutes {
         return PageTransition(
           isIos: true,
           child: const SplashScreen(),
+          type: PageTransitionType.fade,
+        );
+      case noInternetScreen:
+        return PageTransition(
+          isIos: true,
+          child: NoInternetScreen(),
           type: PageTransitionType.fade,
         );
       case home:

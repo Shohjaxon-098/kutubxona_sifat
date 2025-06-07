@@ -7,10 +7,10 @@ class StatCard extends StatelessWidget {
   final String title;
   final bool showExtraText;
   final String leftLabel;
-  final int leftValue;
+  final int? leftValue;
   final String rightLabel;
-  final int rightValue;
-  final int total;
+  final int? rightValue;
+  final int? total;
   final String? cntrLabel;
   final int? cntrvalue;
   const StatCard({
@@ -27,7 +27,7 @@ class StatCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final leftPercent = total == 0 ? 0.0 : leftValue / total;
+    final leftPercent = total == 0 ? 0.0 : leftValue! / total!;
     // final centerPercent =
     //     (showExtraText && cntrvalue != null && total != 0)
     //         ? cntrvalue! / total
@@ -53,9 +53,9 @@ class StatCard extends StatelessWidget {
                 Expanded(
                   child: _buildLegendColumn(
                     leftLabel,
-                    leftValue,
+                    leftValue!,
                     rightLabel,
-                    rightValue,
+                    rightValue!,
                     cntrLabel,
                     cntrvalue,
                   ),
@@ -77,10 +77,10 @@ class StatCard extends StatelessWidget {
                       ),
                       if (showExtraText)
                         StatDonutChart(
-                          left: leftValue,
+                          left: leftValue!,
                           center: cntrvalue ?? 0,
-                          right: rightValue,
-                          total: total,
+                          right: rightValue!,
+                          total: total!,
                         ),
 
                       Text(
