@@ -3,7 +3,7 @@ import 'package:kutubxona/config/theme/app_colors.dart';
 
 ThemeData darkTheme() {
   return ThemeData(
-    fontFamily: 'Cairo',
+    fontFamily: 'OpenSans',
     brightness: Brightness.dark,
     colorScheme: ColorScheme.dark(
       surface: AppColors().darkBack,

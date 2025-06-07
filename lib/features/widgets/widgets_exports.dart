@@ -1,4 +1,3 @@
-export '../auth/presentation/screens/otp/widgets/otp_widget.dart';
 export 'textfield_input.dart';
 export 'phonetextfield_widget.dart';
 export '../home/presentation/widgets/categories.dart';

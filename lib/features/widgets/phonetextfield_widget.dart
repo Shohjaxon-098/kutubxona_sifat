@@ -82,7 +82,7 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
             prefixIcon:
                 showPrefix
                     ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.only(left: 12),
                       child: Text('+998', style: const TextStyle(fontSize: 16)),
                     )
                     : null,
@@ -100,7 +100,7 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
                     : '+998  _ _  _ _ _  _ _  _ _',
             hintStyle: TextStyle(
               color: AppColors().hintColor,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
             enabledBorder: OutlineInputBorder(

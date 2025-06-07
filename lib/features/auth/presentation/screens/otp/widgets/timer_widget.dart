@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kutubxona/export.dart';
 
 class TimerWidget extends StatelessWidget {
+  const TimerWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimerBloc, TimerState>(
@@ -9,13 +12,14 @@ class TimerWidget extends StatelessWidget {
         String displayMessage = '';
         bool isButtonEnabled = false;
 
-        if (state is TimerInitial || state is TimerRunning) {
-          final timeLeft =
-              (state is TimerInitial) ? state.timeLeft : (state as TimerRunning).timeLeft;
-          displayMessage = '$timeLeft:00';
-          isButtonEnabled = timeLeft == 0;
+        if (state is TimerInitial) {
+          displayMessage = _formatTime(state.timeLeft);
+          isButtonEnabled = state.timeLeft == 0;
+        } else if (state is TimerRunning) {
+          displayMessage = _formatTime(state.timeLeft);
+          isButtonEnabled = state.timeLeft == 0;
         } else if (state is TimerCompleted) {
-          displayMessage = "true";
+          displayMessage = "00:00";
           isButtonEnabled = true;
         }
 
@@ -28,31 +32,40 @@ class TimerWidget extends StatelessWidget {
             ),
             isButtonEnabled
                 ? TextButton(
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
+                  onPressed: () async {
+                    final id = AppConfig.libraryId.toString();
+                    final phone = await AppConfig.getPhone.toString();
+
+                    // Qayta telefon raqamini yuborish eventi
+                    context.read<RegisterStep1Bloc>().add(
+                      SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
+                    );
+
+                    // Timerni 60 sekundga qayta ishga tushurish
+                    context.read<TimerBloc>().add(TimerStarted());
+                  },
+                  child: Text(
+                    "Қайта юбориш",
+                    style: TextStyle(
+                      color: AppColors().blue,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                    onPressed: () async {
-                      final id = await AppConfig.libraryId.toString();
-                      final phone = await AppConfig.getPhone.toString();
-                      // ignore: use_build_context_synchronously
-                      context.read<RegisterStep1Bloc>().add(
-                        SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
-                      );
-                      context.read<TimerBloc>().add(TimerStarted());
-                    },
-                    child: Text(
-                      "Қайта юбориш",
-                      style: TextStyle(
-                        color: AppColors().blue,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  )
+                  ),
+                )
                 : const SizedBox(height: 48),
           ],
         );
       },
     );
+  }
+
+  String _formatTime(int seconds) {
+    final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
+    final secs = (seconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$secs';
   }
 }

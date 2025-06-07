@@ -3,9 +3,8 @@ import 'package:kutubxona/config/theme/app_colors.dart';
 
 ThemeData theme(BuildContext context) {
   return ThemeData(
-
     brightness: Brightness.light,
-    fontFamily: 'Cairo',
+    fontFamily: 'OpenSans',
     colorScheme: ColorScheme.light(
       primaryContainer: AppColors().white,
       secondary: AppColors().searchBackLight,
@@ -17,4 +16,3 @@ ThemeData theme(BuildContext context) {
     ),
   );
 }
-
