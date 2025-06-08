@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:kutubxona/core/constants/app_config.dart';
 import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/core/error/exeptions.dart';
 import 'package:kutubxona/features/drawer/data/model/contribution.dart';
 
 abstract class ContributionRemoteDataSource {
@@ -22,8 +23,16 @@ class ContributionRemoteDataSourceImpl implements ContributionRemoteDataSource {
 
       return ContributionModel.fromJson(response.data);
     } on DioException catch (e) {
-      // xatolikni aniqroq qaytarish uchun
-      throw Exception('Failed to fetch contributions: ${e.message}');
+      final statusCode = e.response?.statusCode;
+      final data = e.response?.data;
+      final errorMessage =
+          data is Map<String, dynamic>
+              ? data['detail'] ?? data['message'] ?? e.message
+              : e.message;
+
+      throw ServerException(message: 'Хатолик $statusCode: $errorMessage');
+    } catch (e) {
+      throw ServerException(message: 'Номаълум хатолик: ${e.toString()}');
     }
   }
 }

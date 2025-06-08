@@ -8,15 +8,32 @@ class RegisterStep1Bloc extends Bloc<RegisterStep1Event, RegisterStep1State> {
   final RegisterPhoneUseCase useCase;
 
   RegisterStep1Bloc(this.useCase) : super(RegisterInitial()) {
-    // SHU QISMI MUHIM!
     on<SubmitPhoneNumber>((event, emit) async {
       emit(RegisterLoading());
       try {
-        await useCase.call(RegisterStep1Entity(
-          phoneNumber: event.phoneNumber,
-          libraryId: event.libraryId,
-        ));
+        await useCase.call(
+          RegisterStep1Entity(
+            phoneNumber: event.phoneNumber,
+            libraryId: event.libraryId,
+          ),
+        );
         emit(RegisterSuccess());
+      } catch (e) {
+        emit(RegisterFailure(e.toString()));
+      }
+    });
+
+    // 🛠 RESEND OTP HANDLER - Shuni tekshiring!
+    on<ResendOtp>((event, emit) async {
+      emit(RegisterLoading());
+      try {
+        await useCase.call(
+          RegisterStep1Entity(
+            phoneNumber: event.phoneNumber,
+            libraryId: event.libraryId,
+          ),
+        );
+        emit(RegisterOtpResent());
       } catch (e) {
         emit(RegisterFailure(e.toString()));
       }

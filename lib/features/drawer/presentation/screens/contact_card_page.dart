@@ -2,6 +2,7 @@ import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/contact_card.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/shimmer_contact_card.dart';
+import 'package:kutubxona/features/widgets/no_field_widget.dart';
 
 class ContactCardScreen extends StatefulWidget {
   const ContactCardScreen({super.key});
@@ -22,15 +23,15 @@ class _ContactCardScreenState extends State<ContactCardScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title:  Text(
+        title: Text(
           'Контактлар',
-     style: TextStyle(
-          fontSize: 18,
-          color: Theme.of(context).colorScheme.tertiary,
-          fontWeight: FontWeight.w600,
+          style: TextStyle(
+            fontSize: 18,
+            color: Theme.of(context).colorScheme.tertiary,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
-      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
         centerTitle: true,
       ),
       body: BlocBuilder<AboutUsBloc, AboutUsState>(

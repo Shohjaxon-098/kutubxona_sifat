@@ -6,8 +6,10 @@ class RegisterLoading extends RegisterStep1State {}
 
 class RegisterSuccess extends RegisterStep1State {}
 
-class RegisterFailure extends RegisterStep1State {
-  final String message;
+class RegisterOtpResent extends RegisterStep1State {}
 
-  RegisterFailure(this.message);
+class RegisterFailure extends RegisterStep1State {
+  final String error;
+
+  RegisterFailure(this.error);
 }

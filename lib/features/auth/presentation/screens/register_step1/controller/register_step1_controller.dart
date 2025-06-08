@@ -31,7 +31,7 @@ class RegisterStep1Controller extends ChangeNotifier {
 
   void handleState(RegisterStep1State state, BuildContext context) {
     if (state is RegisterFailure) {
-      ToastMessage.showToast(state.message, context);
+      ToastMessage.showToast(state.error, context);
       isLoading = false;
       notifyListeners();
     } else if (state is RegisterSuccess) {

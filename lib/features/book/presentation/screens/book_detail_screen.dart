@@ -40,7 +40,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     _tabController.addListener(() {
       setState(() => _currentTabIndex = _tabController.index);
     });
-
+    context.read<ReservedBookBloc>().add(
+      LoadReservedBooks(AppConfig.libraryId.toString()),
+    );
     context.read<BookDetailBloc>().add(
       FetchBookDetail(AppConfig.libraryId.toString(), widget.book.slug),
     );
@@ -94,7 +96,6 @@ class _BookDetailScreenState extends State<BookDetailScreen>
               return const BookDetailLoadingScreen();
             } else if (state is BookDetailLoaded) {
               final book = state.book;
-              print(book.isAvailable);
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -127,9 +128,6 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                       },
                       child: BlocBuilder<ReservedBookBloc, ReservedBookState>(
                         builder: (context, reservedState) {
-                          if (reservedState is ReservedBookError) {
-                            return Text('Xatolik: ${reservedState.message}');
-                          }
                           if (reservedState is ReservedBookLoaded) {
                             final reservedBook = reservedState.books
                                 .firstWhereOrNull(
@@ -155,8 +153,21 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                 onChanged: (_) {},
                               );
                             }
-                            if (!book.isAvailable) {
-                              return const Text("Китоб колмаган");
+
+                            if (!state.book.isAvailable) {
+                              return PrimaryButton(
+                                onPressed: null, // ❌ Tugma bosilmaydi
+                                child: Text(
+                                  "Китоб қолмаган",
+                                  style: TextStyle(
+                                    color: AppColors().white.withOpacity(
+                                      0.7,
+                                    ), // 🔘 Oq rang, so‘ndirilgan
+                                  ),
+                                ),
+                                color:
+                                    Colors.grey.shade400, // 🔘 Kulrang orqa fon
+                              );
                             }
 
                             return BlocBuilder<
@@ -173,7 +184,9 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                           ? null
                                           : () {
                                             context.read<ReserveBookBloc>().add(
-                                              ReserveBookRequested(book.id),
+                                              ReserveBookRequested(
+                                                widget.book.id,
+                                              ),
                                             );
                                           },
                                   child:
@@ -194,6 +207,18 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                           ),
                                 );
                               },
+                            );
+                          } else if (reservedState is ReservedBookError) {
+                            return Text("Хатолик: ${reservedState.message}");
+                          } else if (reservedState is ReservedBookLoading) {
+                            return Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
+                              ),
                             );
                           }
 

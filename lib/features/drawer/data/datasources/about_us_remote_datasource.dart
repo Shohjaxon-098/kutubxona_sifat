@@ -1,5 +1,6 @@
 import 'package:kutubxona/core/constants/app_config.dart';
 import 'package:kutubxona/core/core_exports.dart';
+import 'package:kutubxona/core/error/exeptions.dart';
 import 'package:kutubxona/features/drawer/data/model/about_us_model.dart';
 
 abstract class AboutUsRemoteDataSource {
@@ -7,7 +8,8 @@ abstract class AboutUsRemoteDataSource {
 }
 
 class AboutUsRemoteDataSourceImpl implements AboutUsRemoteDataSource {
-  final  dio=DioClient().dio;
+  final dio = DioClient().dio;
+
   AboutUsRemoteDataSourceImpl();
 
   @override
@@ -18,11 +20,16 @@ class AboutUsRemoteDataSourceImpl implements AboutUsRemoteDataSource {
       );
       return AboutUsModel.fromJson(response.data);
     } on DioException catch (e) {
-      throw Exception(
-        'Сервер хатоси: ${e.response?.statusCode ?? ''} - ${e.message}',
-      );
+      final statusCode = e.response?.statusCode;
+      final data = e.response?.data;
+      final errorMessage =
+          data is Map<String, dynamic>
+              ? data['detail'] ?? data['message'] ?? e.message
+              : e.message;
+
+      throw ServerException(message: 'Хатолик $statusCode: $errorMessage');
     } catch (e) {
-      throw Exception('Номаълум хатолик: ${e.toString()}');
+      throw ServerException(message: 'Номаълум хатолик: ${e.toString()}');
     }
   }
 }

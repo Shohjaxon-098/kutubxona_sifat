@@ -41,7 +41,7 @@ class TimerWidget extends StatelessWidget {
 
                     // Qayta telefon raqamini yuborish eventi
                     context.read<RegisterStep1Bloc>().add(
-                      SubmitPhoneNumber(phoneNumber: phone, libraryId: id),
+                      ResendOtp(phoneNumber: phone, libraryId: id),
                     );
 
                     // Timerni 60 sekundga qayta ishga tushurish

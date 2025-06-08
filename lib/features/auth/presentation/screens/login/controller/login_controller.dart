@@ -22,7 +22,6 @@ class LoginController extends ChangeNotifier {
         libraryId: libraryId,
       ),
     );
-    
   }
 
   void handleState(BuildContext context, LoginState state) {
@@ -31,13 +30,17 @@ class LoginController extends ChangeNotifier {
       _stopLoading();
     } else if (state is LoginSuccess) {
       _stopLoading();
-      AppNavigator.pushReplacementNamed(context, AppRoutes.home);
+      // Use Future.microtask to delay navigation safely
+      Future.microtask(() {
+        AppNavigator.pushReplacementNamed(context, AppRoutes.home);
+      });
     }
   }
 
   void _stopLoading() {
+    if (!isLoading) return;
     isLoading = false;
-    notifyListeners();
+    notifyListeners(); // safe, because called before navigation
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:kutubxona/features/auth/presentation/logic/timer/timer_count_sta
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Timer? _timer;
 
-  TimerBloc() : super(TimerInitial(10)) {
+  TimerBloc() : super(TimerInitial(2)) {
     on<TimerStarted>(_onTimerStarted);
     on<TimerTicked>(_onTimerTicked);
     on<TimerStopped>(_onTimerStopped);
@@ -16,7 +16,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     _timer?.cancel(); // Cancel any existing timer
 
     // Emit initial state before starting the timer
-    emit(TimerRunning(10));
+    emit(TimerRunning(2));
 
     // Use await to ensure that the event handler doesn't complete prematurely
     await Future.delayed(
@@ -41,7 +41,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   void _onTimerStopped(TimerStopped event, Emitter<TimerState> emit) {
     _timer?.cancel(); // Taymerni to'xtatish
-    emit(TimerInitial(10)); // Taymerni boshlang'ich holatga qaytarish
+    emit(TimerInitial(2)); // Taymerni boshlang'ich holatga qaytarish
   }
 
   @override

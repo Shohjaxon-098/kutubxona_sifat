@@ -66,6 +66,9 @@ class SelectRegionController extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
 
-    AppNavigator.pushNamedAndRemoveUntil(context, AppRoutes.login);
+    // 🔐 Safe navigation after the current frame
+    Future.microtask(() {
+      AppNavigator.pushNamedAndRemoveUntil(context, AppRoutes.login);
+    });
   }
 }

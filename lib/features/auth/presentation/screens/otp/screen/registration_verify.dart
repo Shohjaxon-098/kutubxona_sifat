@@ -5,11 +5,10 @@ import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/otp_ver
 import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/phone_change_button.dart';
 import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/submit_button.dart';
 import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/timer_widget.dart';
-import 'package:pinput/pinput.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class RegisterVerifyPage extends StatefulWidget {
-  const RegisterVerifyPage({Key? key}) : super(key: key);
+  const RegisterVerifyPage({super.key});
 
   @override
   State<RegisterVerifyPage> createState() => _RegisterVerifyPageState();

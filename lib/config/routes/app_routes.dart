@@ -47,7 +47,12 @@ class AppRoutes {
           duration: const Duration(milliseconds: 400),
         );
       case login:
-        return MaterialPageRoute(builder: (context) => const Login());
+        return PageTransition(
+          isIos: true,
+          child: Login(),
+          type: PageTransitionType.rightToLeft,
+          duration: const Duration(milliseconds: 400),
+        );
       case registerStep1Screen:
         return PageTransition(
           isIos: true,
@@ -66,7 +71,7 @@ class AppRoutes {
         return PageTransition(
           isIos: true,
           child: const RegisterStep2Screen(),
-          type: PageTransitionType.fade,
+          type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
       case registerVerify:

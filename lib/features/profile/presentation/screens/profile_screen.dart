@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'dart:ui';
+
 import 'package:kutubxona/config/config_exports.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
-import 'package:kutubxona/features/drawer/presentation/widgets/drawer_widget.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_bloc.dart';
 import 'package:kutubxona/features/profile/presentation/logic/user_profile/user_profile_state.dart';
 import 'package:kutubxona/features/profile/presentation/widgets/profile_header_card.dart';
@@ -73,7 +71,59 @@ class ProfileScreen extends StatelessWidget {
                   ProfileOptionTile(
                     iconPath: AppImages().settings,
                     title: ' Созламалар',
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (context) {
+                          return BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                            child: Dialog(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(24.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.settings_outlined,
+                                      size: 50,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Бу бўлим тез орада фаол бўлади.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.tertiary,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text(
+                                        'Тушунарли',
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   const SizedBox(height: 16),
                   Divider(thickness: 2, color: AppColors().border),
