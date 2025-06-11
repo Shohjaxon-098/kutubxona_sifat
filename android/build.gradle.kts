@@ -16,9 +16,9 @@ buildscript {
 }
 
 // 👉 SDK versiyalarini global e'lon qilish
-ext["compileSdkVersion"] = 33
+ext["compileSdkVersion"] = 34
 ext["minSdkVersion"] = 21
-ext["targetSdkVersion"] = 33
+ext["targetSdkVersion"] = 34
 
 // 👉 Repositoriyalarni e'lon qilish
 allprojects {
