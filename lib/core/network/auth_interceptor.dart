@@ -12,51 +12,56 @@ class AuthInterceptor extends Interceptor {
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }
-    return handler.next(options);
+    handler.next(options);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401 &&
-        !err.requestOptions.path.contains(
-          '${AppConfig.baseUrl}/token/refresh',
-        )) {
-      final refreshToken = LocalStorage.getRefreshToken();
+    final isUnauthorized = err.response?.statusCode == 401;
+    final isNotRefreshCall =
+        !err.requestOptions.path.contains('/token/refresh');
+
+    if (isUnauthorized && isNotRefreshCall) {
+      final refreshToken = await LocalStorage.getRefreshToken();
 
       if (refreshToken != null) {
         try {
+          // Token refresh qilish
           final response = await dio.post(
             '${AppConfig.baseUrl}/account/token/refresh/',
             data: {'refresh': refreshToken},
           );
-          print('New access token: ${response.data['access']}');
 
           final newAccessToken = response.data['access'];
           await LocalStorage.saveAccessToken(newAccessToken);
 
           if (response.data.containsKey('refresh')) {
-            final newRefreshToken = response.data['refresh'];
-            await LocalStorage.saveRefreshToken(newRefreshToken);
+            await LocalStorage.saveRefreshToken(response.data['refresh']);
           }
 
-          final options = err.requestOptions;
-          options.headers['Authorization'] = 'Bearer $newAccessToken';
+          // Avvalgi requestni qayta yuborish
+          final requestOptions = err.requestOptions;
+          requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
 
-          final clonedResponse = await dio.request(
-            options.path,
-            data: options.data,
-            queryParameters: options.queryParameters,
-            options: Options(method: options.method, headers: options.headers),
+          final newResponse = await dio.request(
+            requestOptions.path,
+            data: requestOptions.data,
+            queryParameters: requestOptions.queryParameters,
+            options: Options(
+              method: requestOptions.method,
+              headers: requestOptions.headers,
+            ),
           );
 
-          return handler.resolve(clonedResponse);
+          return handler.resolve(newResponse);
         } catch (e) {
-          await LocalStorage.clearTokens(); // optional
-          return handler.reject(err);
+          await LocalStorage.clearTokens(); // logout logikasini shu yerda bajaring
+          return handler.reject(err); // asl xatoni qaytaramiz
         }
       }
     }
 
+    // boshqa xatolarni davom ettiramiz
     return handler.next(err);
   }
 }

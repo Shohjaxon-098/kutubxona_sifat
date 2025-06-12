@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:kutubxona/core/network/auth_interceptor.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/data/datasources/book_reserve_remote_data_source.dart';
 import 'package:kutubxona/features/book/data/datasources/review_remote_data_source.dart';
@@ -58,7 +59,18 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // External
-  sl.registerLazySingleton(() => Dio(BaseOptions(baseUrl: AppConfig.baseUrl)));
+  sl.registerLazySingleton<Connectivity>(() => Connectivity());
+  sl.registerLazySingleton<Dio>(() {
+    final dio = Dio(BaseOptions(baseUrl: AppConfig.baseUrl));
+    dio.interceptors.add(AuthInterceptor(dio));
+    return dio;
+  });
+
+  // === Connectivity ===
+  sl.registerLazySingleton<ConnectivityRepository>(
+    () => ConnectivityRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => WatchConnectionUseCase(sl()));
 
   // === OTP ===
   sl.registerFactory(() => OtpBloc(sl()));
@@ -66,6 +78,7 @@ Future<void> init() async {
   sl.registerLazySingleton<OtpRepository>(
     () => OtpRepositoryImpl(OtpRemoteDataSourceImpl()),
   );
+
   // === Home ===
   sl.registerFactory(
     () => HomeBloc(getCategoriesUseCase: sl(), getBooksUseCase: sl()),
@@ -75,11 +88,12 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(HomeRemoteDataSource()),
   );
+
   // === Search ===
   sl.registerFactory(() => SearchBloc(sl()));
-
   sl.registerLazySingleton(() => SearchBooksUseCase(sl()));
-  // === BookDetail ===
+
+  // === Book Detail ===
   sl.registerFactory(() => BookDetailBloc(sl()));
   sl.registerLazySingleton(() => GetBookDetail(sl()));
   sl.registerLazySingleton<BookDetailRepository>(
@@ -87,19 +101,16 @@ Future<void> init() async {
       remoteDataSource: BookDetailRemoteDataSourceImpl(),
     ),
   );
+
   // === Review ===
   sl.registerFactory(() => ReviewBloc(sl()));
-
+  sl.registerFactory(() => PostReviewBloc(sl()));
   sl.registerLazySingleton(() => GetReviewsUseCase(sl()));
+  sl.registerLazySingleton(() => PostReviewUseCase(sl()));
   sl.registerLazySingleton<ReviewRepository>(() => ReviewRepositoryImpl(sl()));
   sl.registerLazySingleton<ReviewRemoteDataSource>(
     () => ReviewRemoteDataSourceImpl(),
   );
-
-  // === Review ===
-  sl.registerFactory(() => PostReviewBloc(sl()));
-
-  sl.registerLazySingleton(() => PostReviewUseCase(sl()));
 
   // === Library ===
   sl.registerFactory(() => LibraryBloc(sl()));
@@ -110,118 +121,87 @@ Future<void> init() async {
   sl.registerLazySingleton<LibraryRemoteDataSource>(
     () => LibraryRemoteDataSourceImpl(),
   );
-  sl.registerLazySingleton<Connectivity>(() => Connectivity());
 
-  // Qolganlar:
-  sl.registerLazySingleton<ConnectivityRepository>(
-    () => ConnectivityRepositoryImpl(sl()),
-  );
-
-  sl.registerLazySingleton(() => WatchConnectionUseCase(sl()));
   // === User Profile ===
   sl.registerFactory(() => UserProfileBloc(sl()));
-
-  sl.registerLazySingleton<UserProfileRemoteDataSource>(
-    () => UserProfileRemoteDataSourceImpl(),
-  );
   sl.registerLazySingleton(() => GetUserProfileUseCase(sl()));
-
   sl.registerLazySingleton<UserProfileRepository>(
     () => UserProfileRepositoryImpl(sl()),
   );
-  sl.registerFactory(() => CategoryBloc(sl()));
-  // BLoC
-  sl.registerFactory(() => AboutUsBloc(sl()));
-
-  // UseCase
-  sl.registerLazySingleton(() => GetAboutUsUseCase(sl()));
-
-  // Repository
-  sl.registerLazySingleton<AboutUsRepository>(
-    () => AboutUsRepositoryImpl(sl()),
+  sl.registerLazySingleton<UserProfileRemoteDataSource>(
+    () => UserProfileRemoteDataSourceImpl(),
   );
 
-  // Remote DataSource
-  sl.registerLazySingleton<AboutUsRemoteDataSource>(
-    () => AboutUsRemoteDataSourceImpl(),
-  );
-
-  sl.registerFactory(() => StatisticBloc(sl()));
-
-  // UseCase
-  sl.registerLazySingleton(() => GetStatisticsUseCase(sl()));
-
-  // Repository
-  sl.registerLazySingleton<StatisticRepository>(
-    () => StatisticRepositoryImpl(sl()),
-  );
-
-  // Remote DataSource
-  sl.registerLazySingleton<StatisticRemoteDataSource>(
-    () => StatisticRemoteDataSourceImpl(),
-  );
-
-  sl.registerFactory(() => ContributionBloc(sl()));
-
-  // UseCase
-  sl.registerLazySingleton(() => GetContributions(sl()));
-
-  // Repository
-  sl.registerLazySingleton<ContributionRepository>(
-    () => ContributionRepositoryImpl(sl()),
-  );
-
-  // Remote DataSource
-  sl.registerLazySingleton<ContributionRemoteDataSource>(
-    () => ContributionRemoteDataSourceImpl(),
-  );
-
-  // Data source
-  sl.registerLazySingleton<BookReserveRemoteDataSource>(
-    () => BookReserveRemoteDataSourceImpl(),
-  );
-
-  // Repository
-  sl.registerLazySingleton<BookReserveRepository>(
-    () => BookReserveRepositoryImpl(sl()),
-  );
-
-  // Use Case
-  sl.registerLazySingleton(() => ReserveBookUseCase(sl()));
-
-  // Cubit
-  sl.registerFactory(() => ReserveBookBloc(sl()));
-
-  sl.registerFactory<DeficientBooksRemoteDataSource>(
-    () => DeficientBooksRemoteDataSourceImpl(),
-  );
-  sl.registerFactory<DeficientBooksRepository>(
-    () => DeficientBooksRepositoryImpl(sl()),
-  );
-  sl.registerFactory(() => GetDeficientBooksUseCase(sl()));
-  sl.registerFactory(() => DeficientBooksCubit(sl()));
-
-  // Repository
+  // === Edit Profile ===
+  sl.registerFactory(() => ProfileBloc(sl()));
+  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
   sl.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(sl()),
   );
   sl.registerLazySingleton<ProfileRemoteDataSource>(
     () => ProfileRemoteDataSourceImpl(),
   );
-  // UseCase
-  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
 
-  // Bloc
-  sl.registerFactory(() => ProfileBloc(sl()));
-
+  // === Reserved Books ===
+  sl.registerFactory(() => ReservedBookBloc(sl()));
+  sl.registerLazySingleton(() => GetReservedBooksUseCase(sl()));
+  sl.registerLazySingleton<ReservedBookRepository>(
+    () => ReservedBookRepositoryImpl(sl()),
+  );
   sl.registerLazySingleton<ReservedBookRemoteDataSource>(
-    () => ReservedBookRemoteDataSourceImpl(sl<Dio>()));
+    () => ReservedBookRemoteDataSourceImpl(sl<Dio>()),
+  );
 
-sl.registerLazySingleton<ReservedBookRepository>(
-    () => ReservedBookRepositoryImpl(sl()));
+  // === Book Reservation ===
+  sl.registerFactory(() => ReserveBookBloc(sl()));
+  sl.registerLazySingleton(() => ReserveBookUseCase(sl()));
+  sl.registerLazySingleton<BookReserveRepository>(
+    () => BookReserveRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<BookReserveRemoteDataSource>(
+    () => BookReserveRemoteDataSourceImpl(),
+  );
 
-sl.registerLazySingleton(() => GetReservedBooksUseCase(sl()));
+  // === Deficient Books ===
+  sl.registerFactory(() => DeficientBooksCubit(sl()));
+  sl.registerFactory(() => GetDeficientBooksUseCase(sl()));
+  sl.registerFactory<DeficientBooksRemoteDataSource>(
+    () => DeficientBooksRemoteDataSourceImpl(),
+  );
+  sl.registerFactory<DeficientBooksRepository>(
+    () => DeficientBooksRepositoryImpl(sl()),
+  );
 
-sl.registerFactory(() => ReservedBookBloc(sl()));
+  // === Drawer – About Us ===
+  sl.registerFactory(() => AboutUsBloc(sl()));
+  sl.registerLazySingleton(() => GetAboutUsUseCase(sl()));
+  sl.registerLazySingleton<AboutUsRepository>(
+    () => AboutUsRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<AboutUsRemoteDataSource>(
+    () => AboutUsRemoteDataSourceImpl(),
+  );
 
+  // === Drawer – Statistic ===
+  sl.registerFactory(() => StatisticBloc(sl()));
+  sl.registerLazySingleton(() => GetStatisticsUseCase(sl()));
+  sl.registerLazySingleton<StatisticRepository>(
+    () => StatisticRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<StatisticRemoteDataSource>(
+    () => StatisticRemoteDataSourceImpl(),
+  );
+
+  // === Drawer – Contribution ===
+  sl.registerFactory(() => ContributionBloc(sl()));
+  sl.registerLazySingleton(() => GetContributions(sl()));
+  sl.registerLazySingleton<ContributionRepository>(
+    () => ContributionRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<ContributionRemoteDataSource>(
+    () => ContributionRemoteDataSourceImpl(),
+  );
+
+  // === Category ===
+  sl.registerFactory(() => CategoryBloc(sl()));
 }
