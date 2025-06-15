@@ -71,10 +71,10 @@ class BooksGrid extends StatelessWidget {
                 book.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.tertiary,
+                  fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700,
                 ),
               ),
               Text(

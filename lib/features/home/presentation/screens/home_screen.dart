@@ -78,10 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(33),
                   ),
-                  color: Theme.of(context).colorScheme.primaryContainer,
+                  color:
+                      Theme.of(context).colorScheme.primaryContainer, // oq fon
                 ),
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SearchFieldWithDropdown(
                       controller: controller,
@@ -96,7 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 24),
                     const BookSectionWidget(),
                     const SizedBox(height: 16),
-                    AllBookSection(),
+                    const AllBookSection(),
+                    const SizedBox(height: 32), // pastgi bo‘sh joy
                   ],
                 ),
               ),

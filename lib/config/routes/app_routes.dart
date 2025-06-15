@@ -49,7 +49,7 @@ class AppRoutes {
       case login:
         return PageTransition(
           isIos: true,
-          child: Login(),
+          child: const Login(),
           type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
