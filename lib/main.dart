@@ -108,15 +108,11 @@ class KutubxonaApp extends StatelessWidget {
       child: MaterialApp(
         theme: theme(context),
         darkTheme: darkTheme(),
-        home: SplashScreen(),
+        home: InternetStatusHandler(child: SplashScreen()),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generateRoute,
         initialRoute: AppRoutes.splash, // Set initial route
         themeMode: ThemeMode.system,
-        builder: (context, child) {
-          final builtChild = child ?? const SplashScreen(); // fallback widget
-          return InternetStatusHandler(child: builtChild);
-        },
       ),
     );
   }

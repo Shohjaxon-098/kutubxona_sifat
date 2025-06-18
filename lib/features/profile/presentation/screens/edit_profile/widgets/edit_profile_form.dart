@@ -55,9 +55,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
     return BlocBuilder<UserProfileBloc, UserProfileState>(
       builder: (context, state) {
         if (state is UserProfileLoaded && !_didSetInitial) {
-          controller.setInitialValues(state.user);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            controller.setInitialValues(state.user);
+          });
           _didSetInitial = true;
         }
+
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -92,8 +95,10 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     children: [
                       ProfileImagePicker(
                         imageFile: controller.photoFile,
+                        imageUrl: controller.photoUrl,
                         onTap: controller.pickPhoto,
                       ),
+
                       const SizedBox(height: 24),
                       CustomTextField(
                         keyboardType: TextInputType.name,
@@ -201,15 +206,18 @@ class _EditProfileFormState extends State<EditProfileForm> {
                         children: [
                           ImagePickerBox(
                             file: controller.docFront,
+                            imageUrl: controller.docFrontUrl,
                             onTap: () => controller.pickDocument(true),
                           ),
                           const SizedBox(width: 12),
                           ImagePickerBox(
                             file: controller.docBack,
+                            imageUrl: controller.docBackUrl,
                             onTap: () => controller.pickDocument(false),
                           ),
                         ],
                       ),
+
                       const SizedBox(height: 24),
                       if (controller.errorMessage != null)
                         Text(

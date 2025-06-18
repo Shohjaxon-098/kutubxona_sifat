@@ -11,7 +11,7 @@ abstract class UserProfileRemoteDataSource {
 }
 
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
-  final  dio=DioClient().dio;
+  final dio = DioClient().dio;
   UserProfileRemoteDataSourceImpl();
   @override
   Future<UserProfileModel> getUserProfile() async {
@@ -21,7 +21,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
         '${AppConfig.baseUrl}/account/profile/${AppConfig.libraryId}/',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
-
+      print(response.data);
       final data = response.data;
 
       return UserProfileModel.fromJson(data);

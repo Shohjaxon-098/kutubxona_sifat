@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/auth/presentation/logic/upload_image/upload_image_bloc.dart';
 import 'package:kutubxona/features/profile/data/model/edit_profile_model.dart';
@@ -23,7 +28,7 @@ class EditProfileController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Verification type (passport/certificate)
+  // Verification type
   String _verificationType = 'passport';
   String get verificationType => _verificationType;
   set verificationType(String value) {
@@ -31,18 +36,25 @@ class EditProfileController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Image files
+  // Local files
   File? photoFile;
   File? docFront;
   File? docBack;
+
+  // Image URLs (initial from server)
+  String? photoUrl;
+  String? docFrontUrl;
+  String? docBackUrl;
 
   // Uploaded image IDs
   int? photoId;
   int? docFrontId;
   int? docBackId;
 
-  // Error message
+  // Error
   String? errorMessage;
+
+  late final StreamSubscription _subscription;
 
   EditProfileController({required this.context}) {
     _listenUploadImageBloc();
@@ -50,7 +62,7 @@ class EditProfileController extends ChangeNotifier {
 
   void _listenUploadImageBloc() {
     final uploadImageBloc = context.read<UploadImageBloc>();
-    uploadImageBloc.stream.listen((state) {
+    _subscription = uploadImageBloc.stream.listen((state) {
       if (state is UploadImageSuccess) {
         if (state.type == 'photo') {
           photoId = state.id;
@@ -67,34 +79,22 @@ class EditProfileController extends ChangeNotifier {
     });
   }
 
+  /// Set initial values from profile
   void setInitialValues(UserProfileEntity profile) {
     nameController.text = profile.firstName;
     surnameController.text = profile.lastName;
     telegramController.text = profile.telegramUsername;
-    passwordController.text =
-        "*******"; // Parolni ko‘rsatmaslik kerak, lekin o‘zgartirish mumkin
-    birthDateController.text =
-        profile.birthDate; // YYYY-MM-DD formatda bo‘lishi kerak
-    selectedGender = profile.gender;
-    verificationType = profile.verificationType;
+    passwordController.text = "*******";
+    birthDateController.text = profile.birthDate;
+    _selectedGender = profile.gender;
+    _verificationType = profile.verificationType;
     passportInfoController.text = profile.documentNumber;
-    docFront = File(profile.documentFile1Path);
-    docBack = File(profile.documentFile2Path);
-    photoFile = File(profile.photoPath);
-    // Agar suratlar mavjud bo‘lsa:
-    // photoFile = profile.photoFile; <-- Agar URL ko‘rsatilsa, sizga NetworkImage kerak
-    // docFront, docBack <-- hozircha fayl bo‘lmasa, null bo‘lib qoladi
-  }
 
-  @override
-  void dispose() {
-    nameController.dispose();
-    surnameController.dispose();
-    passwordController.dispose();
-    telegramController.dispose();
-    birthDateController.dispose();
-    passportInfoController.dispose();
-    super.dispose();
+    photoUrl = profile.photoPath;
+    docFrontUrl = profile.documentFile1Path;
+    docBackUrl = profile.documentFile2Path;
+
+    notifyListeners();
   }
 
   /// Pick image from gallery
@@ -103,27 +103,41 @@ class EditProfileController extends ChangeNotifier {
     return picked != null ? File(picked.path) : null;
   }
 
-  /// Pick and upload profile photo
   Future<void> pickPhoto() async {
     final file = await _pickImage();
     if (file != null) {
       photoFile = file;
+      photoUrl = null; // eski URL ni tozalaymiz
       context.read<UploadImageBloc>().add(
         StartUploadImage(file, isFront: true, type: 'photo'),
       );
       notifyListeners();
+
+      await for (final state in context.read<UploadImageBloc>().stream) {
+        if (state is UploadImageSuccess && state.type == 'photo') {
+          photoId = state.id;
+          notifyListeners();
+          break;
+        } else if (state is UploadImageFailure) {
+          errorMessage = state.message;
+          notifyListeners();
+          break;
+        }
+      }
     }
   }
 
-  /// Pick and upload document image
   Future<void> pickDocument(bool isFront) async {
     final file = await _pickImage();
     if (file != null) {
       if (isFront) {
         docFront = file;
+        docFrontUrl = null;
       } else {
         docBack = file;
+        docBackUrl = null;
       }
+
       context.read<UploadImageBloc>().add(
         StartUploadImage(file, isFront: isFront, type: 'document'),
       );
@@ -131,7 +145,6 @@ class EditProfileController extends ChangeNotifier {
     }
   }
 
-  /// Pick birth date
   Future<void> pickBirthDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
@@ -145,17 +158,22 @@ class EditProfileController extends ChangeNotifier {
     }
   }
 
-  /// Validate form and build profile model
   EditProfileEntity? validateAndBuildModel(GlobalKey<FormState> formKey) {
     if (!formKey.currentState!.validate()) return null;
 
-    if (photoFile == null) {
+    if (photoFile == null && photoUrl == null) {
       errorMessage = "Фото расмини юкланг";
       notifyListeners();
       return null;
     }
+    if (photoFile != null && photoId == null) {
+      errorMessage = "Фото расмини юклаш тугашини кутинг";
+      notifyListeners();
+      return null;
+    }
 
-    if (docFront == null || docBack == null) {
+    if ((docFront == null && docFrontUrl == null) ||
+        (docBack == null && docBackUrl == null)) {
       errorMessage = "Ҳужжат расмини икки тарафини ҳам юкланг";
       notifyListeners();
       return null;
@@ -177,5 +195,17 @@ class EditProfileController extends ChangeNotifier {
       documentFile2: docBackId,
       photo: photoId,
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    nameController.dispose();
+    surnameController.dispose();
+    passwordController.dispose();
+    telegramController.dispose();
+    birthDateController.dispose();
+    passportInfoController.dispose();
+    super.dispose();
   }
 }
