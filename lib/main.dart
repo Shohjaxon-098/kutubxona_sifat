@@ -5,7 +5,6 @@ import 'package:kutubxona/features/book/presentation/logic/book_detail/book_deta
 import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
-import 'package:kutubxona/features/connectivity/presentation/cubit/connectivy_cubit.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/about_us/about_us_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/contribution/contribution_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/cubit/deficient_book_cubit.dart';
@@ -63,7 +62,6 @@ class KutubxonaApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<PostReviewBloc>()),
         BlocProvider(create: (context) => sl<UserProfileBloc>()),
         BlocProvider(create: (context) => sl<CategoryBloc>()),
-        BlocProvider(create: (_) => sl<ConnectivityCubit>()),
         BlocProvider(create: (context) => sl<AboutUsBloc>()),
         BlocProvider(create: (context) => sl<StatisticBloc>()),
         BlocProvider(create: (context) => sl<ContributionBloc>()),

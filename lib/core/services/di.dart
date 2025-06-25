@@ -1,5 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:kutubxona/core/network/auth_interceptor.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/data/datasources/book_reserve_remote_data_source.dart';
 import 'package:kutubxona/features/book/data/datasources/review_remote_data_source.dart';
@@ -15,9 +13,6 @@ import 'package:kutubxona/features/book/presentation/logic/book_detail/book_deta
 import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_reviews_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
-import 'package:kutubxona/features/connectivity/data/repositories/connectivity_repository_impl.dart';
-import 'package:kutubxona/features/connectivity/domain/repositories/connectivity_repository.dart';
-import 'package:kutubxona/features/connectivity/domain/usecases/watch_connection_usecase.dart';
 import 'package:kutubxona/features/drawer/data/datasources/about_us_remote_datasource.dart';
 import 'package:kutubxona/features/drawer/data/datasources/contribution_remote_data_source.dart';
 import 'package:kutubxona/features/drawer/data/datasources/deficient_book_datasources.dart';
@@ -58,19 +53,6 @@ import 'package:kutubxona/features/select_library/presentation/library_bloc/libr
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // External
-  sl.registerLazySingleton<Connectivity>(() => Connectivity());
-  sl.registerLazySingleton<Dio>(() {
-    final dio = Dio(BaseOptions(baseUrl: AppConfig.baseUrl));
-    dio.interceptors.add(AuthInterceptor(dio));
-    return dio;
-  });
-
-  // === Connectivity ===
-  sl.registerLazySingleton<ConnectivityRepository>(
-    () => ConnectivityRepositoryImpl(sl()),
-  );
-  sl.registerLazySingleton(() => WatchConnectionUseCase(sl()));
 
   // === OTP ===
   sl.registerFactory(() => OtpBloc(sl()));
@@ -149,7 +131,7 @@ Future<void> init() async {
     () => ReservedBookRepositoryImpl(sl()),
   );
   sl.registerLazySingleton<ReservedBookRemoteDataSource>(
-    () => ReservedBookRemoteDataSourceImpl(sl<Dio>()),
+    () => ReservedBookRemoteDataSourceImpl(),
   );
 
   // === Book Reservation ===

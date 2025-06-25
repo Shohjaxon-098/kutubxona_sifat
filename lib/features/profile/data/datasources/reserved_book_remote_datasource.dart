@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:kutubxona/config/config_exports.dart';
 import 'package:kutubxona/core/error/exeptions.dart';
 import 'package:kutubxona/core/services/local_storage.dart';
+import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/profile/data/model/reserved_book_model.dart';
 
 abstract class ReservedBookRemoteDataSource {
@@ -11,9 +12,9 @@ abstract class ReservedBookRemoteDataSource {
 }
 
 class ReservedBookRemoteDataSourceImpl implements ReservedBookRemoteDataSource {
-  final Dio dio;
+  final dio=DioClient().dio;
 
-  ReservedBookRemoteDataSourceImpl(this.dio);
+  ReservedBookRemoteDataSourceImpl();
   @override
   Future<List<ReservedBookModel>> getReservedBooks(String libraryId) async {
     final token = await LocalStorage.getAccessToken();
