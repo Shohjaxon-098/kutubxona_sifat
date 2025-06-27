@@ -1,4 +1,4 @@
-package com.example.kutubxona
+package com.sifat.kutubxona
 
 import io.flutter.embedding.android.FlutterActivity
 

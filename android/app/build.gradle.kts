@@ -14,7 +14,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sdkha.kutubxona"
+    namespace = "com.sifat.kutubxona"
     compileSdk = 35
     ndkVersion = "27.0.12077973"
 
@@ -28,7 +28,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.sdkha.kutubxona"
+        applicationId = "com.sifat.kutubxona"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

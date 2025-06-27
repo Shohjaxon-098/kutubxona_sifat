@@ -22,7 +22,6 @@ void main() async {
   await Hive.initFlutter();
   await di.init();
   await Hive.openBox('userBox'); // Open Hive box
-  await LocalStorage.saveAccessToken('invalid_token_123'); // noto‘g‘ri token
   runApp(const KutubxonaApp());
 }
 
