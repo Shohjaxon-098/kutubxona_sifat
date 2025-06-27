@@ -64,7 +64,7 @@ class AppRoutes {
         return PageTransition(
           isIos: true,
           child: const OnboardingScreen(),
-          type: PageTransitionType.fade,
+          type: PageTransitionType.rightToLeft,
           duration: const Duration(milliseconds: 400),
         );
       case registerStep2Screen:

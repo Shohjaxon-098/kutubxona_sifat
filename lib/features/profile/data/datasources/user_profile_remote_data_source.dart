@@ -21,7 +21,6 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
         '${AppConfig.baseUrl}/account/profile/${AppConfig.libraryId}/',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
-      print(response.data);
       final data = response.data;
 
       return UserProfileModel.fromJson(data);

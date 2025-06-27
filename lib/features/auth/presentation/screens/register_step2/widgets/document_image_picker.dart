@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:flutter/material.dart';
 
 class ImagePickerBox extends StatelessWidget {
   final File? file;

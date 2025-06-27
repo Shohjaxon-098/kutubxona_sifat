@@ -131,8 +131,10 @@ class _CategoryBooksState extends State<CategoryBooks> {
         const SizedBox(width: 16),
         GestureDetector(
           onTap: () => showFilterModal(context, widget.categoryId),
-          child: Icon(
-            Icons.dashboard,
+          child: Image.asset(
+            'assets/icons/filter.png',
+            width: 24,
+            height: 24,
             color: Theme.of(context).colorScheme.scrim,
           ),
         ),

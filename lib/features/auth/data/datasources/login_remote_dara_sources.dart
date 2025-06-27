@@ -6,7 +6,7 @@ abstract class LoginRemoteDaraSources {
 }
 
 class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
-  final  dio=DioClient().dio;
+  final dio = DioClient().dio;
   LoginRemoteDaraSourcesImpl();
   @override
   Future<void> login(LoginModel model) async {
@@ -40,7 +40,7 @@ class LoginRemoteDaraSourcesImpl implements LoginRemoteDaraSources {
         if (data is Map<String, dynamic> &&
             data.containsKey('non_field_errors')) {
           throw Exception(
-            data['non_field_errors'][0] == 'Invalid password'
+            data['non_field_errors'][0] == 'Invalid password.'
                 ? 'Noto`g`ri kod'
                 : 'Foydalanuvchi topilmadi',
           );

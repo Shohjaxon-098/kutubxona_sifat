@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
 
 class ShimmerLoadingAllCategories extends StatelessWidget {
   const ShimmerLoadingAllCategories({

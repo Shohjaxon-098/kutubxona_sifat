@@ -47,7 +47,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
             if (state is RegisterStep2Failure) {
               ToastMessage.showToast(state.message, context);
             } else if (state is RegisterStep2Success) {
-              Navigator.pushNamed(ctx, AppRoutes.login);
+              Navigator.pushNamedAndRemoveUntil(ctx, AppRoutes.login, (route) => false);
             }
           },
         ),

@@ -33,14 +33,11 @@ class OnboardingController extends ChangeNotifier {
   }
 
   List<Map<String, String>> get pages => [
-    {
-      "image": AppImages().onBoard1,
-      "text": "Китобларни уйингизга буюртма қилинг",
-    },
-    {"image": AppImages().onBoard2, "text": "Китобларни онлайн ўқинг"},
+    {"image": AppImages().onBoard1, "text": "Китобларни буюртма қилинг"},
+    {"image": AppImages().onBoard2, "text": "Китобларни онлайн банд килинг"},
     {
       "image": AppImages().onBoard3,
-      "text": "Китобларни аудио шаклини тингланг",
+      "text": "Сизга макул хамма китобдар шу ерда",
     },
   ];
 

@@ -5,14 +5,28 @@ import 'package:kutubxona/features/category/presentation/logic/bloc/category_eve
 
 class FilterBottomSheet extends StatefulWidget {
   final int categoryId;
+  final int? initialYear;
+  final int? initialRating;
 
-  const FilterBottomSheet({super.key, required this.categoryId});
+  const FilterBottomSheet({
+    super.key,
+    required this.categoryId,
+    this.initialYear,
+    this.initialRating,
+  });
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
+  @override
+  void initState() {
+    super.initState();
+    selectedYear = widget.initialYear;
+    selectedRating = widget.initialRating;
+  }
+
   int? selectedYear;
   int? selectedRating;
 
@@ -31,19 +45,20 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       selectedYear = null;
       selectedRating = null;
     });
+
     context.read<CategoryBloc>().add(
-      GetBooksByCategoryEvent(widget.categoryId),
+      GetBooksByCategoryEvent(widget.categoryId), // filtersiz yuklash
     );
-    // pop ni keyinchalik chaqirish
+
+    // ❗️ pop() ga hech narsa bermaymiz
     Future.delayed(Duration.zero, () {
-      if (mounted) return Navigator.of(context).pop();
+      if (mounted) Navigator.of(context).pop(); // just pop, no data
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isFilterApplied = selectedYear != null || selectedRating != null;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Wrap(
@@ -199,9 +214,25 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             ),
           ),
 
-          PrimaryButton(
-            onPressed: isFilterApplied ? _clearFilter : null,
-            text: 'Фильтерни тозалаш',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: PrimaryButton(
+              onPressed: () {
+                Future.delayed(Duration.zero, () {
+                  if (mounted)
+                    return Navigator.of(
+                      context,
+                    ).pop({'year': selectedYear, 'rating': selectedRating});
+                });
+              },
+              text: 'Натижаларни курсатиш',
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: _clearFilter,
+              child: Text('Фильтерни тозалаш'),
+            ),
           ),
         ],
       ),
