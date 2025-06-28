@@ -253,7 +253,21 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                         ),
                               );
                             }
-
+                            if (!state.book.isAvailable) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 48.h,
+                                child: PrimaryButton(
+                                  onPressed: null, // disabled
+                                  child: Text(
+                                    "Китоб қолмаган",
+                                    style: TextStyle(
+                                      color: AppColors().white.withOpacity(0.7),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
                             return BlocBuilder<
                               ReserveBookBloc,
                               ReserveBookState

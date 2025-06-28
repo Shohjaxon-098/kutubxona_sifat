@@ -67,42 +67,39 @@ class _CategoryBooksState extends State<CategoryBooks> {
             children: [
               _buildSearchRow(context),
               SizedBox(height: 20.h),
-              Expanded(
-                child: BlocBuilder<CategoryBloc, CategoryState>(
-                  builder: (context, state) {
-                    if (state is CategoryLoadingState) {
-                      return const ShimmerLoadingCategoryBooks();
-                    } else if (state is CategoryLoadedState) {
-                      final books = state.books;
+              BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  if (state is CategoryLoadingState) {
+                    return const ShimmerLoadingCategoryBooks();
+                  } else if (state is CategoryLoadedState) {
+                    final books = state.books;
 
-                      if (books.isEmpty) {
-                        return const NoDataWidget(
-                          imagePath: 'assets/images/no-result.svg',
-                          text:
-                              'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
-                        );
-                      }
-
-                      return GridView.builder(
-                        physics:
-                            const NeverScrollableScrollPhysics(), // ← nested scroll
-                        shrinkWrap: true, // ← don't take infinite height
-                        itemCount: books.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          mainAxisSpacing: 12.h,
-                          crossAxisSpacing: 17.w,
-                          childAspectRatio: 163 / 290,
-                        ),
-                        itemBuilder:
-                            (context, index) => BookCard(book: books[index]),
+                    if (books.isEmpty) {
+                      return const NoDataWidget(
+                        imagePath: 'assets/images/no-result.svg',
+                        text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
                       );
-                    } else if (state is CategoryErrorState) {
-                      return Center(child: Text('Xatolik: ${state.message}'));
                     }
-                    return const SizedBox();
-                  },
-                ),
+
+                    return GridView.builder(
+                      physics:
+                          const NeverScrollableScrollPhysics(), // ← nested scroll
+                      shrinkWrap: true, // ← don't take infinite height
+                      itemCount: books.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
+                        mainAxisSpacing: 12.h,
+                        crossAxisSpacing: 17.w,
+                        childAspectRatio: 163 / 290,
+                      ),
+                      itemBuilder:
+                          (context, index) => BookCard(book: books[index]),
+                    );
+                  } else if (state is CategoryErrorState) {
+                    return Center(child: Text('Xatolik: ${state.message}'));
+                  }
+                  return const SizedBox();
+                },
               ),
             ],
           ),
