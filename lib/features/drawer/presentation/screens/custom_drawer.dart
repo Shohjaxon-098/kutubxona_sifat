@@ -60,25 +60,29 @@ class CustomDrawer extends StatelessWidget {
                                     : null,
                           ),
                           SizedBox(width: 12.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${profile.firstName} ${profile.lastName}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.sp,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${profile.firstName} ${profile.lastName}",
+                                  style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14.sp,
+                                  ),
+                                  maxLines: 1,
                                 ),
-                              ),
-                              SizedBox(height: 5.h),
-                              Text(
-                                formatPhoneNumber(profile.phoneNumber),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12.sp,
+                                SizedBox(height: 5.h),
+                                Text(
+                                  formatPhoneNumber(profile.phoneNumber),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12.sp,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),

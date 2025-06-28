@@ -19,8 +19,9 @@ class NoDataWidget extends StatelessWidget {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height: 140.h),
+
           SvgPicture.asset(imagePath, height: imageHeight.h),
           SizedBox(height: 40.h),
           Text(
