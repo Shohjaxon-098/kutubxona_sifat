@@ -17,7 +17,7 @@ class OnboardingScreen extends StatelessWidget {
               children: [
                 _buildPageView(controller),
                 _buildDots(controller),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 _buildButton(context, controller),
               ],
             ),
@@ -37,14 +37,12 @@ class OnboardingScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final page = controller.pages[index];
           return Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.15,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 0.15.sw),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(page["image"]!, height: 200),
-                const SizedBox(height: 40),
+                SvgPicture.asset(page["image"]!, height: 200.h),
+                SizedBox(height: 40.h),
                 Text(
                   page["text"]!,
                   textAlign: TextAlign.center,
@@ -52,7 +50,7 @@ class OnboardingScreen extends StatelessWidget {
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
                     color: Theme.of(context).colorScheme.tertiary,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                   ),
                 ),
               ],
@@ -64,11 +62,14 @@ class OnboardingScreen extends StatelessWidget {
   }
 
   Widget _buildDots(OnboardingController controller) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        controller.pages.length,
-        (index) => _dot(index, controller.currentIndex),
+    return Padding(
+      padding: EdgeInsets.only(top: 12.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          controller.pages.length,
+          (index) => _dot(index, controller.currentIndex),
+        ),
       ),
     );
   }
@@ -77,12 +78,12 @@ class OnboardingScreen extends StatelessWidget {
     final isActive = index == currentIndex;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      height: 8,
-      width: isActive ? 16 : 8,
+      margin: EdgeInsets.symmetric(horizontal: 4.w),
+      height: 8.h,
+      width: isActive ? 16.w : 8.w,
       decoration: BoxDecoration(
         color: isActive ? AppColors().enableDot : AppColors().disableDot,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(4.r),
       ),
     );
   }
@@ -91,7 +92,7 @@ class OnboardingScreen extends StatelessWidget {
     final isLast = controller.currentIndex == controller.pages.length - 1;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
       child:
           isLast
               ? PrimaryButton(
@@ -99,8 +100,8 @@ class OnboardingScreen extends StatelessWidget {
                 child:
                     controller.isLoading
                         ? SizedBox(
-                          height: 26,
-                          width: 26,
+                          height: 26.h,
+                          width: 26.h,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
                             color: AppColors().white,
@@ -112,7 +113,7 @@ class OnboardingScreen extends StatelessWidget {
                             color: AppColors().white,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ),
               )
@@ -124,7 +125,7 @@ class OnboardingScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                   ),
                 ),
               ),

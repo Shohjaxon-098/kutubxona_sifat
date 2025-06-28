@@ -58,48 +58,54 @@ class _CategoryBooksState extends State<CategoryBooks> {
         centerTitle: true,
         iconTheme: IconThemeData(color: theme.colorScheme.tertiary),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(12.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _buildSearchRow(context),
-            SizedBox(height: 20.h),
-            Expanded(
-              child: BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  if (state is CategoryLoadingState) {
-                    return const ShimmerLoadingCategoryBooks();
-                  } else if (state is CategoryLoadedState) {
-                    final books = state.books;
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.all(12.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildSearchRow(context),
+              SizedBox(height: 20.h),
+              Expanded(
+                child: BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    if (state is CategoryLoadingState) {
+                      return const ShimmerLoadingCategoryBooks();
+                    } else if (state is CategoryLoadedState) {
+                      final books = state.books;
 
-                    if (books.isEmpty) {
-                      return const NoDataWidget(
-                        imagePath: 'assets/images/no-result.svg',
-                        text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                      if (books.isEmpty) {
+                        return const NoDataWidget(
+                          imagePath: 'assets/images/no-result.svg',
+                          text:
+                              'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                        );
+                      }
+
+                      return GridView.builder(
+                        physics:
+                            const NeverScrollableScrollPhysics(), // ← nested scroll
+                        shrinkWrap: true, // ← don't take infinite height
+                        itemCount: books.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          mainAxisSpacing: 12.h,
+                          crossAxisSpacing: 17.w,
+                          childAspectRatio: 163 / 290,
+                        ),
+                        itemBuilder:
+                            (context, index) => BookCard(book: books[index]),
                       );
+                    } else if (state is CategoryErrorState) {
+                      return Center(child: Text('Xatolik: ${state.message}'));
                     }
-
-                    return GridView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: books.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        mainAxisSpacing: 12.h,
-                        crossAxisSpacing: 17.w,
-                        childAspectRatio: 163 / 290,
-                      ),
-                      itemBuilder:
-                          (context, index) => BookCard(book: books[index]),
-                    );
-                  } else if (state is CategoryErrorState) {
-                    return Center(child: Text('Xatolik: ${state.message}'));
-                  }
-                  return const SizedBox();
-                },
+                    return const SizedBox();
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -156,21 +162,21 @@ class BookCard extends StatelessWidget {
         );
       },
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
-            child: AspectRatio(
-              aspectRatio: 163 / 209,
-              child: CachedNetworkImage(
-                imageUrl: book.image,
-                fit: BoxFit.cover,
-                errorWidget:
-                    (context, url, error) => Icon(
-                      Icons.broken_image,
-                      size: 60.sp,
-                      color: Colors.grey[400],
-                    ),
-              ),
+            child: CachedNetworkImage(
+              width: 160.w,
+              height: 200.h,
+              imageUrl: book.image,
+              fit: BoxFit.cover,
+              errorWidget:
+                  (context, url, error) => Icon(
+                    Icons.broken_image,
+                    size: 60.sp,
+                    color: Colors.grey[400],
+                  ),
             ),
           ),
           SizedBox(height: 9.h),

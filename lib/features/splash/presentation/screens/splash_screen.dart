@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/splash/presentation/widgets/splash_logo.dart';
 import 'package:kutubxona/features/splash/presentation/widgets/splash_progress_bar.dart';
@@ -23,13 +26,10 @@ class _SplashScreenState extends State<SplashScreen>
       ..forward();
 
     Future.delayed(_delayDuration, () {
-      if (!mounted) return; // <-- Bu yerda tekshirish qo‘shildi
+      if (!mounted) return;
 
       final userBox = Hive.box('userBox');
-      final bool isRegistered = userBox.get(
-        'isRegistered',
-        defaultValue: false,
-      );
+      final bool isRegistered = userBox.get('isRegistered', defaultValue: false);
 
       if (isRegistered) {
         AppNavigator.pushReplacementNamed(context, AppRoutes.home);
@@ -54,9 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SplashLogo(),
-            // const SizedBox(height: 12),
-            // const SplashText(),
-            const SizedBox(height: 150),
+            SizedBox(height: 150.h),
             SplashProgressBar(controller: _controller),
           ],
         ),

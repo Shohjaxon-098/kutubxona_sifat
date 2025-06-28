@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class SplashLogo extends StatelessWidget {
@@ -5,6 +6,10 @@ class SplashLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(AppImages().splashLogo, width: 140, height: 140);
+    return Image.asset(
+      AppImages().splashLogo,
+      width: 140.w,
+      height: 140.h,
+    );
   }
 }

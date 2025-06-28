@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/auth/presentation/logic/upload_image/upload_image_bloc.dart';
@@ -64,10 +66,10 @@ class _EditProfileFormState extends State<EditProfileForm> {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: const Text(
+            title: Text(
               "Профилни ўзгартириш",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto',
               ),
@@ -87,7 +89,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
             },
             child: SafeArea(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.w),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -98,8 +100,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                         imageUrl: controller.photoUrl,
                         onTap: controller.pickPhoto,
                       ),
-
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       CustomTextField(
                         keyboardType: TextInputType.name,
                         label: "Исмингиз",
@@ -110,12 +111,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     ? "Майдон тўлдирилиши шарт"
                                     : null,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       GenderDropdown(
                         selectedGender: controller.selectedGender,
                         onChanged: (g) => controller.selectedGender = g,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         keyboardType: TextInputType.visiblePassword,
                         label: "Парол",
@@ -123,13 +124,18 @@ class _EditProfileFormState extends State<EditProfileForm> {
                         hint: '********',
                         suffixIcon: GestureDetector(
                           onTap: toggleVisibility,
-                          child: SvgPicture.asset(
-                            fit: BoxFit.scaleDown,
-                            _obscureText
-                                ? 'assets/icons/eye-hide.svg'
-                                : 'assets/icons/eye-show.svg',
-
-                            color: Theme.of(context).colorScheme.tertiary,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            child: SvgPicture.asset(
+                              width: 18.w,
+                              height: 18.h,
+                              _obscureText
+                                  ? 'assets/icons/eye-hide.svg'
+                                  : 'assets/icons/eye-show.svg',
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
                           ),
                         ),
                         validator:
@@ -139,7 +145,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     : "Парол камида 6 та белгидан иборат бўлиши керак",
                         obscure: _obscureText,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         keyboardType: TextInputType.name,
                         label: "Фамилиянгиз",
@@ -150,7 +156,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     ? "Майдон тўлдирилиши шарт"
                                     : null,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         keyboardType: TextInputType.text,
                         label: "Телеграм username",
@@ -161,7 +167,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     ? "Майдон тўлдирилиши шарт"
                                     : null,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       BirthDatePickerField(
                         controller: controller.birthDateController,
                         onTap: () => controller.pickBirthDate(context),
@@ -171,10 +177,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     ? "Майдон тўлдирилиши шарт"
                                     : null,
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
+                      SizedBox(height: 16.h),
+                      Text(
                         "Шахсий тасдиқловчи хужжат",
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.sp,
+                        ),
                       ),
                       DocumentTypeRadio(
                         groupValue: controller.verificationType,
@@ -182,7 +191,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                             (v) =>
                                 controller.verificationType = v ?? 'passport',
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         keyboardType: TextInputType.text,
                         label:
@@ -196,12 +205,15 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     ? "Майдон тўлдирилиши шарт"
                                     : null,
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
+                      SizedBox(height: 16.h),
+                      Text(
                         "Ҳужжат расмини юкланг",
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.sp,
+                        ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       Row(
                         children: [
                           ImagePickerBox(
@@ -209,7 +221,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                             imageUrl: controller.docFrontUrl,
                             onTap: () => controller.pickDocument(true),
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12.w),
                           ImagePickerBox(
                             file: controller.docBack,
                             imageUrl: controller.docBackUrl,
@@ -217,14 +229,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
                           ),
                         ],
                       ),
-
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       if (controller.errorMessage != null)
                         Text(
                           controller.errorMessage!,
-                          style: const TextStyle(color: Colors.red),
+                          style: TextStyle(color: Colors.red, fontSize: 14.sp),
                         ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       PrimaryButton(
                         text: "Сақлаш",
                         onPressed: () => _submitForm(controller),

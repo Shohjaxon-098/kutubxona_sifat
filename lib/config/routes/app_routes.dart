@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/screens/category_screen.dart';
 import 'package:kutubxona/features/home/presentation/screens/home_screen.dart';
@@ -7,7 +8,7 @@ import 'package:kutubxona/features/profile/presentation/screens/my_books_screen.
 import 'package:kutubxona/features/widgets/no_internet_widget.dart';
 
 class AppRoutes {
-  // Define route names
+  // Route names
   static const String splash = '/';
   static const String home = '/home';
   static const String login = '/login';
@@ -24,103 +25,100 @@ class AppRoutes {
   static const String noInternetScreen = '/no-internet';
   static const String editProfile = '/editProfile';
 
-  // Method to handle routing
+  // Default transition settings
+  static const _defaultDuration = Duration(milliseconds: 300);
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
-        return PageTransition(
-          isIos: true,
-          child: const SplashScreen(),
-          type: PageTransitionType.fade,
-        );
+        return _buildTransition(const SplashScreen(), PageTransitionType.fade);
+
       case noInternetScreen:
-        return PageTransition(
-          isIos: true,
-          child: NoInternetScreen(),
-          type: PageTransitionType.fade,
+        return _buildTransition(
+          const NoInternetScreen(),
+          PageTransitionType.fade,
         );
+
       case home:
-        return PageTransition(
-          isIos: true,
-          child: const HomeScreen(),
-          type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 400),
-        );
+        return _buildTransition(const HomeScreen(), PageTransitionType.fade);
+
       case login:
-        return PageTransition(
-          isIos: true,
-          child: const Login(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
-        );
+        return _buildTransition(const Login(), PageTransitionType.rightToLeft);
+
       case registerStep1Screen:
-        return PageTransition(
-          isIos: true,
-          child: const RegisterStep1Screen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          const RegisterStep1Screen(),
+          PageTransitionType.rightToLeft,
         );
-      case onBoardScreen:
-        return PageTransition(
-          isIos: true,
-          child: const OnboardingScreen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
-        );
+
       case registerStep2Screen:
-        return PageTransition(
-          isIos: true,
-          child: const RegisterStep2Screen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          const RegisterStep2Screen(),
+          PageTransitionType.rightToLeft,
         );
+
       case registerVerify:
-        return PageTransition(
-          isIos: true,
-          child: const RegisterVerifyPage(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          const RegisterVerifyPage(),
+          PageTransitionType.rightToLeft,
         );
+
+      case onBoardScreen:
+        return _buildTransition(
+          const OnboardingScreen(),
+          PageTransitionType.rightToLeft,
+        );
+
       case selectRegion:
-        return PageTransition(
-          isIos: true,
-          child: SelectRegionScreen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          SelectRegionScreen(),
+          PageTransitionType.rightToLeft,
         );
+
       case categoryScreen:
-        return PageTransition(
-          isIos: true,
-          child: const CategoryScreen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          const CategoryScreen(),
+          PageTransitionType.rightToLeft,
         );
+
       case bookedBookScreen:
-        return PageTransition(
-          isIos: true,
-          child: BookedBooksPage(libraryId: AppConfig.libraryId.toString()),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          BookedBooksPage(libraryId: AppConfig.libraryId.toString()),
+          PageTransitionType.rightToLeft,
         );
+
       case myBookScreen:
-        return PageTransition(
-          isIos: true,
-          child: MyBooksScreen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          const MyBooksScreen(),
+          PageTransitionType.rightToLeft,
         );
+
       case editProfile:
-        return PageTransition(
-          isIos: true,
-          child: EditProfileScreen(),
-          type: PageTransitionType.rightToLeft,
-          duration: const Duration(milliseconds: 400),
+        return _buildTransition(
+          const EditProfileScreen(),
+          PageTransitionType.rightToLeft,
         );
+
       default:
         return _errorRoute();
     }
   }
 
+  /// Helper: standard transition
+  static PageTransition _buildTransition(
+    Widget child,
+    PageTransitionType type,
+  ) {
+    return PageTransition(
+      child: child,
+      type: type,
+      isIos: !kIsWeb && Platform.isIOS,
+      duration: _defaultDuration,
+      reverseDuration: _defaultDuration,
+    );
+  }
+
+  /// Fallback for unknown routes
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(
       builder:

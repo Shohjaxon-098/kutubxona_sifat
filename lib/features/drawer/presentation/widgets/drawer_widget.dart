@@ -1,4 +1,5 @@
-import 'package:kutubxona/core/core_exports.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrawerItem extends StatelessWidget {
   final Widget icon;
@@ -16,21 +17,27 @@ class DrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: icon,
+      horizontalTitleGap: 12.w,
+      minLeadingWidth: 24.w,
       title: Text(
         label,
         style: TextStyle(
           color: Theme.of(context).colorScheme.tertiary,
           fontFamily: 'Roboto',
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w400,
-          letterSpacing: 0.5,
+          letterSpacing: 0.5.w,
           decoration: TextDecoration.none,
           decorationColor: Colors.transparent,
           decorationStyle: TextDecorationStyle.solid,
           decorationThickness: 1.0,
-          height: 1.2,
-          shadows: const [
-            Shadow(color: Colors.black12, offset: Offset(0, 1), blurRadius: 2),
+          height: 1.2.h,
+          shadows: [
+            Shadow(
+              color: Colors.black12,
+              offset: Offset(0, 1.h),
+              blurRadius: 2.r,
+            ),
           ],
         ),
       ),

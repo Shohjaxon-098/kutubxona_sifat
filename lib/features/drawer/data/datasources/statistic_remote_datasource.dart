@@ -24,7 +24,6 @@ class StatisticRemoteDataSourceImpl implements StatisticRemoteDataSource {
           },
         ),
       );
-      print('Response data: ${response.data}');
       return StatisticModel.fromJson(response.data);
     } on DioError catch (e) {
       // Xatolikni tahlil qilish

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class SplashProgressBar extends StatelessWidget {
@@ -8,7 +10,7 @@ class SplashProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 240,
+      width: 240.w,
       child: AnimatedBuilder(
         animation: controller,
         builder: (_, __) {
@@ -16,7 +18,7 @@ class SplashProgressBar extends StatelessWidget {
             value: controller.value,
             backgroundColor: AppColors().linerBackgroundColor,
             valueColor: AlwaysStoppedAnimation(AppColors().white),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(5.r),
           );
         },
       ),

@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/state_doun_chart.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -13,6 +14,7 @@ class StatCard extends StatelessWidget {
   final int? total;
   final String? cntrLabel;
   final int? cntrvalue;
+
   const StatCard({
     super.key,
     required this.title,
@@ -25,29 +27,25 @@ class StatCard extends StatelessWidget {
     required this.total,
     this.showExtraText = false,
   });
+
   @override
   Widget build(BuildContext context) {
     final leftPercent = total == 0 ? 0.0 : leftValue! / total!;
-    // final centerPercent =
-    //     (showExtraText && cntrvalue != null && total != 0)
-    //         ? cntrvalue! / total
-    //         : 0.0;
-    // final rightPercent = total == 0 ? 0.0 : rightValue / total;
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         side: BorderSide(color: AppColors().border),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12.w),
         child: Column(
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Row(
               children: [
                 Expanded(
@@ -60,18 +58,18 @@ class StatCard extends StatelessWidget {
                     cntrvalue,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 SizedBox(
-                  width: 100,
-                  height: 100,
+                  width: 100.w,
+                  height: 100.w,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       CircularPercentIndicator(
-                        radius: 50,
-                        lineWidth: 12,
+                        radius: 50.r,
+                        lineWidth: 12.w,
                         percent: leftPercent,
-                        progressColor: const Color(0xffFF92AE), // pink
+                        progressColor: const Color(0xffFF92AE),
                         backgroundColor: AppColors().donutRight,
                         circularStrokeCap: CircularStrokeCap.round,
                       ),
@@ -82,11 +80,10 @@ class StatCard extends StatelessWidget {
                           right: rightValue!,
                           total: total!,
                         ),
-
                       Text(
                         "$total\nжами",
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 12),
+                        style: TextStyle(fontSize: 12.sp),
                       ),
                     ],
                   ),
@@ -115,8 +112,7 @@ class StatCard extends StatelessWidget {
           label: leftLabel,
           number: leftValue.toString(),
         ),
-        const SizedBox(height: 12),
-
+        SizedBox(height: 12.h),
         if (showExtraText && cntrLabel != null && cntrValue != null)
           Column(
             children: [
@@ -125,10 +121,9 @@ class StatCard extends StatelessWidget {
                 label: cntrLabel,
                 number: cntrValue.toString(),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
             ],
           ),
-
         _buildLegend(
           color: AppColors().donutRight,
           label: rightLabel,
@@ -148,18 +143,17 @@ class StatCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            CircleAvatar(radius: 6, backgroundColor: color),
-            const SizedBox(width: 6),
+            CircleAvatar(radius: 6.r, backgroundColor: color),
+            SizedBox(width: 6.w),
             Text(
               number,
-
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
             ),
           ],
         ),
         Text(
           label,
-          style: TextStyle(color: AppColors().textBodyMuted, fontSize: 12),
+          style: TextStyle(color: AppColors().textBodyMuted, fontSize: 12.sp),
         ),
       ],
     );

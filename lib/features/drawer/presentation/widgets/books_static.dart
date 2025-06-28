@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/domain/entities/book_statistic_entity.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/book_card_statistic.dart';
@@ -19,16 +21,16 @@ class BooksStatistic extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 16,
+          style: TextStyle(
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             fontFamily: 'Roboto',
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         ...books.map(
           (book) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
+            padding: EdgeInsets.only(bottom: 12.h),
             child: BookCardStatistic(book: book!),
           ),
         ),

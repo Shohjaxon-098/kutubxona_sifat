@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/features/drawer/domain/entities/about_us_entity.dart';
 import 'package:kutubxona/features/drawer/presentation/widgets/contact_info_row.dart';
@@ -11,24 +12,24 @@ class ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(14.r),
             child: CachedNetworkImage(imageUrl: info.image),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
 
           Text(
             info.library_name,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.sp,
+                ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
 
           ContactInfoRow(title: 'Манзил', value: info.address),
           ContactInfoRow(
@@ -37,7 +38,7 @@ class ContactCard extends StatelessWidget {
           ),
           ContactInfoRow(title: 'Электрон почта', value: info.email),
 
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           const SocialMediaRow(),
         ],
       ),

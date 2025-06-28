@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/features/drawer/domain/entities/top_reader_entity.dart';
 
 class TopReadersSection extends StatelessWidget {
@@ -14,24 +15,30 @@ class TopReadersSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Энг фаол китобхонлар',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             fontFamily: 'Roboto',
             letterSpacing: 0.15,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         ...readers.map(
           (reader) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 8.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("${reader!.firstName} ${reader.lastName}"),
-                Text("${reader.total} та китоб"),
+                Text(
+                  "${reader!.firstName} ${reader.lastName}",
+                  style: TextStyle(fontSize: 14.sp),
+                ),
+                Text(
+                  "${reader.total} та китоб",
+                  style: TextStyle(fontSize: 14.sp),
+                ),
               ],
             ),
           ),

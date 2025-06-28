@@ -1,11 +1,12 @@
-// star_rating.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 // ignore: must_be_immutable
 class StarRating extends StatefulWidget {
   final ValueChanged<int> onRatingChanged;
   int rating;
+
   StarRating({super.key, required this.onRatingChanged, required this.rating});
 
   @override
@@ -25,11 +26,14 @@ class _StarRatingState extends State<StarRating> {
             });
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: SvgPicture.asset(
               AppImages().rate,
-
-              color: index < widget.rating ? Color(0xffFF7F4D) : Colors.grey,
+              height: 24.h,
+              width: 24.w,
+              color: index < widget.rating
+                  ? const Color(0xffFF7F4D)
+                  : Colors.grey,
             ),
           ),
         );

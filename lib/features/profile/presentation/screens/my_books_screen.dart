@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/home/domain/entities/book_entity.dart';
 import 'package:kutubxona/features/profile/presentation/logic/bloc/reserved_book_bloc.dart';
@@ -25,10 +24,10 @@ class _MyBooksScreenState extends State<MyBooksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Китобларим',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w500,
             fontFamily: 'Roboto',
           ),
@@ -61,7 +60,7 @@ class _MyBooksScreenState extends State<MyBooksScreen> {
                     .toList();
 
             if (takenBooks.isEmpty) {
-              return Center(
+              return const Center(
                 child: NoDataWidget(
                   imagePath: 'assets/images/no-result.svg',
                   text: 'Олинган китоблар мавжуд эмас',
@@ -69,30 +68,29 @@ class _MyBooksScreenState extends State<MyBooksScreen> {
               );
             }
 
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                final screenWidth = MediaQuery.of(context).size.width;
-                final screenHeight = MediaQuery.of(context).size.height;
+            return Padding(
+              padding: EdgeInsets.all(12.r),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final itemWidth = (1.sw - 36.w) / 2;
+                  final itemHeight = 0.38.sh;
+                  final aspectRatio = itemWidth / itemHeight;
 
-                final itemWidth = (screenWidth - 36) / 2;
-                final itemHeight = screenHeight * 0.38;
-                final aspectRatio = itemWidth / itemHeight;
-
-                return GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.all(12),
-                  itemCount: takenBooks.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: aspectRatio,
-                  ),
-                  itemBuilder: (context, index) {
-                    return BookItemCard(book: takenBooks[index]);
-                  },
-                );
-              },
+                  return GridView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: takenBooks.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12.w,
+                      mainAxisSpacing: 12.h,
+                      childAspectRatio: aspectRatio,
+                    ),
+                    itemBuilder: (context, index) {
+                      return BookItemCard(book: takenBooks[index]);
+                    },
+                  );
+                },
+              ),
             );
           } else if (state is ReservedBookError) {
             return Center(child: Text('Xatolik: ${state.message}'));

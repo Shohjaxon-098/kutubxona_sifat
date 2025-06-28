@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_bloc.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_event.dart';
 import 'package:kutubxona/features/drawer/presentation/logic/statistic/statistic_state.dart';
@@ -26,18 +27,19 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: _buildAppBar(context),
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 16.h),
           child: BlocBuilder<StatisticBloc, StatisticState>(
             builder: (context, state) {
               if (state is StatisticLoading) {
                 return const StatisticsShimmer();
               } else if (state is StatisticLoaded) {
-                // Ma'lumotlar yuklandi, UI ni ko'rsatish
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -52,7 +54,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       rightValue: state.statistic.maleMembers,
                       total: state.statistic.totalMembers,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     StatCard(
                       showExtraText: true,
                       cntrLabel: 'Брон килинмаган китоблар',
@@ -64,14 +66,14 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       rightValue: state.statistic.overdueBooks,
                       total: state.statistic.totalBooks,
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     BooksStatisticsSection(
-                      value: state.statistic, // Replace with appropriate value
-                      percent: 0.5, // Replace with appropriate percent
+                      value: state.statistic,
+                      percent: 0.5,
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     MonthlyActivityChart(statistic: state.statistic),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     BooksStatistic(
                       title: 'Энг кўп ўқилган китоблар',
                       books: state.statistic.topReservedBooksLastWeek,
@@ -84,7 +86,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   ],
                 );
               } else if (state is StatisticError) {
-                return Center(child: Text('Хатолик: ${state.message}'));
+                return Center(
+                  child: Text(
+                    'Хатолик: ${state.message}',
+                    style: TextStyle(fontSize: 14.sp),
+                  ),
+                );
               }
               return const SizedBox();
             },
@@ -95,17 +102,19 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
+    final color = Theme.of(context).colorScheme.tertiary;
+
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.surface,
       title: Text(
         "Статистика",
         style: TextStyle(
-          fontSize: 18,
-          color: Theme.of(context).colorScheme.tertiary,
+          fontSize: 18.sp,
+          color: color,
           fontWeight: FontWeight.w600,
         ),
       ),
-      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.tertiary),
+      iconTheme: IconThemeData(color: color),
       centerTitle: true,
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/features/drawer/domain/entities/statistic_entity.dart';
 
 class BooksStatisticsSection extends StatelessWidget {
   final StatisticEntity value;
   final double percent;
+
   const BooksStatisticsSection({
     super.key,
     required this.value,
@@ -35,63 +37,63 @@ class BooksStatisticsSection extends StatelessWidget {
         'value': value.averageReservationsPerDay,
       },
     ];
-    final maxValue = stats
-        .map((e) => e['value'] as int)
-        .reduce((a, b) => a > b ? a : b);
+
+    final maxValue = stats.map((e) => e['value'] as int).reduce((a, b) => a > b ? a : b);
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         side: BorderSide(color: Colors.grey.shade300),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:
-              stats.map((stat) {
-                final statValue = stat['value'] as int;
-                final localPercent = maxValue == 0 ? 0.0 : statValue / maxValue;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        child: Text(
-                          stat['label'].toString(),
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: AppColors().textBodyMuted,
-                          ),
-                        ),
+          children: stats.map((stat) {
+            final statValue = stat['value'] as int;
+            final localPercent = maxValue == 0 ? 0.0 : statValue / maxValue;
+
+            return Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 150.w,
+                    child: Text(
+                      stat['label'].toString(),
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: AppColors().textBodyMuted,
                       ),
-                      Expanded(
-                        child: LinearProgressIndicator(
-                          value: localPercent,
-                          backgroundColor: const Color(0xFFE2E8F0),
-                          valueColor: const AlwaysStoppedAnimation(
-                            Color(0xFFFF70B5),
-                          ),
-                          minHeight: 10,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 60,
-                        child: Text(
-                          stat['value'].toString(),
-                          textAlign: TextAlign.end,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                );
-              }).toList(),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: LinearProgressIndicator(
+                        value: localPercent,
+                        backgroundColor: const Color(0xFFE2E8F0),
+                        valueColor: const AlwaysStoppedAnimation(Color(0xFFFF70B5)),
+                        minHeight: 10.h,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  SizedBox(
+                    width: 60.w,
+                    child: Text(
+                      stat['value'].toString(),
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
         ),
       ),
     );

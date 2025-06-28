@@ -1,4 +1,5 @@
-import 'package:kutubxona/core/core_exports.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoRow extends StatelessWidget {
   final String title;
@@ -9,7 +10,7 @@ class InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 2),
+      padding: EdgeInsets.only(top: 2.h),
       child: Row(
         children: [
           Expanded(
@@ -18,21 +19,21 @@ class InfoRow extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Roboto',
-                fontSize: 13,
-                letterSpacing: 0.25,
+                fontSize: 13.sp,
+                letterSpacing: 0.25.w,
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: 10.w),
           Text(
-            textAlign: TextAlign.right,
             value,
+            textAlign: TextAlign.right,
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontFamily: 'Roboto',
-              letterSpacing: 0.25,
-              fontSize: 13,
+              fontSize: 13.sp,
+              letterSpacing: 0.25.w,
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),

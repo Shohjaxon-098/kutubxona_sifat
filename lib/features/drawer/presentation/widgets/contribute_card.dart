@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/features/drawer/domain/entities/contribution.dart';
@@ -10,15 +11,14 @@ class ContributeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             child: CachedNetworkImage(
               imageUrl: info.imageUrl,
-              height: 170,
+              height: 170.h,
               width: double.infinity,
               fit: BoxFit.cover,
               placeholder:
@@ -27,16 +27,16 @@ class ContributeCard extends StatelessWidget {
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
-          const SizedBox(height: 18),
+          SizedBox(height: 18.h),
           Text(
             'Бепул кутубхонага хисса қўшиш',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
               fontFamily: 'OpenSans',
-              fontSize: 18,
+              fontSize: 18.sp,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           Row(
             children: [
               Expanded(
@@ -44,12 +44,12 @@ class ContributeCard extends StatelessWidget {
                   info.cardNumber1,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                   ),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.copy, size: 18),
+                icon: Icon(Icons.copy, size: 18.sp),
                 tooltip: 'Нусха олиш',
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: info.cardNumber1));
@@ -65,12 +65,12 @@ class ContributeCard extends StatelessWidget {
                   info.cardNumber2,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                   ),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.copy, size: 18),
+                icon: Icon(Icons.copy, size: 18.sp),
                 tooltip: 'Нусха олиш',
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: info.cardNumber2));
@@ -79,12 +79,12 @@ class ContributeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Text(
             info.description,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w400,
-              fontSize: 14,
+              fontSize: 14.sp,
             ),
           ),
         ],

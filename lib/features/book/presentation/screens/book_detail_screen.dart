@@ -130,34 +130,127 @@ class _BookDetailScreenState extends State<BookDetailScreen>
 
                             if (reservedBook != null &&
                                 reservedBook.takenAt != null) {
-                              return TextFieldInput(
-                                label: "Олиб кетиш санаси",
-                                initialValue: reservedBook.takenAt!,
-                                readOnly: true,
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    context.read<ReserveBookBloc>().add(
-                                      CancelReservationRequested(
-                                        reservedBook.id,
-                                      ),
-                                    );
-                                  },
-                                  icon: const Icon(Icons.highlight_remove),
-                                ),
-                                onChanged: (_) {},
-                              );
-                            }
+                              return AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 300),
+                                transitionBuilder:
+                                    (child, animation) => FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    ),
+                                child:
+                                    reservedBook.takenAt != null
+                                        ? TextFieldInput(
+                                          key: const ValueKey('takenAt'),
+                                          label: "Олиб кетиш санаси",
+                                          initialValue: reservedBook.takenAt!,
+                                          readOnly: true,
+                                          suffixIcon: IconButton(
+                                            onPressed: () {
+                                              context
+                                                  .read<ReserveBookBloc>()
+                                                  .add(
+                                                    CancelReservationRequested(
+                                                      reservedBook.id,
+                                                    ),
+                                                  );
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                            ),
+                                          ),
+                                          onChanged: (_) {},
+                                        )
+                                        : !state.book.isAvailable
+                                        ? PrimaryButton(
+                                          key: const ValueKey('notAvailable'),
+                                          onPressed: null,
+                                          color: Colors.grey.shade400,
+                                          child: Text(
+                                            "Китоб қолмаган",
+                                            style: TextStyle(
+                                              color: AppColors().white
+                                                  .withOpacity(0.7),
+                                            ),
+                                          ),
+                                        )
+                                        : BlocBuilder<
+                                          ReserveBookBloc,
+                                          ReserveBookState
+                                        >(
+                                          builder: (context, reserveState) {
+                                            final isLoading =
+                                                reserveState
+                                                    is ReserveBookLoading;
 
-                            if (!state.book.isAvailable) {
-                              return PrimaryButton(
-                                onPressed: null,
-                                child: Text(
-                                  "Китоб қолмаган",
-                                  style: TextStyle(
-                                    color: AppColors().white.withOpacity(0.7),
-                                  ),
-                                ),
-                                color: Colors.grey.shade400,
+                                            return SizedBox(
+                                              key: const ValueKey(
+                                                'reserveButton',
+                                              ),
+                                              width: double.infinity,
+                                              height: 48.h,
+                                              child: PrimaryButton(
+                                                onPressed:
+                                                    isLoading
+                                                        ? null
+                                                        : () {
+                                                          context
+                                                              .read<
+                                                                ReserveBookBloc
+                                                              >()
+                                                              .add(
+                                                                ReserveBookRequested(
+                                                                  widget
+                                                                      .book
+                                                                      .id,
+                                                                ),
+                                                              );
+                                                        },
+                                                child: AnimatedSwitcher(
+                                                  duration: const Duration(
+                                                    milliseconds: 300,
+                                                  ),
+                                                  transitionBuilder:
+                                                      (child, animation) =>
+                                                          FadeTransition(
+                                                            opacity: animation,
+                                                            child: child,
+                                                          ),
+                                                  child:
+                                                      isLoading
+                                                          ? SizedBox(
+                                                            key: const ValueKey(
+                                                              "loading",
+                                                            ),
+                                                            height: 24.h,
+                                                            width: 24.w,
+                                                            child:
+                                                                const CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      2,
+                                                                  color:
+                                                                      Colors
+                                                                          .white,
+                                                                ),
+                                                          )
+                                                          : Text(
+                                                            "Банд қилиш",
+                                                            key: const ValueKey(
+                                                              "text",
+                                                            ),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
                               );
                             }
 
@@ -169,51 +262,60 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                 final isLoading =
                                     reserveState is ReserveBookLoading;
 
-                                return PrimaryButton(
-                                  onPressed:
-                                      isLoading
-                                          ? null
-                                          : () {
-                                            context.read<ReserveBookBloc>().add(
-                                              ReserveBookRequested(
-                                                widget.book.id,
-                                              ),
-                                            );
-                                          },
-                                  child:
-                                      isLoading
-                                          ? SizedBox(
-                                            height: 24.h,
-                                            width: 24.w,
-                                            child:
-                                                const CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  color: Colors.white,
-                                                ),
-                                          )
-                                          : Text(
-                                            "Банд қилиш",
-                                            style: TextStyle(
-                                              color: AppColors().white,
-                                            ),
+                                return SizedBox(
+                                  width: double.infinity,
+                                  height: 48.h,
+                                  child: PrimaryButton(
+                                    onPressed:
+                                        isLoading
+                                            ? null
+                                            : () {
+                                              context
+                                                  .read<ReserveBookBloc>()
+                                                  .add(
+                                                    ReserveBookRequested(
+                                                      widget.book.id,
+                                                    ),
+                                                  );
+                                            },
+                                    child: AnimatedSwitcher(
+                                      duration: const Duration(
+                                        milliseconds: 300,
+                                      ),
+                                      transitionBuilder:
+                                          (child, animation) => FadeTransition(
+                                            opacity: animation,
+                                            child: child,
                                           ),
+                                      child:
+                                          isLoading
+                                              ? SizedBox(
+                                                key: const ValueKey("loading"),
+                                                height: 24.h,
+                                                width: 24.w,
+                                                child:
+                                                    const CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      color: Colors.white,
+                                                    ),
+                                              )
+                                              : Text(
+                                                "Банд қилиш",
+                                                key: const ValueKey("text"),
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                    ),
+                                  ),
                                 );
                               },
                             );
                           } else if (reservedState is ReservedBookError) {
                             return Text("Хатолик: ${reservedState.message}");
-                          } else if (reservedState is ReservedBookLoading) {
-                            return Center(
-                              child: SizedBox(
-                                width: 24.w,
-                                height: 24.h,
-                                child: CircularProgressIndicator(
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                ),
-                              ),
-                            );
                           }
-
                           return const SizedBox.shrink();
                         },
                       ),

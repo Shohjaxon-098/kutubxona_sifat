@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/config/config_exports.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
@@ -16,9 +16,12 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title: const Text(
+        title: Text(
           "Профиль",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         centerTitle: true,
       ),
@@ -33,12 +36,12 @@ class ProfileScreen extends StatelessWidget {
           } else if (state is UserProfileLoaded) {
             final user = state.user;
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   ProfileHeaderCard(user: user),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, AppRoutes.myBookScreen);
@@ -46,12 +49,12 @@ class ProfileScreen extends StatelessWidget {
                     child: const ProfileOptionTile(
                       iconPath: 'assets/icons/book-shelf.svg',
                       title: 'Китобларим',
-                      onTap: null, // TODO: Implement navigation
+                      onTap: null,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Divider(thickness: 2, color: AppColors().border),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
+                  Divider(thickness: 2.h, color: AppColors().border),
+                  SizedBox(height: 16.h),
                   GestureDetector(
                     onTap: () {
                       AppNavigator.pushNamed(
@@ -65,9 +68,9 @@ class ProfileScreen extends StatelessWidget {
                       onTap: null,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Divider(thickness: 2, color: AppColors().border),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
+                  Divider(thickness: 2.h, color: AppColors().border),
+                  SizedBox(height: 16.h),
                   ProfileOptionTile(
                     iconPath: AppImages().settings,
                     title: ' Созламалар',
@@ -79,41 +82,38 @@ class ProfileScreen extends StatelessWidget {
                           return BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                             child: Dialog(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.surface,
+                              backgroundColor: Theme.of(context).colorScheme.surface,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(20.r),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(24.0),
+                                padding: EdgeInsets.all(24.r),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(
                                       Icons.settings_outlined,
-                                      size: 50,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      size: 50.sp,
+                                      color: Theme.of(context).colorScheme.primary,
                                     ),
-
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Text(
                                       'Бу бўлим тез орада фаол бўлади.',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 16,
-                                        color:
-                                            Theme.of(
-                                              context,
-                                            ).colorScheme.tertiary,
+                                        fontSize: 16.sp,
+                                        color: Theme.of(context).colorScheme.tertiary,
                                       ),
                                     ),
-                                    const SizedBox(height: 16),
+                                    SizedBox(height: 16.h),
                                     TextButton(
                                       onPressed: () => Navigator.pop(context),
-                                      child: const Text(
+                                      child: Text(
                                         'Тушунарли',
-                                        style: TextStyle(color: Colors.blue),
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -125,8 +125,8 @@ class ProfileScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 16),
-                  Divider(thickness: 2, color: AppColors().border),
+                  SizedBox(height: 16.h),
+                  Divider(thickness: 2.h, color: AppColors().border),
                 ],
               ),
             );

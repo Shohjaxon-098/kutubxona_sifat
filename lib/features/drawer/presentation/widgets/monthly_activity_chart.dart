@@ -1,32 +1,32 @@
-import 'package:flutter/material.dart';
 import 'package:kutubxona/export.dart';
-import 'package:kutubxona/features/drawer/domain/entities/statistic_entity.dart'; // AppColors uchun kerak bo‘lsa
+import 'package:kutubxona/features/drawer/domain/entities/statistic_entity.dart';
 
 class MonthlyActivityChart extends StatelessWidget {
   const MonthlyActivityChart({super.key, required this.statistic});
   final StatisticEntity? statistic;
+
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         side: BorderSide(color: Colors.grey.shade300),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12.w),
         child: Column(
           children: [
-            const Text(
+            Text(
               "Охирги ой ичида олинган ва қайтарилган китоблар",
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 fontFamily: 'OpenSans',
               ),
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: const [
+            SizedBox(height: 12.h),
+            const Row(
+              children: [
                 Expanded(
                   child: Legend(
                     color: Color(0xffFF92AE),
@@ -41,25 +41,27 @@ class MonthlyActivityChart extends StatelessWidget {
                 ),
               ],
             ),
-
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             ...List.generate(statistic!.last30DaysStatistics.length, (i) {
               final dayStat = statistic!.last30DaysStatistics[i];
               final takenPercent = dayStat!.takenBooks / 10;
               final returnedPercent = dayStat.returnedBooks / 10;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Row(
                   children: [
-                    Text(
-                      dayStat.date,
-                      style: TextStyle(
-                        fontSize: 9,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors().textBodyMuted,
+                    SizedBox(
+                      width: 40.w,
+                      child: Text(
+                        dayStat.date,
+                        style: TextStyle(
+                          fontSize: 9.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors().textBodyMuted,
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10.w),
                     Expanded(
                       child: Column(
                         children: [
@@ -69,18 +71,18 @@ class MonthlyActivityChart extends StatelessWidget {
                             valueColor: const AlwaysStoppedAnimation(
                               Color(0xffA6B7D4),
                             ),
-                            minHeight: 8,
-                            borderRadius: BorderRadius.circular(8),
+                            minHeight: 8.h,
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
-                          const SizedBox(height: 3),
+                          SizedBox(height: 3.h),
                           LinearProgressIndicator(
                             value: returnedPercent,
                             backgroundColor: const Color(0xffF1F5F9),
                             valueColor: const AlwaysStoppedAnimation(
                               Color(0xffFF92AE),
                             ),
-                            minHeight: 8,
-                            borderRadius: BorderRadius.circular(8),
+                            minHeight: 8.h,
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
                         ],
                       ),
@@ -106,16 +108,15 @@ class Legend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(radius: 4, backgroundColor: color),
-        const SizedBox(width: 6),
+        CircleAvatar(radius: 4.r, backgroundColor: color),
+        SizedBox(width: 6.w),
         Flexible(
           child: Text(
             text,
-
             overflow: TextOverflow.clip,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Roboto',
-              fontSize: 10,
+              fontSize: 10.sp,
               fontWeight: FontWeight.w500,
             ),
           ),

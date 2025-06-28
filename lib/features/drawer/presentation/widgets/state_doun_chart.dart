@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class StatDonutChart extends StatelessWidget {
@@ -25,7 +26,7 @@ class StatDonutChart extends StatelessWidget {
         right: right,
         total: total,
       ),
-      child: const SizedBox(width: 100, height: 100),
+      child: SizedBox(width: 100.w, height: 100.w),
     );
   }
 }
@@ -47,9 +48,10 @@ class _SegmentedCirclePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (total == 0) return;
 
-    final strokeWidth = 12.0;
+    final strokeWidth = 12.w;
     final radius = (size.width - strokeWidth) / 2;
     final centerOffset = Offset(size.width / 2, size.height / 2);
+
     final paint =
         Paint()
           ..style = PaintingStyle.stroke
@@ -58,9 +60,8 @@ class _SegmentedCirclePainter extends CustomPainter {
 
     double startAngle = -pi / 2;
     double totalSweep = 2 * pi;
-    double minSweep = 0.035; // Minimum visible segment
+    double minSweep = 0.035; // minimal ko'rinadigan segment burchagi
 
-    // Convert raw values to sweep angles
     List<_Segment> segments = [
       _Segment(value: left.toDouble(), color: AppColors().donutLeft),
       _Segment(value: center.toDouble(), color: AppColors().donutCenter),

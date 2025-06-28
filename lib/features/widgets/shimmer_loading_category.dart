@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerLoadingAllCategories extends StatelessWidget {
@@ -25,8 +26,8 @@ class ShimmerLoadingAllCategories extends StatelessWidget {
       itemCount: itemCount,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        mainAxisSpacing: mainAxisSpacing,
-        crossAxisSpacing: crossAxisSpacing,
+        mainAxisSpacing: mainAxisSpacing.h,
+        crossAxisSpacing: crossAxisSpacing.w,
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
@@ -34,9 +35,9 @@ class ShimmerLoadingAllCategories extends StatelessWidget {
           baseColor: Theme.of(context).colorScheme.primaryFixed,
           highlightColor: Theme.of(context).colorScheme.primaryFixedDim,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               decoration: BoxDecoration(color: Colors.white),
             ),
           ),

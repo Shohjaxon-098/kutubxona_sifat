@@ -20,30 +20,35 @@ class NoInternetScreen extends StatelessWidget {
         body: RefreshIndicator(
           onRefresh: () => _retry(context),
           child: ListView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             children: [
               Center(
-                child: Container(
-                  padding: EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
+                child: Padding(
+                  padding: EdgeInsets.all(24.w),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SvgPicture.asset('assets/images/no-connect.svg'),
+                      SvgPicture.asset(
+                        'assets/images/no-connect.svg',
+                        height: 180.h,
+                      ),
+                      SizedBox(height: 24.h),
                       Text(
                         'Нет доступа к интернету',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(
                         'Проверьте подключение к интернету',
-                        style: TextStyle(color: AppColors().grey),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: AppColors().grey,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),

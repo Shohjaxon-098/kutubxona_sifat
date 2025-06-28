@@ -15,7 +15,6 @@ class DeficientBooksRemoteDataSourceImpl
     final response = await dio.get(
       '${AppConfig.baseUrl}/books/${AppConfig.libraryId}/deficient-books/',
     );
-    print(response.data);
     final results = response.data['results'] as List;
     return results.map((e) => DeficientBookModel.fromJson(e)).toList();
   }

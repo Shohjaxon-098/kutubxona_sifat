@@ -1,4 +1,3 @@
-import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
@@ -35,10 +34,10 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'Банд қилинган китоблар',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w500,
               fontFamily: 'Roboto',
             ),
@@ -53,11 +52,9 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
         body: BlocConsumer<ReserveBookBloc, ReserveBookState>(
           listener: (context, state) {
             if (state is CancelReservationSuccess) {
-              // ❗ Kitob cancel bo‘ldi => ro‘yxatni yangilaymiz
               context.read<ReservedBookBloc>().add(
                 LoadReservedBooks(widget.libraryId),
               );
-
               ToastMessage.showToast("Bandlik bekor qilindi", context);
             } else if (state is ReserveBookError) {
               ToastMessage.showToast(state.message, context);
@@ -69,14 +66,6 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
                 if (state is ReservedBookLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is ReservedBookLoaded) {
-                  if (state.books.isEmpty) {
-                    return const Center(
-                      child: NoDataWidget(
-                        imagePath: 'assets/images/no-result.svg',
-                        text: 'Банд қилинган китоблар мавжуд эмас',
-                      ),
-                    );
-                  }
                   final bookedBooks =
                       state.books
                           .where((book) => book.status == 'booked')
@@ -90,30 +79,32 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
                       ),
                     );
                   }
+
                   return ListView.builder(
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
                     itemCount: bookedBooks.length,
                     itemBuilder: (_, index) {
                       final reservedBook = bookedBooks[index];
                       final book = reservedBook.book;
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 16,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8.h,
+                          horizontal: 16.w,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(8.r),
                               child: CachedNetworkImage(
                                 imageUrl: book.image,
-                                width: 100,
-                                height: 100,
+                                width: 100.w,
+                                height: 100.w,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12.w),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,35 +114,38 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
                                     style: TextStyle(
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       letterSpacing: 0.15,
                                     ),
                                   ),
-                                  const SizedBox(height: 9),
+                                  SizedBox(height: 9.h),
                                   Row(
-                                    children: List.generate(5, (index) {
+                                    children: List.generate(5, (i) {
                                       return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 2,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 2.w,
                                         ),
                                         child: SvgPicture.asset(
                                           AppImages().rate,
-                                          height: 16,
+                                          height: 16.h,
                                           color:
-                                              index < double.parse(book.rating!)
+                                              i <
+                                                      double.parse(
+                                                        book.rating ?? '0',
+                                                      )
                                                   ? AppColors().rateColor
                                                   : AppColors().grey,
                                         ),
                                       );
                                     }),
                                   ),
-                                  const SizedBox(height: 6),
+                                  SizedBox(height: 6.h),
                                   Text(
                                     book.author,
                                     style: TextStyle(
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       letterSpacing: 0.15,
                                       color:
                                           Theme.of(context).colorScheme.primary,
@@ -163,15 +157,11 @@ class _BookedBooksPageState extends State<BookedBooksPage> {
                             IconButton(
                               icon: SvgPicture.asset(
                                 'assets/icons/off_close.svg',
-                                width: 24,
-                                height: 24,
+                                width: 24.w,
+                                height: 24.h,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),
-                              onPressed: () {
-                                context.read<ReserveBookBloc>().add(
-                                  CancelReservationRequested(reservedBook.id),
-                                );
-                              },
+                              onPressed: () => removeBook(reservedBook.id),
                             ),
                           ],
                         ),
