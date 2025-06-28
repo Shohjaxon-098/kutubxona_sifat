@@ -1,4 +1,4 @@
-// Presentation Layer – Filter Bottom Sheet
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_bloc.dart';
 import 'package:kutubxona/features/category/presentation/logic/bloc/category_event.dart';
@@ -20,6 +20,9 @@ class FilterBottomSheet extends StatefulWidget {
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
+  int? selectedYear;
+  int? selectedRating;
+
   @override
   void initState() {
     super.initState();
@@ -27,15 +30,19 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     selectedRating = widget.initialRating;
   }
 
-  int? selectedYear;
-  int? selectedRating;
-
   void _applyFilter() {
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
+        Navigator.of(
+          context,
+        ).pop({'year': selectedYear, 'rating': selectedRating});
+      }
+    });
     context.read<CategoryBloc>().add(
       GetBooksByCategoryEvent(
         widget.categoryId,
         year: selectedYear,
-        rating: selectedRating != null ? selectedRating.toString() : null,
+        rating: selectedRating?.toString(),
       ),
     );
   }
@@ -47,12 +54,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     });
 
     context.read<CategoryBloc>().add(
-      GetBooksByCategoryEvent(widget.categoryId), // filtersiz yuklash
+      GetBooksByCategoryEvent(widget.categoryId),
     );
 
-    // ❗️ pop() ga hech narsa bermaymiz
     Future.delayed(Duration.zero, () {
-      if (mounted) Navigator.of(context).pop(); // just pop, no data
+      if (mounted) Navigator.of(context).pop();
     });
   }
 
@@ -60,43 +66,41 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.w),
       child: Wrap(
         children: [
           Center(
             child: Container(
-              width: 40,
-              height: 4,
-              margin: const EdgeInsets.only(bottom: 12),
+              width: 40.w,
+              height: 4.h,
+              margin: EdgeInsets.only(bottom: 12.h),
               decoration: BoxDecoration(
                 color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.r),
               ),
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.tune),
-              const SizedBox(width: 8),
+              Icon(Icons.tune, size: 22.sp),
+              SizedBox(width: 8.w),
               Text(
                 "Китобларни саралаш",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
               ),
             ],
           ),
+          SizedBox(height: 32.h),
 
-          const SizedBox(height: 50),
-
-          // Year Filter
+          /// Year Filter
           Container(
-            padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.symmetric(vertical: 6),
+            padding: EdgeInsets.all(12.w),
+            margin: EdgeInsets.symmetric(vertical: 6.h),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors().border),
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(12.r),
+              color: theme.colorScheme.surface,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,10 +109,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   "Йил бўйича фильтер",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     color: theme.colorScheme.tertiary,
                   ),
                 ),
+                SizedBox(height: 12.h),
                 CustomDropdown(
                   hintText: 'Йилни танланг',
                   items: List.generate(8, (i) => (2020 + i).toString()),
@@ -118,7 +123,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       final year = int.tryParse(value);
                       if (year != null) {
                         setState(() => selectedYear = year);
-                        _applyFilter();
                       }
                     }
                   },
@@ -127,14 +131,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             ),
           ),
 
-          // Rating Filter
+          /// Rating Filter
           Container(
-            padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.symmetric(vertical: 12),
+            padding: EdgeInsets.all(12.w),
+            margin: EdgeInsets.symmetric(vertical: 12.h),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors().border),
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(12.r),
+              color: theme.colorScheme.surface,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,11 +147,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   "Рейтинг бўйича фильтер",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     color: theme.colorScheme.tertiary,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Column(
                   children: List.generate(5, (index) {
                     final rating = 5 - index;
@@ -156,21 +160,20 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     return InkWell(
                       onTap: () {
                         setState(() => selectedRating = rating);
-                        _applyFilter();
                       },
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 12,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12.h,
+                          horizontal: 12.w,
                         ),
-                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        margin: EdgeInsets.symmetric(vertical: 4.h),
                         decoration: BoxDecoration(
                           color:
                               isSelected
                                   ? theme.colorScheme.primary.withOpacity(0.1)
                                   : Colors.transparent,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
                             color:
                                 isSelected
@@ -185,17 +188,18 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                                   ? Icons.radio_button_checked
                                   : Icons.radio_button_off,
                               color: theme.colorScheme.primary,
+                              size: 20.sp,
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12.w),
                             Row(
                               children: List.generate(5, (i) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 2,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 2.w,
                                   ),
                                   child: SvgPicture.asset(
                                     AppImages().rate,
-                                    width: 24,
+                                    width: 20.w,
                                     color:
                                         i < rating
                                             ? AppColors().rateColor
@@ -214,24 +218,16 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: PrimaryButton(
-              onPressed: () {
-                Future.delayed(Duration.zero, () {
-                  if (mounted)
-                    return Navigator.of(
-                      context,
-                    ).pop({'year': selectedYear, 'rating': selectedRating});
-                });
-              },
-              text: 'Натижаларни курсатиш',
-            ),
-          ),
+          SizedBox(height: 16.h),
+          PrimaryButton(onPressed: _applyFilter, text: 'Натижаларни курсатиш'),
+          SizedBox(height: 10.h),
           Center(
             child: TextButton(
               onPressed: _clearFilter,
-              child: Text('Фильтерни тозалаш'),
+              child: Text(
+                'Фильтерни тозалаш',
+                style: TextStyle(fontSize: 14.sp),
+              ),
             ),
           ),
         ],

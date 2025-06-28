@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/drawer/presentation/screens/custom_drawer.dart';
 import 'package:kutubxona/features/home/presentation/widgets/all_book_section.dart';
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode focusNode = FocusNode();
   bool showDropdown = false;
   final LayerLink _layerLink = LayerLink();
+
   @override
   void initState() {
     context.read<UserProfileBloc>().add(GetUserProfileEvent());
@@ -32,9 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
     context.read<UserProfileBloc>().add(GetUserProfileEvent());
     context.read<HomeBloc>().add(GetAllHomeDataEvent());
-    await Future.delayed(
-      Duration(milliseconds: 500),
-    ); // optional: refresh animationni ko‘rsatish uchun
+    await Future.delayed(Duration(milliseconds: 500));
   }
 
   @override
@@ -49,13 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: CustomDrawer(
         onLogout: () async {
           await LocalStorage.clearUser();
-
           if (!context.mounted) return;
-
-          AppNavigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.login, // yoki LoginScreen.routeName
-          );
+          AppNavigator.pushNamedAndRemoveUntil(context, AppRoutes.login);
         },
       ),
       drawerEnableOpenDragGesture: false,
@@ -67,24 +62,19 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverAppBar(
               iconTheme: IconThemeData(color: AppColors().white),
               pinned: true,
-
-              expandedHeight: 160,
+              expandedHeight: 160.h,
               backgroundColor: AppColors().cardColor,
               flexibleSpace: FlexibleSpaceBar(background: GreetingHeader()),
             ),
             SliverToBoxAdapter(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(33),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(33.r),
                   ),
-                  color:
-                      Theme.of(context).colorScheme.primaryContainer, // oq fon
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -96,13 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       onDropdownVisibilityChanged:
                           (visible) => setState(() => showDropdown = visible),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     const CategorySectionWidget(),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     const BookSectionWidget(),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     const AllBookSection(),
-                    const SizedBox(height: 32), // pastgi bo‘sh joy
+                    SizedBox(height: 32.h),
                   ],
                 ),
               ),

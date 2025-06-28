@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/network/internet_status_handler.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/logic/bloc/reserve_book_bloc.dart';
@@ -22,7 +23,14 @@ void main() async {
   await Hive.initFlutter();
   await di.init();
   await Hive.openBox('userBox'); // Open Hive box
-  runApp(const KutubxonaApp());
+  runApp(
+    ScreenUtilInit(
+      designSize: Size(375, 812), // iPhone 11 o'lchami, sizga mosini tanlang
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => KutubxonaApp(),
+    ),
+  );
 }
 
 class KutubxonaApp extends StatelessWidget {

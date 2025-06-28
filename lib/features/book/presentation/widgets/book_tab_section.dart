@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/widgets/book_comment_tab.dart';
 import 'package:kutubxona/features/book/presentation/widgets/book_info_tab.dart';
@@ -26,17 +27,19 @@ class BookTabSection extends StatelessWidget {
           dividerColor: Colors.transparent,
           controller: controller,
           indicatorColor: Colors.transparent,
-          labelStyle: const TextStyle(
-            fontSize: 16,
+          labelStyle: TextStyle(
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
           ),
-          unselectedLabelStyle: const TextStyle(fontSize: 16),
+          unselectedLabelStyle: TextStyle(fontSize: 16.sp),
           labelColor: textColor,
           unselectedLabelColor: Colors.grey,
-          tabs: const [Tab(text: "Маълумотлар"), Tab(text: "Фикрлар")],
+          tabs: const [
+            Tab(text: "Маълумотлар"),
+            Tab(text: "Фикрлар"),
+          ],
           onTap: (index) {
             if (index == 1) {
-              // "Фикрлар" bosilganda alohida screenga o'tish
               Navigator.push(
                 context,
                 PageTransition(
@@ -46,14 +49,15 @@ class BookTabSection extends StatelessWidget {
                   child: BookCommentsScreen(bookId: book.id),
                 ),
               );
-              // Tabni yana 0 ga qaytarish uchun:
               controller.animateTo(0);
             }
           },
         ),
-        const SizedBox(height: 16),
-        // faqat Маълумотлар (info) ni ko'rsatamiz
-        IndexedStack(index: 0, children: [BookInfoTab(book: book)]),
+        SizedBox(height: 16.h),
+        IndexedStack(
+          index: 0,
+          children: [BookInfoTab(book: book)],
+        ),
       ],
     );
   }

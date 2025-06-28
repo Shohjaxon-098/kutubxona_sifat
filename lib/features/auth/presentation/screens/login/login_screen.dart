@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/auth/presentation/screens/login/controller/login_controller.dart';
 import 'widgets/login_button.dart';
@@ -29,34 +30,38 @@ class LoginBody extends StatelessWidget {
     final controller = context.watch<LoginController>();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true, // ✅ bu ham kerak
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
-          // Har doim controllerni .read bilan olib, mounted tekshirish shart emas
           final controller = context.read<LoginController>();
           controller.handleState(context, state);
         },
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(
+              left: 16.w,
+              right: 16.w,
+              top: 24.h,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 24.h,
+            ),
             child: Form(
               key: controller.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const LoginHeader(),
-                  const SizedBox(height: 50),
+                  SizedBox(height: 40.h),
                   LoginPhoneField(controller: controller.phoneController),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   LoginPasswordField(controller: controller.passwordController),
-                  const Spacer(),
+                  SizedBox(height: 40.h),
                   LoginButton(
                     isLoading: controller.isLoading,
                     onPressed: () => controller.login(context),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   const LoginTelegramButton(),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   const LoginRegisterButton(),
                 ],
               ),

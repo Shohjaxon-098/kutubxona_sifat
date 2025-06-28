@@ -10,7 +10,7 @@ class SectionTitle extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
         color: Theme.of(context).colorScheme.tertiary,

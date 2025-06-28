@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class LoginPasswordField extends StatefulWidget {
@@ -37,13 +38,17 @@ class _LoginPasswordFieldState extends State<LoginPasswordField> {
       },
       suffixIcon: GestureDetector(
         onTap: _toggleVisibility,
-        child: SvgPicture.asset(
-          fit: BoxFit.scaleDown,
-          _obscureText
-              ? 'assets/icons/eye-hide.svg'
-              : 'assets/icons/eye-show.svg',
-
-          color: Theme.of(context).colorScheme.tertiary,
+        child: Padding(
+          padding: EdgeInsets.only(right: 8.w),
+          child: SvgPicture.asset(
+            _obscureText
+                ? 'assets/icons/eye-hide.svg'
+                : 'assets/icons/eye-show.svg',
+            fit: BoxFit.scaleDown,
+            width: 24.w,
+            height: 24.h,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
         ),
       ),
     );

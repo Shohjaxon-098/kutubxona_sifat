@@ -22,8 +22,8 @@ Future<void> showFilterModal(BuildContext context, int categoryId) async {
         ),
   );
 
+  // Foydalanuvchi filterni saqlaganmi yoki bekor qilganmi tekshiramiz
   if (result != null) {
-    // 🎯 Filter tanlandi
     selectedYear = result['year'] as int?;
     selectedRating = result['rating'] as int?;
 
@@ -35,7 +35,7 @@ Future<void> showFilterModal(BuildContext context, int categoryId) async {
       ),
     );
   } else {
-    // 🎯 Filter tozalandi yoki bekor qilindi => eski qiymatlarni null qilamiz
+    // Filter tozalangan yoki modal yopilgan
     selectedYear = null;
     selectedRating = null;
   }

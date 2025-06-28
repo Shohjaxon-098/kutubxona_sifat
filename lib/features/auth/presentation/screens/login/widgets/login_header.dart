@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class LoginHeader extends StatelessWidget {
@@ -7,10 +8,10 @@ class LoginHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 260,
+      height: 260.h,
       decoration: BoxDecoration(
         color: AppColors().cardColor,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(24.r),
         image: DecorationImage(
           image: AssetImage(AppImages().mask),
           fit: BoxFit.cover,
@@ -20,15 +21,15 @@ class LoginHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 84,
-            height: 84,
+            width: 84.w,
+            height: 84.w,
             decoration: BoxDecoration(
               color: AppColors().white,
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(28.r),
               boxShadow: [
                 BoxShadow(
                   blurRadius: 0,
-                  spreadRadius: 5,
+                  spreadRadius: 5.r,
                   color: AppColors().cardShadow,
                 ),
               ],
@@ -38,12 +39,12 @@ class LoginHeader extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 33),
+          SizedBox(height: 33.h),
           Text(
             'Ассалому алайкум\nХуш келибсиз!',
             style: TextStyle(
               color: AppColors().white,
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,

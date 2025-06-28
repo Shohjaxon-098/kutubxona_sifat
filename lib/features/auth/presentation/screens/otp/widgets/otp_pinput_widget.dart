@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpPinput extends StatelessWidget {
@@ -19,14 +20,14 @@ class OtpPinput extends StatelessWidget {
     final borderColor = Theme.of(context).colorScheme.tertiary;
 
     final defaultPinTheme = PinTheme(
-      width: 46,
-      height: 46,
+      width: 46.w,
+      height: 46.h,
       textStyle: TextStyle(
-        fontSize: 22,
+        fontSize: 22.sp,
         color: Theme.of(context).colorScheme.tertiary,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: borderColor),
       ),
     );
@@ -42,24 +43,24 @@ class OtpPinput extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              margin: const EdgeInsets.only(bottom: 9),
-              width: 22,
-              height: 1,
+              margin: EdgeInsets.only(bottom: 9.h),
+              width: 22.w,
+              height: 1.h,
               color: focusedBorderColor,
             ),
           ],
         ),
-        separatorBuilder: (index) => const SizedBox(width: 8),
+        separatorBuilder: (index) => SizedBox(width: 8.w),
         onCompleted: onCompleted,
         focusedPinTheme: defaultPinTheme.copyWith(
           decoration: defaultPinTheme.decoration!.copyWith(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             border: Border.all(color: focusedBorderColor),
           ),
         ),
         submittedPinTheme: defaultPinTheme.copyWith(
           decoration: defaultPinTheme.decoration!.copyWith(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             border: Border.all(color: focusedBorderColor),
           ),
         ),

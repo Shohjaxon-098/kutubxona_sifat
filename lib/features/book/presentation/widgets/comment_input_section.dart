@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/core_exports.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
@@ -6,7 +7,6 @@ import 'package:kutubxona/features/book/presentation/logic/book_get_review/book_
 import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_bloc.dart';
 import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_event.dart';
 import 'package:kutubxona/features/book/presentation/logic/post_review/post_review_state.dart';
-
 import 'package:kutubxona/features/widgets/primary_button.dart';
 import 'package:kutubxona/features/widgets/star_reting.dart';
 
@@ -36,7 +36,7 @@ class _CommentInputSectionState extends State<CommentInputSection> {
     return BlocConsumer<PostReviewBloc, PostReviewState>(
       listener: (context, state) {
         if (state is PostReviewSuccess) {
-          _clearFields(); // ⭐ Yuborilgandan keyin hammasi tozalanadi
+          _clearFields();
           ToastMessage.showToast("Фикр юборилди", context);
         } else if (state is PostReviewError) {
           ToastMessage.showToast(state.message, context);
@@ -51,51 +51,56 @@ class _CommentInputSectionState extends State<CommentInputSection> {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: colorScheme.tertiary,
+                fontSize: 16.sp,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             StarRating(
-              rating:
-                  selectedRating, // ⭐ Qo‘shamiz: mavjud qiymatni ko‘rsatish uchun
+              rating: selectedRating,
               onRatingChanged:
                   (rating) => setState(() {
                     selectedRating = rating;
                   }),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Text(
               "Изох",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: colorScheme.tertiary,
+                fontSize: 16.sp,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             TextField(
               controller: commentController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors().border),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors().border),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors().border),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 hintText: 'Изох',
-                hintStyle: TextStyle(color: AppColors().hintColor),
+                hintStyle: TextStyle(
+                  color: AppColors().hintColor,
+                  fontSize: 14.sp,
+                ),
               ),
+              style: TextStyle(fontSize: 14.sp),
               maxLines: 4,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
-                width: 120,
+                width: 120.w,
                 child: PrimaryButton(
                   onPressed:
                       state is PostReviewLoading
@@ -129,10 +134,10 @@ class _CommentInputSectionState extends State<CommentInputSection> {
                           },
                   child:
                       state is PostReviewLoading
-                          ? const SizedBox(
-                            width: 26,
-                            height: 26,
-                            child: CircularProgressIndicator(
+                          ? SizedBox(
+                            width: 26.w,
+                            height: 26.h,
+                            child: const CircularProgressIndicator(
                               strokeWidth: 2,
                               color: Colors.white,
                             ),
@@ -142,7 +147,7 @@ class _CommentInputSectionState extends State<CommentInputSection> {
                             style: TextStyle(
                               color: AppColors().white,
                               fontWeight: FontWeight.w500,
-                              fontSize: 15,
+                              fontSize: 15.sp,
                               fontFamily: 'Roboto',
                             ),
                           ),

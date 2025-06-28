@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:kutubxona/config/config_exports.dart';
 import 'package:kutubxona/export.dart';
 
 class RatingSummaryWidget extends StatelessWidget {
   final double averageRating;
-  final Map<int, double> ratingPercentages; // Example: {5: 0.86, 4: 0.61, ...}
+  final Map<int, double> ratingPercentages;
 
   const RatingSummaryWidget({
     super.key,
@@ -16,62 +14,65 @@ class RatingSummaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Рейтинг',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          SizedBox(height: 8.h),
+          Text(
             '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
             'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.grey, fontSize: 13.sp),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           ...List.generate(5, (index) {
             final star = 5 - index;
             final percent = (ratingPercentages[star] ?? 0);
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+              padding: EdgeInsets.symmetric(vertical: 4.h),
               child: Row(
                 children: [
-                  SvgPicture.asset(AppImages().rate, width: 16),
-                  const SizedBox(width: 4),
-                  Text('$star'),
-                  const SizedBox(width: 8),
+                  SvgPicture.asset(AppImages().rate, width: 16.w),
+                  SizedBox(width: 4.w),
+                  Text('$star', style: TextStyle(fontSize: 14.sp)),
+                  SizedBox(width: 8.w),
                   Expanded(
                     child: LinearProgressIndicator(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                       value: percent,
-                      minHeight: 8,
-                      backgroundColor: Color(0xffEEF4FF),
+                      minHeight: 8.h,
+                      backgroundColor: const Color(0xffEEF4FF),
                       color: AppColors().primaryColor,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Text('${(percent * 100).toInt()}%'),
+                  SizedBox(width: 8.w),
+                  Text(
+                    '${(percent * 100).toInt()}%',
+                    style: TextStyle(fontSize: 13.sp),
+                  ),
                 ],
               ),
             );
           }),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(
             averageRating.toStringAsFixed(1),
-            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           RatingBarIndicator(
             rating: averageRating,
             itemBuilder: (context, index) => SvgPicture.asset(AppImages().rate),
             itemCount: 5,
-            itemSize: 26,
+            itemSize: 26.w,
             unratedColor: Colors.grey.shade300,
           ),
         ],

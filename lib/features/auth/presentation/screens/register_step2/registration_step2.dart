@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/auth/presentation/screens/register_step2/controller/register_step2_controller.dart';
@@ -47,7 +49,11 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
             if (state is RegisterStep2Failure) {
               ToastMessage.showToast(state.message, context);
             } else if (state is RegisterStep2Success) {
-              Navigator.pushNamedAndRemoveUntil(ctx, AppRoutes.login, (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                ctx,
+                AppRoutes.login,
+                (route) => false,
+              );
             }
           },
         ),
@@ -62,7 +68,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.w),
             child: Form(
               key: _formKey,
               child: AnimatedBuilder(
@@ -77,12 +83,12 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       CustomTextField(
                         label: "Исмингиз",
                         controller: controller.nameController,
@@ -90,12 +96,20 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         validator: validateRequired,
                         hint: 'Исмингиз',
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
+                      CustomTextField(
+                        label: "Фамилиянгиз",
+                        controller: controller.surnameController,
+                        keyboardType: TextInputType.name,
+                        validator: validateRequired,
+                        hint: 'Фамилиянгиз',
+                      ),
+                      SizedBox(height: 16.h),
                       GenderDropdown(
                         selectedGender: controller.selectedGender,
                         onChanged: (val) => controller.setGender(val),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         label: "Парол",
                         controller: controller.passwordController,
@@ -105,25 +119,21 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         hint: '******',
                         suffixIcon: GestureDetector(
                           onTap: toggleVisibility,
-                          child: SvgPicture.asset(
-                            fit: BoxFit.scaleDown,
-                            _obscureText
-                                ? 'assets/icons/eye-hide.svg'
-                                : 'assets/icons/eye-show.svg',
-
-                            color: Theme.of(context).colorScheme.tertiary,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: SvgPicture.asset(
+                              width: 18.w,
+                              height: 18.h,
+                              _obscureText
+                                  ? 'assets/icons/eye-hide.svg'
+                                  : 'assets/icons/eye-show.svg',
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        label: "Фамилиянгиз",
-                        controller: controller.surnameController,
-                        keyboardType: TextInputType.name,
-                        validator: validateRequired,
-                        hint: 'Фамилиянгиз',
-                      ),
-                      const SizedBox(height: 16),
+
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         label: "Телеграм username",
                         controller: controller.telegramController,
@@ -131,22 +141,25 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         validator: validateRequired,
                         hint: '@telegram_username',
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       BirthDatePickerField(
                         controller: controller.birthDateController,
                         onTap: () => controller.pickBirthDate(),
                         validator: validateRequired,
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
+                      SizedBox(height: 16.h),
+                      Text(
                         "Шахсий тасдиқловчи хужжат",
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.sp,
+                        ),
                       ),
                       DocumentTypeRadio(
                         groupValue: controller.documentType,
                         onChanged: (val) => controller.setDocumentType(val),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       CustomTextField(
                         label:
                             controller.documentType == 'passport'
@@ -163,19 +176,22 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                             controller.documentType == 'passport' ? 9 : 12,
                       ),
                       if (controller.documentType == 'passport') ...[
-                        const SizedBox(height: 16),
-                        const Text(
+                        SizedBox(height: 16.h),
+                        Text(
                           "Ҳужжат расмини юкланг",
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.sp,
+                          ),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12.h),
                         Row(
                           children: [
                             ImagePickerBox(
                               file: controller.docFront,
                               onTap: () => controller.pickImage(true),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12.w),
                             ImagePickerBox(
                               file: controller.docBack,
                               onTap: () => controller.pickImage(false),
@@ -183,13 +199,13 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                           ],
                         ),
                       ],
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       if (controller.apiErrorMessage != null)
                         Text(
                           controller.apiErrorMessage!,
-                          style: const TextStyle(color: Colors.red),
+                          style: TextStyle(color: Colors.red, fontSize: 13.sp),
                         ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       PrimaryButton(
                         onPressed:
                             controller.isLoading
@@ -198,8 +214,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         child:
                             controller.isLoading
                                 ? SizedBox(
-                                  width: 20,
-                                  height: 20,
+                                  width: 20.w,
+                                  height: 20.w,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     color: AppColors().white,
@@ -211,7 +227,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                                     fontFamily: 'Roboto',
                                     fontWeight: FontWeight.w400,
                                     color: AppColors().white,
-                                    fontSize: 15,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                       ),

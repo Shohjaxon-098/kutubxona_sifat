@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:kutubxona/export.dart';
 
 class CustomDropdown extends StatefulWidget {
@@ -28,44 +27,47 @@ class _CustomDropdownState extends State<CustomDropdown> {
   bool isOpen = false;
 
   void _toggleDropdown() {
-    if (isOpen) {
-      _closeDropdown();
-    } else {
-      _openDropdown();
-    }
+    isOpen ? _closeDropdown() : _openDropdown();
   }
 
   void _openDropdown() {
     final RenderBox renderBox =
         _key.currentContext!.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
-    renderBox.localToGlobal(Offset.zero);
 
     _overlayEntry = OverlayEntry(
       builder: (context) {
         return Positioned(
           width: size.width,
           child: CompositedTransformFollower(
-            offset: Offset(0, size.height + 16),
+            offset: Offset(0, size.height + 16.h),
             link: _layerLink,
             showWhenUnlinked: false,
             child: Material(
+              elevation: 0,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16.r),
+                bottomRight: Radius.circular(16.r),
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
+                    bottomLeft: Radius.circular(16.r),
+                    bottomRight: Radius.circular(16.r),
                   ),
                   border: Border.all(color: AppColors().border),
                 ),
-                constraints: BoxConstraints(maxHeight: 300),
+                constraints: BoxConstraints(maxHeight: 300.h),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   children:
                       widget.items.map((item) {
                         return ListTile(
-                          title: Text(item),
+                          dense: true,
+                          minVerticalPadding: 0,
+                          visualDensity: VisualDensity.compact,
+                          title: Text(item, style: TextStyle(fontSize: 14.sp)),
                           onTap: () {
                             widget.onChanged(item);
                             _closeDropdown();
@@ -81,17 +83,13 @@ class _CustomDropdownState extends State<CustomDropdown> {
     );
 
     Overlay.of(context).insert(_overlayEntry!);
-    setState(() {
-      isOpen = true;
-    });
+    setState(() => isOpen = true);
   }
 
   void _closeDropdown() {
     _overlayEntry?.remove();
     _overlayEntry = null;
-    setState(() {
-      isOpen = false;
-    });
+    setState(() => isOpen = false);
   }
 
   @override
@@ -107,44 +105,53 @@ class _CustomDropdownState extends State<CustomDropdown> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.label ?? '',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              fontFamily: 'Roboto',
+          if (widget.label != null) ...[
+            Text(
+              widget.label!,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                fontFamily: 'Roboto',
+              ),
             ),
-          ),
-          SizedBox(height: 6),
+            SizedBox(height: 6.h),
+          ],
           GestureDetector(
             onTap: _toggleDropdown,
             child: Container(
               key: _key,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+              height: 45.h,
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors().border),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 color: Theme.of(context).colorScheme.surface,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    widget.selectedItem ?? widget.hintText ?? '',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'Roboto',
-                      color:
-                          widget.selectedItem == null
-                              ? AppColors().hintColor
-                              : Theme.of(context).colorScheme.onSurface,
+                  Expanded(
+                    child: Text(
+                      widget.selectedItem ?? widget.hintText ?? '',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Roboto',
+                        color:
+                            widget.selectedItem == null
+                                ? AppColors().hintColor
+                                : Theme.of(context).colorScheme.onSurface,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
+                  SizedBox(width: 8.w),
                   Icon(
                     isOpen
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: AppColors().hintColor,
+                    size: 20.sp,
                   ),
                 ],
               ),

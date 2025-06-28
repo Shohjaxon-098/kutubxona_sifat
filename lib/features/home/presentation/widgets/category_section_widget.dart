@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/widgets/no_field_widget.dart';
 
@@ -8,22 +9,28 @@ class CategorySectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _sectionHeader(context, 'Рукнлар', AppRoutes.categoryScreen),
+        Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: _sectionHeader(context, 'Рукнлар', AppRoutes.categoryScreen),
+        ),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            if (state is HomeLoading) return ShimmerLoadingAllCategories();
+            if (state is HomeLoading) {
+              return const ShimmerLoadingAllCategories();
+            }
             if (state is HomeDataLoaded) {
               if (state.categories.isEmpty) {
                 return const NoDataWidget(
                   imagePath: 'assets/images/no-result.svg',
-                  text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
+                  text: 'Рукнлар бўйича\n хечнарса топилмади!',
                 );
               }
               return Categories(categories: state.categories, limitItems: true);
             }
-
             if (state is HomeError) {
-              return Center(child: Text(state.message));
+              return Center(
+                child: Text(state.message, style: TextStyle(fontSize: 14.sp)),
+              );
             }
             return const SizedBox.shrink();
           },
@@ -38,13 +45,14 @@ class CategorySectionWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
         GestureDetector(
           onTap: () => AppNavigator.pushNamed(context, route),
           child: Text(
             'Барчаси',
             style: TextStyle(
+              fontSize: 14.sp,
               color: AppColors().blue,
               fontWeight: FontWeight.w500,
             ),

@@ -25,7 +25,6 @@ class CategoryBooks extends StatefulWidget {
 class _CategoryBooksState extends State<CategoryBooks> {
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  bool showDropdown = false;
 
   @override
   void initState() {
@@ -38,12 +37,11 @@ class _CategoryBooksState extends State<CategoryBooks> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
+    final width = MediaQuery.of(context).size.width;
 
-    // Ekran kengligiga qarab crossAxisCount o‘zgartirish
     int crossAxisCount = 2;
-    if (size.width >= 600) crossAxisCount = 3;
-    if (size.width >= 900) crossAxisCount = 4;
+    if (width >= 600) crossAxisCount = 3;
+    if (width >= 900) crossAxisCount = 4;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -52,7 +50,7 @@ class _CategoryBooksState extends State<CategoryBooks> {
           widget.categoryName,
           style: TextStyle(
             fontFamily: 'Roboto',
-            fontSize: 18,
+            fontSize: 18.sp,
             color: theme.colorScheme.tertiary,
             fontWeight: FontWeight.w500,
           ),
@@ -61,54 +59,47 @@ class _CategoryBooksState extends State<CategoryBooks> {
         iconTheme: IconThemeData(color: theme.colorScheme.tertiary),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Search va filter qatori
-              _buildSearchRow(context),
-              const SizedBox(height: 20),
-              Expanded(
-                child: BlocBuilder<CategoryBloc, CategoryState>(
-                  builder: (context, state) {
-                    if (state is CategoryLoadingState) {
-                      return const ShimmerLoadingCategoryBooks();
-                    } else if (state is CategoryLoadedState) {
-                      final books = state.books;
+        padding: EdgeInsets.all(12.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildSearchRow(context),
+            SizedBox(height: 20.h),
+            Expanded(
+              child: BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  if (state is CategoryLoadingState) {
+                    return const ShimmerLoadingCategoryBooks();
+                  } else if (state is CategoryLoadedState) {
+                    final books = state.books;
 
-                      if (books.isEmpty) {
-                        return const NoDataWidget(
-                          imagePath: 'assets/images/no-result.svg',
-                          text:
-                              'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
-                        );
-                      }
-
-                      return GridView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          mainAxisSpacing: 12,
-                          crossAxisSpacing: 17,
-                          childAspectRatio:
-                              163 / 290, // kartaning kengligi/bo'yi
-                        ),
-                        itemCount: books.length,
-                        itemBuilder: (context, index) {
-                          final book = books[index];
-                          return BookCard(book: book);
-                        },
+                    if (books.isEmpty) {
+                      return const NoDataWidget(
+                        imagePath: 'assets/images/no-result.svg',
+                        text: 'Сизнинг сўровингиз бўйича\n хечнарса топилмади!',
                       );
-                    } else if (state is CategoryErrorState) {
-                      return Center(child: Text('Xatolik: ${state.message}'));
                     }
-                    return const SizedBox();
-                  },
-                ),
+
+                    return GridView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: books.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
+                        mainAxisSpacing: 12.h,
+                        crossAxisSpacing: 17.w,
+                        childAspectRatio: 163 / 290,
+                      ),
+                      itemBuilder:
+                          (context, index) => BookCard(book: books[index]),
+                    );
+                  } else if (state is CategoryErrorState) {
+                    return Center(child: Text('Xatolik: ${state.message}'));
+                  }
+                  return const SizedBox();
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -128,13 +119,13 @@ class _CategoryBooksState extends State<CategoryBooks> {
             },
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16.w),
         GestureDetector(
           onTap: () => showFilterModal(context, widget.categoryId),
           child: Image.asset(
             'assets/icons/filter.png',
-            width: 24,
-            height: 24,
+            width: 24.w,
+            height: 24.h,
             color: Theme.of(context).colorScheme.scrim,
           ),
         ),
@@ -167,9 +158,8 @@ class BookCard extends StatelessWidget {
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             child: AspectRatio(
-              // Bu childAspectRatio ga moslashadi
               aspectRatio: 163 / 209,
               child: CachedNetworkImage(
                 imageUrl: book.image,
@@ -177,15 +167,15 @@ class BookCard extends StatelessWidget {
                 errorWidget:
                     (context, url, error) => Icon(
                       Icons.broken_image,
-                      size: 60,
+                      size: 60.sp,
                       color: Colors.grey[400],
                     ),
               ),
             ),
           ),
-          const SizedBox(height: 9),
+          SizedBox(height: 9.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -196,25 +186,27 @@ class BookCard extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.tertiary,
                     fontWeight: FontWeight.w700,
+                    fontSize: 14.sp,
                   ),
                 ),
-                const SizedBox(height: 3),
+                SizedBox(height: 3.h),
                 Text(
                   book.category,
                   style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 12.sp,
                     color: AppColors().searchInDark,
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages().rate, width: 15),
-                    const SizedBox(width: 6),
+                    SvgPicture.asset(AppImages().rate, width: 15.w),
+                    SizedBox(width: 6.w),
                     Text(
                       book.rating ?? '0',
                       style: TextStyle(
                         color: AppColors().rateCount,
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

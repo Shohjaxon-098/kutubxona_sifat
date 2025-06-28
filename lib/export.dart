@@ -7,3 +7,4 @@ export 'features/select_library/library_exports.dart';
 export 'features/widgets/widgets_exports.dart';
 export 'features/onboard/presentation/screen/onboarding_screen.dart';
 export 'features/splash/presentation/screens/splash_screen.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';

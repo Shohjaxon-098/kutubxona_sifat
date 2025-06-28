@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class DocumentTypeRadio extends StatelessWidget {
@@ -15,21 +16,31 @@ class DocumentTypeRadio extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RadioListTile<String>(
-          activeColor: AppColors().searchInDark,
-          value: 'passport',
-          groupValue: groupValue,
-          onChanged: onChanged,
-          title: const Text("Паспорт"),
-        ),
-        RadioListTile<String>(
-          activeColor: AppColors().searchInDark,
+        _buildRadioTile(title: "Паспорт", value: 'passport'),
+        SizedBox(height: 4.h),
+        _buildRadioTile(
+          title: "Туғилганлик ҳақида гувоҳнома",
           value: 'birth_certificate',
-          groupValue: groupValue,
-          onChanged: onChanged,
-          title: const Text("Туғилганлик ҳақида гувоҳнома"),
         ),
       ],
+    );
+  }
+
+  Widget _buildRadioTile({required String title, required String value}) {
+    return RadioListTile<String>(
+      contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 0),
+      activeColor: AppColors().searchInDark,
+      value: value,
+      groupValue: groupValue,
+      onChanged: onChanged,
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Roboto',
+        ),
+      ),
     );
   }
 }

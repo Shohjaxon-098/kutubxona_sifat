@@ -64,6 +64,7 @@ dependencies:
   smart_auth: ^3.2.0
   url_launcher: ^6.3.1
   sms_autofill: ^2.4.1
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

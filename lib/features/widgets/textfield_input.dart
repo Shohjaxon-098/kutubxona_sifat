@@ -15,6 +15,7 @@ class TextFieldInput extends StatelessWidget {
   final void Function()? onTap;
   final String? initialValue;
   final int? maxLength;
+
   const TextFieldInput({
     super.key,
     required this.label,
@@ -39,13 +40,13 @@ class TextFieldInput extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             fontFamily: 'Roboto',
           ),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         TextFormField(
           maxLength: maxLength,
           readOnly: readOnly ?? false,
@@ -67,39 +68,49 @@ class TextFieldInput extends StatelessWidget {
             if (lengthInput != null)
               LengthLimitingTextInputFormatter(lengthInput),
           ],
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w400,
-            fontSize: 14,
+            fontSize: 14.sp,
             fontFamily: 'Roboto',
           ),
           cursorColor: Theme.of(context).colorScheme.tertiary,
           cursorWidth: 1,
-          cursorHeight: 22,
+          cursorHeight: 22.h,
           initialValue: initialValue,
           decoration: InputDecoration(
-            constraints: const BoxConstraints(minHeight: 50),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 14.h,
+              horizontal: 12.w,
+            ),
+            suffixIconConstraints: BoxConstraints(
+              minWidth: 18.w,
+              minHeight: 18.h,
+            ),
+            // constraints: BoxConstraints(minHeight: 50.h), // ⛔ Olib tashlandi
             suffixIcon: suffixIcon,
             isDense: true,
             hintText: hint,
-            errorStyle: const TextStyle(fontSize: 12),
+            errorStyle: TextStyle(fontSize: 12.sp),
             hintStyle: TextStyle(
               fontFamily: 'Roboto',
               color: AppColors().hintColor,
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w400,
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+            ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
             disabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
           ),
         ),

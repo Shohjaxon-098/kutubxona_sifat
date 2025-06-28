@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class LoginButton extends StatelessWidget {
@@ -28,7 +29,7 @@ class LoginButton extends StatelessWidget {
               : Text(
                 "Кириш",
                 style: TextStyle(
-                  fontSize: 15,
+  fontSize: 16.sp,
                   color: AppColors().white,
                   fontWeight: FontWeight.w500,
                 ),

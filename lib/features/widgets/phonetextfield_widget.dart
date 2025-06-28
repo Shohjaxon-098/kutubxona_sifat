@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/config/theme/app_colors.dart';
 import 'package:kutubxona/core/util/formatters/phone_formatter.dart';
 
@@ -21,13 +22,13 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
     super.initState();
     _controller = widget.phoneController;
     _focusNode = FocusNode();
-    if (!mounted) return;
+
     _controller.addListener(() {
-      setState(() {});
+      if (mounted) setState(() {});
     });
 
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
+      if (mounted && _focusNode.hasFocus) {
         setState(() {
           _isTapped = true;
         });
@@ -37,7 +38,6 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
 
   @override
   void dispose() {
-    _controller.removeListener(() {});
     _focusNode.dispose();
     super.dispose();
   }
@@ -49,23 +49,23 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Мобил рақам',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 14,
+            fontSize: 14.sp,
             fontFamily: 'Roboto',
           ),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         TextFormField(
           controller: _controller,
           focusNode: _focusNode,
-          cursorColor: AppColors().black,
+          cursorColor: Theme.of(context).colorScheme.tertiary,
           cursorWidth: 1,
+          cursorHeight: 22.h,
           keyboardType: TextInputType.phone,
-          cursorHeight: 22,
-          style: const TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16.sp),
           inputFormatters: [
             LengthLimitingTextInputFormatter(12),
             PhoneNumberFormatter(),
@@ -79,45 +79,47 @@ class _PhoneTextfieldWidgetState extends State<PhoneTextfieldWidget> {
             return null;
           },
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 14.h,
+              horizontal: 12.w,
+            ),
+
             prefixIcon:
                 showPrefix
                     ? Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Text('+998', style: const TextStyle(fontSize: 16)),
+                      padding: EdgeInsets.only(left: 12.w),
+                      child: Text('+998', style: TextStyle(fontSize: 16.sp)),
                     )
                     : null,
-            prefixIconConstraints: const BoxConstraints(
-              minWidth: 0,
-              minHeight: 0,
+            prefixIconConstraints: BoxConstraints(
+              minWidth: 0.w,
+              minHeight: 0.h,
             ),
-            constraints: const BoxConstraints(minHeight: 50),
-            errorStyle: const TextStyle(fontSize: 12),
-            helperText: ' ',
+            constraints: BoxConstraints(minHeight: 50.h),
             isDense: true,
-            hintText:
-                showPrefix
-                    ? null // ✅ prefix chiqsa, hintdagi +998 yo‘qoladi
-                    : '+998  _ _  _ _ _  _ _  _ _',
+            helperText: ' ',
+            hintText: showPrefix ? null : '+998  _ _  _ _ _  _ _  _ _',
             hintStyle: TextStyle(
               color: AppColors().hintColor,
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w500,
             ),
+            errorStyle: TextStyle(fontSize: 12.sp),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
             disabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors().border),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
           ),
         ),

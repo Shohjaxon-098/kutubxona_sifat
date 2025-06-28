@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class LoginRegisterButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class LoginRegisterButton extends StatelessWidget {
       },
       child: Text(
         "Рўйхатдан ўтиш",
-        style: TextStyle(color: AppColors().primaryColor, fontSize: 15),
+        style: TextStyle(color: AppColors().primaryColor, fontSize: 15.sp),
       ),
     );
   }

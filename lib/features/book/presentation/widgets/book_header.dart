@@ -1,4 +1,4 @@
-// features/book_detail/presentation/widgets/book_header.dart
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class BookHeader extends StatelessWidget {
@@ -11,63 +11,65 @@ class BookHeader extends StatelessWidget {
     return Row(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           child: CachedNetworkImage(
             imageUrl: book.image,
-            width: 123,
-            height: 158,
+            width: 123.w,
+            height: 158.h,
             fit: BoxFit.cover,
-            errorWidget:
-                (context, url, error) =>
-                    Icon(Icons.broken_image, color: Colors.grey[400]),
+            errorWidget: (context, url, error) =>
+                Icon(Icons.broken_image, color: Colors.grey[400], size: 40.sp),
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 book.name,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: TextStyle(
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: 5.h),
               Text(
                 book.author,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 14.sp,
+                ),
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: 5.h),
               _labelValue("Рукн:", book.category, context),
-              const SizedBox(height: 5),
+              SizedBox(height: 5.h),
               _labelValue("Тил:", book.language, context),
-              const SizedBox(height: 5),
+              SizedBox(height: 5.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
                     children: List.generate(5, (index) {
-                      return GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2),
-                          child: Icon(
-                            index < double.parse(book.rating)
-                                ? Icons.star
-                                : Icons.star_border,
-                            size: 18,
-                            color:
-                                index < double.parse(book.rating)
-                                    ? Colors.orange
-                                    : Colors.grey,
-                          ),
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.w),
+                        child: Icon(
+                          index < double.parse(book.rating)
+                              ? Icons.star
+                              : Icons.star_border,
+                          size: 18.sp,
+                          color: index < double.parse(book.rating)
+                              ? Colors.orange
+                              : Colors.grey,
                         ),
                       );
                     }),
                   ),
-                  SizedBox(width: 6),
-                  Text('${book.rating}'),
+                  SizedBox(width: 6.w),
+                  Text(
+                    '${book.rating}',
+                    style: TextStyle(fontSize: 13.sp),
+                  ),
                 ],
               ),
             ],
@@ -85,14 +87,17 @@ class BookHeader extends StatelessWidget {
           label,
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 14,
+            fontSize: 14.sp,
             fontFamily: 'Roboto',
             color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         Text(
           value,
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontSize: 13.sp,
+          ),
         ),
       ],
     );

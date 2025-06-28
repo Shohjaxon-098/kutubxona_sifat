@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kutubxona/export.dart';
 
@@ -7,10 +8,10 @@ class OtpVerificationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 260,
+      height: 260.h,
       decoration: BoxDecoration(
         color: AppColors().cardColor,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(24.r),
         image: DecorationImage(
           image: AssetImage(AppImages().mask),
           fit: BoxFit.cover,
@@ -20,11 +21,11 @@ class OtpVerificationHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 84,
-            height: 84,
+            width: 84.w,
+            height: 84.h,
             decoration: BoxDecoration(
               color: AppColors().white,
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(28.r),
               boxShadow: [
                 BoxShadow(
                   blurRadius: 0,
@@ -34,16 +35,16 @@ class OtpVerificationHeader extends StatelessWidget {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(12.w),
               child: SvgPicture.asset(AppImages().secure),
             ),
           ),
-          const SizedBox(height: 33),
+          SizedBox(height: 33.h),
           Text(
             'Телефонингизга юборилган\nкодни киритинг',
             style: TextStyle(
               color: AppColors().white,
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,

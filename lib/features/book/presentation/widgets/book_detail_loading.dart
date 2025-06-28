@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BookDetailLoadingScreen extends StatelessWidget {
@@ -7,47 +8,55 @@ class BookDetailLoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              _buildShimmerBox(width: 123, height: 158, context: context),
-              const SizedBox(width: 16),
+              _buildShimmerBox(width: 123.w, height: 158.h, context: context),
+              SizedBox(width: 16.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildShimmerBox(
-                      height: 20,
+                      height: 20.h,
                       width: double.infinity,
                       context: context,
                     ),
-                    const SizedBox(height: 8),
-                    _buildShimmerBox(height: 16, width: 150, context: context),
-                    const SizedBox(height: 8),
-                    _buildShimmerBox(height: 16, width: 100, context: context),
+                    SizedBox(height: 8.h),
+                    _buildShimmerBox(
+                      height: 16.h,
+                      width: 150.w,
+                      context: context,
+                    ),
+                    SizedBox(height: 8.h),
+                    _buildShimmerBox(
+                      height: 16.h,
+                      width: 100.w,
+                      context: context,
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          _buildShimmerBox(height: 16, width: 100, context: context),
-          const SizedBox(height: 8),
+          SizedBox(height: 24.h),
+          _buildShimmerBox(height: 16.h, width: 100.w, context: context),
+          SizedBox(height: 8.h),
           _buildShimmerBox(
-            height: 14,
+            height: 14.h,
             width: double.infinity,
             context: context,
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildShimmerBox(
-            height: 50,
+            height: 50.h,
             width: double.infinity,
             context: context,
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
         ],
       ),
     );
@@ -65,7 +74,7 @@ class BookDetailLoadingScreen extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           color: Colors.grey,
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/category/presentation/screens/category_books.dart';
 import 'package:kutubxona/features/home/domain/entities/category.dart';
@@ -29,8 +30,8 @@ class Categories extends StatelessWidget {
       itemCount: displayCategories.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        mainAxisSpacing: mainAxisSpacing,
-        crossAxisSpacing: crossAxisSpacing,
+        mainAxisSpacing: mainAxisSpacing.h,
+        crossAxisSpacing: crossAxisSpacing.w,
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
@@ -51,7 +52,7 @@ class Categories extends StatelessWidget {
             );
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -65,14 +66,14 @@ class Categories extends StatelessWidget {
                 ),
                 Container(color: Colors.black.withOpacity(0.45)),
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.w),
                   child: Center(
                     child: Text(
                       category.name!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors().white,
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

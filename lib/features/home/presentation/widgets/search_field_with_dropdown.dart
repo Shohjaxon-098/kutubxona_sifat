@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/book/presentation/screens/book_detail_screen.dart';
 
@@ -10,6 +11,7 @@ class SearchFieldWithDropdown extends StatelessWidget {
     required this.showDropdown,
     required this.onDropdownVisibilityChanged,
   });
+
   final TextEditingController controller;
   final FocusNode focusNode;
   final LayerLink layerLink;
@@ -24,7 +26,7 @@ class SearchFieldWithDropdown extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSearchField(context),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           if (showDropdown) _buildDropdown(),
         ],
       ),
@@ -38,9 +40,7 @@ class SearchFieldWithDropdown extends StatelessWidget {
       context: context,
       enabled: true,
       onSubmitted: (query) {
-        
-        context.read<SearchBloc>().add(SearchQueryChanged(query,));
-
+        context.read<SearchBloc>().add(SearchQueryChanged(query));
         onDropdownVisibilityChanged(query.isNotEmpty && focusNode.hasFocus);
       },
     );
@@ -50,7 +50,7 @@ class SearchFieldWithDropdown extends StatelessWidget {
     return CompositedTransformFollower(
       link: layerLink,
       showWhenUnlinked: false,
-      offset: const Offset(0, 56), // searchField height + margin
+      offset: Offset(0, 56.h), // searchField height + margin
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           return AnimatedSwitcher(
@@ -65,13 +65,13 @@ class SearchFieldWithDropdown extends StatelessWidget {
               if (state is SearchLoading) {
                 return _dropdownCard(
                   context: context,
-                  child: const Center(
+                  child: Center(
                     child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.all(16.r),
                       child: SizedBox(
-                        width: 26,
-                        height: 26,
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                        width: 26.w,
+                        height: 26.h,
+                        child: const CircularProgressIndicator(strokeWidth: 2),
                       ),
                     ),
                   ),
@@ -81,9 +81,12 @@ class SearchFieldWithDropdown extends StatelessWidget {
                 if (books.isEmpty) {
                   return _dropdownCard(
                     context: context,
-                    child: const Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Text("Hech qanday kitob topilmadi."),
+                    child: Padding(
+                      padding: EdgeInsets.all(12.r),
+                      child: Text(
+                        "Hech qanday kitob topilmadi.",
+                        style: TextStyle(fontSize: 12.sp),
+                      ),
                     ),
                   );
                 }
@@ -92,8 +95,11 @@ class SearchFieldWithDropdown extends StatelessWidget {
                 return _dropdownCard(
                   context: context,
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text("Xatolik: ${state.message}"),
+                    padding: EdgeInsets.all(12.r),
+                    child: Text(
+                      "Xatolik: ${state.message}",
+                      style: TextStyle(fontSize: 12.sp),
+                    ),
                   ),
                 );
               }
@@ -108,13 +114,13 @@ class SearchFieldWithDropdown extends StatelessWidget {
   Widget _dropdownCard({required Widget child, required BuildContext context}) {
     return Material(
       elevation: 0,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(12.r),
       child: Container(
-        width: 400,
-        constraints: const BoxConstraints(maxHeight: 300),
+        width: 400.w,
+        constraints: BoxConstraints(maxHeight: 300.h),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade300),
         ),
         child: child,
@@ -128,40 +134,40 @@ class SearchFieldWithDropdown extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: books.length,
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         separatorBuilder:
-            (_, __) => Divider(height: 1, color: Colors.grey.shade200),
+            (_, __) => Divider(height: 1.h, color: Colors.grey.shade200),
         itemBuilder: (context, index) {
           final book = books[index];
           return ListTile(
             leading: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               child: CachedNetworkImage(
                 imageUrl: book.image,
                 fit: BoxFit.cover,
-                height: 100,
-                width: 45,
+                height: 100.h,
+                width: 45.w,
               ),
             ),
             title: Text(
               book.name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   book.author,
-                  style: const TextStyle(
-                    fontSize: 10,
+                  style: TextStyle(
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Text(
                   book.category,
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 10.sp,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
@@ -170,13 +176,15 @@ class SearchFieldWithDropdown extends StatelessWidget {
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(formatDate(book.publishedDate)),
-
+                Text(
+                  formatDate(book.publishedDate),
+                  style: TextStyle(fontSize: 10.sp),
+                ),
                 Text(
                   book.rating,
                   style: TextStyle(
                     color: AppColors().rateCount,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -197,12 +205,12 @@ class SearchFieldWithDropdown extends StatelessWidget {
               onDropdownVisibilityChanged(false);
             },
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
             ),
             hoverColor: Colors.grey.shade100,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 4,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 4.h,
             ),
           );
         },

@@ -19,9 +19,7 @@ class BookCommentsScreen extends StatelessWidget {
             .where((s) => s != null)
             .cast<double>()
             .toList();
-
     if (validScores.isEmpty) return 0.0;
-
     final total = validScores.reduce((a, b) => a + b);
     return total / validScores.length;
   }
@@ -31,7 +29,6 @@ class BookCommentsScreen extends StatelessWidget {
     if (total == 0) return {for (int i = 1; i <= 5; i++) i: 0.0};
 
     final Map<int, int> counts = {for (int i = 1; i <= 5; i++) i: 0};
-
     for (var review in reviews) {
       final scoreDouble = num.tryParse(review.score);
       if (scoreDouble != null) {
@@ -53,7 +50,7 @@ class BookCommentsScreen extends StatelessWidget {
           'Фикрлар',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 18,
+            fontSize: 18.sp,
             color: Theme.of(context).colorScheme.tertiary,
             fontFamily: 'Roboto',
           ),
@@ -71,7 +68,7 @@ class BookCommentsScreen extends StatelessWidget {
             final average = calculateAverageRating(state.reviews);
             final percentages = calculateRatingPercentages(state.reviews);
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,19 +76,20 @@ class BookCommentsScreen extends StatelessWidget {
                     averageRating: average,
                     ratingPercentages: percentages,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   CommentInputSection(bookId: bookId),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   Divider(color: AppColors().border),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   Text(
                     "Фикрлар",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
+                      fontSize: 16.sp,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   ReviewList(reviews: state.reviews),
                 ],
               ),

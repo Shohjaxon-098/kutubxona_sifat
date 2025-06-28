@@ -30,8 +30,6 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   int _currentTabIndex = 0;
-  String? takenAt;
-  int? reservationId;
 
   @override
   void initState() {
@@ -46,7 +44,6 @@ class _BookDetailScreenState extends State<BookDetailScreen>
     context.read<BookDetailBloc>().add(
       FetchBookDetail(AppConfig.libraryId.toString(), widget.book.slug),
     );
-
     context.read<ReviewBloc>().add(
       FetchReviews(
         libraryId: AppConfig.libraryId.toString(),
@@ -84,7 +81,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
             style: TextStyle(
               color: Theme.of(context).colorScheme.tertiary,
               fontWeight: FontWeight.w500,
-              fontSize: 18,
+              fontSize: 18.sp,
               fontFamily: 'Roboto',
             ),
           ),
@@ -97,26 +94,23 @@ class _BookDetailScreenState extends State<BookDetailScreen>
             } else if (state is BookDetailLoaded) {
               final book = state.book;
               return SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BookHeader(book: book),
-                    const SizedBox(height: 24),
-
+                    SizedBox(height: 24.h),
                     SectionTitle(title: 'Қисқача'),
-                    const SizedBox(height: 8),
-
+                    SizedBox(height: 8.h),
                     Text(
                       book.description,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'OpenSans',
                       ),
                     ),
-
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     BlocListener<ReserveBookBloc, ReserveBookState>(
                       listener: (context, state) {
                         if (state is ReserveBookSuccess ||
@@ -156,17 +150,14 @@ class _BookDetailScreenState extends State<BookDetailScreen>
 
                             if (!state.book.isAvailable) {
                               return PrimaryButton(
-                                onPressed: null, // ❌ Tugma bosilmaydi
+                                onPressed: null,
                                 child: Text(
                                   "Китоб қолмаган",
                                   style: TextStyle(
-                                    color: AppColors().white.withOpacity(
-                                      0.7,
-                                    ), // 🔘 Oq rang, so‘ndirilgan
+                                    color: AppColors().white.withOpacity(0.7),
                                   ),
                                 ),
-                                color:
-                                    Colors.grey.shade400, // 🔘 Kulrang orqa fon
+                                color: Colors.grey.shade400,
                               );
                             }
 
@@ -191,13 +182,14 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                                           },
                                   child:
                                       isLoading
-                                          ? const SizedBox(
-                                            height: 24,
-                                            width: 24,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 2,
-                                              color: Colors.white,
-                                            ),
+                                          ? SizedBox(
+                                            height: 24.h,
+                                            width: 24.w,
+                                            child:
+                                                const CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  color: Colors.white,
+                                                ),
                                           )
                                           : Text(
                                             "Банд қилиш",
@@ -213,8 +205,8 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                           } else if (reservedState is ReservedBookLoading) {
                             return Center(
                               child: SizedBox(
-                                width: 24,
-                                height: 24,
+                                width: 24.w,
+                                height: 24.h,
                                 child: CircularProgressIndicator(
                                   color: Theme.of(context).colorScheme.tertiary,
                                 ),
@@ -226,9 +218,7 @@ class _BookDetailScreenState extends State<BookDetailScreen>
                         },
                       ),
                     ),
-
-                    const SizedBox(height: 20),
-
+                    SizedBox(height: 20.h),
                     BookTabSection(
                       book: book,
                       controller: _tabController,

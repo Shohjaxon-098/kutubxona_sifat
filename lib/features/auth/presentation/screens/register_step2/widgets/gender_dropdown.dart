@@ -6,19 +6,19 @@ class GenderDropdown extends StatelessWidget {
   final ValueChanged<String?> onChanged;
 
   const GenderDropdown({
-    Key? key,
+    super.key,
     required this.selectedGender,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return CustomDropdown(
-      label: 'Жинс',
-      hintText: 'Жинс',
-      items: ['male', 'famale'],
+      label: "Жинс",
+      items: const ["Male", "Famale"],
       selectedItem: selectedGender,
       onChanged: onChanged,
+      hintText: "Жинс",
     );
   }
 }

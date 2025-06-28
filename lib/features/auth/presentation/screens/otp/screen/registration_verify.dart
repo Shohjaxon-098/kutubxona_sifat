@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/core/util/toast_message.dart';
 import 'package:kutubxona/export.dart';
 import 'package:kutubxona/features/auth/presentation/screens/otp/widgets/otp_pinput_widget.dart';
@@ -63,7 +64,7 @@ class _RegisterVerifyPageState extends State<RegisterVerifyPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: BlocConsumer<OtpBloc, OtpState>(
           listener: (context, state) {
@@ -77,30 +78,47 @@ class _RegisterVerifyPageState extends State<RegisterVerifyPage>
             }
           },
           builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  OtpVerificationHeader(),
-                  const SizedBox(height: 100),
-                  OtpPinput(
-                    controller: _pinController,
-                    focusNode: focusNode,
-                    onCompleted: (_) => _submitOtp(),
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  physics:
+                      constraints.maxHeight > 600.h
+                          ? const NeverScrollableScrollPhysics()
+                          : const BouncingScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: Column(
+                          children: [
+                            OtpVerificationHeader(),
+                            SizedBox(height: 50.h),
+                            OtpPinput(
+                              controller: _pinController,
+                              focusNode: focusNode,
+                              onCompleted: (_) => _submitOtp(),
+                            ),
+                            SizedBox(height: 16.h),
+                            const TimerWidget(),
+                            const Spacer(),
+                            PhoneChangeButton(),
+                            SizedBox(height: 24.h),
+                            SubmitButton(
+                              controller: _pinController,
+                              state: state,
+                              onPressed: _submitOtp,
+                            ),
+                            SizedBox(height: 12.h),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  TimerWidget(),
-                  Spacer(),
-                  PhoneChangeButton(),
-                  const SizedBox(height: 24),
-                  SubmitButton(
-                    controller: _pinController,
-                    state: state,
-                    onPressed: _submitOtp,
-                  ),
-                ],
-              ),
+                );
+              },
             );
           },
         ),

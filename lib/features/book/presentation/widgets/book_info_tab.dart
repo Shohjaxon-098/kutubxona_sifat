@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kutubxona/export.dart';
 
 class BookInfoTab extends StatelessWidget {
@@ -8,6 +9,7 @@ class BookInfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.tertiary;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -20,13 +22,26 @@ class BookInfoTab extends StatelessWidget {
 
   Widget _field(String title, String value, Color color) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.w700, color: color)),
-          const SizedBox(height: 10),
-          Text(value, style: TextStyle(color: color)),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: color,
+              fontSize: 15.sp,
+            ),
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            value,
+            style: TextStyle(
+              color: color,
+              fontSize: 14.sp,
+            ),
+          ),
         ],
       ),
     );

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kutubxona/config/theme/app_colors.dart';
-import 'package:kutubxona/core/util/app_images.dart';
+import 'package:kutubxona/export.dart';
 
 class ReviewList extends StatelessWidget {
   final List reviews;
@@ -16,7 +11,10 @@ class ReviewList extends StatelessWidget {
       return Center(
         child: Text(
           'Ҳеч қандай фикрлар йўқ',
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontSize: 15.sp,
+          ),
         ),
       );
     }
@@ -30,14 +28,14 @@ class ReviewList extends StatelessWidget {
         final user = review.libraryMember!.user;
 
         return Padding(
-          padding: const EdgeInsets.only(bottom: 12),
+          padding: EdgeInsets.only(bottom: 12.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(
-                  radius: 25,
+                  radius: 25.r,
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   backgroundImage:
                       user.photoUrl == null
@@ -46,10 +44,10 @@ class ReviewList extends StatelessWidget {
                   child:
                       user.photoUrl == null
                           ? Padding(
-                            padding: const EdgeInsets.only(bottom: 3),
+                            padding: EdgeInsets.only(bottom: 3.h),
                             child: SvgPicture.asset(
                               AppImages().person,
-                              width: 40,
+                              width: 40.w,
                             ),
                           )
                           : null,
@@ -58,7 +56,7 @@ class ReviewList extends StatelessWidget {
                   "${user.firstName} ${user.lastName}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
@@ -67,7 +65,7 @@ class ReviewList extends StatelessWidget {
                     'yyyy.MM.dd',
                   ).format(DateTime.parse(review.createdAt)),
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
@@ -75,11 +73,11 @@ class ReviewList extends StatelessWidget {
               Text(
                 review.review,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               Divider(color: AppColors().border),
             ],
           ),
